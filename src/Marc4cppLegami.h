@@ -165,7 +165,7 @@ class Marc4cppLegami {
     bool isAnticoE(const char *bid);
     bool isAutore(const char *id);
     bool isModerno();
-    char* getSottoLivelloTitolo410(const tree<std::string> &reticolo, int curSottolivello, int sottoLivello);
+    void getSottoLivelloTitolo410(CString * entryReticolo, const tree<std::string> &reticolo, int curSottolivello, int sottoLivello);
     DataField * creaLegameAutoreAutore(char *entryReticoloPtr, int pos, char *vidPadre);
     DataField * creaLegameTitoloAutore(char *entryReticoloPtr, int pos);
     DataField * creaLegameTitoloAutore(char *vid, char tipoLegame, CString * cdRelazione, CString *cdStrumentoMusicale);

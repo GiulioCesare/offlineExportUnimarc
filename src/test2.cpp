@@ -30,6 +30,8 @@
 
 /home/argentino/export/gea/dp/offlineExportUnimarc.linux.local.cfg -t /home/argentino/export/gea/dp/tagsToExport.txt
 
+/media/argentino/473056186B71DFD3/export/indice/dp/pbe/offlineExportUnimarc_opac_pbe_incrementale_media_sw.cfg -t /media/argentino/473056186B71DFD3/export/indice/dp/pbe/tagsToExportEcclesiastiche.txt --incrementale_dal 2020-07-05
+
 ============================================================================
  Name        : test2.cpp
  Author      : Argentino
@@ -2878,8 +2880,13 @@ void printHeader()
 																// DataField * Marc4cppDocumento::creaTag300_NoteGenerali_2(char *areaStartPtr, char *areaEndPtr)
 //					printf ("\n\nVersione 11.6.1 12/06/2020");	// AUTHORITY Titolo dell'opera
 																// Aggiunto tag 003. Gestione facoltativa della tbTitset2. Rivisto tag da esportare in base a foglio excel di Mataloni
-					printf ("\n\nVersione 11.7.1 08/07/2020");	// AUTHORITY Titolo dell'opera (fix legami autore)
-
+//					printf ("\n\nVersione 11.7.1 08/07/2020");	// AUTHORITY Titolo dell'opera (fix legami autore)
+//					printf ("\n\nVersione 11.7.2 14/07/2020");	// 14/07/2020 Crea 899 solo se biblioteca trovata (bug con PBE)
+//					printf ("\n\nVersione 11.7.3 30/07/2020");	// fixed bug latente da 11 anni (ritorno di puntatore a variabile locle) per cambio compilatore in vmexport
+																// char *getSottoLivelloTitolo410(const tree<std::string> &reticolo, int curSottolivello, int sottoLivello);
+																//	to
+																// void getSottoLivelloTitolo410(CString * entryReticolo, const tree<std::string> &reticolo, int curSottolivello, int sottoLivello);
+					printf ("\n\nVersione 11.8.1 03/08/2020");	// creaLegameSoggettoVariante, fixed SignalAnError
 
 
 

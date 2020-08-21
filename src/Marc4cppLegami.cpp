@@ -2556,14 +2556,16 @@ void Marc4cppLegami::creaTag410_InCascata_Indice(int sottoLivelli, const tree<st
 	Subfield *sf;
 	ATTValVector<CString *> vectPtr;
 	TbReticoloTit *tbReticoloTit = 0;
-	char* entryReticolo = 0;
+//	char* entryReticolo = 0;
+	CString entryReticolo;
+
 	char *ptr = 0;
 	char bidLivelloPadre[10 + 1];
 	bidLivelloPadre[10] = 0;
 	int livelloValido = sottoLivelli;
 	CString subString,s ;
 
-// dump_reticolo(reticolo, reticolo.begin(), reticolo.end());
+dump_reticolo(reticolo, reticolo.begin(), reticolo.end());
 
 
 //	while (livelloValido) {
@@ -2602,13 +2604,30 @@ void Marc4cppLegami::creaTag410_InCascata_Indice(int sottoLivelli, const tree<st
 
 	// Prendiamo il titolo
 
-	entryReticolo = getSottoLivelloTitolo410(reticolo, 1, 1);
-	ptr = strchr(entryReticolo, ':');
+	getSottoLivelloTitolo410(&entryReticolo, reticolo, 1, 1);
+//printf ("\nentryReticolo='%s'", entryReticolo.data()); //
+
+ptr = strchr(entryReticolo.data(), ':');
 
 	char *BufTailPtr, *aString;
+
 	BufTailPtr = bidLivelloPadre;
 	aString =  ptr + 5;
 	MACRO_COPY_FAST(10);
+
+//printf ("BufTailPtr = '%s'", BufTailPtr);
+//strncpy (BufTailPtr, ptr + 5, 10);
+//printf ("BufTailPtr = '%s'", BufTailPtr);
+//
+//	printf ("\nsizeof long long = %d", sizeof (long long));
+//	printf ("\nsizeof short = %d", sizeof (short));
+//
+//	*((long long*)BufTailPtr) = *((long long*)aString); \
+//	*((short*)BufTailPtr+4) = *((short*)aString+4);		\
+
+
+
+
 
 //	memcpy(bidLivelloPadre, ptr + 5, 10);
 
@@ -2672,13 +2691,13 @@ void Marc4cppLegami::creaTag410_InCascata_Indice(int sottoLivelli, const tree<st
 	s.Clear();
 	for (int i = (livelloValido - 1); i; i--) {
 		// Troviamo il bid
-		entryReticolo = getSottoLivelloTitolo410(reticolo, 1, i);
+		getSottoLivelloTitolo410(&entryReticolo, reticolo, 1, i);
 
-		if (!entryReticolo) // 12/11/2018
+		if (entryReticolo.IsEmpty())
 			continue;
 
 
-		char *ptr = strchr(entryReticolo, ':');
+		char *ptr = strchr(entryReticolo.data(), ':');
 
 //printf ("entryReticolo='%s', ptr='%s'", entryReticolo, ptr);
 
@@ -3061,7 +3080,7 @@ void Marc4cppLegami::creaTag410_InCascata_Polo(int sottoLivelli, const tree<std:
 		ATTValVector<CString *> vectPtr;
 		CString s;
 		TbReticoloTit *tbReticoloTit = 0;
-		char* entryReticolo = 0;
+		CString entryReticolo;
 		char *ptr = 0;
 		char bidLivelloPadre[10 + 1];
 		bidLivelloPadre[10] = 0;
@@ -3091,11 +3110,11 @@ void Marc4cppLegami::creaTag410_InCascata_Polo(int sottoLivelli, const tree<std:
 //			break;
 //		} // end while
 
-entryReticolo = getSottoLivelloTitolo410(reticolo, 1, livelloValido);
-if (!entryReticolo || !livelloValido)	// 25/03/2019 BUG RAV0078503 (ambiene di new_sbw)	SEG FAULT
+getSottoLivelloTitolo410(&entryReticolo, reticolo, 1, livelloValido);
+if (entryReticolo.IsEmpty() || !livelloValido)	// 25/03/2019 BUG RAV0078503 (ambiene di new_sbw)	SEG FAULT
 	return;
 
-ptr = strchr(entryReticolo, ':');
+ptr = strchr(entryReticolo.data(), ':');
 //tbReticoloTit = new TbReticoloTit(ptr + 5);
 s.assign(ptr+5);
 tbReticoloTit = new TbReticoloTit(s.data());
@@ -3134,8 +3153,8 @@ if (!livelloValido)
 
 		//	s = " 001";
 		s = "001"; // 15/01/2010 10.47
-		entryReticolo = getSottoLivelloTitolo410(reticolo, 1, 1);
-		ptr = strchr(entryReticolo, ':');
+		getSottoLivelloTitolo410(&entryReticolo, reticolo, 1, 1);
+		ptr = strchr(entryReticolo.Data(), ':');
 
 		char *BufTailPtr, *aString;
 		BufTailPtr = bidLivelloPadre;
@@ -3192,8 +3211,8 @@ if (!livelloValido)
 		for (int i = (livelloValido - 1); i; i--) {
 
 			// Troviamo il bid
-			entryReticolo = getSottoLivelloTitolo410(reticolo, 1, i);
-			char *ptr = strchr(entryReticolo, ':');
+			getSottoLivelloTitolo410(&entryReticolo, reticolo, 1, i);
+			char *ptr = strchr(entryReticolo.data(), ':');
 			tbReticoloTit->assign(ptr + 5);
 			bidSottolivello = tbReticoloTit->getField(tbReticoloTit->bid);
 			//		 printf ("\nentry=%s, bid=%s", entryReticolo, bid);
@@ -3357,7 +3376,7 @@ void Marc4cppLegami::creaTag225_AreaCollezione(int sottoLivelli,
 	CString s;
 
 	TbReticoloTit *tbReticoloTit = 0;
-	char* entryReticolo = 0;
+	CString entryReticolo;
 	char *ptr = 0;
 	//print_tree(reticolo, reticolo.begin(), reticolo.end());
 
@@ -3383,12 +3402,12 @@ void Marc4cppLegami::creaTag225_AreaCollezione(int sottoLivelli,
 //	} // end while
 //
 
-	entryReticolo = getSottoLivelloTitolo410(reticolo, 1, livelloValido);
-	if (!entryReticolo || !livelloValido )	// 25/03/2019 elaborando bid: RAV0078503 ambiente new_sbw
+	getSottoLivelloTitolo410(&entryReticolo, reticolo, 1, livelloValido);
+	if (entryReticolo.IsEmpty() || !livelloValido )	// 25/03/2019 elaborando bid: RAV0078503 ambiente new_sbw
 		return;
 
 
-	ptr = strchr(entryReticolo, ':');
+	ptr = strchr(entryReticolo.data(), ':');
 	s.assign(ptr + 5);
 	tbReticoloTit = new TbReticoloTit(s.data());
 	s.Clear();
@@ -3452,8 +3471,8 @@ void Marc4cppLegami::creaTag225_AreaCollezione(int sottoLivelli,
 	for (int i = (livelloValido - 1); i; i--) {
 
 		// Troviamo il bid
-		entryReticolo = getSottoLivelloTitolo410(reticolo, 1, i);
-		char *ptr = strchr(entryReticolo, ':');
+		getSottoLivelloTitolo410(&entryReticolo, reticolo, 1, i);
+		char *ptr = strchr(entryReticolo.data(), ':');
 
 		tbReticoloTit->assign(ptr + 5);
 		// Gestiamo solo legami di tipo 01
@@ -4064,7 +4083,7 @@ void Marc4cppLegami::creaLegameSoggettoVariante() {
 	bool trovataVariante;
 
 
-	const char *cid, *cid2, *didSource, *didSource2, *didColl;
+	const char *cid, *cid2, *didSource; // , *didSource2, *didColl;
 //	int cd_soggettario = SOGGETTARIO_NON_DEFINITO;
 	cid = tbSoggetto->getField(tbSoggetto->cid);
 
@@ -4074,6 +4093,8 @@ void Marc4cppLegami::creaLegameSoggettoVariante() {
 	{
 		while (trSogDes->loadNextRecord())  // Prendiamo un descrittore alla volta
 		{
+//trSogDes->dumpRecord();
+
 			// Stiamo cambiando CID?
 			cid2 = trSogDes->getField(trSogDes->cid);
 			if (strcmp (cid, cid2))
@@ -4085,7 +4106,7 @@ void Marc4cppLegami::creaLegameSoggettoVariante() {
 			retb = tbDescrittore->loadRecord(didSource);
 			if (!retb)
 			{
-				SignalAnError(__FILE__, __LINE__, "\nDescrittore base % s per descrittore coll %s", didSource, didColl);
+				SignalAnError(__FILE__, __LINE__, "\nDescrittore base %s ", didSource);  // per descrittore coll %s , didColl
 				continue;
 			}
 			CString *key_des = tbDescrittore->getFieldString(tbDescrittore->ky_norm_descritt);
@@ -4450,7 +4471,8 @@ DataField * Marc4cppLegami::creaSoggettoCNP1(CKeyValueVector *scomposizioniKVV, 
 //} // end getSottoLivelloTitolo410
 
 // 26/09/2018 fix mail giliberto
-char* Marc4cppLegami::getSottoLivelloTitolo410(
+void Marc4cppLegami::getSottoLivelloTitolo410(
+		CString * entryReticolo,
 		const tree<std::string> &reticolo, int curSottolivello,
 		int sottoLivello)
 {
@@ -4479,17 +4501,20 @@ char* Marc4cppLegami::getSottoLivelloTitolo410(
 			str = *it;
 			pos = str.find(',');
 			if (pos == -1) // 12/11/2018
-				return 0;
+				return; //  0
 			const char *ptr = str.data()+pos;
 			legame[0] = *++ptr;
 			legame[1] = *++ptr;
 			if (!strcmp(legame, "01"))	// il legame 01, se esiste, puo' essere un sibling qualsiasi
-				return (char*)str.data();
+//				return (char*)str.data();
+				*entryReticolo = str.data();
+				return;
 		}
 		++it;
 	}
 //	std::cout << "-----]" << std::endl;
-	return 0; // trovato nulla
+//	return 0; // trovato nulla
+	entryReticolo->Clear();
 }
 
 void Marc4cppLegami::print_tree(const tree<std::string>& tr,

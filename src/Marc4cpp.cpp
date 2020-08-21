@@ -533,6 +533,15 @@ void Marc4cpp::zeroInit() {
 	trcPossProvInventari = 0;
 
 
+	// Legami Titolo/Repertorio (08/06/2020)
+	// ------------------------
+	trRepTitIn = 0;
+	trRepTitOffsetIn = 0;
+	elementsTrRepTit = 0;
+	offsetBufferTrRepTitPtr = 0;
+	trRepTit = 0;
+
+
 	// Legami Marca/Repertorio
 	// ------------------------
 	trRepMarIn = 0;
@@ -2376,7 +2385,7 @@ bool Marc4cpp::creaRecordBibliografico(MarcRecord *marcRecord, const tree<std::s
 		DataField *df_899 =  marcRecord->getDataField((char *)"899");
 		if (!df_899)
 		{
-			printf ("Non esiste una localizzazione (899) per il bid %s", bid);
+			printf ("\nNon esiste una localizzazione (899) per il bid %s", bid);
 			return false; // 05/11/2018
 		}
 	}

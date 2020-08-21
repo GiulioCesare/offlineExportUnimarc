@@ -2400,11 +2400,6 @@ DataField * Marc4cppLegami::creaTag899_Localizzazione(bool has430, bool has440) 
 
 
 
-	df = new DataField((char *)"899", 3);
-	//df->setTag();
-	char tipoDigitalizzazione = *(trTitBib->getField(trTitBib->tp_digitalizz));
-	if (tipoDigitalizzazione) // Se non valorizzato .. in attesa di info
-		df->setIndicator2(tipoDigitalizzazione);
 
     if (!tbfBiblioteca->loadRecord(kPoloBiblioteca.data()))
     {
@@ -2412,6 +2407,15 @@ DataField * Marc4cppLegami::creaTag899_Localizzazione(bool has430, bool has440) 
     	SignalAWarning(__FILE__, __LINE__, "Biblioteca non trovata per '%s'",	kPoloBiblioteca.data());
 		return df;
     }
+
+    // 14/07/2020 Crea 899 solo se biblioteca trovata (bug con PBE)
+	df = new DataField((char *)"899", 3);
+	//df->setTag();
+	char tipoDigitalizzazione = *(trTitBib->getField(trTitBib->tp_digitalizz));
+	if (tipoDigitalizzazione) // Se non valorizzato .. in attesa di info
+		df->setIndicator2(tipoDigitalizzazione);
+
+
 	cdAnaBib = tbfBiblioteca->getFieldString(tbfBiblioteca->cd_ana_biblioteca);
 
 //printf ("\ncdAnaBib=%s", cdAnaBib->data());
