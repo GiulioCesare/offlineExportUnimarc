@@ -2763,9 +2763,10 @@ bool Marc4cpp::setupAuthDocument(
 	loadDictionary_KV("tb_scomposizioni_cnp", compostoNonPreferitoKV);
 
 
-
 	codiciNotaKV = new CKeyValueVector(tKVSTRING, tKVSTRING);
 	loadDictionary_KV("tb_codici_cnot", codiciNotaKV);
+
+
 
 	codiciEclaKV = new CKeyValueVector(tKVSTRING, tKVSTRING);	// 12/2014
 	loadDictionary_KV("tb_codici_ecla", codiciEclaKV);
