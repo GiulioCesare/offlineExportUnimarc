@@ -81,6 +81,9 @@
 #include "TbTermineTesauro.h"
 #include "TrsTerminiTitoliBiblioteche.h"
 
+#include "TrLuoLuo.h"
+#include "TrRepLuo.h"
+
 
 using namespace std;
 
@@ -169,6 +172,45 @@ private:
 
 	CKeyValueVector *tbcSezioneCollocazioneQuadreKV; // []
 //	CString tbcSezioneCollocazioneFilename;
+
+	// Relazioni Luogo->Luogo (.rel) 04/11/2020
+		// ------------------------
+		CFile* trLuoLuoRelIn;
+		CFile* trLuoLuoRelOffsetIn;
+		long elementsTrLuoLuoRel;	// Numero di relazioni
+		char *offsetBufferTrLuoLuoRelPtr;
+		//TrLuoLuo *trLuoLuo;
+
+		// Relazioni INVERSE Luogo->Luogo (.rel)
+		// ------------------------
+		CFile* trLuoLuoRelInvIn;
+		CFile* trLuoLuoRelInvOffsetIn;
+		long elementsTrLuoLuoRelInv;	// Numero di relazioni
+		char *offsetBufferTrLuoLuoRelInvPtr;
+
+		// Entity Relazione luogo/luogo invertita 04/11/2020
+		// ------------------------
+		TrDesDes *trLuoLuoInv;
+		CFile* trLuoLuoInvIn;
+		CFile* trLuoLuoInvOffsetIn;
+		long elementsTrLuoLuoInv;	// Numero di relazioni
+		char *offsetBufferTrLuoLuoInvPtr;
+
+		// Relazione Luogo Luogo // 04/11/2020
+		// -----------------------
+		CFile* trLuoLuoIn;
+		CFile* trLuoLuoOffsetIn;
+		long elementsTrLuoLuo;
+		char *offsetBufferTrLuoLuoPtr;
+		TrLuoLuo *trLuoLuo;
+
+		// Relazione Repertorio Luogo // 04/11/2020
+		// -----------------------
+		CFile* trRepLuoIn;
+		CFile* trRepLuoOffsetIn;
+		long elementsTrRepLuo;
+		char *offsetBufferTrRepLuoPtr;
+		TrRepLuo *trRepLuo;
 
 
 	// Gestione tesauro entita' 04/12/2015
@@ -539,19 +581,12 @@ private:
 	CFile* trTitTitRelOffsetIn;
 	long elementsTrTitTitRel;	// Numero di relazioni
 	char *offsetBufferTrTitTitRelPtr;
-
 	TrTitTit *trTitTit;
-
 
 	// Relazioni INVERSE titolo->titolo (.rel)
 	// ------------------------
-	//CString trTitTitInvRelFilename;
 	CFile* trTitTitInvRelIn;
-
-
-	//CString trTitTitInvRelOffsetFilename;
 	CFile* trTitTitInvRelOffsetIn;
-
 	long elementsTrTitTitInvRel;	// Numero di relazioni
 	char *offsetBufferTrTitTitInvRelPtr;
 
@@ -787,7 +822,6 @@ private:
 
 
 
-
 	// File dei reticoli
 	CFile* reticoliOut;
 
@@ -824,6 +858,7 @@ private:
 	void CreaReticoloAutoreAddNodeChildren(tree<std::string>* reticolo, tree<std::string>::pre_order_iterator startNodeIter, const char* bid, const char* level, int levelPos);
 	void CreaReticoloSoggettoAddNodeChildren(tree<std::string>* reticolo, tree<std::string>::pre_order_iterator startNodeIter, const char* bid, const char* level, int levelPos);
 	void CreaReticoloTitoloUniformeAddNodeChildren(tree<std::string>* reticolo, tree<std::string>::pre_order_iterator startNodeIter, const char* bid, const char* level, int levelPos); // 11/04/2016
+	void CreaReticoloLuogoAddNodeChildren(tree<std::string>* reticolo, tree<std::string>::pre_order_iterator startNodeIter, const char* bid, const char* level, int levelPos);// 05/11/2020
 
 	void writeReticolo(const tree<std::string>& tr, tree<std::string>::pre_order_iterator it, tree<std::string>::pre_order_iterator end);
 
@@ -910,6 +945,17 @@ public:
 			ATTValVector<CString *> *entitaVector,
 			ATTValVector<CString *> *relazioniVector,
 			ATTValVector<CString *> *offsetVector,
+			char *bidXunimarcFilename,
+			char *reticoliFilename
+	);
+
+	bool setupAuthLuoghi(
+			char *tagsToGenerateBufferPtr,
+			int tagsToGenerate,
+			char *marcFilename,
+			char *marcTxtFilename,
+			char *polo,
+			ATTValVector<CString *> *entitaVector, ATTValVector<CString *> *relazioniVector, ATTValVector<CString *> *offsetVector,
 			char *bidXunimarcFilename,
 			char *reticoliFilename
 	);

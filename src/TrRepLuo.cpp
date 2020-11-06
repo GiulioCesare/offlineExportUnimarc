@@ -15,16 +15,16 @@
   * along with this program. If not, see <http://www.gnu.org/licenses/>.
   ******************************************************************************/
 /*
- * TrAutAut.cpp
+ * TrRepLuo.cpp
  *
- *  Created on: 8-ott-2009
- *      Author: Arge
+ *  Created on: 3-nov-2020
+ *      Author: Hassan
  */
 
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "TrAutAut.h"
+#include "TrRepLuo.h"
 
 #include "BinarySearch.h"
 #include "library/CTokenizer.h"
@@ -39,14 +39,14 @@ extern void SignalAWarning(	const OrsChar *Module, OrsInt Line, const OrsChar * 
 
 
 
-TrAutAut::TrAutAut(CFile *tbIn, CFile *tbOffsetIn, char *offsetBufferTbPtr, long elementsTb, int keyPlusOffsetPlusLfLength, int key_length) :
+TrRepLuo::TrRepLuo(CFile *tbIn, CFile *tbOffsetIn, char *offsetBufferTbPtr, long elementsTb, int keyPlusOffsetPlusLfLength, int key_length) :
 	Tb (tbIn, tbOffsetIn, offsetBufferTbPtr, elementsTb, keyPlusOffsetPlusLfLength, key_length)
 {
-	tbFields = 9;
+	tbFields = 8;
 	init();
 }
 
-TrAutAut::~TrAutAut() {
+TrRepLuo::~TrRepLuo() {
 
 }
 
@@ -54,12 +54,12 @@ TrAutAut::~TrAutAut() {
 
 
 
-bool TrAutAut::loadRecord(const char *key)
+bool TrRepLuo::loadRecord(const char *key)
 {
 
 	if (!Tb::loadRecord(key))
 	{
-		SignalAnError(__FILE__, __LINE__, "Derived class TrAutAut::loadRecord key=%s",key);
+		SignalAnError(__FILE__, __LINE__, "Derived class TrLuoLuo::loadRecord key=%s",key);
 		return false;
 	}
 	return true;
@@ -69,7 +69,7 @@ bool TrAutAut::loadRecord(const char *key)
 
 
 
-bool TrAutAut::loadNextRecordDaIndice(const char *key, bool inverted)
+bool TrRepLuo::loadNextRecordDaIndice(const char *key, bool inverted)
 {
 //	char * separator = recordSeparator.data();
 //	CTokenizer Tokenizer(separator);

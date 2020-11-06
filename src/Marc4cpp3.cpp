@@ -161,7 +161,10 @@ printf ("\nAPRI FILE RELAZIONI: %s", sPtr->data());
 			trTitMarRelIn = cFileIn;
 		else if (!strcmp(tabella, "tr_tit_luo"))
 			trTitLuoIn = cFileIn;
-
+		else if (!strcmp(tabella, "tr_luo_luo_rel"))
+			trLuoLuoRelIn = cFileIn;
+		else if (!strcmp(tabella, "tr_luo_luo_rel_inv"))
+			trLuoLuoRelInvIn = cFileIn;
 
 
 		else if (!strcmp(tabella, "trs_termini_titoli_biblioteche_rel"))
@@ -1277,6 +1280,7 @@ bool Marc4cpp::loadOffsetFiles()
 		}
 	}
 
+
 	// Carichiamo gli offset delle relazioni Personaggi/Interpreti
 	if (trPerIntOffsetIn)
 	{
@@ -1330,6 +1334,79 @@ bool Marc4cpp::loadOffsetFiles()
 		}
 //		keyPlusOffsetPlusLfLength = saveKeyPlusOffsetPlusLfLength;
 	}
+
+	// 04/11/2020
+	// Carichiamo gli offset delle relazioni Luoghi
+	if (trRepLuoOffsetIn)
+	{
+		trRepLuoOffsetIn->SeekToEnd();
+		fileSize = trRepLuoOffsetIn->CurOffset();
+		elements = elementsTrRepLuo = fileSize/keyPlusOffsetPlusLfLength;
+		if (offsetFileVectorInMem.FindByValue(trRepLuoOffsetIn) != -1)
+		{
+			printf ("\nCarico in memoria indice %s, keyOffsetLen=%d, elements=%ld", trRepLuoOffsetIn->GetName(), keyPlusOffsetPlusLfLength, elements);
+			offsetBufferTrRepLuoPtr = (char *)malloc(elements*(keyPlusOffsetPlusLfLength));
+			if (!offsetBufferTrRepLuoPtr)	{
+				printf ("\n!!!! ALLOCAZIONE MEMORIA FALLITA");
+				return false;	}
+			loadOffsetFiles2(trRepLuoOffsetIn, offsetBufferTrRepLuoPtr);
+		}
+	}
+
+
+	// Carichiamo gli offset delle relazioni Luogo/Luogo (.rel)
+	if (trLuoLuoRelOffsetIn)
+	{
+		trLuoLuoRelOffsetIn->SeekToEnd();
+		fileSize = trLuoLuoRelOffsetIn->CurOffset();
+		elements = elementsTrLuoLuoRel = fileSize/keyPlusOffsetPlusLfLength;
+		if ((offsetFileVectorInMem.FindByValue(trLuoLuoRelOffsetIn) != -1))
+		{
+			printf ("\nCarico in memoria indice %s, keyOffsetLen=%d, elements=%ld", trLuoLuoRelOffsetIn->GetName(), keyPlusOffsetPlusLfLength, elements);
+			offsetBufferTrLuoLuoRelPtr = (char *)malloc(elements*(keyPlusOffsetPlusLfLength)); // n righe di BID+Offset
+			if (!offsetBufferTrLuoLuoRelPtr)	{
+				printf ("\n!!!! ALLOCAZIONE MEMORIA FALLITA");
+				return false;	}
+			loadOffsetFiles2(trLuoLuoRelOffsetIn, offsetBufferTrLuoLuoRelPtr);
+		}
+	}
+
+	// Carichiamo gli offset delle relazioni inverse Luogo/luogo (.rel)
+	if (trLuoLuoRelInvOffsetIn )
+	{
+		trLuoLuoRelInvOffsetIn->SeekToEnd();
+		fileSize = trLuoLuoRelInvOffsetIn->CurOffset();
+		elements = elementsTrLuoLuoRelInv = fileSize/keyPlusOffsetPlusLfLength;
+		if ((offsetFileVectorInMem.FindByValue(trLuoLuoRelInvOffsetIn) != -1))
+		{
+			printf ("\nCarico in memoria indice %s, keyOffsetLen=%d, elements=%ld", trLuoLuoRelInvOffsetIn->GetName(), keyPlusOffsetPlusLfLength, elements);
+			offsetBufferTrLuoLuoRelInvPtr = (char *)malloc(elements*(keyPlusOffsetPlusLfLength)); // n righe di BID+Offset
+			if (!offsetBufferTrLuoLuoRelInvPtr)	{
+				printf ("\n!!!! ALLOCAZIONE MEMORIA FALLITA");
+				return false;	}
+			loadOffsetFiles2(trLuoLuoRelInvOffsetIn, offsetBufferTrLuoLuoRelInvPtr);
+		}
+	}
+
+	// Carichiamo gli offset della entita  inverse Luogo/Luogo
+	if (trLuoLuoInvOffsetIn)
+	{
+		trLuoLuoInvOffsetIn->SeekToEnd();
+		fileSize = trLuoLuoInvOffsetIn->CurOffset();
+		elements = elementsTrLuoLuoInv = fileSize/keyPlusOffsetPlusLfLength;
+		if ((offsetFileVectorInMem.FindByValue(trLuoLuoInvOffsetIn) != -1))
+		{
+			printf ("\nCarico in memoria indice %s, keyOffsetLen=%d, elements=%ld", trLuoLuoInvOffsetIn->GetName(), keyPlusOffsetPlusLfLength, elements);
+			offsetBufferTrLuoLuoInvPtr = (char *)malloc(elements*(keyPlusOffsetPlusLfLength)); // n righe di BID+Offset
+			if (!offsetBufferTrLuoLuoInvPtr)	{
+				printf ("\n!!!! ALLOCAZIONE MEMORIA FALLITA");
+				return false;	}
+			loadOffsetFiles2(trLuoLuoInvOffsetIn, offsetBufferTrLuoLuoInvPtr);
+		}
+	}
+
+
+
 	return true;
 } // End loadOffsetFile
 
@@ -1512,6 +1589,16 @@ try {
 
 		else if (!strcmp(tabella, "tr_rep_mar_off"))
 			trRepMarOffsetIn = cFileIn;
+		else if (!strcmp(tabella, "tr_rep_luo_off"))
+					trRepLuoOffsetIn = cFileIn;
+		else if (!strcmp(tabella, "tr_luo_luo_inv_off"))
+			trLuoLuoInvOffsetIn = cFileIn;
+
+		else if (!strcmp(tabella, "tr_luo_luo_rel_off"))
+			trLuoLuoRelOffsetIn = cFileIn;
+		else if (!strcmp(tabella, "tr_luo_luo_rel_inv_off"))
+			trLuoLuoRelInvOffsetIn = cFileIn;
+
 		else if (!strcmp(tabella, "tr_per_int_off"))
 			trPerIntOffsetIn = cFileIn;
 		else if (!strcmp(tabella, "tbc_possessore_provenienza_off"))
@@ -1728,6 +1815,10 @@ printf ("\nAPRI FILE ENTITA': %s", sPtr->data());
 			tbImprontaIn= cFileIn;
 		else if (!strcmp(tabella, "tb_luogo"))
 			tbLuogoIn = cFileIn;
+		else if (!strcmp(tabella, "tr_luo_luo"))
+			trLuoLuoIn = cFileIn;
+		else if (!strcmp(tabella, "tr_rep_luo"))
+			trRepLuoIn = cFileIn;
 		else if (!strcmp(tabella, "tb_grafica"))
 			tbGraficaIn= cFileIn;
 		else if (!strcmp(tabella, "tb_cartografia"))

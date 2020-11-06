@@ -62,6 +62,7 @@ public:
 
 	TbLuogo(CFile* tbLuogoIn, CFile *tbLuogoOffsetIn, char *offsetBufferTbLuogoPtr, long elementsTbLuogo, int keyPlusOffsetPlusLfLength, int key_length);
 	TbLuogo();
+	TbLuogo(TbLuogo *tbLuogo);
 	virtual ~TbLuogo();
 	bool loadRecord(const char *key);
 

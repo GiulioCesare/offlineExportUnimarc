@@ -48,6 +48,14 @@
 extern void SignalAnError(	const OrsChar *Module, OrsInt Line, const OrsChar * MsgFmt, ...);
 extern void SignalAWarning(	const OrsChar *Module, OrsInt Line, const OrsChar * MsgFmt, ...);
 
+//Authority luogo 05/11/2020
+Marc4cppDocumentoAuthority::Marc4cppDocumentoAuthority(MarcRecord *marcRecord, TbLuogo *tbLuogo, char *polo, char *tagsToGenerateBufferPtr, int tagsToGenerate, int aurthority)
+
+{
+
+	this->tbLuogo = tbLuogo;
+	init (marcRecord, polo, tagsToGenerateBufferPtr, tagsToGenerate, aurthority);
+}
 
 Marc4cppDocumentoAuthority::Marc4cppDocumentoAuthority(MarcRecord *marcRecord, TbAutore *tbAutore, char *polo, char *tagsToGenerateBufferPtr, int tagsToGenerate, int aurthority)
 
@@ -220,6 +228,8 @@ ControlField * Marc4cppDocumentoAuthority::creaTag001_IdentificatoreRecord()
 		cf->setData(tbSoggetto->getFieldString(tbSoggetto->cid));
 	else if (authority == AUTHORITY_TITOLI_UNIFORMI)
 		cf->setData(tbTitolo->getFieldString(tbTitolo->bid));
+	else if (authority == AUTHORITY_LUOGHI)
+		cf->setData(tbLuogo->getFieldString(tbLuogo->lid));
 //	else
 //		cf->setData("??????????");
 
@@ -284,44 +294,9 @@ ControlField * Marc4cppDocumentoAuthority::creaTag005_IdentificatoreVersione()
 {
 	ControlField *cf;
 	cf = new ControlField();
-	char dateBuf[8+6+2+1];
+	char dateBuf[8+6+2+1]; // YYYYMMDDHHMMSS.T+ EOL
 	*(dateBuf+8+6+2)=0;
-
 	cf->setTag("005");
-
-//	if (authority == AUTHORITY_AUTORI)
-//	{
-//		if (DATABASE_ID != DATABASE_INDICE) // 03/05/2012
-//		{
-//			time_t rawtime;
-//			time(&rawtime);
-//			struct tm * timeinfo = localtime(&rawtime);
-//			CMisc::formatDate3(timeinfo, dateBuf);
-//			cf->setData(dateBuf, 16); // YYYYMMDDHHMMSS.T
-//		}
-//		else
-//		{ // INDICE
-//			CMisc::formatDate2(tbAutore->getField(tbAutore->ts_var), dateBuf); // 30/11/2015
-//			cf->setData(dateBuf, 16);
-//		}
-//	}
-//	else if (authority == AUTHORITY_SOGGETTI)
-//	{
-//		if (DATABASE_ID != DATABASE_INDICE) // 03/05/2012
-//		{
-//			time_t rawtime;
-//			time(&rawtime);
-//			struct tm * timeinfo = localtime(&rawtime);
-//			CMisc::formatDate3(timeinfo, dateBuf);
-//			cf->setData(dateBuf, 16); // YYYYMMDDHHMMSS.T
-//		}
-//		else
-//		{ // INDICE
-//			CMisc::formatDate2(tbSoggetto->getField(tbSoggetto->ts_ins), dateBuf); // YYYYMMDDHHMMSS.T
-//			cf->setData(dateBuf, 16);
-//		}
-//	}
-
 	if (DATABASE_ID != DATABASE_INDICE) // 03/05/2012
 	{
 		time_t rawtime;
@@ -333,18 +308,33 @@ ControlField * Marc4cppDocumentoAuthority::creaTag005_IdentificatoreVersione()
 	else
 	{
 		if (authority == AUTHORITY_AUTORI)
-			CMisc::formatDate2(tbAutore->getField(tbAutore->ts_var), dateBuf); // 30/11/2015
-		else if (authority == AUTHORITY_SOGGETTI)
-			CMisc::formatDate2(tbSoggetto->getField(tbSoggetto->ts_var), dateBuf); // YYYYMMDDHHMMSS.T
-		else if (authority == AUTHORITY_TITOLI_UNIFORMI)
-			CMisc::formatDate2(tbTitolo->getField(tbTitolo->ts_var), dateBuf); // YYYYMMDDHHMMSS.T
-		else
 		{
+			CMisc::formatDate2(tbAutore->getField(tbAutore->ts_var), dateBuf); // 30/11/2015
+		cf->setData(dateBuf, 16); // YYYYMMDDHHMMSS.T
+				}
+		else if (authority == AUTHORITY_LUOGHI)
+		{
+			CMisc::formatDate1(tbLuogo->getField(tbLuogo->ts_var), dateBuf); // YYYYMMDD   05/11/2020
+		cf->setData(dateBuf, 8); // YYYYMMDD
+				}
+		else if (authority == AUTHORITY_SOGGETTI)
+		{
+			CMisc::formatDate2(tbSoggetto->getField(tbSoggetto->ts_var), dateBuf); // YYYYMMDDHHMMSS.T
+		cf->setData(dateBuf, 16); // YYYYMMDDHHMMSS.T
+					}
+		else if (authority == AUTHORITY_TITOLI_UNIFORMI)
+			{
+			CMisc::formatDate2(tbTitolo->getField(tbTitolo->ts_var), dateBuf); // YYYYMMDDHHMMSS.T
+			cf->setData(dateBuf, 16); // YYYYMMDDHHMMSS.T
+			}
+		else
+			{
 			printf("creaTag005 Authority not found: %s", authority);
 			delete cf;
 			return 0;
-		}
-		cf->setData(dateBuf, 16); // YYYYMMDDHHMMSS.T
+			cf->setData(dateBuf, 16); // YYYYMMDDHHMMSS.T
+			}
+
 	}
 
 
@@ -410,7 +400,44 @@ DataField * Marc4cppDocumentoAuthority::creaTag010_Isni()
 	return df;
 }// End creaTag010
 
+// 05/11/2020 X Authority Luoghi
+DataField * Marc4cppDocumentoAuthority::creaTag035_Istat()
+{
+	if (authority == AUTHORITY_LUOGHI)
+	{
+	//	CMisc::formatDate1(tbLuogo->getField(tbLuogo->ts_var), dateBuf); // YYYYMMDD   05/11/2020
+		CString* sPtr;
+		sPtr=tbLuogo->getFieldString(tbLuogo->nota_luogo);
+		int pos=sPtr->First('#');
+		if(!(pos < 0))
+		{
+			char *istatPtr=sPtr->SubstringData(pos+1);
+			if(istatPtr)
+			{
+				DataField *df;
+				Subfield *sf;
+				df = new DataField();
+				df->setTag("035");
+		//		df->setData(istatPtr,sPtr->getBufferSubStringLength());
+				sf = new Subfield('a', istatPtr);
+				df->addSubfield(sf);
+				marcRecord->addDataField(df);
+					return df;
+			}
+		}
+		else
 
+		{
+			return 0;
+		}
+	}
+	else
+	{
+		printf("creaTag035 Authority not found: %s", authority);
+		return 0;
+	}
+
+}// End creaTag035_Istat
 
 /*
 	// 100 General Processing Data
@@ -514,6 +541,13 @@ DataField * Marc4cppDocumentoAuthority::creaTag100()
 		CMisc::formatDate1(tbAutore->getField(tbAutore->ts_ins), dateBuf);
 		cdLivello = tbAutore->getFieldString(tbAutore->cd_livello);
 	}
+
+	else if (authority == AUTHORITY_LUOGHI)
+	{
+//tbLuogo->dumpRecord();
+		CMisc::formatDate1(tbLuogo->getField(tbLuogo->ts_ins), dateBuf);
+		cdLivello = tbLuogo->getFieldString(tbLuogo->cd_livello);
+	}
 	else if (authority == AUTHORITY_SOGGETTI)
 	{
 		CMisc::formatDate1(tbSoggetto->getField(tbSoggetto->ts_ins), dateBuf);
@@ -535,9 +569,10 @@ DataField * Marc4cppDocumentoAuthority::creaTag100()
 		else
 			s.AppendChar('x');
 	}
+
 	else
 	{
-		if (cdLivello->isEqual("97"))
+		if (cdLivello->isEqual("97") || authority == AUTHORITY_LUOGHI)
 			s.AppendChar('a');
 		else
 			s.AppendChar('x');
@@ -645,8 +680,14 @@ DataField * Marc4cppDocumentoAuthority::creaTag102()
 	Subfield *sf;
 	CString s;
 	CString cdPaese;
+	if (authority == AUTHORITY_AUTORI)
+	{
 	cdPaese = tbAutore->getField(tbAutore->cd_paese);
-
+	}
+	else if(authority == AUTHORITY_LUOGHI)
+	{
+		cdPaese = tbLuogo->getField(tbLuogo->cd_paese);
+	}
 	if (cdPaese.isEqual("null") || cdPaese.IsEmpty())
 		return df;
 
@@ -1338,14 +1379,18 @@ DataField * Marc4cppDocumentoAuthority::creaTag260LuogoDiPubblicazioneNormalizzz
 {
 	DataField *df;
 	Subfield *sf;
-
-	df = new DataField();
-	df->setTag("260");
-	sf = new Subfield('a');
-	//sf->setData("", 0);
-	df->addSubfield(sf);
-	marcRecord->addDataField(df);
-
+	if (authority == AUTHORITY_LUOGHI)
+	 {
+		df = new DataField();
+		df->setTag("260");
+		sf = new Subfield('a');
+		sf->setData(tbLuogo->getFieldString(tbLuogo->cd_paese));
+		df->addSubfield(sf);
+		sf = new Subfield('d');
+		sf->setData(tbLuogo->getFieldString(tbLuogo->ds_luogo));
+		df->addSubfield(sf);
+		marcRecord->addDataField(df);
+	 }
 	return df;
 }
 /*
@@ -1392,6 +1437,15 @@ DataField * Marc4cppDocumentoAuthority::creaTag300Note()
 	else if (authority == AUTHORITY_TITOLI_UNIFORMI)
 	{
 			nota = tbTitolo->getField(tbTitolo->nota_inf_tit);
+	}
+	else if (authority == AUTHORITY_LUOGHI)
+	{
+		nota=tbLuogo->getField(tbLuogo->nota_luogo);
+		int pos=nota.First('#');
+		if(!(pos < 0))
+		{
+			nota.CropRightFrom(pos);
+		}
 	}
 	if (nota.StartsWith("null") || nota.IsEmpty())
 		return df;
@@ -1548,15 +1602,21 @@ DataField * Marc4cppDocumentoAuthority::creaTag801FonteDiProvenienza()
 
 
 	if (authority == AUTHORITY_AUTORI)
+	{
 		cdPaese = tbAutore->getField(tbAutore->cd_paese);
-	if (cdPaese.isEqual("null") || cdPaese.IsEmpty())
-		cdPaese = "IT";
-
-
-	if (authority == AUTHORITY_AUTORI)
 		tsIns = tbAutore->getField(tbAutore->ts_ins);
+	}
+	else if (authority == AUTHORITY_LUOGHI)
+	{
+		cdPaese = tbLuogo->getField(tbLuogo->cd_paese);
+		tsIns = tbLuogo->getField(tbLuogo->ts_ins);
+	}
+
 	else if (authority == AUTHORITY_SOGGETTI)
 		tsIns = tbSoggetto->getField(tbSoggetto->ts_ins);
+
+	if (cdPaese.isEqual("null") || cdPaese.IsEmpty())
+			cdPaese = "IT";
 
 	CMisc::formatDate1(tsIns.data(), dateBuf);
 
@@ -1568,8 +1628,7 @@ DataField * Marc4cppDocumentoAuthority::creaTag801FonteDiProvenienza()
 	sf = new Subfield('a', &cdPaese);
     //sf->setData();
     df->addSubfield(sf);
-
-	sf = new Subfield('b', &BIBLIOTECARICHIEDENTESCARICO);
+	sf = new Subfield('b', "ICCU");//&BIBLIOTECARICHIEDENTESCARICO
     //sf->setData();
     df->addSubfield(sf);
 
@@ -1810,27 +1869,46 @@ bool Marc4cppDocumentoAuthority::elaboraDatiDocumento(bool isTitoloOpera)
 
 	if (authority == AUTHORITY_AUTORI)
 	{
-//		if (isTagToGenerate("015"))	11/05/2017 DISMESSO (Mery Calogiuri)
-//			creaTag015_Isadn();
 		if (isTagToGenerate("010"))
 			creaTag010_Isni();
+	}
+	else if (authority == AUTHORITY_LUOGHI)
+	{
+		if (isTagToGenerate("035"))
+			creaTag035_Istat();
 	}
 
 	creaTag100(); // General Processing Data
 
-	if (authority == AUTHORITY_AUTORI)
+	if (authority == AUTHORITY_LUOGHI)
+		{
+		if (isTagToGenerate("102"))
+			creaTag102(); // Nationality of the Entity
+		if (isTagToGenerate("152"))
+			{
+			DataField *df = new DataField();
+				df->setTag("152");
+				Subfield *sf = new Subfield('a', "Catalogazione in SBN, Authority, Luoghi");
+				//sf->setData();
+				df->addSubfield(sf);
+
+				marcRecord->addDataField(df);
+			}
+		creaTag260LuogoDiPubblicazioneNormalizzzato(); // LUOGO DI PUBBLICAZIONE NORMALIZZATO
+		}
+	else if (authority == AUTHORITY_AUTORI)
 		{
 		if (isTagToGenerate("101"))
 			creaTag101_autore(); // LINGUA DELLA ENTITA'
 		if (isTagToGenerate("102"))
 			creaTag102(); // Nationality of the Entity
 		if (isTagToGenerate("152"))
-			creaTag152_autore(); // Rules
+				creaTag152_autore(); // Rules
 		creaTag200(); // Personal Name
 		creaTag210(); // Ente
 
 		}
-	if (authority == AUTHORITY_TITOLI_UNIFORMI)
+	else if (authority == AUTHORITY_TITOLI_UNIFORMI)
 	{
 		if (isTagToGenerate("101"))
 			creaTag101_titolo(); // LINGUA DELLA ENTITA'
@@ -1855,7 +1933,7 @@ bool Marc4cppDocumentoAuthority::elaboraDatiDocumento(bool isTitoloOpera)
 
 	creaTag300Note();
 
-	if (authority == AUTHORITY_AUTORI || authority == AUTHORITY_SOGGETTI)
+	if (authority == AUTHORITY_AUTORI || authority == AUTHORITY_SOGGETTI || authority == AUTHORITY_LUOGHI)
 		creaTag801FonteDiProvenienza();
 
 	if (authority == AUTHORITY_TITOLI_UNIFORMI && isTagToGenerate("801"))

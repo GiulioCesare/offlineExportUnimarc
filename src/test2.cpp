@@ -299,8 +299,8 @@ extern void SignalAWarning(	OrsChar *Module, OrsInt Line, OrsChar * MsgFmt, ...)
 
 // Forward declaration
 void testCFile();
-void testMarcRead();
 void testSplitAssign();
+void testMarcRead();
 int offlineExport(int argc, const char* argv[]);
 void printHeader();
 void readConfig(CFile *iniFileIn, cIni *ini);
@@ -771,7 +771,34 @@ void printLines(CFile* cFile)
 	}
 
 }
+void testSplitAssign ()
+{
+ATTValVector<CString*> *fieldsVector;
+fieldsVector = new ATTValVector<CString*>();
+int tbFields = 14;
+CString *sPtr;
 
+for (int i=0; i < tbFields; i++)
+{
+sPtr = new CString();
+if (!sPtr)
+{
+// SignalAnError(__FILE_, _LINE__, "failed to instantiate string for entry: %d", i);
+break;
+}
+fieldsVector->Add(sPtr);
+}
+
+CString *stringRecord = new CString((char *)"BVEL000073&$%A&$%95&$%Lubań&$%LUBAN &$%LUBAN &$%PL&$%Comune polacco del voivodato della Bassa Slesia.&$%BVE CRcr663 &$%2016-06-15 09:37:06.1&$%XXXAMM000403&$%2018-06-04 09:41:15&$% &$% ");
+stringRecord->Split_assign(*fieldsVector, "&$%");
+
+for (int i=0; i < fieldsVector->length(); i++)
+printf("\n%d: %s", i, fieldsVector->Entry(i)->data());
+
+delete stringRecord;
+fieldsVector->DeleteAndClear();
+delete fieldsVector;
+}
 
 
 void testCFileInMemory()
@@ -1327,6 +1354,34 @@ int offlineExport(int argc, const char* argv[])
 
 	} // End if (AUTHORITY.isEqual("titoli_uniformi"))
 
+	else if (AUTHORITY.isEqual("luoghi"))
+	{
+
+		//printf("trattamento luoghi");
+		try {
+		retb = marc4cpp->setupAuthLuoghi(
+				tagsToGenerateBufferPtr,
+				tagsToGenerate,
+				MARKFILEOUT.data(),
+				MARKFILEOUTTXT.data(),
+				POLO.data(),
+				entitaVector, relazioniVector, offsetVector,
+				IDXUNIMARC.data(),
+				RETICOLO_OUT.data()
+				);
+
+		} catch (GenericError e) {
+			std::cout << e.errorMessage;
+		}
+		if (!retb)
+		{
+			free (tagsToGenerateBufferPtr);
+			delete marc4cpp;
+			return 1;
+		}
+        marc4cpp->CreaUnimarcAuthority(INIZIAELABORAZIONEDARIGA, POSITIONBYOFFSET, ELABORANRIGHE, LOGOGNIXRIGHE);
+} // End if (AUTHORITY.isEqual("luoghi"))
+
 
 	else
 	{
@@ -1808,6 +1863,16 @@ void printTagsGestiti()
 	printf ("\n500,501,510,511,530,531,541");	// 02/03/2017
 	printf ("\n801,810,815,830");
 
+
+	printf ("\n\nAuthority LUOGHI");   // 04/11/2020
+	printf ("\n----------------");
+	printf ("\n0001,003,005,035");
+	printf ("\n100,102,152");
+	printf ("\n260");
+	printf ("\n300");
+	printf ("\n460");
+	printf ("\n801,810,815,830");
+
 }
 
 
@@ -1819,7 +1884,6 @@ void testMarcRead()
 	readMarcExample.read((char *)"/home/export/offlineExport/bve/tmp/IEbase_BVE.mrc"); // Unimarc prodotto dal dataprep
 
 }
-
 
 
 void testCFile()
@@ -2915,11 +2979,9 @@ int main(int argc, const char* argv[]) {
 	setvbuf(stdout, NULL, _IONBF, 0); // To flush output.
 
 	//testTokenizer();
-	//	testCFile();
+	//testCFile();
 	//testMarcRead();
-	testSplitAssign();
-return 0;
-
+	//testSplitAssign ();
 	entitaVector = new ATTValVector<CString *>();
 	relazioniVector = new ATTValVector<CString *>();
 	offsetVector = new ATTValVector<CString *>();
@@ -2960,32 +3022,3 @@ return 0;
 //	/media/argentino/473056186B71DFD3/export/indice/dp/offlineExportUnimarc64.linux.media.cfg -t /media/argentino/473056186B71DFD3/export/indice/dp/tagsToExport.txt
 
 
-
-void testSplitAssign ()
-{
-	ATTValVector<CString*> *fieldsVector;
-	fieldsVector = new ATTValVector<CString*>();
-	int tbFields = 14;
-	CString *sPtr;
-
-	for (int i=0; i < tbFields; i++)
-	{
-		sPtr = new CString();
-		if (!sPtr)
-		{
-//		    SignalAnError(__FILE__, __LINE__, "failed to instantiate string for entry: %d", i);
-		    break;
-		}
-		fieldsVector->Add(sPtr);
-	}
-
-	CString *stringRecord = new CString((char *)"BVEL000073&$%A&$%95&$%Lubań&$%LUBAN                         &$%LUBAN                                                                           &$%PL&$%Comune polacco del voivodato della Bassa Slesia.&$%BVE CRcr663 &$%2016-06-15 09:37:06.1&$%XXXAMM000403&$%2018-06-04 09:41:15&$% &$% ");
-	stringRecord->Split_assign(*fieldsVector, "&$%");
-
-	for (int i=0; i < fieldsVector->length(); i++)
-		printf("\n%d: %s", i, fieldsVector->Entry(i)->data());
-
-	delete stringRecord;
-	fieldsVector->DeleteAndClear();
-	delete fieldsVector;
-}

@@ -584,6 +584,36 @@ void Marc4cpp::zeroInit() {
 	trsTerminiTitoliBiblioteche = 0;
 
 
+	//Gestione Authority Luoghi  05/11/2020
+	trLuoLuoRelIn = 0;
+	trLuoLuoRelOffsetIn = 0;
+	elementsTrLuoLuoRel = 0;
+	offsetBufferTrLuoLuoRelPtr = 0;
+
+	trLuoLuoRelInvIn=0;
+	trLuoLuoRelInvOffsetIn=0;
+	elementsTrLuoLuoRelInv=0;
+	offsetBufferTrLuoLuoRelInvPtr=0;
+
+	trLuoLuoInvIn = 0;
+	trLuoLuoInvOffsetIn = 0;
+	elementsTrLuoLuoInv = 0;
+	offsetBufferTrLuoLuoInvPtr = 0;
+	trLuoLuoInv = 0;
+
+	trLuoLuoIn = 0;
+	trLuoLuoOffsetIn = 0;
+	elementsTrLuoLuo = 0;
+	offsetBufferTrLuoLuoPtr = 0;
+	trLuoLuo = 0;
+
+	trRepLuoIn = 0;
+	trRepLuoOffsetIn = 0;
+	elementsTrRepLuo = 0;
+	offsetBufferTrRepLuoPtr = 0;
+	trRepLuo = 0;
+
+
 
 	marcOutTxt = 0;
 	marcOutXml = 0;
@@ -1124,9 +1154,11 @@ bool Marc4cpp::setupCommon(
 //	printf ("\nRAM allocata per i file OFFSET: %0.2f mb", (float)(fileOffsetInMemSize / 1024000));
 
 	printf ("\nRAM allocata per i file ENTITA': %ld mb", (fileEntitaInMemSize / 1024000));
+	printf ("\nRAM allocata per i file ENTITA': %ld kb", (fileEntitaInMemSize / 1024));
 	printf ("\nRAM allocata per i file RELAZIONE: %ld mb", (fileRelazioniInMemSize / 1024000));
+	printf ("\nRAM allocata per i file RELAZIONE: %ld kb", (fileRelazioniInMemSize / 1024));
 	printf ("\nRAM allocata per i file OFFSET: %lld mb", fileOffsetInMemSize / 1024000);
-
+	printf ("\nRAM allocata per i file OFFSET: %lld kb", fileOffsetInMemSize/1024 );
 
 	printf ("\n\nFine Marc4cpp::setupCommon\n");
 	return retb;
@@ -1337,10 +1369,6 @@ bool Marc4cpp::elaboraLeader()
 			}
 			else
 				leader->setRecordStatus('n');	// nuovo
-
-
-
-
 				chr = *(tbTitolo->getField(tbTitolo->tp_record_uni)); // 09/02/2010 16.12 per risolvere il problema del null con le collane
 //			if (chr)
 			if (chr && chr != ' ') // 05/11/2010 14.52
@@ -1363,21 +1391,15 @@ bool Marc4cpp::elaboraLeader()
 
 			else if (livBib == 'r') // collezione fattizia 21/07/2014
 				livBib = 'c';
-
-
-
 			leader->setLivelloBibliografico(livBib);
-
 			leader->setLivelloGerarchico(livelloGerarchico);
 			//leader->setCharCodingScheme_typeOfEntity(ENCODING_UTF8);				// 1, decimo
-
 			int livelloAuthority = atoi (tbTitolo->getField(tbTitolo->cd_livello)); // 10/09/10
 			if (livelloAuthority == 5)
 				leader->setLivelloDiCodifica('1');
 			else if (livelloAuthority > 5 && livelloAuthority < 72)
 				leader->setLivelloDiCodifica('3');
 			// else 72-97 defaults to ' ';
-
 		}
 		if (authority == AUTHORITY_AUTORI)
 		{
@@ -1388,7 +1410,6 @@ bool Marc4cpp::elaboraLeader()
 				leader->setRecordStatus('d');	// cancellato
 			else
 				leader->setRecordStatus('n');	// nuovo
-
 			leader->setTypeOfRecord('x'); 	// 1, 6to carattere x=authority record
 			leader->setLivelloBibliografico(' '); // undefined
 			leader->setLivelloGerarchico(' '); // undefined
@@ -1399,6 +1420,30 @@ bool Marc4cpp::elaboraLeader()
 //			else
 //				leader->setCharCodingScheme_typeOfEntity('b');				// 1, decimo
 			leader->setPos9Undefined(BLANK);
+
+			leader->setLivelloDiCodifica(' ');
+			leader->setTipoDiCatalogazioneDescrittiva(' ');
+		}
+		else if (authority == AUTHORITY_LUOGHI)
+		{
+
+       //tbLuogo->dumpRecord();
+
+			if (*(tbLuogo->getField(tbLuogo->fl_canc)) == 'S' || *(tbLuogo->getField(tbLuogo->fl_canc)) == 's')
+				leader->setRecordStatus('d');	// cancellato
+			else
+				leader->setRecordStatus('n');	// nuovo
+
+			leader->setTypeOfRecord('x'); 	// 1, 6to carattere x=authority record
+			leader->setLivelloBibliografico(' '); // undefined
+			leader->setLivelloGerarchico(' '); // undefined
+
+//			char tpNomeAut = *(tbLuogo->getField(tbAutore->tp_nome_aut));
+//			if (tpNomeAut != 'A' && tpNomeAut != 'B' && tpNomeAut != 'C' && tpNomeAut != 'D')
+//				leader->setCharCodingScheme_typeOfEntity('a');				// 1, decimo
+//			else
+//				leader->setCharCodingScheme_typeOfEntity('b');				// 1, decimo
+			leader->setPos9Undefined('k');
 
 			leader->setLivelloDiCodifica(' ');
 			leader->setTipoDiCatalogazioneDescrittiva(' ');

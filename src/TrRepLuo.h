@@ -15,53 +15,38 @@
   * along with this program. If not, see <http://www.gnu.org/licenses/>.
   ******************************************************************************/
 /*
- * TbNumeroStandard.h
+ * LuoLuo.h
  *
- *  Created on: 25-dic-2008
- *      Author: Arge
+ *  Created on: 3-nov-2020
+ *      Author: Hassan
  */
 
 
-#ifndef TBNUMEROSTANDARD_H_
-#define TBNUMEROSTANDARD_H_
+#ifndef TRREPLUO_H_
+#define TRREPLUO_H_
 
 #include "Tb.h"
-//#define TB_NUMERO_STD_FIELDS 11
 
-class TbNumeroStd : public Tb{
+class TrRepLuo: public Tb {
+
 public:
-	enum tbTitoloFieldId {
-		bid,
-		tp_numero_std,	/*	P ACNP
-							D BIBLIOGRAFIE STRANIERE
-							B BNI
-							S BOMS
-							C CATALOGHI COLLETTIVI STRANIERI
-							R CRP
-							U CUBI
-							I ISBN
-							M ISMN
-							J ISSN
-							G N. PUBBLICAZIONE GOVERNATIVA
-							L NUMERO DI LASTRA
-							E NUMERO EDITORIALE
-							Y SARTORI */
-		numero_std,		// tp_numero_std I, J
-		numero_lastra, 	// tp_numero_std L, E
-		cd_paese,
-		nota_numero_std,
+
+	enum fieldId {
+		lid_base,
+		lid_coll,
+		tp_legame,
 		ute_ins,
 		ts_ins,
 		ute_var,
 		ts_var,
-		fl_canc,
+		fl_canc
 	};
 
-
-	TbNumeroStd(CFile *tbNumeroStandardIn, CFile *tbNumeroStandardOffsetIn, char *offsetBufferTbNumeroStandardPtr, long elementsTbNumeroStandard, int keyPlusOffsetPlusLfLength, int key_length);
-	virtual ~TbNumeroStd();
+	TrRepLuo(CFile *TrRepLuoIn, CFile *TrRepLuoOffsetIn, char *offsetBufferTrRepLuoPtr, long elementsTrRepLuo, int keyPlusOffsetPlusLfLength, int key_length);
+	virtual ~TrRepLuo();
 	bool loadRecord(const char *key);
+	bool loadNextRecordDaIndice(const char *key, bool inverted);
 
 };
 
-#endif /* TBNUMEROSTANDARD_H_ */
+#endif /* TRREPLUO_H_ */

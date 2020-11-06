@@ -41,6 +41,7 @@
 #include "TbSoggetto.h"
 #include "TbDescrittore.h"
 #include "TbTitSet2.h"
+#include "TbLuogo.h"
 
 
 
@@ -56,6 +57,7 @@ class Marc4cppDocumentoAuthority {
 	TbTitSet2 		*tbTitSet2;
 	TbComposizione	*tbComposizione;
 	TbMusica	*tbMusica;
+	TbLuogo		*tbLuogo;
 
 	char *tagsToGenerateBufferPtr;
 	int tagsToGenerate;
@@ -67,6 +69,7 @@ class Marc4cppDocumentoAuthority {
     ControlField * creaTag005_IdentificatoreVersione();
     DataField * creaTag015_Isadn();
     DataField * creaTag010_Isni();
+    DataField * creaTag035_Istat();
 
     DataField * creaTag100();
     DataField * creaTag101_autore();
@@ -133,6 +136,8 @@ public:
 	Marc4cppDocumentoAuthority(MarcRecord *marcRecord, TbAutore *tbAutore, TbTitolo *tbTitolo, TbTitSet2 *tbTitSet2,
 			TbComposizione *tbComposizione, TbMusica *tbMusica,
 			char *polo, char *tagsToGenerateBufferPtr, int tagsToGenerate, int authority); // 04/04/2016
+	Marc4cppDocumentoAuthority(MarcRecord *marcRecord, TbLuogo *tbLuogo, char *polo, char *tagsToGenerateBufferPtr, int tagsToGenerate, int authority);// Authority Luoghi 05/11/2020
+
 
 	virtual ~Marc4cppDocumentoAuthority();
 

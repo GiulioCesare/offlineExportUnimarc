@@ -195,6 +195,12 @@ tree<std::string> *Marc4cpp::creaReticoloAuthority(char * id)
 	    reticolo->set_head(buf); // root strdup(buf)
 		CreaReticoloTitoloUniformeAddNodeChildren(reticolo, reticolo->begin(), id, "1", 1);
 	}
+	else if (authority == AUTHORITY_LUOGHI)
+		{
+			sprintf (buf, "1:LUO:%s", id);
+		    reticolo->set_head(buf); // root strdup(buf)
+			CreaReticoloLuogoAddNodeChildren(reticolo, reticolo->begin(), id, "1", 1);
+		}
 
     if (reticoliOut)
     	writeReticolo(*reticolo, reticolo->begin(), reticolo->end());
@@ -202,7 +208,7 @@ tree<std::string> *Marc4cpp::creaReticoloAuthority(char * id)
     delete sPtr;
 //printf ("Reticolo size=%d", reticolo->size());
     return reticolo;
-} // End Marc4cpp::creaReticoloAuthorityAutore
+} // End Marc4cpp::creaReticoloAuthority
 
 
 
@@ -216,10 +222,7 @@ bool Marc4cpp::creaRecordUnimarcAuthority(char *id)
 	tree<std::string>  *reticolo;
 
 	try{
-//		if (authority == AUTHORITY_AUTORI)
-//			reticolo = creaReticoloAuthorityAutore(id);
-//		else if (authority == AUTHORITY_SOGGETTI)
-//			reticolo = creaReticoloAuthoritySoggetto(id);
+
 			reticolo = creaReticoloAuthority(id);
 
 	} catch (GenericError e) {
@@ -583,6 +586,11 @@ bool Marc4cpp::creaRecordAuthority(MarcRecord *marcRecord, const tree<std::strin
 	    if (!tbAutore->loadRecord(id))
 	    	return false;
 	}
+	else if (authority == AUTHORITY_LUOGHI) // 05/11/2020
+	{
+	    if (!tbLuogo->loadRecord(id))
+	    	return false;
+	}
 	else if (authority == AUTHORITY_SOGGETTI)
 	{
 	    if (!tbSoggetto->loadRecord(id))
@@ -604,6 +612,7 @@ bool Marc4cpp::creaRecordAuthority(MarcRecord *marcRecord, const tree<std::strin
 	}
 
 //tbAutore->dumpRecord();
+//tbLuogo->dumpRecord();
 
 	elaboraLeader();
 
@@ -891,3 +900,198 @@ delete sPtr;
 
 } // End Marc4cpp::CreaReticoloTitoloUniformeAddNodeChildren
 
+bool Marc4cpp::setupAuthLuoghi(
+		char *tagsToGenerateBufferPtr,
+		int tagsToGenerate,
+		char *marcFilename,
+		char *marcTxtFilename,
+		char *polo,
+		ATTValVector<CString *> *entitaVector, ATTValVector<CString *> *relazioniVector, ATTValVector<CString *> *offsetVector,
+		char *bidXunimarcFilename,
+		char *reticoliFilename
+		)
+	{
+	bool retb;
+	this->authority = AUTHORITY_LUOGHI;
+
+	retb = setupCommon(tagsToGenerateBufferPtr,
+			tagsToGenerate,
+			marcFilename,
+			marcTxtFilename,
+			0,
+			entitaVector, relazioniVector, offsetVector, 0,
+			bidXunimarcFilename,
+			reticoliFilename,
+			0);
+
+	tabelleVector.Add(tbLuogo = new TbLuogo(tbLuogoIn, tbLuogoOffsetIn, offsetBufferTbLuogoPtr, elementsTbLuogo, keyPlusOffsetPlusLfLength, BID_KEY_LENGTH));
+	tabelleVector.Add(tbRepertorio = new TbRepertorio(tbRepertorioIn, tbRepertorioOffsetIn, offsetBufferTbRepertorioPtr, elementsTbRepertorio, keyPlusOffsetPlusLfLength, BID_KEY_LENGTH));
+
+	tabelleVector.Add(trRepLuo = new TrRepLuo(trRepLuoIn, trRepLuoOffsetIn, offsetBufferTrRepLuoPtr, elementsTrRepLuo, keyPlusOffsetPlusLfLength, BID_KEY_LENGTH));
+
+	tabelleVector.Add(trLuoLuo = new TrLuoLuo(trLuoLuoIn, trLuoLuoOffsetIn, offsetBufferTrLuoLuoPtr, elementsTrLuoLuo, keyPlusOffsetPlusLfLength, BID_KEY_LENGTH));
+	//tabelleVector.Add(trLuoLuoRelInv = new TrLuoLuoRel(trLuoLuoRelInvIn, trLuoLuoRelInvOffsetIn, offsetBufferTrLuoLuoRelInvPtr, elementsTrTitAutInvRel, keyPlusOffsetPlusLfLength, BID_KEY_LENGTH));
+     marc4cppDocumentoAuthority = new Marc4cppDocumentoAuthority(marcRecord, tbLuogo, polo, tagsToGenerateBufferPtr, tagsToGenerate, authority);
+     marc4cppLegamiAuthority = new Marc4cppLegamiAuthority(marc4cppDocumentoAuthority, marcRecord,
+     			tbLuogo,
+     			trRepLuo,
+     			tbRepertorio,
+				trLuoLuoRelIn, trLuoLuoRelOffsetIn, offsetBufferTrLuoLuoRelPtr, elementsTrLuoLuoRel,
+				trLuoLuoRelInvIn, trLuoLuoRelInvOffsetIn, offsetBufferTrLuoLuoRelInvPtr, elementsTrLuoLuoRelInv,
+     			keyPlusOffsetPlusLfLength,
+     			trKeyPlusOffsetPlusLfLength,
+     			BID_KEY_LENGTH,
+     			authority
+     			);
+     printf ("\n\nFine Marc4cpp::setupAuthLuoghi\n");
+	/*
+
+//marc4CppMallinfo();
+ */
+	return retb;
+} // End Marc4cpp::setupAuthLuoghi
+
+/*
+*	Aggiungiamo i legami di un luogo
+*/
+void Marc4cpp::CreaReticoloLuogoAddNodeChildren(tree<std::string>* reticolo, tree<std::string>::pre_order_iterator startNodeIter, const char* bid, const char* level, int levelPos)
+{
+	bool retb;
+	long position;
+//	long offset;
+	int offset; // 18/03/2014 32 bit
+
+	CString *sPtr, s;
+	sPtr = new CString (2048);
+
+	char buf[80];
+	int leafId = 0;
+	CTokenizer *Tokenizer = new CTokenizer("|");
+
+	OrsChar *Token;
+  	tree<std::string>::pre_order_iterator nodeIter;
+	char childBid[10+1];
+	childBid[10]=0; // eos
+	char *entryPtr;
+	char curLevel[80];
+	CString entryFile;
+
+    // Troviamo le relazioni autore/autore
+    // -----------------------------------
+//	retb = BinarySearch::search(offsetBufferTrAutAutRelPtr, elementsTrAutAutRel, keyPlusOffsetPlusLfLength, bid, BID_KEY_LENGTH, position, &entryPtr);
+
+
+	if (offsetBufferTrLuoLuoRelPtr)
+		retb = BinarySearch::search(offsetBufferTrLuoLuoRelPtr, elementsTrLuoLuoRel, keyPlusOffsetPlusLfLength, bid, BID_KEY_LENGTH, position, &entryPtr);
+	else
+	{
+		retb = BinarySearch::search(trLuoLuoRelOffsetIn, elementsTrLuoLuoRel, keyPlusOffsetPlusLfLength, bid, BID_KEY_LENGTH, position, &entryFile);
+		entryPtr = entryFile.data();
+	}
+
+
+
+	if (retb)
+	{
+		// Questo bid ha legami ad altri titoli
+		// Dalla posizione prendiamo l'offset
+//		offset = atol (entryPtr+BID_KEY_LENGTH); // offsetBufferTrAutAutPtr+position
+		if (OFFSET_TYPE == OFFSET_TYPE_BINARY) // 09/02/2015
+			//memcpy (&offset, entryPtr+ BID_KEY_LENGTH, 4);	// OFFSET BINARI
+			offset =  *((int*)(entryPtr+BID_KEY_LENGTH)); // 24/03/2015
+
+		else
+			offset = atoi (entryPtr+BID_KEY_LENGTH); // OFFSET in ASCII
+
+		// Dall'offset del file delle relazioni andiamo a prendere la relazione titolo/titolo
+		trLuoLuoRelIn->SeekTo(offset);
+		if (!sPtr->ReadLineWithPrefixedMaxSize(trLuoLuoRelIn))
+	        SignalAnError(__FILE__, __LINE__, "read failed");
+
+
+		// Splittiamo la riga negli n elementi che la compongono
+		Tokenizer->Assign(sPtr->data());
+
+		Token = Tokenizer->GetToken(); // Remove root
+//		CString level = "1.";
+
+		while(*(Token = Tokenizer->GetToken()))
+		{
+			sprintf (curLevel, "%s.%d", level,++leafId);
+
+			sprintf (buf, "%s:LUO:%s", curLevel, Token);
+			nodeIter = reticolo->append_child(startNodeIter, buf);
+
+		}
+//		print_tree(*reticolo, reticolo->begin(), reticolo->end());
+	}
+
+    // Troviamo le relazioni inverse Luogo/luogo (tipo legame 4)
+    // -----------------------------------
+	if (offsetBufferTrLuoLuoRelInvPtr)
+		retb = BinarySearch::search(offsetBufferTrLuoLuoRelInvPtr, elementsTrLuoLuoRelInv, keyPlusOffsetPlusLfLength, bid, BID_KEY_LENGTH, position, &entryPtr);
+	else
+	{
+		retb = BinarySearch::search(trLuoLuoRelInvOffsetIn, elementsTrLuoLuoRelInv, keyPlusOffsetPlusLfLength, bid, BID_KEY_LENGTH, position, &entryFile);
+		entryPtr = entryFile.data();
+	}
+
+	if (retb)
+	{
+		// Questo bid ha legami ad altri titoli
+		// Dalla posizione prendiamo l'offset
+//		offset = atol (entryPtr+BID_KEY_LENGTH); // offsetBufferTrAutAutPtr+position
+		if (OFFSET_TYPE == OFFSET_TYPE_BINARY) // 09/02/2015
+			//memcpy (&offset, entryPtr+ BID_KEY_LENGTH, 4);	// OFFSET BINARI
+			offset =  *((int*)(entryPtr+BID_KEY_LENGTH)); // 24/03/2015
+
+		else
+			offset = atoi (entryPtr+BID_KEY_LENGTH); // OFFSET in ASCII
+
+		// Dall'offset del file delle relazioni andiamo a prendere la relazione luogo/luogo
+		trLuoLuoRelInvIn->SeekTo(offset);
+		if (!sPtr->ReadLineWithPrefixedMaxSize(trLuoLuoRelInvIn))
+	        SignalAnError(__FILE__, __LINE__, "read failed");
+
+
+		// Splittiamo la riga negli n elementi che la compongono
+		Tokenizer->Assign(sPtr->data());
+
+
+		// La prima relazione va invertita
+		s = Tokenizer->GetToken();
+
+		Token = Tokenizer->GetToken();
+
+		sprintf (curLevel, "%s.%d", level,++leafId);
+
+		//sprintf (buf, "%s:Luo:%s%s", curLevel, s.data(), Token+10);
+		sprintf (buf, "%s:Luo:%s", curLevel, Token);	// 11/03/2013 prendi il vid invertito
+		nodeIter = reticolo->append_child(startNodeIter, buf);
+
+
+
+		while(*(Token = Tokenizer->GetToken()))
+		{
+			sprintf (curLevel, "%s.%d", level,++leafId);
+
+			sprintf (buf, "%s:LUO:%s", curLevel, Token);
+//printf (buf, "arge %s:LUO:%s", curLevel, Token);
+			nodeIter = reticolo->append_child(startNodeIter, buf);
+
+			// Crea i figli
+//				memcpy(childBid,Token, 10);
+//				CreaReticoloAddNodeChildren(reticolo, nodeIter, childBid, curLevel);
+		}
+//		print_tree(*reticolo, reticolo->begin(), reticolo->end());
+	}
+
+
+
+
+
+delete Tokenizer;
+delete sPtr;
+
+
+} // End Marc4cpp::CreaReticoloLuogoAddNodeChildren

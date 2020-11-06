@@ -79,9 +79,11 @@ CPP_SRCS += \
 ../src/TrAutAut.cpp \
 ../src/TrBidAltroid.cpp \
 ../src/TrDesDes.cpp \
+../src/TrLuoLuo.cpp \
 ../src/TrPerInt.cpp \
 ../src/TrRel.cpp \
 ../src/TrRepAut.cpp \
+../src/TrRepLuo.cpp \
 ../src/TrRepMar.cpp \
 ../src/TrRepTit.cpp \
 ../src/TrSogDes.cpp \
@@ -177,9 +179,11 @@ OBJS += \
 ./src/TrAutAut.o \
 ./src/TrBidAltroid.o \
 ./src/TrDesDes.o \
+./src/TrLuoLuo.o \
 ./src/TrPerInt.o \
 ./src/TrRel.o \
 ./src/TrRepAut.o \
+./src/TrRepLuo.o \
 ./src/TrRepMar.o \
 ./src/TrRepTit.o \
 ./src/TrSogDes.o \
@@ -273,9 +277,11 @@ CPP_DEPS += \
 ./src/TrAutAut.d \
 ./src/TrBidAltroid.d \
 ./src/TrDesDes.d \
+./src/TrLuoLuo.d \
 ./src/TrPerInt.d \
 ./src/TrRel.d \
 ./src/TrRepAut.d \
+./src/TrRepLuo.d \
 ./src/TrRepMar.d \
 ./src/TrRepTit.d \
 ./src/TrSogDes.d \

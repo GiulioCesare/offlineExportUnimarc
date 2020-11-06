@@ -46,6 +46,9 @@ TbLuogo::TbLuogo(CFile *tbIn, CFile *tbOffsetIn, char *offsetBufferTbPtr, long e
 	init();
 }
 
+TbLuogo::TbLuogo(TbLuogo *TbLuogo) : Tb (TbLuogo)
+{
+}
 TbLuogo::~TbLuogo() {
 
 }

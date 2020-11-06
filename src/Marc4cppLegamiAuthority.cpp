@@ -44,6 +44,39 @@ extern void SignalAWarning(	const OrsChar *Module, OrsInt Line, const OrsChar * 
 //#define EXPORT_VIAF_TITOLI_UNIFORMI
 
 Marc4cppLegamiAuthority::Marc4cppLegamiAuthority(Marc4cppDocumentoAuthority *marc4cppDocumentoAuthority,
+		MarcRecord *marcRecord, // per luoghi
+		TbLuogo *tbLuogo,
+		TrRepLuo *trRepLuo,
+		TbRepertorio *tbRepertorio,
+		CFile* trLuoLuoIn, CFile* trLuoLuoOffsetIn,	char* offsetBufferTrLuoLuoPtr, long elementsTrLuoLuo,
+		CFile* trLuoLuoRelInvIn, CFile* trLuoLuoRelInvOffsetIn, char* offsetBufferTrLuoLuoRelInvPtr, long elementsTrLuoLuotInvRel,
+		int keyPlusOffsetPlusLfLength,
+		int trKeyPlusOffsetPlusLfLength,
+		int key_length,
+		int authority)
+{
+		this->marc4cppDocumentoAuthority = marc4cppDocumentoAuthority;
+		this->marcRecord = marcRecord;
+		this->tbLuogo = tbLuogo;
+		this->trRepLuo = trRepLuo;
+		this->tbRepertorio = tbRepertorio;
+		this->trLuoLuoIn = trLuoLuoIn;
+		this->trLuoLuoOffsetIn = trLuoLuoOffsetIn;
+		this->offsetBufferTrLuoLuoPtr = offsetBufferTrLuoLuoPtr;
+		this->elementsTrLuoLuo = elementsTrLuoLuo;
+		this->trLuoLuoRelInvIn = trLuoLuoRelInvIn;
+		this->trLuoLuoRelInvOffsetIn = trLuoLuoRelInvOffsetIn;
+		this->offsetBufferTrLuoLuoRelInvPtr = offsetBufferTrLuoLuoRelInvPtr;
+		this->elementsTrLuoLuoInvRel = elementsTrLuoLuoInvRel;
+		this->elementsTrLuoLuoRel = elementsTrLuoLuoRel;
+
+		this->keyPlusOffsetPlusLfLength = keyPlusOffsetPlusLfLength;
+		this->trKeyPlusOffsetPlusLfLength = trKeyPlusOffsetPlusLfLength;
+		this->key_length = key_length;
+		this->authority = authority;
+		init();
+}
+Marc4cppLegamiAuthority::Marc4cppLegamiAuthority(Marc4cppDocumentoAuthority *marc4cppDocumentoAuthority,
 		MarcRecord *marcRecord, // Autori
 		TbAutore *tbAutore,
 		TrRepAut *trRepAut,
@@ -382,6 +415,57 @@ void Marc4cppLegamiAuthority::creaLegamiAutoreAutore()
 	   }
 
 } // End Marc4cppLegamiAuthority::creaLegamiAutoreAutore
+
+
+void Marc4cppLegamiAuthority::creaLegamiLuogoLuogo()
+{
+	string str;
+//	unsigned int pos;
+	int pos; // 24/04/2020
+
+	char lid[10+1];	lid[10]=0;
+	DataField *df;
+
+	// Cicliamo sul figli di root per cercare gli autori
+	tree<std::string>::pre_order_iterator it=reticolo.begin();
+
+	str = *it;
+	int bidStart = str.find_last_of(':');
+	memcpy (lid, (char *)str.data()+bidStart+1, 10);
+
+//	std::cout << "AUT children of :" << *it << std::endl;
+	tree<std::string>::sibling_iterator ch=reticolo.begin().begin(); //h1
+	while(ch!=reticolo.end().end()) { // h1
+		str = *ch;
+		// Troviamo il separatore della gerarchia
+		if ((pos=str.find(':'))!=string::npos)
+		{
+			if (str.find("LUO:", pos+1)!=string::npos)
+			{
+//				std::cout << std::endl << str ;
+				// Andiamo a lavorare sui figli
+				tree<std::string>::pre_order_iterator ch1=ch.begin(); // .begin()
+				while(ch1 != ch.end()) { // h1
+					str = *ch1;
+					// Troviamo il separatore della gerarchia
+					if ((pos=str.find(':'))!=string::npos)
+					{ // figlio puo' essere solo un legame ad autore
+						df = creaLegameLuogoLuogo((char *)str.data(), pos);
+//						if (df)
+//							marcRecord->addDataField(df);
+					}
+				++ch1;
+				} // End while ch1
+			}
+			// Facciamo corrente
+			if ((pos=str.find(':'))!=string::npos)
+				df = creaLegameLuogoLuogo((char *)str.data(), pos);
+
+		}
+	   ++ch;
+	   }
+
+} // End Marc4cppLegamiAuthority::creaLegamiLuogoLuogo
 
 
 
@@ -889,6 +973,43 @@ DataField * Marc4cppLegamiAuthority::creaLegameAutoreAutore(char *entryReticoloP
 	delete tbAutoreRinvio;
 	return df;
 } // End Marc4cppLegamiAuthority::creaLegameAutoreAutore
+
+DataField * Marc4cppLegamiAuthority::creaLegameLuogoLuogo(char *entryReticoloPtr, int pos)
+{
+	bool retb;
+	DataField *df = 0;
+//	DataField *dfDup = 0;
+	char tipoLegame = *(strchr (entryReticoloPtr, ',')+1);
+	CString cdRelazione;
+	int posCdRelazione = pos + 5 + 11 + 1 + 1;
+	cdRelazione.AppendString( entryReticoloPtr + posCdRelazione, 3);
+
+	// Prendiamo la c�lasse per accedere alla tbClasse
+	char lid[10+1];	lid[10]=0;
+
+	memcpy (lid, entryReticoloPtr+pos+5, 10);
+
+	TbLuogo * tbLuogoRinvio = new TbLuogo(tbLuogo);
+
+	retb = tbLuogoRinvio->loadRecord(lid);
+	if (!retb)
+	{
+      //  SignalAWarning(__FILE__, __LINE__, "\Luogo con lid %s non trovato", lid);
+		delete tbLuogoRinvio;
+		return 0; // Record non trovato
+	}
+	df=new DataField();
+	df->setTag("460");
+	Subfield *sf;
+	sf = new Subfield('3', lid, 10);
+	df->addSubfield(sf);
+	sf = new Subfield('d', tbLuogoRinvio->getField(tbLuogoRinvio->ds_luogo), tbLuogoRinvio->getFieldLength(tbLuogoRinvio->ds_luogo));
+	df->addSubfield(sf);
+	marcRecord->addDataField(df);
+	delete tbLuogoRinvio;
+
+	return df;
+} // End Marc4cppLegamiAuthority::creaLegameLuogoLuogo
 
 
 
@@ -1485,6 +1606,12 @@ bool Marc4cppLegamiAuthority::elaboraDatiLegamiAuthority(const tree<std::string>
 	    CString rootRecord; rootRecord = tbAutore->getStringRecordData();
 		creaLegamiAutoreAutore();
 		creaLegamiAutoreRepertori();
+	}
+	else if (authority == AUTHORITY_LUOGHI)
+	{
+	    CString rootRecord; rootRecord = tbLuogo->getStringRecordData();
+		creaLegamiLuogoLuogo();
+		//creaLegamiAutoreRepertori();
 	}
 	else if(authority == AUTHORITY_SOGGETTI)
 	{

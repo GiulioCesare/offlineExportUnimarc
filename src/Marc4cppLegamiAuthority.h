@@ -27,6 +27,7 @@
 
 #include "MarcRecord.h"
 #include "TbAutore.h"
+#include "TbLuogo.h"
 #include "TbCodici.h"
 #include "library/tree.hh"
 #include "library/CKeyValueVector.h"
@@ -42,6 +43,7 @@
 #include "TbDescrittore.h"
 #include "TrSogDes.h"
 #include "TrDesDes.h"
+#include "TrRepLuo.h"
 
 #include "library/CTokenizer.h"
 #include "MarcGlobals.h"
@@ -97,6 +99,18 @@ class Marc4cppLegamiAuthority {
 	char* offsetBufferTrAutAutRelPtr;
 	long elementsTrAutAutRel;
 
+	TbLuogo* tbLuogo;
+	TrRepLuo* trRepLuo;
+	CFile* trLuoLuoIn;
+	CFile* trLuoLuoOffsetIn;
+	char* offsetBufferTrLuoLuoPtr;
+	long elementsTrLuoLuo;
+	CFile* trLuoLuoRelInvIn;
+	CFile*trLuoLuoRelInvOffsetIn;
+	char* offsetBufferTrLuoLuoRelInvPtr;
+	long elementsTrLuoLuoInvRel;
+	long elementsTrLuoLuoRel;
+
 
 	int keyPlusOffsetPlusLfLength;
 	int classeKeyPlusOffsetPlusLfLength;
@@ -116,6 +130,7 @@ class Marc4cppLegamiAuthority {
 
 
 	void creaLegamiAutoreAutore();
+	void creaLegamiLuogoLuogo();
 	void creaLegamiSoggettoDescrittori();
 	void creaTag931_LegameSoggettoDescrittore();
 	void creaLegamiDescrittoriDescrittori(char *didBase);
@@ -123,6 +138,7 @@ class Marc4cppLegamiAuthority {
 
 
 	DataField * creaLegameAutoreAutore(char *entryReticoloPtr, int pos);
+	DataField * creaLegameLuogoLuogo(char *entryReticoloPtr, int pos);
 	void creaLegamiautoriDiRinvio(DataField *df, char *vid);
 
 	DataField * creaTag400_RinvioAutorePersonale(TbAutore * tbAutoreRinvio);
@@ -151,6 +167,21 @@ class Marc4cppLegamiAuthority {
 
 
 public:
+	//authority luoghi 05/11/2020
+
+	Marc4cppLegamiAuthority(Marc4cppDocumentoAuthority *marc4cppDocumentoAuthority,
+				MarcRecord *marcRecord, // per luoghi
+				TbLuogo *tbLuogo,
+				TrRepLuo *trRepLuo,
+				TbRepertorio *tbRepertorio,
+				CFile* trLuoLuoIn, CFile* trLuoLuoOffsetIn,	char* offsetBufferTrLuoLuoPtr, long elementsTrLuoLuo,
+				CFile* trLuoLuoRelInvIn, CFile* trLuoLuoRelInvOffsetIn, char* offsetBufferTrLuoLuoRelInvPtr, long elementsTrLuoLuotInvRel,
+				int keyPlusOffsetPlusLfLength,
+				int trKeyPlusOffsetPlusLfLength,
+				int key_length,
+				int authority
+				);
+
 	Marc4cppLegamiAuthority(Marc4cppDocumentoAuthority *marc4cppDocumentoAuthority,
 			MarcRecord *marcRecord, // per autori
 			TbAutore *tbAutore,
