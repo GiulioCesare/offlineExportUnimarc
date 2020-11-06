@@ -300,6 +300,7 @@ extern void SignalAWarning(	OrsChar *Module, OrsInt Line, OrsChar * MsgFmt, ...)
 // Forward declaration
 void testCFile();
 void testMarcRead();
+void testSplitAssign();
 int offlineExport(int argc, const char* argv[]);
 void printHeader();
 void readConfig(CFile *iniFileIn, cIni *ini);
@@ -1820,6 +1821,7 @@ void testMarcRead()
 }
 
 
+
 void testCFile()
 {
 	CString s;
@@ -2913,8 +2915,10 @@ int main(int argc, const char* argv[]) {
 	setvbuf(stdout, NULL, _IONBF, 0); // To flush output.
 
 	//testTokenizer();
-	//testCFile();
+	//	testCFile();
 	//testMarcRead();
+	testSplitAssign();
+return 0;
 
 	entitaVector = new ATTValVector<CString *>();
 	relazioniVector = new ATTValVector<CString *>();
@@ -2954,3 +2958,34 @@ int main(int argc, const char* argv[]) {
 
 // DOCUMENT
 //	/media/argentino/473056186B71DFD3/export/indice/dp/offlineExportUnimarc64.linux.media.cfg -t /media/argentino/473056186B71DFD3/export/indice/dp/tagsToExport.txt
+
+
+
+void testSplitAssign ()
+{
+	ATTValVector<CString*> *fieldsVector;
+	fieldsVector = new ATTValVector<CString*>();
+	int tbFields = 14;
+	CString *sPtr;
+
+	for (int i=0; i < tbFields; i++)
+	{
+		sPtr = new CString();
+		if (!sPtr)
+		{
+//		    SignalAnError(__FILE__, __LINE__, "failed to instantiate string for entry: %d", i);
+		    break;
+		}
+		fieldsVector->Add(sPtr);
+	}
+
+	CString *stringRecord = new CString((char *)"BVEL000073&$%A&$%95&$%Lubań&$%LUBAN                         &$%LUBAN                                                                           &$%PL&$%Comune polacco del voivodato della Bassa Slesia.&$%BVE CRcr663 &$%2016-06-15 09:37:06.1&$%XXXAMM000403&$%2018-06-04 09:41:15&$% &$% ");
+	stringRecord->Split_assign(*fieldsVector, "&$%");
+
+	for (int i=0; i < fieldsVector->length(); i++)
+		printf("\n%d: %s", i, fieldsVector->Entry(i)->data());
+
+	delete stringRecord;
+	fieldsVector->DeleteAndClear();
+	delete fieldsVector;
+}

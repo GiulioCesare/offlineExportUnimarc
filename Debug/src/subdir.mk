@@ -300,7 +300,7 @@ C_DEPS += \
 src/%.o: ../src/%.cpp
 	@echo 'Building file: $<'
 	@echo 'Invoking: GCC C++ Compiler'
-	g++ -DTRACK_MEMORY_LEAKS -DDEBUG_ARGE -I"/home/argentino/workspace/cdt/offlineExportUnimarc/include" -I"/home/argentino/workspace/cdt/offlineExportUnimarc/src" -O0 -g3 -c -fmessage-length=0 -MMD -MP -MF"$(@:%.o=%.d)" -MT"$(@)" -o "$@" "$<"
+	g++ -DTRACK_MEMORY_LEAKS -DDEBUG_ARGE -I"/home/faraone/workspace/cdt/offlineExportUnimarc/include" -I"/home/faraone/workspace/cdt/offlineExportUnimarc/src" -O0 -g3 -c -fmessage-length=0 -MMD -MP -MF"$(@:%.o=%.d)" -MT"$(@)" -o "$@" "$<"
 	@echo 'Finished building: $<'
 	@echo ' '
 
