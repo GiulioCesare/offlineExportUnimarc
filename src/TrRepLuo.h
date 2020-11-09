@@ -32,9 +32,9 @@ class TrRepLuo: public Tb {
 public:
 
 	enum fieldId {
-		lid_base,
-		lid_coll,
-		tp_legame,
+		lid,
+		id_repertorio,
+		nota_rep_luo,
 		ute_ins,
 		ts_ins,
 		ute_var,

@@ -2952,8 +2952,8 @@ void printHeader()
 																// char *getSottoLivelloTitolo410(const tree<std::string> &reticolo, int curSottolivello, int sottoLivello);
 																//	to
 																// void getSottoLivelloTitolo410(CString * entryReticolo, const tree<std::string> &reticolo, int curSottolivello, int sottoLivello);
-					printf ("\n\nVersione 11.8.1 03/08/2020");	// creaLegameSoggettoVariante, fixed SignalAnError
-
+//					printf ("\n\nVersione 11.8.1 03/08/2020");	// creaLegameSoggettoVariante, fixed SignalAnError
+					printf ("\n\nVersione 11.11.1 09/11/2020"); // gestione Authority Luoghi.
 
 
 //	mail Patrizia. Per quando aggiorniamo esercizio
@@ -3020,5 +3020,6 @@ int main(int argc, const char* argv[]) {
 
 // DOCUMENT
 //	/media/argentino/473056186B71DFD3/export/indice/dp/offlineExportUnimarc64.linux.media.cfg -t /media/argentino/473056186B71DFD3/export/indice/dp/tagsToExport.txt
+
 
 

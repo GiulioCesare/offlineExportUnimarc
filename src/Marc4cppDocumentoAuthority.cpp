@@ -1738,11 +1738,21 @@ DataField * Marc4cppDocumentoAuthority::creaTag801FonteDiProvenienza_titoli()
 
 DataField * Marc4cppDocumentoAuthority::creaTag830NoteCatalogatoreAutore()
 {
-	DataField *df;
+	DataField *df=0;
 	Subfield *sf;
 
 	CString notaCatalogatore;
+	if(authority==AUTHORITY_AUTORI)
+	{
 	notaCatalogatore = tbAutore->getField(tbAutore->nota_cat_aut);
+	}
+	else if(authority==AUTHORITY_LUOGHI){
+		notaCatalogatore = tbLuogo->getField(tbLuogo->nota_catalogatore);
+	}
+	else
+	{
+		return df;
+	}
 
 //tbAutore->dumpRecord();
 	if (notaCatalogatore.isEqual("null") || notaCatalogatore.IsEmpty())
@@ -1854,6 +1864,25 @@ bool Marc4cppDocumentoAuthority::isTagToGenerate(const char *nomeTag)
 
 
 }
+bool Marc4cppDocumentoAuthority::isTagToGenerate(const int tag)
+{
+//	char *entryPtr;
+//	long position;
+//	bool retb;
+
+	//int tag = atoi (nomeTag);
+	//if (*(tagsToGenerateBufferPtr+tag) == 1)
+	if (*(tagsToGenerateBufferPtr+tag))
+		return true;
+	else
+		return false;
+
+
+//	retb = BinarySearch::search(tagsToGenerateBufferPtr, tagsToGenerate, 3, nomeTag, 3, position, &entryPtr);
+//	return retb;
+
+
+}
 
 
 
@@ -1869,22 +1898,22 @@ bool Marc4cppDocumentoAuthority::elaboraDatiDocumento(bool isTitoloOpera)
 
 	if (authority == AUTHORITY_AUTORI)
 	{
-		if (isTagToGenerate("010"))
+		if (isTagToGenerate(010))
 			creaTag010_Isni();
 	}
 	else if (authority == AUTHORITY_LUOGHI)
 	{
-		if (isTagToGenerate("035"))
+		if (isTagToGenerate(35))
 			creaTag035_Istat();
 	}
-
-	creaTag100(); // General Processing Data
+	if (isTagToGenerate(100))
+		creaTag100(); // General Processing Data
 
 	if (authority == AUTHORITY_LUOGHI)
 		{
-		if (isTagToGenerate("102"))
+		if (isTagToGenerate(102))
 			creaTag102(); // Nationality of the Entity
-		if (isTagToGenerate("152"))
+		if (isTagToGenerate(152))
 			{
 			DataField *df = new DataField();
 				df->setTag("152");
@@ -1894,7 +1923,8 @@ bool Marc4cppDocumentoAuthority::elaboraDatiDocumento(bool isTitoloOpera)
 
 				marcRecord->addDataField(df);
 			}
-		creaTag260LuogoDiPubblicazioneNormalizzzato(); // LUOGO DI PUBBLICAZIONE NORMALIZZATO
+		if (isTagToGenerate(260))
+			creaTag260LuogoDiPubblicazioneNormalizzzato(); // LUOGO DI PUBBLICAZIONE NORMALIZZATO
 		}
 	else if (authority == AUTHORITY_AUTORI)
 		{
@@ -1930,20 +1960,24 @@ bool Marc4cppDocumentoAuthority::elaboraDatiDocumento(bool isTitoloOpera)
 	if (authority == AUTHORITY_SOGGETTI && isTagToGenerate("250"))
 		creaTag250Soggetti();
 
+	if (isTagToGenerate(300))
+		creaTag300Note();
 
-	creaTag300Note();
+	if (isTagToGenerate(801))
+		{
+		if(authority == AUTHORITY_AUTORI || authority == AUTHORITY_SOGGETTI || authority == AUTHORITY_LUOGHI)
+			creaTag801FonteDiProvenienza();
 
-	if (authority == AUTHORITY_AUTORI || authority == AUTHORITY_SOGGETTI || authority == AUTHORITY_LUOGHI)
-		creaTag801FonteDiProvenienza();
-
-	if (authority == AUTHORITY_TITOLI_UNIFORMI && isTagToGenerate("801"))
-		creaTag801FonteDiProvenienza_titoli();
-
-	if (authority == AUTHORITY_TITOLI_UNIFORMI && isTagToGenerate("830"))
+		else if (authority == AUTHORITY_TITOLI_UNIFORMI)
+			creaTag801FonteDiProvenienza_titoli();
+		}
+	if(isTagToGenerate(830))
+	{
+	if (authority == AUTHORITY_TITOLI_UNIFORMI)
 			creaTag830NoteCatalogatoreTitolo();  // Nota del catalogatore
-	if (authority == AUTHORITY_AUTORI && isTagToGenerate("830"))
+	else if (authority == AUTHORITY_AUTORI || authority == AUTHORITY_LUOGHI  )
 		creaTag830NoteCatalogatoreAutore();
-
+	}
 	return true;
 } // End Marc4cppDocumentoAuthority::elaboraDatiDocumento
 

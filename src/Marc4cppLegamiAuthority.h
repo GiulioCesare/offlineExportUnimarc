@@ -151,6 +151,9 @@ class Marc4cppLegamiAuthority {
 	void creaLegamiAutoreRepertori();
 	DataField * creaTag_81xRepertorio(char *tag);
 
+	void creaLegamiLuogoRepertori();   // 09/11/2020
+	DataField * creaTag_81xLuogoRepertorio(char *tag);
+
 	void creaLegamiTitoloRepertori();
 	DataField * creaTag_81xRepertorio_Titolo(char *tag);
 

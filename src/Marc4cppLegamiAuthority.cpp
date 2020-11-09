@@ -637,6 +637,46 @@ DataField * Marc4cppLegamiAuthority::creaTag_81xRepertorio(char *tag)
 	return df;
 }
 
+DataField * Marc4cppLegamiAuthority::creaTag_81xLuogoRepertorio(char *tag)
+{
+	DataField *df=0;
+	Subfield *sf;
+
+	// Dalla tabella di relazione prendiamo il repertorio
+	CString repertorio;
+
+	repertorio = trRepLuo->getField(trRepLuo->id_repertorio);
+
+	repertorio.leftPadding('0', 10);
+
+	// Andiamo sulla tabella di repertorio a prendere le info
+	if (tbRepertorio->loadRecord(repertorio.data()))
+	{
+//tbRepertorio->dumpRecord();
+
+		df = new DataField();
+		df->setTag(tag);
+
+		sf = new Subfield('a', tbRepertorio->getFieldString(tbRepertorio->ds_repertorio));
+		df->addSubfield(sf);
+
+		if(!strcmp(tag,"810"))
+		{
+			if(! trRepLuo->getFieldString(trRepLuo->nota_rep_luo)->IsEmpty())
+			{
+				sf = new Subfield('b', trRepLuo->getFieldString(trRepLuo->nota_rep_luo));
+		df->addSubfield(sf);
+			}
+		}
+		marcRecord->addDataField(df);
+	}
+	else
+	{
+		SignalAnError(__FILE__, __LINE__, "\nRepertorio %s non trovato nella tabella dei repertori", repertorio.data());
+	}
+
+	return df;
+}
 DataField * Marc4cppLegamiAuthority::creaTag_81xRepertorio_Titolo(char *tag)
 {
 	DataField *df=0;
@@ -771,7 +811,7 @@ void Marc4cppLegamiAuthority::creaLegamiAutoreRepertori()
 	// Dal vid vediamo se abbiamo almeno un legame autore/repertorio
 //	retb = BinarySearch::search(trRepAut->getOffsetBufferTbPtr(), trRepAut->getElementsTb(), keyPlusOffsetPlusLfLength, vid, key_length, position, &entryPtr);
 
-	if (trRepAut->getOffsetBufferTbPtr())
+	if (trRepLuo->getOffsetBufferTbPtr())
 		retb = BinarySearch::search(trRepAut->getOffsetBufferTbPtr(), trRepAut->getElementsTb(), keyPlusOffsetPlusLfLength, vid, key_length, position, &entryPtr);
 	else
 	{
@@ -781,7 +821,7 @@ void Marc4cppLegamiAuthority::creaLegamiAutoreRepertori()
 
 	if (retb)
 	{
-		if (trRepAut->existsRecordNonUnique(vid))
+		if (trRepLuo->existsRecordNonUnique(vid))
 		{
 			while (trRepAut->loadNextRecord(vid))  // Prendiamo un repertotrio alla volta
 			{
@@ -796,7 +836,45 @@ void Marc4cppLegamiAuthority::creaLegamiAutoreRepertori()
 
 } // End Marc4cppLegamiAuthority::creaLegamiAutoreRepertori
 
+void Marc4cppLegamiAuthority::creaLegamiLuogoRepertori()
+{
+	bool retb;
+	long position;
+	//long offset;
+	char *entryPtr;
+	CString entryFile;
 
+
+	const char *lid;
+	lid = tbLuogo->getField(tbLuogo->lid);
+
+	// Dal vid vediamo se abbiamo almeno un legame autore/repertorio
+//	retb = BinarySearch::search(trRepAut->getOffsetBufferTbPtr(), trRepAut->getElementsTb(), keyPlusOffsetPlusLfLength, vid, key_length, position, &entryPtr);
+
+	if (trRepLuo->getOffsetBufferTbPtr())
+		retb = BinarySearch::search(trRepLuo->getOffsetBufferTbPtr(), trRepLuo->getElementsTb(), keyPlusOffsetPlusLfLength, lid, key_length, position, &entryPtr);
+	else
+	{
+		retb = BinarySearch::search(trRepLuo->getTbOffsetIn(), trRepLuo->getElementsTb(), keyPlusOffsetPlusLfLength, lid, key_length, position, &entryFile);
+		entryPtr = entryFile.data();
+	}
+
+	if (retb)
+	{
+		if (trRepLuo->existsRecordNonUnique(lid))
+		{
+			while (trRepLuo->loadNextRecord(lid))  // Prendiamo un repertotrio alla volta
+			{
+			//	if (*trRepLuo->getField(trRepLuo->fl_trovato) == 'S')
+					creaTag_81xLuogoRepertorio((char *)"810");
+//				else
+//					creaTag_81xRepertorio((char *)"815");
+			} // end while
+		} // End se esiste legame luogo/repertorio
+	}
+
+
+} // End Marc4cppLegamiAuthority::creaLegamiAutoreRepertori
 
 void Marc4cppLegamiAuthority::creaLegamiTitoloRepertori()
 {
@@ -1610,8 +1688,10 @@ bool Marc4cppLegamiAuthority::elaboraDatiLegamiAuthority(const tree<std::string>
 	else if (authority == AUTHORITY_LUOGHI)
 	{
 	    CString rootRecord; rootRecord = tbLuogo->getStringRecordData();
-		creaLegamiLuogoLuogo();
-		//creaLegamiAutoreRepertori();
+	    if(marc4cppDocumentoAuthority->isTagToGenerate("460"))
+	    	creaLegamiLuogoLuogo();
+		if(marc4cppDocumentoAuthority->isTagToGenerate("810"))
+			creaLegamiLuogoRepertori();
 	}
 	else if(authority == AUTHORITY_SOGGETTI)
 	{
