@@ -1688,9 +1688,11 @@ bool Marc4cppLegamiAuthority::elaboraDatiLegamiAuthority(const tree<std::string>
 	else if (authority == AUTHORITY_LUOGHI)
 	{
 	    CString rootRecord; rootRecord = tbLuogo->getStringRecordData();
-	    if(marc4cppDocumentoAuthority->isTagToGenerate("460"))
+	//    if(marc4cppDocumentoAuthority->isTagToGenerate("460"))
+	    if(IS_TAG_TO_GENERATE(460))
 	    	creaLegamiLuogoLuogo();
-		if(marc4cppDocumentoAuthority->isTagToGenerate("810"))
+	//	if(marc4cppDocumentoAuthority->isTagToGenerate("810"))
+	    if(IS_TAG_TO_GENERATE(810))
 			creaLegamiLuogoRepertori();
 	}
 	else if(authority == AUTHORITY_SOGGETTI)
@@ -1900,7 +1902,8 @@ DataField * Marc4cppLegamiAuthority::creaLegameTitoloTitolo(char *entryReticoloP
 		// Se opera con autore ce lo dice la 241, se esiste
 		DataField *df241 = marcRecord->getDataField((char *)"241");
 
-		if (df241 && marc4cppDocumentoAuthority->isTagToGenerate("441"))
+		//if (df241 && marc4cppDocumentoAuthority->isTagToGenerate("441"))
+		if(df241 && IS_TAG_TO_GENERATE(441))
 		{ // Rinvio ad opera con autore
 
 			df = new DataField((char *)"441", 3);
@@ -1914,7 +1917,8 @@ DataField * Marc4cppLegamiAuthority::creaLegameTitoloTitolo(char *entryReticoloP
 		}
 		else
 		{ // Rinvio ad opera senza autore
-			if (marc4cppDocumentoAuthority->isTagToGenerate("431"))
+//			if (marc4cppDocumentoAuthority->isTagToGenerate("431"))
+			if(IS_TAG_TO_GENERATE(431))
 			{
 				df = new DataField((char *)"431", 3);
 				sf = new Subfield('a', sPtr);
@@ -1933,10 +1937,13 @@ DataField * Marc4cppLegamiAuthority::creaLegameTitoloTitolo(char *entryReticoloP
 	else
 	{
 //		if (df231 && marc4cppDocumentoAuthority->isTagToGenerate("531"))
-		if (df241 && marc4cppDocumentoAuthority->isTagToGenerate("531"))
-			df = new DataField((char *)"531", 3);
+//		if (df241 && marc4cppDocumentoAuthority->isTagToGenerate("531"))
+		if(IS_TAG_TO_GENERATE(531))
+		df = new DataField((char *)"531", 3);
 		else
-		{	if (marc4cppDocumentoAuthority->isTagToGenerate("530"))
+		{
+			//if (marc4cppDocumentoAuthority->isTagToGenerate("530"))
+			if(IS_TAG_TO_GENERATE(530))
 				df = new DataField((char *)"530", 3);
 		}
 

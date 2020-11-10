@@ -1846,43 +1846,26 @@ DataField * Marc4cppDocumentoAuthority::creaTag931(char *areaStartPtr, char *are
 
 
 
-bool Marc4cppDocumentoAuthority::isTagToGenerate(const char *nomeTag)
-{
-	char *entryPtr;
-	long position;
-	bool retb;
-
-	int tag = atoi (nomeTag);
-	if (*(tagsToGenerateBufferPtr+tag) == 1)
-		return true;
-	else
-		return false;
-
-
-//	retb = BinarySearch::search(tagsToGenerateBufferPtr, tagsToGenerate, 3, nomeTag, 3, position, &entryPtr);
-//	return retb;
-
-
-}
-bool Marc4cppDocumentoAuthority::isTagToGenerate(const int tag)
-{
+//bool Marc4cppDocumentoAuthority::isTagToGenerate(const char *nomeTag)
+//{
 //	char *entryPtr;
 //	long position;
 //	bool retb;
-
-	//int tag = atoi (nomeTag);
-	//if (*(tagsToGenerateBufferPtr+tag) == 1)
-	if (*(tagsToGenerateBufferPtr+tag))
-		return true;
-	else
-		return false;
-
-
-//	retb = BinarySearch::search(tagsToGenerateBufferPtr, tagsToGenerate, 3, nomeTag, 3, position, &entryPtr);
-//	return retb;
-
-
-}
+//
+//	int tag = atoi (nomeTag);
+//	if (*(tagsToGenerateBufferPtr+tag) == 1)
+//		return true;
+//	else
+//		return false;
+//}
+//
+//bool Marc4cppDocumentoAuthority::isTagToGenerate(const int tag)
+//{
+//	if (*(tagsToGenerateBufferPtr+tag))
+//		return true;
+//	else
+//		return false;
+//}
 
 
 
@@ -1898,22 +1881,22 @@ bool Marc4cppDocumentoAuthority::elaboraDatiDocumento(bool isTitoloOpera)
 
 	if (authority == AUTHORITY_AUTORI)
 	{
-		if (isTagToGenerate(010))
+		if (IS_TAG_TO_GENERATE(010))
 			creaTag010_Isni();
 	}
 	else if (authority == AUTHORITY_LUOGHI)
 	{
-		if (isTagToGenerate(35))
+		if (IS_TAG_TO_GENERATE(35))
 			creaTag035_Istat();
 	}
-	if (isTagToGenerate(100))
+	if (IS_TAG_TO_GENERATE(100))
 		creaTag100(); // General Processing Data
 
 	if (authority == AUTHORITY_LUOGHI)
 		{
-		if (isTagToGenerate(102))
+		if (IS_TAG_TO_GENERATE(102))
 			creaTag102(); // Nationality of the Entity
-		if (isTagToGenerate(152))
+		if (IS_TAG_TO_GENERATE(152))
 			{
 			DataField *df = new DataField();
 				df->setTag("152");
@@ -1923,16 +1906,16 @@ bool Marc4cppDocumentoAuthority::elaboraDatiDocumento(bool isTitoloOpera)
 
 				marcRecord->addDataField(df);
 			}
-		if (isTagToGenerate(260))
+		if (IS_TAG_TO_GENERATE(260))
 			creaTag260LuogoDiPubblicazioneNormalizzzato(); // LUOGO DI PUBBLICAZIONE NORMALIZZATO
 		}
 	else if (authority == AUTHORITY_AUTORI)
 		{
-		if (isTagToGenerate("101"))
+		if (IS_TAG_TO_GENERATE(101))
 			creaTag101_autore(); // LINGUA DELLA ENTITA'
-		if (isTagToGenerate("102"))
+		if (IS_TAG_TO_GENERATE(102))
 			creaTag102(); // Nationality of the Entity
-		if (isTagToGenerate("152"))
+		if (IS_TAG_TO_GENERATE(152))
 				creaTag152_autore(); // Rules
 		creaTag200(); // Personal Name
 		creaTag210(); // Ente
@@ -1940,14 +1923,14 @@ bool Marc4cppDocumentoAuthority::elaboraDatiDocumento(bool isTitoloOpera)
 		}
 	else if (authority == AUTHORITY_TITOLI_UNIFORMI)
 	{
-		if (isTagToGenerate("101"))
+		if (IS_TAG_TO_GENERATE(101))
 			creaTag101_titolo(); // LINGUA DELLA ENTITA'
-		if (isTagToGenerate("102"))
+		if (IS_TAG_TO_GENERATE(102))
 			creaTag102TitoliUniformi(); // codice paese
-		if (isTagToGenerate("152"))
+		if (IS_TAG_TO_GENERATE(152))
 			creaTag152_titolo(); // Regole di catalogazione
 
-		if (isTagToGenerate("230") || isTagToGenerate("231"))
+		if (IS_TAG_TO_GENERATE(230) || IS_TAG_TO_GENERATE(231))
 		{
 			if (!isTitoloOpera)
 				creaTag230TitoloUniforme(); // titolo uniforme
@@ -1957,13 +1940,13 @@ bool Marc4cppDocumentoAuthority::elaboraDatiDocumento(bool isTitoloOpera)
 
 	}
 
-	if (authority == AUTHORITY_SOGGETTI && isTagToGenerate("250"))
+	if (authority == AUTHORITY_SOGGETTI && IS_TAG_TO_GENERATE(250))
 		creaTag250Soggetti();
 
-	if (isTagToGenerate(300))
+	if (IS_TAG_TO_GENERATE(300))
 		creaTag300Note();
 
-	if (isTagToGenerate(801))
+	if (IS_TAG_TO_GENERATE(801))
 		{
 		if(authority == AUTHORITY_AUTORI || authority == AUTHORITY_SOGGETTI || authority == AUTHORITY_LUOGHI)
 			creaTag801FonteDiProvenienza();
@@ -1971,7 +1954,7 @@ bool Marc4cppDocumentoAuthority::elaboraDatiDocumento(bool isTitoloOpera)
 		else if (authority == AUTHORITY_TITOLI_UNIFORMI)
 			creaTag801FonteDiProvenienza_titoli();
 		}
-	if(isTagToGenerate(830))
+	if(IS_TAG_TO_GENERATE(830))
 	{
 	if (authority == AUTHORITY_TITOLI_UNIFORMI)
 			creaTag830NoteCatalogatoreTitolo();  // Nota del catalogatore

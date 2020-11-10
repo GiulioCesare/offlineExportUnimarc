@@ -143,8 +143,8 @@ public:
 
 	bool elaboraDatiDocumento(bool isTitoloOpera);
 //	bool elaboraAltriDatiDocumento();
-	bool isTagToGenerate(const char *nomeTag);
-	bool isTagToGenerate(const int tag);
+//	bool isTagToGenerate(const char *nomeTag);
+//	bool isTagToGenerate(const int tag);
 
 };
 
