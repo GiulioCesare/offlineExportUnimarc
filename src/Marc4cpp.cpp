@@ -1447,6 +1447,7 @@ bool Marc4cpp::elaboraLeader()
 
 			leader->setLivelloDiCodifica(' ');
 			leader->setTipoDiCatalogazioneDescrittiva(' ');
+			leader->setEntryMap(" 45  ");
 		}
 		else if (authority == AUTHORITY_SOGGETTI)
 		{

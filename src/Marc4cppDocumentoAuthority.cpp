@@ -314,8 +314,8 @@ ControlField * Marc4cppDocumentoAuthority::creaTag005_IdentificatoreVersione()
 				}
 		else if (authority == AUTHORITY_LUOGHI)
 		{
-			CMisc::formatDate1(tbLuogo->getField(tbLuogo->ts_var), dateBuf); // YYYYMMDD   05/11/2020
-		cf->setData(dateBuf, 8); // YYYYMMDD
+			CMisc::formatDate2(tbLuogo->getField(tbLuogo->ts_var), dateBuf); // YYYYMMDD   05/11/2020
+		cf->setData(dateBuf, 16); // YYYYMMDDHHMMSS.T
 				}
 		else if (authority == AUTHORITY_SOGGETTI)
 		{
@@ -414,12 +414,13 @@ DataField * Marc4cppDocumentoAuthority::creaTag035_Istat()
 			char *istatPtr=sPtr->SubstringData(pos+1);
 			if(istatPtr)
 			{
+				CString newIstatStr="(ISTAT)";
+				newIstatStr.AppendString(istatPtr);
 				DataField *df;
 				Subfield *sf;
 				df = new DataField();
 				df->setTag("035");
-		//		df->setData(istatPtr,sPtr->getBufferSubStringLength());
-				sf = new Subfield('a', istatPtr);
+				sf = new Subfield('a', &newIstatStr);
 				df->addSubfield(sf);
 				marcRecord->addDataField(df);
 					return df;
@@ -1441,10 +1442,11 @@ DataField * Marc4cppDocumentoAuthority::creaTag300Note()
 	else if (authority == AUTHORITY_LUOGHI)
 	{
 		nota=tbLuogo->getField(tbLuogo->nota_luogo);
-		int pos=nota.First('#');
+		//int pos=nota.First('#');
+		int pos=nota.IndexSubString(". - ");
 		if(!(pos < 0))
 		{
-			nota.CropRightFrom(pos);
+			nota.CropRightFrom(pos+1);
 		}
 	}
 	if (nota.StartsWith("null") || nota.IsEmpty())

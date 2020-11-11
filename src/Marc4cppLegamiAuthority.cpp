@@ -1079,6 +1079,12 @@ DataField * Marc4cppLegamiAuthority::creaLegameLuogoLuogo(char *entryReticoloPtr
 	df=new DataField();
 	df->setTag("460");
 	Subfield *sf;
+//	if(tbLuogoRinvio->getFieldLength(tbLuogoRinvio->nota_luogo)>0)
+	if(!tbLuogoRinvio->getFieldString(tbLuogoRinvio->nota_luogo)->IsEmpty())
+	 {
+		sf = new Subfield('0', tbLuogoRinvio->getField(tbLuogoRinvio->nota_luogo), tbLuogoRinvio->getFieldLength(tbLuogoRinvio->nota_luogo));
+		df->addSubfield(sf);
+	 }
 	sf = new Subfield('3', lid, 10);
 	df->addSubfield(sf);
 	sf = new Subfield('d', tbLuogoRinvio->getField(tbLuogoRinvio->ds_luogo), tbLuogoRinvio->getFieldLength(tbLuogoRinvio->ds_luogo));
