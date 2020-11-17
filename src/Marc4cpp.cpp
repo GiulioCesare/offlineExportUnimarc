@@ -1210,6 +1210,9 @@ void Marc4cpp::stop()
 	if (codiciOrgaKV)
 		delete codiciOrgaKV;
 
+	if (codiciPaesKV)
+		delete codiciPaesKV; //17/11/2020
+
 	if (variantiSinonimiaKsogVarKV)	// 15/01/2018
 		delete variantiSinonimiaKsogVarKV;
 
@@ -2819,6 +2822,7 @@ bool Marc4cpp::setupAuthDocument(
 
 	codiciOrgaKV = new CKeyValueVector(tKVSTRING, tKVSTRING);	// 26/01/2015
 	loadDictionary_KV("tb_codici_orga", codiciOrgaKV);
+
 
 
 

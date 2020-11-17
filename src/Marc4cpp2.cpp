@@ -907,6 +907,7 @@ bool Marc4cpp::setupAuthLuoghi(
 		char *marcTxtFilename,
 		char *polo,
 		ATTValVector<CString *> *entitaVector, ATTValVector<CString *> *relazioniVector, ATTValVector<CString *> *offsetVector,
+		ATTValVector<CString *> *codiciVector,
 		char *bidXunimarcFilename,
 		char *reticoliFilename
 		)
@@ -919,10 +920,12 @@ bool Marc4cpp::setupAuthLuoghi(
 			marcFilename,
 			marcTxtFilename,
 			0,
-			entitaVector, relazioniVector, offsetVector, 0,
+			entitaVector, relazioniVector, offsetVector, codiciVector,
 			bidXunimarcFilename,
 			reticoliFilename,
 			0);
+	codiciPaesKV = new CKeyValueVector(tKVSTRING, tKVSTRING);	// 17/11/2020
+	loadDictionary_KV("tb_codici_paes", codiciPaesKV);
 
 	tabelleVector.Add(tbLuogo = new TbLuogo(tbLuogoIn, tbLuogoOffsetIn, offsetBufferTbLuogoPtr, elementsTbLuogo, keyPlusOffsetPlusLfLength, BID_KEY_LENGTH));
 	tabelleVector.Add(tbRepertorio = new TbRepertorio(tbRepertorioIn, tbRepertorioOffsetIn, offsetBufferTbRepertorioPtr, elementsTbRepertorio, keyPlusOffsetPlusLfLength, BID_KEY_LENGTH));

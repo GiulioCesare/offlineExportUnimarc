@@ -121,6 +121,8 @@ CKeyValueVector *codiciEclaKV = 0;
 //#endif
 CKeyValueVector *codiciOrgaKV = 0; // 26/01/2015
 
+CKeyValueVector *codiciPaesKV = 0; // 17/11/2020
+
 // 2018/01/15 (veramente stiamo trattando dei dizionari)
 //CKeyValueVector *varianteKsogVarKV = 0;
 CKeyValueVector *variantiSinonimiaKsogVarKV = 0;
@@ -1365,7 +1367,7 @@ int offlineExport(int argc, const char* argv[])
 				MARKFILEOUT.data(),
 				MARKFILEOUTTXT.data(),
 				POLO.data(),
-				entitaVector, relazioniVector, offsetVector,
+				entitaVector, relazioniVector, offsetVector,dictionaryVector,
 				IDXUNIMARC.data(),
 				RETICOLO_OUT.data()
 				);

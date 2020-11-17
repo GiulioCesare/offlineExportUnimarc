@@ -87,6 +87,7 @@ extern bool	EXPORT_VIAF;
 extern CKeyValueVector *codiciNotaKV; //03/05/2013 Mantis polo 5302
 extern CKeyValueVector *codiciEclaKV; // 10/12/14
 extern CKeyValueVector *codiciOrgaKV; // 21/01/15
+extern CKeyValueVector *codiciPaesKV; // 17/11/20
 
 extern CKeyValueVector *variantiSinonimiaKsogVarKV; // 15/01/2018
 extern CKeyValueVector *variantiSinonimiaKvarSogKV; // 22/02/2018

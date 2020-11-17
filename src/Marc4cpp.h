@@ -956,6 +956,7 @@ public:
 			char *marcTxtFilename,
 			char *polo,
 			ATTValVector<CString *> *entitaVector, ATTValVector<CString *> *relazioniVector, ATTValVector<CString *> *offsetVector,
+			ATTValVector<CString *> *codiciVector,
 			char *bidXunimarcFilename,
 			char *reticoliFilename
 	);

@@ -38,6 +38,8 @@
 #endif
 using namespace std;
 
+extern CKeyValueVector *codiciPaesKV; // 17/11/2020
+
 extern void SignalAnError(	const OrsChar *Module, OrsInt Line, const OrsChar * MsgFmt, ...);
 extern void SignalAWarning(	const OrsChar *Module, OrsInt Line, const OrsChar * MsgFmt, ...);
 

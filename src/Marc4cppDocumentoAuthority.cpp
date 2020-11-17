@@ -44,6 +44,8 @@
     #include "nvwa/debug_new.h"
 #endif
 
+extern CKeyValueVector *codiciPaesKV; // 17/11/2020
+
 //#include "C210.h"
 extern void SignalAnError(	const OrsChar *Module, OrsInt Line, const OrsChar * MsgFmt, ...);
 extern void SignalAWarning(	const OrsChar *Module, OrsInt Line, const OrsChar * MsgFmt, ...);
@@ -1383,9 +1385,17 @@ DataField * Marc4cppDocumentoAuthority::creaTag260LuogoDiPubblicazioneNormalizzz
 	if (authority == AUTHORITY_LUOGHI)
 	 {
 		df = new DataField();
+		CString sTmp;
 		df->setTag("260");
 		sf = new Subfield('a');
-		sf->setData(tbLuogo->getFieldString(tbLuogo->cd_paese));
+		sTmp = tbLuogo->getField(tbLuogo->cd_paese);
+		char *descCdPaes = codiciPaesKV->GetValueFromKey(sTmp.data());
+		if (!descCdPaes)
+			sTmp.AppendString((char *)"? Codice Paese invalido");
+		else
+			sTmp = descCdPaes;
+		sf->setData(&sTmp);
+		//sf->setData(tbLuogo->getFieldString(tbLuogo->cd_paese));
 		df->addSubfield(sf);
 		sf = new Subfield('d');
 		sf->setData(tbLuogo->getFieldString(tbLuogo->ds_luogo));
@@ -1610,7 +1620,8 @@ DataField * Marc4cppDocumentoAuthority::creaTag801FonteDiProvenienza()
 	}
 	else if (authority == AUTHORITY_LUOGHI)
 	{
-		cdPaese = tbLuogo->getField(tbLuogo->cd_paese);
+		cdPaese = "IT"; //17/11/2020
+		//cdPaese = tbLuogo->getField(tbLuogo->cd_paese);
 		tsIns = tbLuogo->getField(tbLuogo->ts_ins);
 	}
 
@@ -1953,13 +1964,13 @@ bool Marc4cppDocumentoAuthority::elaboraDatiDocumento(bool isTitoloOpera)
 		if(authority == AUTHORITY_AUTORI || authority == AUTHORITY_SOGGETTI || authority == AUTHORITY_LUOGHI)
 			creaTag801FonteDiProvenienza();
 
-		else if (authority == AUTHORITY_TITOLI_UNIFORMI)
+		else if (authority == AUTHORITY_TITOLI_UNIFORMI)//hassan 17/11/2020
 			creaTag801FonteDiProvenienza_titoli();
 		}
 	if(IS_TAG_TO_GENERATE(830))
 	{
 	if (authority == AUTHORITY_TITOLI_UNIFORMI)
-			creaTag830NoteCatalogatoreTitolo();  // Nota del catalogatore
+		creaTag830NoteCatalogatoreTitolo();  // Nota del catalogatore
 	else if (authority == AUTHORITY_AUTORI || authority == AUTHORITY_LUOGHI  )
 		creaTag830NoteCatalogatoreAutore();
 	}
