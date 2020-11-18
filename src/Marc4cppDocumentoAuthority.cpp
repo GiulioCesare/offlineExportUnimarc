@@ -1389,7 +1389,7 @@ DataField * Marc4cppDocumentoAuthority::creaTag260LuogoDiPubblicazioneNormalizzz
 		df->setTag("260");
 		sf = new Subfield('a');
 		sTmp = tbLuogo->getField(tbLuogo->cd_paese);
-		char *descCdPaes = codiciPaesKV->GetValueFromKey(sTmp.data());
+		char *descCdPaes = codiciPaesKV->GetValueFromSortedKey(sTmp.data());
 		if (!descCdPaes)
 			sTmp.AppendString((char *)"? Codice Paese invalido");
 		else
