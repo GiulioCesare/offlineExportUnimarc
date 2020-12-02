@@ -98,8 +98,10 @@ class Marc4cppDocumentoAuthority {
 	DataField * creaTag801FonteDiProvenienza_titoli();
 	DataField * creaTag830NoteCatalogatoreAutore();
 	DataField * creaTag830NoteCatalogatoreTitolo();
+	DataField * creaTag999Sbn();
 
 	DataField * creaTag856();
+	DataField * creaTag899();
 
     DataField * creaTag928(char *areaStartPtr, char *areaEndPtr);
     DataField * creaTag930(char *areaStartPtr, char *areaEndPtr);

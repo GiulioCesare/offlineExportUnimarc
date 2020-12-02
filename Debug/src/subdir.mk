@@ -79,6 +79,7 @@ CPP_SRCS += \
 ../src/TrAutAut.cpp \
 ../src/TrBidAltroid.cpp \
 ../src/TrDesDes.cpp \
+../src/TrIdsbnIdaltri.cpp \
 ../src/TrLuoLuo.cpp \
 ../src/TrPerInt.cpp \
 ../src/TrRel.cpp \
@@ -179,6 +180,7 @@ OBJS += \
 ./src/TrAutAut.o \
 ./src/TrBidAltroid.o \
 ./src/TrDesDes.o \
+./src/TrIdsbnIdaltri.o \
 ./src/TrLuoLuo.o \
 ./src/TrPerInt.o \
 ./src/TrRel.o \
@@ -277,6 +279,7 @@ CPP_DEPS += \
 ./src/TrAutAut.d \
 ./src/TrBidAltroid.d \
 ./src/TrDesDes.d \
+./src/TrIdsbnIdaltri.d \
 ./src/TrLuoLuo.d \
 ./src/TrPerInt.d \
 ./src/TrRel.d \

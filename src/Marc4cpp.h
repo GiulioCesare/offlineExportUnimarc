@@ -83,6 +83,7 @@
 
 #include "TrLuoLuo.h"
 #include "TrRepLuo.h"
+#include "TrIdsbnIdaltri.h"
 
 
 using namespace std;
@@ -638,15 +639,32 @@ private:
 	long elementsTrAutAutInv;	// Numero di relazioni
 	char *offsetBufferTrAutAutInvPtr;
 	TrAutAut *trAutAutInv;
-
-
-
-	// Relazioni autore->autore
+	
+		// Relazioni autore->autore
 	// ------------------------
 	CFile* trAutAutRelIn;
 	CFile* trAutAutRelOffsetIn;
 	long elementsTrAutAutRel;	// Numero di relazioni
 	char *offsetBufferTrAutAutRelPtr;
+
+
+
+
+
+	// Relazioni idsbn->idaltri
+	// ------------------------
+	CFile* trIdsbnIdaltriAuIn;
+	CFile* trIdsbnIdaltriAuOffsetIn;
+	long elementstrIdsbnIdaltriAu;	// Numero di relazioni
+	char *offsetBuffertrIdsbnIdaltriAuPtr;
+	TrIdsbnIdaltri *trIdsbnIdaltriAu;
+
+	// Relazioni idsbn->idaltri
+	// ------------------------
+	CFile* trIdsbnIdaltriAuRelIn;
+	CFile* trIdsbnIdaltriAuRelOffsetIn;
+	long elementstrIdsbnIdaltriAuRel;	// Numero di relazioni
+	char *offsetBuffertrIdsbnIdaltriAuRel;
 
 
 	// Relazioni inveerse autore->autore (per tipo legame 4)

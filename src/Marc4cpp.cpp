@@ -615,12 +615,29 @@ void Marc4cpp::zeroInit() {
 
 
 
+	trIdsbnIdaltriAuIn=0;
+	trIdsbnIdaltriAuOffsetIn=0;
+	elementstrIdsbnIdaltriAu=0;	// Numero di relazioni
+	offsetBuffertrIdsbnIdaltriAuPtr=0;
+
+	// Relazioni idsbn->idaltri
+	// ------------------------
+	trIdsbnIdaltriAuRelIn=0;
+	trIdsbnIdaltriAuRelOffsetIn=0;
+	elementstrIdsbnIdaltriAuRel=0;	// Numero di relazioni
+	offsetBuffertrIdsbnIdaltriAuRel=0;
+
 	marcOutTxt = 0;
 	marcOutXml = 0;
 	reticoliOut = 0;
 
 	recordsNonDocumento = 0;
 	marc4cppDocumentoAuthority = 0;
+
+
+
+
+
 };
 
 

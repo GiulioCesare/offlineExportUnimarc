@@ -150,6 +150,9 @@ printf ("\nAPRI FILE RELAZIONI: %s", sPtr->data());
 		else if (!strcmp(tabella, "tr_aut_aut_rel_inv"))
 			trAutAutRelInvIn = cFileIn;
 
+		else if (!strcmp(tabella, "tr_idsbn_idaltri_au_rel"))
+			trIdsbnIdaltriAuRelIn = cFileIn;
+
 		else if (!strcmp(tabella, "tr_tit_aut_rel_inv"))
 			trTitAutRelInvIn = cFileIn;
 
@@ -1405,6 +1408,40 @@ bool Marc4cpp::loadOffsetFiles()
 		}
 	}
 
+	// Carichiamo gli offset delle entita Idsbn/Idaltri
+	if (trIdsbnIdaltriAuOffsetIn)
+	{
+		trIdsbnIdaltriAuOffsetIn->SeekToEnd();
+		fileSize = trIdsbnIdaltriAuOffsetIn->CurOffset();
+		elements = elementstrIdsbnIdaltriAu = fileSize/keyPlusOffsetPlusLfLength;
+		if ((offsetFileVectorInMem.FindByValue(trIdsbnIdaltriAuOffsetIn) != -1))
+		{
+			printf ("\nCarico in memoria indice %s, keyOffsetLen=%d, elements=%ld", trIdsbnIdaltriAuOffsetIn->GetName(), keyPlusOffsetPlusLfLength, elements);
+			offsetBuffertrIdsbnIdaltriAuPtr = (char *)malloc(elements*(keyPlusOffsetPlusLfLength)); // n righe di BID+Offset
+			if (!offsetBuffertrIdsbnIdaltriAuPtr)	{
+				printf ("\n!!!! ALLOCAZIONE MEMORIA FALLITA");
+				return false;	}
+			loadOffsetFiles2(trIdsbnIdaltriAuOffsetIn, offsetBuffertrIdsbnIdaltriAuPtr);
+		}
+	}
+
+	// Carichiamo gli offset delle relazioni Idsbn/Idaltri (.rel)
+	if (trIdsbnIdaltriAuRelOffsetIn)
+	{
+		trIdsbnIdaltriAuRelOffsetIn->SeekToEnd();
+		fileSize = trIdsbnIdaltriAuRelOffsetIn->CurOffset();
+		elements = elementstrIdsbnIdaltriAuRel = fileSize/keyPlusOffsetPlusLfLength;
+		if ((offsetFileVectorInMem.FindByValue(trIdsbnIdaltriAuRelOffsetIn) != -1))
+		{
+			printf ("\nCarico in memoria indice %s, keyOffsetLen=%d, elements=%ld", trIdsbnIdaltriAuRelOffsetIn->GetName(), keyPlusOffsetPlusLfLength, elements);
+			offsetBuffertrIdsbnIdaltriAuRel = (char *)malloc(elements*(keyPlusOffsetPlusLfLength)); // n righe di BID+Offset
+			if (!offsetBuffertrIdsbnIdaltriAuRel)	{
+				printf ("\n!!!! ALLOCAZIONE MEMORIA FALLITA");
+				return false;	}
+			loadOffsetFiles2(trIdsbnIdaltriAuRelOffsetIn, offsetBuffertrIdsbnIdaltriAuRel);
+		}
+	}
+
 
 
 	return true;
@@ -1485,13 +1522,15 @@ try {
 		else if (!strcmp(tabella, "tbf_biblioteca_off"))
 			tbfBibliotecaOffsetIn = cFileIn;
 
+		else if (!strcmp(tabella, "tr_idsbn_idaltri_au_rel_off"))
+			trIdsbnIdaltriAuRelOffsetIn = cFileIn;
+
 		else if (!strcmp(tabella, "tr_tit_tit_rel_off"))
 			trTitTitRelOffsetIn = cFileIn;
 		else if (!strcmp(tabella, "tr_tit_tit_off"))
 			trTitTitOffsetIn = cFileIn;
 		else if (!strcmp(tabella, "tr_tit_tit_inv_rel_off"))
 			trTitTitInvRelOffsetIn = cFileIn;
-
 
 		else if (!strcmp(tabella, "tb_autore_off"))
 			tbAutoreOffsetIn = cFileIn;
@@ -1627,6 +1666,8 @@ try {
 		else if (!strcmp(tabella, "trs_termini_titoli_biblioteche_rel_off"))
 			trsTerminiTitoliBibliotecheOffsetRelIn= cFileIn;
 
+		else if(!strcmp(tabella,"tr_idsbn_idaltri_au_off"))
+			trIdsbnIdaltriAuOffsetIn=cFileIn;
 
 
 
@@ -1894,6 +1935,8 @@ printf ("\nAPRI FILE ENTITA': %s", sPtr->data());
 		else if (!strcmp(tabella, "tr_bid_altroid"))
 			trBidAltroidIn = cFileIn;
 
+		else if(!strcmp(tabella,"tr_idsbn_idaltri_au"))
+			trIdsbnIdaltriAuIn=cFileIn;
 
 		else
 		{

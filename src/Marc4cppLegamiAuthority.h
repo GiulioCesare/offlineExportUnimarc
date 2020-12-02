@@ -44,6 +44,7 @@
 #include "TrSogDes.h"
 #include "TrDesDes.h"
 #include "TrRepLuo.h"
+#include "TrIdsbnIdaltri.h"
 
 #include "library/CTokenizer.h"
 #include "MarcGlobals.h"
@@ -98,6 +99,15 @@ class Marc4cppLegamiAuthority {
 	CFile* trAutAutRelOffsetIn;
 	char* offsetBufferTrAutAutRelPtr;
 	long elementsTrAutAutRel;
+
+
+	CFile* trIdsbnIdaltriAuRelIn;
+	CFile* trIdsbnIdaltriAuRelOffsetIn;
+	char* offsetBuffertrIdsbnIdaltriAuRelPtr;
+	long elementstrIdsbnIdaltriAuRel;
+
+	TrIdsbnIdaltri* trIdsbnIdaltriAu;
+	TbfBiblioteca* tbfBiblioteca;
 
 	TbLuogo* tbLuogo;
 	TrRepLuo* trRepLuo;
@@ -157,6 +167,8 @@ class Marc4cppLegamiAuthority {
 	void creaLegamiTitoloRepertori();
 	DataField * creaTag_81xRepertorio_Titolo(char *tag);
 
+	void creaLegamiAutoreBasiDati();
+
 
 	void creaTag_40x(DataField *df, TbAutore * tbAutoreRinvio);
 	void creaTag_41x(DataField *df, TbAutore * tbAutoreRinvio);
@@ -192,8 +204,10 @@ public:
 			TbRepertorio *tbRepertorio,
 			CFile* trAutAutIn, CFile* trAutAutOffsetIn,	char* offsetBufferTrAutAutPtr, long elementsTrAutAut,
 			CFile* trTitAutRelInvIn, CFile* trTitAutRelInvOffsetIn, char* offsetBufferTrTitAutRelInvPtr, long elementsTrTitAutInvRel,
+			TrIdsbnIdaltri *trIdsbnIdaltriAu,
+			CFile* trIdsbnIdaltriAuRelIn, CFile* trIdsbnIdaltriAuRelOffsetIn, char* offsetBuffertrIdsbnIdaltriAuRel, long elementstrIdsbnIdaltriAuRel,
 
-
+			TbfBiblioteca *tbfBiblioteca,
 			CKeyValueVector *tbfBibliotecaKV,
 			int keyPlusOffsetPlusLfLength,
 			int trKeyPlusOffsetPlusLfLength,

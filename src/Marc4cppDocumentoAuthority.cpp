@@ -1784,6 +1784,45 @@ DataField * Marc4cppDocumentoAuthority::creaTag830NoteCatalogatoreAutore()
 	return df;
 }
 
+
+DataField * Marc4cppDocumentoAuthority::creaTag999Sbn()
+{
+	DataField *df=0;
+	Subfield *sf;
+
+	CString notaSbn;
+	if(authority==AUTHORITY_AUTORI)
+	{
+//	notaSbn = TbfBiblioteca->getField(TbfBiblioteca->cd_biblioteca_indice);
+	}
+
+	else
+	{
+		return df;
+	}
+
+//tbAutore->dumpRecord();
+	if (notaSbn.isEqual("null") || notaSbn.IsEmpty())
+		return df;
+
+
+	df = new DataField();
+	df->setTag("999");
+
+	sf = new Subfield('1', &notaSbn);
+    df->addSubfield(sf);
+
+	sf = new Subfield('2', &notaSbn);
+    df->addSubfield(sf);
+
+	sf = new Subfield('9', &notaSbn);
+    df->addSubfield(sf);
+
+	marcRecord->addDataField(df);
+
+	return df;
+}
+
 DataField * Marc4cppDocumentoAuthority::creaTag830NoteCatalogatoreTitolo()
 {
 	DataField *df=0;
@@ -1801,6 +1840,39 @@ DataField * Marc4cppDocumentoAuthority::creaTag830NoteCatalogatoreTitolo()
 	df->setTag("830");
 
 	sf = new Subfield('a', &notaCatalogatore);
+	//sf->setData();
+    df->addSubfield(sf);
+
+	marcRecord->addDataField(df);
+
+	return df;
+}
+
+
+DataField * Marc4cppDocumentoAuthority::creaTag899()
+{
+	DataField *df=0;
+	Subfield *sf;
+
+	CString sbn;
+	if(authority==AUTHORITY_AUTORI)
+	{
+	sbn = tbAutore->getField(tbAutore->nota_cat_aut);
+	}
+	else
+	{
+		return df;
+	}
+
+//tbAutore->dumpRecord();
+	if (sbn.isEqual("null") || sbn.IsEmpty())
+		return df;
+
+
+	df = new DataField();
+	df->setTag("830");
+
+	sf = new Subfield('a', &sbn);
 	//sf->setData();
     df->addSubfield(sf);
 
@@ -1974,6 +2046,7 @@ bool Marc4cppDocumentoAuthority::elaboraDatiDocumento(bool isTitoloOpera)
 	else if (authority == AUTHORITY_AUTORI || authority == AUTHORITY_LUOGHI  )
 		creaTag830NoteCatalogatoreAutore();
 	}
+	creaTag999Sbn();
 	return true;
 } // End Marc4cppDocumentoAuthority::elaboraDatiDocumento
 

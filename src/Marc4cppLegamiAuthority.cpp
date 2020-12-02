@@ -86,7 +86,9 @@ Marc4cppLegamiAuthority::Marc4cppLegamiAuthority(Marc4cppDocumentoAuthority *mar
 		TbRepertorio *tbRepertorio,
 		CFile* trAutAutIn, CFile* trAutAutOffsetIn,	char* offsetBufferTrAutAutPtr, long elementsTrAutAut,
 		CFile* trTitAutRelInvIn, CFile* trTitAutRelInvOffsetIn, char* offsetBufferTrTitAutRelInvPtr, long elementsTrTitAutInvRel,
-
+		TrIdsbnIdaltri *trIdsbnIdaltriAu,
+		CFile* trIdsbnIdaltriAuRelIn, CFile* trIdsbnIdaltriAuRelOffsetIn, char* offsetBuffertrIdsbnIdaltriAuRelPtr, long elementstrIdsbnIdaltriAuRel,
+		TbfBiblioteca *tbfBiblioteca,
 		CKeyValueVector *tbfBibliotecaKV,
 		int keyPlusOffsetPlusLfLength,
 		int trKeyPlusOffsetPlusLfLength,
@@ -114,7 +116,14 @@ Marc4cppLegamiAuthority::Marc4cppLegamiAuthority(Marc4cppDocumentoAuthority *mar
 		this->elementsTrTitAutInvRel = elementsTrTitAutInvRel;
 		this->elementsTrAutAutRel = elementsTrAutAutRel;
 
+		this->trIdsbnIdaltriAuRelIn = trIdsbnIdaltriAuRelIn;
+		this->trIdsbnIdaltriAuRelOffsetIn = trIdsbnIdaltriAuRelOffsetIn;
+		this->offsetBuffertrIdsbnIdaltriAuRelPtr = offsetBuffertrIdsbnIdaltriAuRelPtr;
+		this->elementstrIdsbnIdaltriAuRel = elementstrIdsbnIdaltriAuRel;
+		this->elementstrIdsbnIdaltriAuRel = elementstrIdsbnIdaltriAuRel;
 
+		this->trIdsbnIdaltriAu=trIdsbnIdaltriAu;
+		this->tbfBiblioteca =tbfBiblioteca;
 
 		this->tbfBibliotecaKV = tbfBibliotecaKV;
 		this->keyPlusOffsetPlusLfLength = keyPlusOffsetPlusLfLength;
@@ -813,7 +822,7 @@ void Marc4cppLegamiAuthority::creaLegamiAutoreRepertori()
 	// Dal vid vediamo se abbiamo almeno un legame autore/repertorio
 //	retb = BinarySearch::search(trRepAut->getOffsetBufferTbPtr(), trRepAut->getElementsTb(), keyPlusOffsetPlusLfLength, vid, key_length, position, &entryPtr);
 
-	if (trRepLuo->getOffsetBufferTbPtr())
+	if (trRepAut->getOffsetBufferTbPtr())
 		retb = BinarySearch::search(trRepAut->getOffsetBufferTbPtr(), trRepAut->getElementsTb(), keyPlusOffsetPlusLfLength, vid, key_length, position, &entryPtr);
 	else
 	{
@@ -836,7 +845,144 @@ void Marc4cppLegamiAuthority::creaLegamiAutoreRepertori()
 	}
 
 
-} // End Marc4cppLegamiAuthority::creaLegamiAutoreRepertori
+} // End Marc4cppLegamiAuthority::creaLegamiAutoreBasiDati
+
+void Marc4cppLegamiAuthority::creaLegamiAutoreBasiDati()
+{
+	bool retb;
+	long position;
+	long offset;
+	char *entryPtr;
+	CString entryFile;
+	DataField *df =0;
+	Subfield *sf;
+	const char *vid;
+
+	ATTValVector <CString *> cncIds;
+	ATTValVector <CString *> cnmIds;
+	ATTValVector <CString *> stringVect;
+
+	vid = tbAutore->getField(tbAutore->vid);
+
+	//+++
+	if (! trIdsbnIdaltriAu->loadRecord(vid))
+	{
+		return;
+	}
+	trIdsbnIdaltriAu->dumpRecord();
+	CString cdPoloBib=trIdsbnIdaltriAu->getField(trIdsbnIdaltriAu->cd_polo);
+	cdPoloBib.AppendString(trIdsbnIdaltriAu->getField(trIdsbnIdaltriAu->cd_biblioteca));
+	printf("\ncdPoloBib '%s'",cdPoloBib.Data());
+	if (! tbfBiblioteca->loadRecord(cdPoloBib.Data()))
+	{
+		return;
+	}
+	tbfBiblioteca->dumpRecord();
+
+	CString cdAnaBib = tbfBiblioteca->getField(tbfBiblioteca->cd_ana_biblioteca);
+
+	printf("\n cdAnaBib '%s'",cdAnaBib.Data());
+
+
+
+	// Troviamo le relazioni autore/autore
+	// -----------------------------------
+	//	retb = BinarySearch::search(offsetBufferTrAutAutRelPtr, elementsTrAutAutRel, keyPlusOffsetPlusLfLength, bid, BID_KEY_LENGTH, position, &entryPtr);
+
+
+	if (offsetBuffertrIdsbnIdaltriAuRelPtr)
+		retb = BinarySearch::search(offsetBuffertrIdsbnIdaltriAuRelPtr, elementstrIdsbnIdaltriAuRel, keyPlusOffsetPlusLfLength, vid, VID_KEY_LENGTH, position, &entryPtr);
+	else
+	{
+		retb = BinarySearch::search(trIdsbnIdaltriAuRelOffsetIn, elementstrIdsbnIdaltriAuRel, keyPlusOffsetPlusLfLength, vid, VID_KEY_LENGTH, position, &entryFile);
+		entryPtr = entryFile.data();
+	}
+
+
+	if (retb)
+	{
+		CString *sPtr=new CString();
+		CTokenizer *Tokenizer = new CTokenizer("|");
+		char* tokenPtr;
+		CString token;
+
+		// Questo bid ha legami ad altri titoli
+		// Dalla posizione prendiamo l'offset
+		//		offset = atol (entryPtr+BID_KEY_LENGTH); // offsetBufferTrAutAutPtr+position
+		if (OFFSET_TYPE == OFFSET_TYPE_BINARY) // 09/02/2015
+			//memcpy (&offset, entryPtr+ BID_KEY_LENGTH, 4);	// OFFSET BINARI
+			offset =  *((int*)(entryPtr+BID_KEY_LENGTH)); // 24/03/2015
+
+		else
+			offset = atoi (entryPtr+BID_KEY_LENGTH); // OFFSET in ASCII
+
+		// Dall'offset del file delle relazioni andiamo a prendere la relazione titolo/titolo
+		trIdsbnIdaltriAuRelIn->SeekTo(offset);
+		if (!sPtr->ReadLineWithPrefixedMaxSize(trIdsbnIdaltriAuRelIn))
+			SignalAnError(__FILE__, __LINE__, "read failed");
+
+		printf("\nlegami: '%s'",sPtr->Data());
+
+		// Splittiamo la riga negli n elementi che la compongono
+		Tokenizer->Assign(sPtr->data());
+		tokenPtr = Tokenizer->GetToken(); // Remove root
+
+		while(*(tokenPtr = Tokenizer->GetToken()))
+		{
+			token.assign(tokenPtr);
+			stringVect.Clear();
+			token.Split(stringVect, ',');
+			if (stringVect[1]->StartsWith("CNC"))
+				cncIds.Add(stringVect[0]);
+			else
+				cnmIds.Add(stringVect[0]);
+
+			delete stringVect[1]; // eliminiamo il DB che non ci serve +
+
+		}//End while
+		if (cncIds.length())
+		{
+			df = new DataField();
+			df->setTag("999");
+			sf = new Subfield('1', &cdAnaBib);
+			df->addSubfield(sf);
+			sf = new Subfield('2', (char*)vid);
+			df->addSubfield(sf);
+			for(int i=0;i<cncIds.length();i++)
+			{
+				sf = new Subfield('9',cncIds.Entry(i));
+				df->addSubfield(sf);
+			}
+			marcRecord->addDataField(df);
+		}
+		if (cnmIds.length())
+		{
+			df = new DataField();
+			df->setTag("999");
+			sf = new Subfield('1', &cdAnaBib);
+			df->addSubfield(sf);
+
+			sf = new Subfield('2', (char*)vid);
+			df->addSubfield(sf);
+
+			for(int i=0;i<cnmIds.length();i++)
+			{
+				sf = new Subfield('9',cnmIds.Entry(i));
+				df->addSubfield(sf);
+			}
+			marcRecord->addDataField(df);
+		}
+
+		cncIds.DeleteAndClear();
+		cnmIds.DeleteAndClear();
+
+
+		int i=0;
+		delete sPtr;
+		delete Tokenizer;
+	}// End if(retb)
+
+} // End Marc4cppLegamiAuthority::creaLegamiAutoreBasiDati
 
 void Marc4cppLegamiAuthority::creaLegamiLuogoRepertori()
 {
@@ -1692,6 +1838,7 @@ bool Marc4cppLegamiAuthority::elaboraDatiLegamiAuthority(const tree<std::string>
 	    CString rootRecord; rootRecord = tbAutore->getStringRecordData();
 		creaLegamiAutoreAutore();
 		creaLegamiAutoreRepertori();
+		creaLegamiAutoreBasiDati();
 	}
 	else if (authority == AUTHORITY_LUOGHI)
 	{

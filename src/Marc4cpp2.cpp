@@ -517,6 +517,9 @@ bool Marc4cpp::setupAuthAutori(
 	tabelleVector.Add(tbAutore = new TbAutore(tbAutoreIn, tbAutoreOffsetIn, offsetBufferTbAutorePtr, elementsTbAutore, keyPlusOffsetPlusLfLength, BID_KEY_LENGTH));
     tabelleVector.Add(tbRepertorio = new TbRepertorio(tbRepertorioIn, tbRepertorioOffsetIn, offsetBufferTbRepertorioPtr, elementsTbRepertorio, keyPlusOffsetPlusLfLength, BID_KEY_LENGTH));
     tabelleVector.Add(trRepAut = new TrRepAut(trRepAutIn, trRepAutOffsetIn, offsetBufferTrRepAutPtr, elementsTrRepAut, keyPlusOffsetPlusLfLength, BID_KEY_LENGTH));
+    tabelleVector.Add(trIdsbnIdaltriAu = new TrIdsbnIdaltri(trIdsbnIdaltriAuIn, trIdsbnIdaltriAuOffsetIn, offsetBuffertrIdsbnIdaltriAuPtr, elementstrIdsbnIdaltriAu, keyPlusOffsetPlusLfLength, VID_KEY_LENGTH));
+
+    tabelleVector.Add(tbfBiblioteca = new TbfBiblioteca(tbfBibliotecaIn, tbfBibliotecaOffsetIn, offsetBufferTbfBibliotecaPtr, elementsTbfBiblioteca, bibliotecaKeyPlusOffsetPlusLfLength, BIBLIOTECA_KEY_LENGTH)); // BIBLIOTECA_KEY_LENGTH+OFFSET_LENGTH+LF_LENGTH
 
 //	tabelleVector.Add(trTitAutRelInv = new TrTitAutRel(trTitAutRelInvIn, trTitAutRelInvOffsetIn, offsetBufferTrTitAutRelInvPtr, elementsTrTitAutInvRel, keyPlusOffsetPlusLfLength, BID_KEY_LENGTH));
 
@@ -538,8 +541,9 @@ bool Marc4cpp::setupAuthAutori(
 
 trAutAutRelIn, trAutAutRelOffsetIn, offsetBufferTrAutAutRelPtr, elementsTrAutAutRel,
 trTitAutRelInvIn, trTitAutRelInvOffsetIn, offsetBufferTrTitAutRelInvPtr, elementsTrTitAutInvRel,
-//trTitAutRelInv,
-
+trIdsbnIdaltriAu,
+trIdsbnIdaltriAuRelIn, trIdsbnIdaltriAuRelOffsetIn, offsetBuffertrIdsbnIdaltriAuRel, elementstrIdsbnIdaltriAuRel,
+tbfBiblioteca,
 			tbfBibliotecaInPoloKV,
 			keyPlusOffsetPlusLfLength,
 			trKeyPlusOffsetPlusLfLength,
