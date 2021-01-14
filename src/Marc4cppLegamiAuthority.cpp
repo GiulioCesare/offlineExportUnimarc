@@ -870,20 +870,16 @@ void Marc4cppLegamiAuthority::creaLegamiAutoreBasiDati()
 		return;
 	}
 	trIdsbnIdaltriAu->dumpRecord();
-	CString cdPoloBib=trIdsbnIdaltriAu->getField(trIdsbnIdaltriAu->cd_polo);
-	cdPoloBib.AppendString(trIdsbnIdaltriAu->getField(trIdsbnIdaltriAu->cd_biblioteca));
-	printf("\ncdPoloBib '%s'",cdPoloBib.Data());
-	if (! tbfBiblioteca->loadRecord(cdPoloBib.Data()))
-	{
-		return;
-	}
-	tbfBiblioteca->dumpRecord();
+//	CString cdPoloBib=trIdsbnIdaltriAu->getField(trIdsbnIdaltriAu->cd_polo);
+//	cdPoloBib.AppendString(trIdsbnIdaltriAu->getField(trIdsbnIdaltriAu->cd_biblioteca));
+//	printf("\ncdPoloBib '%s'",cdPoloBib.Data());
+//	if (! tbfBiblioteca->loadRecord(cdPoloBib.Data()))
+//	{
+//		return;
+//	}
+//	tbfBiblioteca->dumpRecord();
 
-	CString cdAnaBib = tbfBiblioteca->getField(tbfBiblioteca->cd_ana_biblioteca);
-
-	printf("\n cdAnaBib '%s'",cdAnaBib.Data());
-
-
+	CString cdAnaBib;
 
 	// Troviamo le relazioni autore/autore
 	// -----------------------------------
@@ -926,27 +922,44 @@ void Marc4cppLegamiAuthority::creaLegamiAutoreBasiDati()
 		// Splittiamo la riga negli n elementi che la compongono
 		Tokenizer->Assign(sPtr->data());
 		tokenPtr = Tokenizer->GetToken(); // Remove root
-
+		CString poloBibCnc,poloBibCnm;
 		while(*(tokenPtr = Tokenizer->GetToken()))
 		{
 			token.assign(tokenPtr);
 			stringVect.Clear();
 			token.Split(stringVect, ',');
 			if (stringVect[1]->StartsWith("CNC"))
+				{
+				if(poloBibCnc.IsEmpty())
+					poloBibCnc=stringVect[1]->data();
 				cncIds.Add(stringVect[0]);
+				}
 			else
+			{
+				if(poloBibCnm.IsEmpty())
+					poloBibCnm=stringVect[1]->data();
 				cnmIds.Add(stringVect[0]);
-
+			}
 			delete stringVect[1]; // eliminiamo il DB che non ci serve +
 
 		}//End while
 		if (cncIds.length())
 		{
+		//	CString cdPoloBib=trIdsbnIdaltriAu->getField(trIdsbnIdaltriAu->cd_polo);
+		//	cdPoloBib.AppendString(trIdsbnIdaltriAu->getField(trIdsbnIdaltriAu->cd_biblioteca));
+		//	printf("\ncdPoloBib '%s'",cdPoloBib.Data());
+			if (! tbfBiblioteca->loadRecord(poloBibCnc.Data()))
+			{
+				SignalAnError(__FILE__, __LINE__, "\nCodice polo biblioteca sconosciuto %c", poloBibCnc.Data());
+			}else{
+
 			df = new DataField();
 			df->setTag("999");
+			cdAnaBib = tbfBiblioteca->getField(tbfBiblioteca->cd_ana_biblioteca);
 			sf = new Subfield('1', &cdAnaBib);
 			df->addSubfield(sf);
-			sf = new Subfield('2', (char*)vid);
+			//sf = new Subfield('2', (char*)vid);
+			sf =new Subfield('2',poloBibCnc.Data());
 			df->addSubfield(sf);
 			for(int i=0;i<cncIds.length();i++)
 			{
@@ -954,15 +967,23 @@ void Marc4cppLegamiAuthority::creaLegamiAutoreBasiDati()
 				df->addSubfield(sf);
 			}
 			marcRecord->addDataField(df);
+			}
 		}
+
 		if (cnmIds.length())
 		{
+			if (! tbfBiblioteca->loadRecord(poloBibCnm.Data()))
+						{
+				SignalAnError(__FILE__, __LINE__, "\nCodice polo biblioteca sconosciuto %c", poloBibCnm.Data());
+						}else{
 			df = new DataField();
 			df->setTag("999");
+			cdAnaBib = tbfBiblioteca->getField(tbfBiblioteca->cd_ana_biblioteca);
 			sf = new Subfield('1', &cdAnaBib);
 			df->addSubfield(sf);
 
-			sf = new Subfield('2', (char*)vid);
+		//	sf = new Subfield('2', (char*)vid);
+			sf =new Subfield('2',poloBibCnm.Data());
 			df->addSubfield(sf);
 
 			for(int i=0;i<cnmIds.length();i++)
@@ -971,6 +992,7 @@ void Marc4cppLegamiAuthority::creaLegamiAutoreBasiDati()
 				df->addSubfield(sf);
 			}
 			marcRecord->addDataField(df);
+		}
 		}
 
 		cncIds.DeleteAndClear();

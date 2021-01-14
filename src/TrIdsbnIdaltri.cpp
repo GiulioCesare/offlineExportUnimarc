@@ -59,7 +59,7 @@ bool TrIdsbnIdaltri::loadRecord(const char *key)
 
 	if (!Tb::loadRecord(key))
 	{
-		SignalAnError(__FILE__, __LINE__, "Derived class TrLuoLuo::loadRecord key=%s",key);
+		SignalAnError(__FILE__, __LINE__, "Derived class TrIdsbnIdaltri::loadRecord key=%s",key);
 		return false;
 	}
 	return true;
