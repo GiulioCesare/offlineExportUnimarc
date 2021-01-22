@@ -2964,7 +2964,7 @@ void printHeader()
 //					DB
 //					tb_cartografia
 //					inserito campo TP_PROIEZIONE
-//					--alter table tb_cartografia per aggiungere tp_proiezione
+//					--alter table tb_cartoggrafia per aggiungere tp_proiezione
 //					ALTER TABLE MULTIMATERIALE.TB_CARTOGRAFIA ADD TP_PROIEZIONE  varchar2(2);
 
 
