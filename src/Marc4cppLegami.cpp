@@ -66,6 +66,12 @@ Marc4cppLegami::Marc4cppLegami(MarcRecord *marcRecord,
 
 		TsLinkMultim *tsLinkMultim, TbParola *tbParola,
 
+		TrIdsbnIdaltri *trIdsbnIdaltriAu,
+					CFile *trIdsbnIdaltriAuRelIn,
+					CFile *trIdsbnIdaltriAuRelOffsetIn,
+					char* offsetBuffertrIdsbnIdaltriAuRel,
+					long elementstrIdsbnIdaltriAuRel,// 21/01/2021
+
 		TbfBiblioteca *tbfBiblioteca,
 
 		Tb950Inv	*tb950Inv,	// 12/09/14
@@ -119,6 +125,13 @@ Marc4cppLegami::Marc4cppLegami(MarcRecord *marcRecord,
 	this->trPerInt = trPerInt;
 	this->tsLinkMultim =tsLinkMultim;
 	this->tbParola = tbParola;
+
+	this->trIdsbnIdaltriAuRelIn = trIdsbnIdaltriAuRelIn;
+	this->trIdsbnIdaltriAuRelOffsetIn = trIdsbnIdaltriAuRelOffsetIn;
+	this->offsetBuffertrIdsbnIdaltriAuRelPtr = offsetBuffertrIdsbnIdaltriAuRel;
+	this->elementstrIdsbnIdaltriAuRel = elementstrIdsbnIdaltriAuRel;
+	this->elementstrIdsbnIdaltriAuRel = elementstrIdsbnIdaltriAuRel;
+	this->trIdsbnIdaltriAu=trIdsbnIdaltriAu;  // 21/01/2021
 
 	//	this->tbfBibliotecaInPoloKV = tbfBibliotecaInPoloKV;
 	this->tbfBiblioteca = tbfBiblioteca;
@@ -1219,6 +1232,51 @@ void Marc4cppLegami::creaLegamiTitoloAutore() {
 
 } // End Marc4cppLegami::creaLegamiTitoloAutore
 
+
+
+void Marc4cppLegami::creaLegamiAutoreAltriDB() {
+	string str;
+	unsigned int pos;
+	char bid[10 + 1];
+	bid[10] = 0;
+	DataField *df;
+
+	// Cicliamo sul figli di root per cercare gli autori
+	tree<std::string>::pre_order_iterator it = reticolo.begin();
+
+	str = *it;
+	int bidStart = str.find_last_of(':');
+	char *BufTailPtr, *aString;
+	BufTailPtr = bid;
+	aString = (char *) str.data() + bidStart + 1;
+	MACRO_COPY_FAST(10);
+//	memcpy(bid, (char *) str.data() + bidStart + 1, 10);
+
+	//	std::cout << "AUT children of :" << *it << std::endl;
+	tree<std::string>::sibling_iterator ch = reticolo.begin().begin(); //h1
+	while (ch != reticolo.end().end()) { // h1
+		str = *ch;
+		// Troviamo il separatore della gerarchia
+
+		//if ((pos = str.find(':')) != string::npos) {
+			if ((pos=str.find("AUT:")) != -1) {
+			//if (str.find("AUT:", pos + 1) != string::npos) {
+				//				std::cout << str << std::endl;
+				//entryReticoloPtr = (char *)str.data();
+				if(df= creaLegameAutoreAltriDB((char *) str.data(), pos + 4))
+
+					{
+						//marcRecord->addDataField(df);
+					}
+			}
+	//	}
+		++ch;
+	}
+	//	std::cout << std::endl;
+
+} // End Marc4cppLegami::creaLegamiAutoreDb
+
+
 DataField * Marc4cppLegami::creaLegameTitoloAutore(char *entryReticoloPtr,
 		int pos) {
 	DataField *df = 0;
@@ -1486,6 +1544,10 @@ bool Marc4cppLegami::elaboraDatiLegamiAlDocumento(
 //	}
 
 	// Gestione degli ordini (961)
+
+
+	creaLegamiAutoreAltriDB(); //20/01/2020
+
 	elaboraOrdini();
 
 
@@ -2888,6 +2950,7 @@ void Marc4cppLegami::creaTag71x(DataField *df, CString *cdRelazione, char tipoRe
 	char *ptr; // , *breakPtr
 	//CString s;
 
+	//tbAutore->dumpRecord();
 	//const char *nomePtr = tbAutore->getField(tbAutore->ds_nome_aut);
 	CString *sPtr = tbAutore->getFieldString(tbAutore->ds_nome_aut);
 

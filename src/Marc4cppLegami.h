@@ -70,6 +70,8 @@ Campi delle relazioni trTitAutRelIn
 #include "TrTitCla.h"
 #include "TrTitLuo.h"
 #include "TrTitAutRel.h"
+#include "TrRepAut.h"     //19/01/2021
+#include "TrIdsbnIdaltri.h"  //19/01/2021
 
 #include "TbRepertorio.h"
 #include "TrRepMar.h"
@@ -115,6 +117,15 @@ class Marc4cppLegami {
     long elementsTrTitSogBib;
     long elementsTrTitTitInvRel;
     long elementsTrTitTitRel;
+    /*add 19/01/2021*/
+	CFile* trIdsbnIdaltriAuRelIn;
+	CFile* trIdsbnIdaltriAuRelOffsetIn;
+	char* offsetBuffertrIdsbnIdaltriAuRelPtr;
+	long elementstrIdsbnIdaltriAuRel;
+	TrIdsbnIdaltri* trIdsbnIdaltriAu;
+
+	TbfBiblioteca* tbfBiblioteca;
+
     Marc4cppDocumento *marc4cppDocumento;
     MarcRecord      *marcRecord;
     tree<std::string> reticolo;
@@ -124,7 +135,6 @@ class Marc4cppLegami {
     TbAutore        *tbAutore;
     TbClasse        *tbClasse;
     TbComposizione  *tbComposizione;
-    TbfBiblioteca   *tbfBiblioteca;
 
     Tb950Inv		*tb950Inv;	// 12/09/14
 	Tb950Coll		*tb950Coll;
@@ -157,6 +167,8 @@ class Marc4cppLegami {
     TbDescrittore	*tbDescrittore; // 28/06/2016
 	TrSogDes 		*trSogDes; // 28/06/2016
 	TrDesDes 		*trDesDes; // 28/06/2016
+	TrRepAut        *trRepAut;//19/01/2021
+	TrIdsbnIdaltri  *trIdsbnIdaltri; //19/01/2021
 
     bool haResponsabilita1o2(const tree<std::string>& tr);
     bool haResponsabilitaPrincipale(const tree<std::string>& tr);
@@ -226,6 +238,8 @@ class Marc4cppLegami {
     void elabora46x(char *bid, bool bidHaPadre); // , char *sequenza
     void elabora46y(char *bid, TbReticoloTit *tbReticoloTit);
     void elaboraOrdini();
+    DataField * creaLegameAutoreAltriDB(char *entryReticoloPtr, int pos);//19/01/2021
+    void creaLegamiAutoreAltriDB();//20/01/2021
     void getEntityId(char *entryReticolo, char *bid);
     void init();
     void initLicr();
@@ -327,6 +341,12 @@ public:
 
 			TsLinkMultim *tsLinkMultim, TbParola *tbParola,
 
+			TrIdsbnIdaltri *trIdsbnIdaltriAu,
+			CFile *trIdsbnIdaltriAuRelIn,
+			CFile *trIdsbnIdaltriAuRelOffsetIn,
+			char* offsetBuffertrIdsbnIdaltriAuRel,
+			long elementstrIdsbnIdaltriAuRel,// 21/01/2021
+
 			TbfBiblioteca 	*tbfBiblioteca,
 
 			Tb950Inv *tb950Inv,	// 12/09/14
@@ -342,6 +362,25 @@ public:
 			int trKeyPlusOffsetPlusLfLength,
 			int key_length,
 			char *polo
+			);
+
+	Marc4cppLegami(Marc4cppLegami *marc4cppLegami,    //19/01/2021
+			MarcRecord *marcRecord, // per autori
+			TbAutore *tbAutore,
+			TrRepAut *trRepAut,
+			TbRepertorio *tbRepertorio,
+			CFile* trAutAutIn, CFile* trAutAutOffsetIn,	char* offsetBufferTrAutAutPtr, long elementsTrAutAut,
+			CFile* trTitAutRelInvIn, CFile* trTitAutRelInvOffsetIn, char* offsetBufferTrTitAutRelInvPtr, long elementsTrTitAutInvRel,
+			TrIdsbnIdaltri *trIdsbnIdaltriAu,
+			CFile* trIdsbnIdaltriAuRelIn, CFile* trIdsbnIdaltriAuRelOffsetIn, char* offsetBuffertrIdsbnIdaltriAuRel, long elementstrIdsbnIdaltriAuRel,
+
+			TbfBiblioteca *tbfBiblioteca,
+			CKeyValueVector *tbfBibliotecaKV,
+			int keyPlusOffsetPlusLfLength,
+			int trKeyPlusOffsetPlusLfLength,
+			int key_length,
+			int authority,
+			TbTitolo *tbTitolo
 			);
 
     virtual ~Marc4cppLegami();

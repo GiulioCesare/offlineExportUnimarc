@@ -192,6 +192,8 @@ RML0057134  # Lotte sveve
 #include "MarcGlobals.h"
 #include "TbReticoloAut.h"
 #include <stdlib.h>
+#include "library/macros.h"
+
 //#include <stdio.h>
 
 #ifdef TRACK_MEMORY_LEAKS
@@ -307,6 +309,177 @@ void Marc4cppLegami::elaboraOrdini() {
 
 
 
+
+DataField  *Marc4cppLegami::creaLegameAutoreAltriDB(char *entryReticoloPtr, int pos) {
+	bool retb;
+		long position;
+		long offset;
+		char *entryPtr;
+		CString entryFile;
+		DataField *df =0;
+		Subfield *sf;
+		//const char *vid;
+		char vid[10 + 1];
+			vid[10] = 0;
+
+		ATTValVector <CString *> cncIds;
+		ATTValVector <CString *> cnmIds;
+		ATTValVector <CString *> stringVect;
+		//tbAutore->dumpRecord();
+		//vid = tbAutore->getField(tbAutore->vid);
+
+		char *BufTailPtr, *aString;
+		BufTailPtr = vid;
+		aString = (char *) entryReticoloPtr + pos ;
+		MACRO_COPY_FAST(10);
+
+		//+++ test hassan
+		if (! trIdsbnIdaltriAu->loadRecord(vid))
+		{
+			return df;
+		}
+		//trIdsbnIdaltriAu->dumpRecord();
+	//	CString cdPoloBib=trIdsbnIdaltriAu->getField(trIdsbnIdaltriAu->cd_polo);
+	//	cdPoloBib.AppendString(trIdsbnIdaltriAu->getField(trIdsbnIdaltriAu->cd_biblioteca));
+	//	printf("\ncdPoloBib '%s'",cdPoloBib.Data());
+	//	if (! tbfBiblioteca->loadRecord(cdPoloBib.Data()))
+	//	{
+	//		return;
+	//	}
+	//	tbfBiblioteca->dumpRecord();
+
+		CString cdAnaBib;
+
+		// Troviamo le relazioni autore/autore
+		// -----------------------------------
+		//	retb = BinarySearch::search(offsetBufferTrAutAutRelPtr, elementsTrAutAutRel, keyPlusOffsetPlusLfLength, bid, BID_KEY_LENGTH, position, &entryPtr);
+
+
+		if (offsetBuffertrIdsbnIdaltriAuRelPtr)
+			retb = BinarySearch::search(offsetBuffertrIdsbnIdaltriAuRelPtr, elementstrIdsbnIdaltriAuRel, keyPlusOffsetPlusLfLength, vid, VID_KEY_LENGTH, position, &entryPtr);
+		else
+		{
+			retb = BinarySearch::search(trIdsbnIdaltriAuRelOffsetIn, elementstrIdsbnIdaltriAuRel, keyPlusOffsetPlusLfLength, vid, VID_KEY_LENGTH, position, &entryFile);
+			entryPtr = entryFile.data();
+		}
+
+
+		if (retb)
+		{
+			CString *sPtr=new CString();
+			CTokenizer *Tokenizer = new CTokenizer("|");
+			char* tokenPtr;
+			CString token;
+
+			// Questo bid ha legami ad altri titoli
+			// Dalla posizione prendiamo l'offset
+			//		offset = atol (entryPtr+BID_KEY_LENGTH); // offsetBufferTrAutAutPtr+position
+			if (OFFSET_TYPE == OFFSET_TYPE_BINARY) // 09/02/2015
+				//memcpy (&offset, entryPtr+ BID_KEY_LENGTH, 4);	// OFFSET BINARI
+				offset =  *((int*)(entryPtr+BID_KEY_LENGTH)); // 24/03/2015
+
+			else
+				offset = atoi (entryPtr+BID_KEY_LENGTH); // OFFSET in ASCII
+
+			// Dall'offset del file delle relazioni andiamo a prendere la relazione titolo/titolo
+			trIdsbnIdaltriAuRelIn->SeekTo(offset);
+			if (!sPtr->ReadLineWithPrefixedMaxSize(trIdsbnIdaltriAuRelIn))
+				SignalAnError(__FILE__, __LINE__, "read failed");
+
+			//printf("\nlegami: '%s'",sPtr->Data());
+
+			// Splittiamo la riga negli n elementi che la compongono
+			Tokenizer->Assign(sPtr->data());
+			tokenPtr = Tokenizer->GetToken(); // Remove root
+			CString poloBibCnc,poloBibCnm;
+			while(*(tokenPtr = Tokenizer->GetToken()))
+			{
+				token.assign(tokenPtr);
+				stringVect.Clear();
+				token.Split(stringVect, ',');
+				if (stringVect[1]->StartsWith("CNC"))
+					{
+					if(poloBibCnc.IsEmpty())
+						poloBibCnc=stringVect[1]->data();
+					cncIds.Add(stringVect[0]);
+					}
+				else
+				{
+					if(poloBibCnm.IsEmpty())
+						poloBibCnm=stringVect[1]->data();
+					cnmIds.Add(stringVect[0]);
+				}
+				delete stringVect[1]; // eliminiamo il DB che non ci serve +
+
+			}//End while
+
+			if (cncIds.length())
+			{
+			//	CString cdPoloBib=trIdsbnIdaltriAu->getField(trIdsbnIdaltriAu->cd_polo);
+			//	cdPoloBib.AppendString(trIdsbnIdaltriAu->getField(trIdsbnIdaltriAu->cd_biblioteca));
+			//	printf("\ncdPoloBib '%s'",cdPoloBib.Data());
+				if (! tbfBiblioteca->loadRecord(poloBibCnc.Data()))
+				{
+					SignalAnError(__FILE__, __LINE__, "\nCodice polo biblioteca sconosciuto %c", poloBibCnc.Data());
+				}else{
+
+				df = new DataField();
+				df->setTag("999");
+				cdAnaBib = tbfBiblioteca->getField(tbfBiblioteca->cd_ana_biblioteca);
+				sf = new Subfield('1', &cdAnaBib);
+				df->addSubfield(sf);
+				//sf = new Subfield('2', (char*)vid);
+				sf =new Subfield('2',poloBibCnc.Data());
+				df->addSubfield(sf);
+				sf = new Subfield('3', (char*)vid);
+				df->addSubfield(sf);
+				for(int i=0;i<cncIds.length();i++)
+				{
+					sf = new Subfield('9',cncIds.Entry(i));
+					df->addSubfield(sf);
+				}
+				marcRecord->addDataField(df);
+				}
+			}
+
+			if (cnmIds.length())
+			{
+				if (! tbfBiblioteca->loadRecord(poloBibCnm.Data()))
+							{
+					SignalAnError(__FILE__, __LINE__, "\nCodice polo biblioteca sconosciuto %c", poloBibCnm.Data());
+							}else{
+				df = new DataField();
+				df->setTag("999");
+				cdAnaBib = tbfBiblioteca->getField(tbfBiblioteca->cd_ana_biblioteca);
+				sf = new Subfield('1', &cdAnaBib);
+				df->addSubfield(sf);
+
+			//	sf = new Subfield('2', (char*)vid);
+				sf =new Subfield('2',poloBibCnm.Data());
+				df->addSubfield(sf);
+				sf = new Subfield('3', (char*)vid);
+				df->addSubfield(sf);
+				for(int i=0;i<cnmIds.length();i++)
+				{
+					sf = new Subfield('9',cnmIds.Entry(i));
+					df->addSubfield(sf);
+				}
+				marcRecord->addDataField(df);
+			}
+			}
+
+			cncIds.DeleteAndClear();
+			cnmIds.DeleteAndClear();
+
+
+			int i=0;
+			delete sPtr;
+			delete Tokenizer;
+			return df;
+		}// End if(retb)
+
+
+} // end creaLegameAutoreAltriDB
 
 
 

@@ -121,8 +121,8 @@ Marc4cppLegamiAuthority::Marc4cppLegamiAuthority(Marc4cppDocumentoAuthority *mar
 		this->offsetBuffertrIdsbnIdaltriAuRelPtr = offsetBuffertrIdsbnIdaltriAuRelPtr;
 		this->elementstrIdsbnIdaltriAuRel = elementstrIdsbnIdaltriAuRel;
 		this->elementstrIdsbnIdaltriAuRel = elementstrIdsbnIdaltriAuRel;
-
 		this->trIdsbnIdaltriAu=trIdsbnIdaltriAu;
+
 		this->tbfBiblioteca =tbfBiblioteca;
 
 		this->tbfBibliotecaKV = tbfBibliotecaKV;
@@ -869,7 +869,7 @@ void Marc4cppLegamiAuthority::creaLegamiAutoreBasiDati()
 	{
 		return;
 	}
-	trIdsbnIdaltriAu->dumpRecord();
+	//trIdsbnIdaltriAu->dumpRecord();
 //	CString cdPoloBib=trIdsbnIdaltriAu->getField(trIdsbnIdaltriAu->cd_polo);
 //	cdPoloBib.AppendString(trIdsbnIdaltriAu->getField(trIdsbnIdaltriAu->cd_biblioteca));
 //	printf("\ncdPoloBib '%s'",cdPoloBib.Data());

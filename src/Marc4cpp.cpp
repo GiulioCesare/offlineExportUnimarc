@@ -2844,6 +2844,8 @@ bool Marc4cpp::setupAuthDocument(
 
 
 
+
+
 	tb950Coll = new Tb950Coll (tb950CollOutFilenameIn, tb950CollOutOffsetBidFilenameIn, tb950CollOutOffsetKLocFilenameIn, offsetBufferTb950CollBidPtr, offsetBufferTb950CollKLocPtr, elementsTb950BidColl,elementsTb950KeylocColl, BID_KEY_LENGTH, KEYLOC_KEY_LENGTH, offsetPlusLfLength); //  OFFSET_LENGTH+LF_LENGTH
     tabelleVector.Add(tb950Ese = new Tb950Ese (tb950EseOutFilenameIn, tb950EseOutOffsetFilenameIn, offsetBufferTb950EsePtr, elementsTb950Ese, keyPlusOffsetPlusLfLength, BID_KEY_LENGTH));
     tabelleVector.Add(tb950Inv = new Tb950Inv (tb950InvOutFilenameIn, tb950InvOutOffsetFilenameIn, offsetBufferTb950InvPtr, elementsTb950Inv, keyPlusOffsetPlusLfLength, BID_KEY_LENGTH));
@@ -2910,6 +2912,7 @@ if (trBidAltroidIn)
     tabelleVector.Add(tbTitSet1 = new TbTitSet1(tbTitSet1In, tbTitSet1OffsetIn, offsetBufferTbTitSet1Ptr, elementsTbTitSet1, titset1KeyPlusOffsetPlusLfLength, BID_KEY_LENGTH));
     // 31/03/2016
     tabelleVector.Add(tbTitSet2 = new TbTitSet2(tbTitSet2In, tbTitSet2OffsetIn, offsetBufferTbTitSet2Ptr, elementsTbTitSet2, titset2KeyPlusOffsetPlusLfLength, BID_KEY_LENGTH));
+    tabelleVector.Add(trIdsbnIdaltriAu = new TrIdsbnIdaltri(trIdsbnIdaltriAuIn, trIdsbnIdaltriAuOffsetIn, offsetBuffertrIdsbnIdaltriAuPtr, elementstrIdsbnIdaltriAu, keyPlusOffsetPlusLfLength, VID_KEY_LENGTH)); // 21/01/2021
 
 //	if (DATABASE_ID == DATABASE_SBNWEB && IS_TAG_TO_GENERATE(696))
 //	{
@@ -2962,6 +2965,8 @@ if (DATABASE_ID == DATABASE_SBNWEB)
 			trTitTitInvRelIn, trTitTitInvRelOffsetIn, offsetBufferTrTitTitInvRelPtr, elementsTrTitTitInvRel,
 			trTitBib, trTitAut, trTitAutRel, trTitCla, trTitMarRel, trTitMarTb, trAutAutInv, trTitLuo, tbNumeroStandard,
 			tbRepertorio, trRepMar, trPerInt, tsLinkMultim, tbParola,
+			trIdsbnIdaltriAu,
+			trIdsbnIdaltriAuRelIn, trIdsbnIdaltriAuRelOffsetIn, offsetBuffertrIdsbnIdaltriAuRel, elementstrIdsbnIdaltriAuRel,
 			tbfBiblioteca,
 
 			tb950Inv,	// 12/09/14

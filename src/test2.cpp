@@ -2955,8 +2955,10 @@ void printHeader()
 																//	to
 																// void getSottoLivelloTitolo410(CString * entryReticolo, const tree<std::string> &reticolo, int curSottolivello, int sottoLivello);
 //					printf ("\n\nVersione 11.8.1 03/08/2020");	// creaLegameSoggettoVariante, fixed SignalAnError
-					printf ("\n\nVersione 11.11.1 09/11/2020"); // gestione Authority Luoghi.
+//					printf ("\n\nVersione 11.11.1 09/11/2020"); // gestione Authority Luoghi.
 
+					printf ("\n\nVersione 12.01.01 22/01/2021"); // gestione Authority Autore, localizzazioni altriDB(999).]
+																// gestione authority documento localizzazione autori verso altri DB(999).
 
 //	mail Patrizia. Per quando aggiorniamo esercizio
 //					DB
