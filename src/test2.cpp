@@ -1943,7 +1943,7 @@ void testCFile()
 
 void printHeader()
 {
-	printf ("\nOffline Export UNIMARC - (c)Copyright Iccu 2009-2020 (autore Argentino Trombin) - Open source");
+	printf ("\nOffline Export UNIMARC - (c)Copyright Iccu 2009-2021 (autore Argentino Trombin) - Open source");
 //	printf ("\nVersione 1.0.0 del 17/11/2009");
 //	printf ("\nVersione 1.0.1 del 19/11/2009"); 	// Rifatta la 200
 //	printf ("\nVersione 1.0.2 del 23/11/2009"); 	// Rifatta la 960 in base a doc. di Rossana con aggiunta della $m

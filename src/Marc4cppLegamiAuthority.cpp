@@ -917,7 +917,7 @@ void Marc4cppLegamiAuthority::creaLegamiAutoreBasiDati()
 		if (!sPtr->ReadLineWithPrefixedMaxSize(trIdsbnIdaltriAuRelIn))
 			SignalAnError(__FILE__, __LINE__, "read failed");
 
-		printf("\nlegami: '%s'",sPtr->Data());
+		//printf("\nlegami: '%s'",sPtr->Data());
 
 		// Splittiamo la riga negli n elementi che la compongono
 		Tokenizer->Assign(sPtr->data());
@@ -1860,7 +1860,8 @@ bool Marc4cppLegamiAuthority::elaboraDatiLegamiAuthority(const tree<std::string>
 	    CString rootRecord; rootRecord = tbAutore->getStringRecordData();
 		creaLegamiAutoreAutore();
 		creaLegamiAutoreRepertori();
-		creaLegamiAutoreBasiDati();
+		if (IS_TAG_TO_GENERATE(999))
+			creaLegamiAutoreBasiDati();
 	}
 	else if (authority == AUTHORITY_LUOGHI)
 	{

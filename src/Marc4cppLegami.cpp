@@ -1545,8 +1545,8 @@ bool Marc4cppLegami::elaboraDatiLegamiAlDocumento(
 
 	// Gestione degli ordini (961)
 
-
-	creaLegamiAutoreAltriDB(); //20/01/2020
+	if (IS_TAG_TO_GENERATE(999))
+		creaLegamiAutoreAltriDB(); //20/01/2020
 
 	elaboraOrdini();
 
@@ -2627,7 +2627,7 @@ void Marc4cppLegami::creaTag410_InCascata_Indice(int sottoLivelli, const tree<st
 	int livelloValido = sottoLivelli;
 	CString subString,s ;
 
-dump_reticolo(reticolo, reticolo.begin(), reticolo.end());
+//dump_reticolo(reticolo, reticolo.begin(), reticolo.end());
 
 
 //	while (livelloValido) {
