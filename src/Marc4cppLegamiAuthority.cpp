@@ -1860,7 +1860,7 @@ bool Marc4cppLegamiAuthority::elaboraDatiLegamiAuthority(const tree<std::string>
 	    CString rootRecord; rootRecord = tbAutore->getStringRecordData();
 		creaLegamiAutoreAutore();
 		creaLegamiAutoreRepertori();
-		if (IS_TAG_TO_GENERATE(999))
+		if (IS_TAG_TO_GENERATE(999)&& DATABASE_ID == DATABASE_INDICE)
 			creaLegamiAutoreBasiDati();
 	}
 	else if (authority == AUTHORITY_LUOGHI)

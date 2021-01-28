@@ -1545,7 +1545,7 @@ bool Marc4cppLegami::elaboraDatiLegamiAlDocumento(
 
 	// Gestione degli ordini (961)
 
-	if (IS_TAG_TO_GENERATE(999))
+	if (IS_TAG_TO_GENERATE(999) && DATABASE_ID == DATABASE_INDICE)
 		creaLegamiAutoreAltriDB(); //20/01/2020
 
 	elaboraOrdini();
