@@ -1822,7 +1822,7 @@ void printTagsGestiti()
 	printf ("\n8-- Blocco di informazioni sulla fonte");
 	printf ("\n	801,850,856,899");
 	printf ("\n9-- Blocco di uso locale (nazionale)");
-	printf ("\n	921,922,923,926,927,928,929,950,951,956,960,961,967,977"); // 01/2015 967,977
+	printf ("\n	921,922,923,926,927,928,929,950,951,956,960,961,967,977,999"); // 01/2015 967,977
 
 	printf ("\n\nAuthority AUTORE");
 	printf ("\n----------------");
@@ -1843,7 +1843,7 @@ void printTagsGestiti()
 	printf ("\n8-- Blocco di informazioni sulla fonte");
 	printf ("\n	801,810,815,830");  // 856 NOPE
 	printf ("\n9-- Blocco di uso locale (nazionale)");
-	printf ("\n	nessuna"); // 920,921,928,930,931,932 NOPE
+	printf ("\n	999"); // 920,921,928,930,931,932 NOPE
 
 	printf ("\n\nAuthority SOGGETTO");
 	printf ("\n----------------");
