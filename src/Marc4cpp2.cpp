@@ -604,7 +604,8 @@ bool Marc4cpp::creaRecordAuthority(MarcRecord *marcRecord, const tree<std::strin
 	{
 	    if (!tbTitolo->loadRecord(id))
 	    	return false;
-	    if (POLO.isEqual("INDICE"))
+	 //   if (POLO.isEqual("INDICE"))
+		    if (POLO.isEqual("IND"))
 	    {
 			isTitoloOpera=true; // SEMPRE
 //		    if (!tbTitSet2->loadRecord(id)) // 20/07/2017

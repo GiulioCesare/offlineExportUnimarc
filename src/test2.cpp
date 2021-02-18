@@ -2957,9 +2957,9 @@ void printHeader()
 //					printf ("\n\nVersione 11.8.1 03/08/2020");	// creaLegameSoggettoVariante, fixed SignalAnError
 //					printf ("\n\nVersione 11.11.1 09/11/2020"); // gestione Authority Luoghi.
 
-					printf ("\n\nVersione 12.01.01 22/01/2021"); // gestione Authority Autore, localizzazioni altriDB(999).]
+//					printf ("\n\nVersione 12.01.01 22/01/2021"); // gestione Authority Autore, localizzazioni altriDB(999).]
 																// gestione authority documento localizzazione autori verso altri DB(999).
-
+					printf ("\n\nVersione 12.02.01 18/02/2021"); // Fix AUTHORITY_TITOLI_UNIFORMI (// if (POLO.isEqual("INDICE")))
 //	mail Patrizia. Per quando aggiorniamo esercizio
 //					DB
 //					tb_cartografia
