@@ -6,3 +6,4 @@ CVS/
 offlineExportUnimarc
 *.d
 *.o
+offlineExportUnimarc.launch
