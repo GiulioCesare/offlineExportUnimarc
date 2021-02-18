@@ -2961,7 +2961,6 @@ void printHeader()
 																// gestione authority documento localizzazione autori verso altri DB(999).
 					printf ("\n\nVersione 12.02.02 18/02/2021"); // Fix AUTHORITY_TITOLI_UNIFORMI (// if (POLO.isEqual("INDICE")))
 
-					// questo e' per prova devi cancellarlo Argentino
 					//	mail Patrizia. Per quando aggiorniamo esercizio
 //					DB
 //					tb_cartografia
