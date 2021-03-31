@@ -2959,7 +2959,8 @@ void printHeader()
 
 //					printf ("\n\nVersione 12.01.01 22/01/2021"); // gestione Authority Autore, localizzazioni altriDB(999).]
 																// gestione authority documento localizzazione autori verso altri DB(999).
-					printf ("\n\nVersione 12.02.02 18/02/2021"); // Fix AUTHORITY_TITOLI_UNIFORMI (// if (POLO.isEqual("INDICE")))
+//					printf ("\n\nVersione 12.02.02 18/02/2021"); // Fix AUTHORITY_TITOLI_UNIFORMI (// if (POLO.isEqual("INDICE")))
+					printf ("\n\nVersione 12.03.03 31/03/2021"); // add la funzione elaboraNota321();
 
 					//	mail Patrizia. Per quando aggiorniamo esercizio
 //					DB
