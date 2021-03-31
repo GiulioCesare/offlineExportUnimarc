@@ -163,6 +163,7 @@ class Marc4cppDocumento {
     void elaboraDatiTipoNumeroStandard();
     void elaboraNote(char *bid);
     void elaboraNote321(char * bid);
+    void elaboraNota321(CString *sPtr, char *bid, int notaDa); //29/03/2021
  //   void estraiUnicoElemento210(CString &s, C210 * c210); 12/01/2016
     void init(char *polo);
 

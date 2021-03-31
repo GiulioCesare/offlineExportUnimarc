@@ -39,7 +39,8 @@
 #undef DEBUG_ARGE
 
 
-
+#define NOTA_DA_ISDB 0
+#define NOTA_DA_TB_NOTA 1
 //#include "C210.h"
 extern void SignalAnError(const OrsChar *Module, OrsInt Line,
 		const OrsChar * MsgFmt, ...);
@@ -3128,6 +3129,10 @@ void Marc4cppDocumento::elaboraNote(char * bid)
 			sf = new Subfield('a', tbNota->getFieldString(tbNota->ds_nota));
 			df->addSubfield(sf);
 			marcRecord->addDataField(df);
+		}else if  (	sPtr->isEqual("321") && IS_TAG_TO_GENERATE(321))
+		{
+			sPtr = tbNota->getFieldString(tbNota->ds_nota);
+			elaboraNota321(sPtr,bid,NOTA_DA_TB_NOTA);
 		}
 	}
 } // End elaboraNote
@@ -3938,40 +3943,40 @@ while (tbNota321->loadNextRecord(bid)) // 18/04/2016
 //continue;
 
 		sPtr = tbNota321->getFieldString(tbNota321->ds_nota);
-		sPtr-> Split(linkAreas, "##");
+//		sPtr-> Split(linkAreas, "##");
 
-		if (linkAreas.length() != 5)
-		{
-			printf("\nNota 321 invalida per bid %s: '%s'", bid, sPtr->data());
-			linkAreas.DeleteAndClear(); // must be here else memory leak
-			continue;
-		}
-
-		df = new DataField((char *)"321", 3);
-		sf = new Subfield('a', linkAreas.Entry(1)); // Caso A nome della basedati/sito Obbligatorio/Non ripetibile
-													// 		B autore/titolo
-		df->addSubfield(sf);
-		if (linkAreas.Entry(2)->Length())
-		{
-//			sf = new Subfield('b', linkAreas.Entry(3)); // Caso B Data di recensione 17/02/2016 Opzionale/Non ripetibile
-			sf = new Subfield('b', linkAreas.Entry(2)); // Caso B Data di recensione 17/02/2016 Opzionale/Non ripetibile
-			df->addSubfield(sf);
-		}
-
-		if (linkAreas.Entry(3)->Length())
-		{ // solo se esiste
-			sf = new Subfield('c', linkAreas.Entry(3)); // Caso A identificativo record nella base dati di riferimento
-														//      B posizione (vol./p.)
-			df->addSubfield(sf);
-		}
-
-		if (linkAreas.Entry(4)->Length())
-		{
-			sf = new Subfield('u', linkAreas.Entry(4)); // Caso A URL Non ripetibile
-			df->addSubfield(sf);
-		}
-		marcRecord->addDataField(df);
-		linkAreas.DeleteAndClear(); // must be here else memory leak
+//		if (linkAreas.length() != 5)
+//		{
+//			printf("\nNota 321 invalida per bid %s: '%s'", bid, sPtr->data());
+//			linkAreas.DeleteAndClear(); // must be here else memory leak
+//			continue;
+//		}
+		elaboraNota321(sPtr, bid, NOTA_DA_ISDB);
+//		df = new DataField((char *)"321", 3);
+//		sf = new Subfield('a', linkAreas.Entry(1)); // Caso A nome della basedati/sito Obbligatorio/Non ripetibile
+//													// 		B autore/titolo
+//		df->addSubfield(sf);
+//		if (linkAreas.Entry(2)->Length())
+//		{
+////			sf = new Subfield('b', linkAreas.Entry(3)); // Caso B Data di recensione 17/02/2016 Opzionale/Non ripetibile
+//			sf = new Subfield('b', linkAreas.Entry(2)); // Caso B Data di recensione 17/02/2016 Opzionale/Non ripetibile
+//			df->addSubfield(sf);
+//		}
+//
+//		if (linkAreas.Entry(3)->Length())
+//		{ // solo se esiste
+//			sf = new Subfield('c', linkAreas.Entry(3)); // Caso A identificativo record nella base dati di riferimento
+//														//      B posizione (vol./p.)
+//			df->addSubfield(sf);
+//		}
+//
+//		if (linkAreas.Entry(4)->Length())
+//		{
+//			sf = new Subfield('u', linkAreas.Entry(4)); // Caso A URL Non ripetibile
+//			df->addSubfield(sf);
+//		}
+//		marcRecord->addDataField(df);
+//		linkAreas.DeleteAndClear(); // must be here else memory leak
 	}
 } // End elaboraNote321
 
@@ -4009,3 +4014,58 @@ DataField * Marc4cppDocumento::creaTag035() {
 } // End creaTag035
 
 
+void Marc4cppDocumento::elaboraNota321(CString *sPtr, char * bid, int notaDa)
+{
+	DataField *df = 0;
+	Subfield *sf = 0;
+	ATTValVector<CString *> linkAreas;
+
+	//sPtr = tbNota321->getFieldString(tbNota321->ds_nota);
+			sPtr-> Split(linkAreas, "##");
+
+			if(notaDa == NOTA_DA_ISDB)
+			{	if(linkAreas.length() != 5)
+				{
+					printf("\nNota 321 da ISBD invalida per bid %s: '%s'", bid, sPtr->data());
+					linkAreas.DeleteAndClear(); // must be here else memory leak
+					return;
+				}
+			}
+			else { // Nota da tb_nota
+				if(linkAreas.length() != 6)
+					{
+						printf("\nNota 321 da tb_nota  invalida per bid %s: '%s'", bid, sPtr->data());
+						linkAreas.DeleteAndClear(); // must be here else memory leak
+						return;
+					}
+			}
+			if(notaDa == NOTA_DA_TB_NOTA)
+			{
+				linkAreas.DeleteAndRemoveByEntry(0);
+			}
+	df = new DataField((char *)"321", 3);
+		sf = new Subfield('a', linkAreas.Entry(1)); // Caso A nome della basedati/sito Obbligatorio/Non ripetibile
+													// 		B autore/titolo
+		df->addSubfield(sf);
+		if (linkAreas.Entry(2)->Length())
+		{
+//			sf = new Subfield('b', linkAreas.Entry(3)); // Caso B Data di recensione 17/02/2016 Opzionale/Non ripetibile
+			sf = new Subfield('b', linkAreas.Entry(2)); // Caso B Data di recensione 17/02/2016 Opzionale/Non ripetibile
+			df->addSubfield(sf);
+		}
+
+		if (linkAreas.Entry(3)->Length())
+		{ // solo se esiste
+			sf = new Subfield('c', linkAreas.Entry(3)); // Caso A identificativo record nella base dati di riferimento
+														//      B posizione (vol./p.)
+			df->addSubfield(sf);
+		}
+
+		if (linkAreas.Entry(4)->Length())
+		{
+			sf = new Subfield('u', linkAreas.Entry(4)); // Caso A URL Non ripetibile
+			df->addSubfield(sf);
+		}
+		marcRecord->addDataField(df);
+		linkAreas.DeleteAndClear(); // must be here else memory leak
+} // End elaboraNote321
