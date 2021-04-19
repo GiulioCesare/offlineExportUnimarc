@@ -832,7 +832,7 @@ void Marc4cppLegamiAuthority::creaLegamiAutoreRepertori()
 
 	if (retb)
 	{
-		if (trRepLuo->existsRecordNonUnique(vid))
+		if (trRepAut->existsRecordNonUnique(vid))
 		{
 			while (trRepAut->loadNextRecord(vid))  // Prendiamo un repertotrio alla volta
 			{
