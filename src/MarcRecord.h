@@ -54,6 +54,7 @@ public:
     void setControlFieldsVector(ATTValVector<ControlField*> *controlFieldsVector);
     ATTValVector<DataField*> * getDataFieldsVector() const;
     ControlField* getControlField(char * fieldId) const;
+    ATTValVector<DataField*> * getDataFields(char * fieldId);
     DataField* getDataField(char * fieldId) const;
 
     void setDataFieldsVector(ATTValVector<DataField*> *dataFieldsVector);

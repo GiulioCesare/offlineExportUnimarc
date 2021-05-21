@@ -7,3 +7,4 @@ offlineExportUnimarc
 *.d
 *.o
 offlineExportUnimarc.launch
+/Debug/

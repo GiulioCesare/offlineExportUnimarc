@@ -3144,7 +3144,11 @@ void Marc4cpp::ricostruisci101()
 
 	DataField *df_101 = marcRecord->getDataField((char *)"101");
 	DataField *df_454 = marcRecord->getDataField((char *)"454");
-	DataField *df_500 = marcRecord->getDataField((char *)"500");
+
+	//	DataField *df_500 = marcRecord->getDataField((char *)"500");
+
+	// 20/05/2021 mail Mataloni PAL0136504. $x rimosso solo nella 1ma 500. Rimuoverlo anche nelle altre
+	ATTValVector<DataField*> *df_500Vector = marcRecord->getDataFields((char *)"500");
 
 	if (!df_101)
 		return;
@@ -3192,48 +3196,55 @@ void Marc4cpp::ricostruisci101()
 		}
 	}
 
-	if (df_500)
-	{
-		sf = df_500->getSubfield('x'); // il sottocampo di servizio per la lingua
-		if (sf)
+//	if (df_500)
+		for (int i=0; i < df_500Vector->Length(); i++)
 		{
-			linguaPtr = sf->getDataString();
-			linguaPtr->ToLower();
-			sf = new Subfield('c', linguaPtr);
+			DataField *df_500 = df_500Vector->Entry(i);
+			sf = df_500->getSubfield('x'); // il sottocampo di servizio per la lingua
 			if (sf)
 			{
-				df_101->addSubfield(sf);
+				if (!i)
+				{
+					linguaPtr = sf->getDataString();
+					linguaPtr->ToLower();
+					sf = new Subfield('c', linguaPtr);
+					if (sf)
+						df_101->addSubfield(sf);
+				}
 				df_500->removeSubfield('x'); // Rimuoviamo il sottocampo di servizio nella 500
 			}
-		}
-		sf = df_500->getSubfield('y'); // il sottocampo di servizio per la lingua
-		if (sf)
-		{
-			linguaPtr = sf->getDataString();
-			linguaPtr->ToLower();
-			sf = new Subfield('c', linguaPtr);
+
+			sf = df_500->getSubfield('y'); // il sottocampo di servizio per la lingua
 			if (sf)
 			{
-				df_101->addSubfield(sf);
+				if (!i)
+				{
+					linguaPtr = sf->getDataString();
+					linguaPtr->ToLower();
+					sf = new Subfield('c', linguaPtr);
+					if (sf)
+					{
+						df_101->addSubfield(sf);
+					}
+				}
 				df_500->removeSubfield('y'); // Rimuoviamo il sottocampo di servizio nella 454
 			}
 
 			sf = df_500->getSubfield('z'); // il sottocampo di servizio per la lingua
 			if (sf)
 			{
-				linguaPtr = sf->getDataString();
-				linguaPtr->ToLower();
-				sf = new Subfield('c', linguaPtr);
-				if (sf)
+				if (!i)
 				{
-					df_101->addSubfield(sf);
-					df_500->removeSubfield('z'); // Rimuoviamo il sottocampo di servizio nella 454
+					linguaPtr = sf->getDataString();
+					linguaPtr->ToLower();
+					sf = new Subfield('c', linguaPtr);
+					if (sf)
+						df_101->addSubfield(sf);
 				}
+				df_500->removeSubfield('z'); // Rimuoviamo il sottocampo di servizio nella 454
 			}
-		}
-
-	}
-
+		} // End for
+	delete df_500Vector;
 
 
 } // End Marc4cpp::ricostruisci101()

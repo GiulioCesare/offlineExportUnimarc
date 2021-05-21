@@ -921,16 +921,28 @@ DataField * Marc4cppLegami::creaTag500_TitoloUniforme(
 			}
 			else
 			{
+//tbAutore->dumpRecord();
+
 				if (TIPO_SCARICO == TIPO_SCARICO_UNIMARC)
 					sf = new Subfield('9', idBuffer, 10);
 				else // TIPO_SCARICO_OPAC
 				{
-					char *ptr = strchr (tbAutore->getField(tbAutore->ds_nome_aut), '*');
-					if (ptr)
-						sf = new Subfield('9', ptr+1,tbAutore->getFieldLength(tbAutore->ds_nome_aut) - ((ptr+1)-tbAutore->getField(tbAutore->ds_nome_aut)) ); // skip no sort
-						//sf->setData();
-					else
-						sf = new Subfield('9', tbAutore->getFieldString(tbAutore->ds_nome_aut));
+
+//					char *ptr = strchr (tbAutore->getField(tbAutore->ds_nome_aut), '*');
+//					if (ptr)
+//						sf = new Subfield('9', ptr+1,tbAutore->getFieldLength(tbAutore->ds_nome_aut) - ((ptr+1)-tbAutore->getField(tbAutore->ds_nome_aut)) ); // skip no sort
+//						//sf->setData();
+//					else
+//						sf = new Subfield('9', tbAutore->getFieldString(tbAutore->ds_nome_aut));
+
+					// 20/05/2021 BUG mantis 7700
+					// Quando un nome di ente viene adoperato come legame a un titolo
+					// dell'opera gli asterischi non vengono eliminati
+					CString *sPtr=tbAutore->getFieldString(tbAutore->ds_nome_aut);
+					sPtr->removeCharacterOccurances('*');
+					sf = new Subfield('9', sPtr->Data());
+
+
 						//sf->setData();
 					} // end else
 				df->addSubfield(sf);

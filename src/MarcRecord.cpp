@@ -404,6 +404,29 @@ DataField* MarcRecord::getDataField(char * fieldId) const
 	return 0;
 }
 
+ATTValVector<DataField*> * MarcRecord::getDataFields(char * fieldId)
+{
+	ATTValVector<DataField*> *dfVector = new ATTValVector<DataField*>();
+
+	// Cycle through the data fields
+	DataField* df;
+	for (int i=0; i < dataFieldsVector->Length(); i++)
+	{
+		df = dataFieldsVector->Entry(i);
+		if (df)
+		{
+			CString * tag = df->getTagString();
+
+			if (!tag->Compare((const char *)fieldId))
+				dfVector->Add(df);
+		}
+	}
+	return dfVector; // Rememer to delete the vector (not the contents)
+}
+
+
+
+
 ControlField* MarcRecord::getControlField(char * fieldId) const
 {
 	// Cycle through the data fields

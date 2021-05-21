@@ -1913,6 +1913,9 @@ void Marc4cppLegamiAuthority::creaLegamiTitoloAutore(bool isTitoloOpera)
 
 //	std::cout << "AUT children of :" << *it << std::endl;
 	tree<std::string>::sibling_iterator ch=reticolo.begin().begin(); //h1
+
+	bool has_author=false;
+
 	while(ch!=reticolo.end().end()) { // h1
 		str = *ch;
 		// Troviamo il separatore della gerarchia
@@ -1936,11 +1939,53 @@ void Marc4cppLegamiAuthority::creaLegamiTitoloAutore(bool isTitoloOpera)
 				// Facciamo corrente
 //			if ((pos=str.find(':'))!=string::npos)
 				df = creaLegameTitoloAutore((char *)str.data(), pos, isTitoloOpera);
+				has_author=true;
 			}
 
 		}
 	   ++ch;
 	   }
+/*
+// mantis 7699 20/05/2021
+//=======================
+Nel caso di titolo dell'opera musicale il tag 239 deve essere annidato nel tag
+231 analogamente a quanto avviene per il tag 241 (titolo dell'opera musicale con
+autore).
+Di seguito alcuni BID i cui record UNIMARC risultano errati:
+
+CMP0302784
+CMP0207441
+CMP0145197
+*/
+if (!has_author)
+{
+	printf ("\nmettiamo la 239 nella 231 se presente");
+	if (isTitoloOpera)
+	{
+		DataField *df1=0;
+
+		DataField *df231 = marcRecord->getDataField("231");
+		if (df231)
+		{
+
+			// Accodiamo la 239 (titolo completo se presente)
+			DataField *df239 = marcRecord->getDataField((char *)"239");
+			if (df239)
+			{
+				Subfield *sf = new Subfield('1', df239->toSubTag());
+				df231->addSubfield(sf);
+
+				marcRecord->removeDataFields(239);
+			}
+
+
+		}
+	}
+}
+
+
+
+
 
 } // End Marc4cppLegamiAuthority::creaLegamiTitoloAutore
 

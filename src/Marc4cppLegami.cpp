@@ -2566,6 +2566,10 @@ void Marc4cppLegami::creaLegamiTitoloTitolo() {
 		elabora46x(bid, false); // bid ha padri = false
 		elabora42x(bid);
 	}
+//	else STAND BY in attesa di conferma
+//	{//03/05/2020 - GEA Mail di Mery  27/04/2021 09:49. Vedi GEA0178869
+//		elabora42x(bid);
+//	}
 
 	if (sottoLivelliTitolo410) {
 		if (IS_TAG_TO_GENERATE(410))
