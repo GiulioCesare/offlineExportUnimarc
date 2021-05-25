@@ -119,4 +119,6 @@ extern CString *incrementale_dal;
 
 extern bool esportaSoloInventariCollocati;
 
+extern bool export_author_special_characters;
+
 #endif /* MARCGLOBALS_H_ */

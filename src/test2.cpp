@@ -55,6 +55,7 @@ Switch overrides
    '-u o --tipoUnimarc'
    '-x o --xmlMarkFileOut'
    '-z o --indiciBinari (ASCII/BINARY)' // 13/04/2015
+   '-r o --export_author_special_characters // // 25/05/2021 Mataloni/SRI
 
 # Defines a livello di progetto
 	-DTRACK_MEMORY_LEAKS	// per intercettare i memory leakes
@@ -157,7 +158,8 @@ char const * switchOverrides = "Switch overrides:\n\
    '-u o --tipoUnimarc',\n\
    '-x o --xmlMarkFileOut',\n\
    '-y o --sistemaNumerico (decimale/esadecimale)',\n\
-   '-z o --indiciBinari (ASCII/BINARY)'"; // 13/04/2015
+   '-z o --indiciBinari (ASCII/BINARY)',\n\ 
+   '-r o --export_author_special_characters'";  // 25/05/2021 Mataloni/SRI
 
 
 
@@ -331,7 +333,7 @@ CKeyValueVector *bibliotecheDaNonMostrareIn950KV = 0;
 
 CKeyValueVector *bibliotecheDaMostrareIn899KV = 0;
 
-
+bool export_author_special_characters = false; // 24/05/2021 evolutiva Jira per export caratteri speciali per autori per SRI
 
 
 void addSezioniDiCollocazioneDaNonMostrareIn960(char *csvSez)
@@ -1129,6 +1131,8 @@ int offlineExport(int argc, const char* argv[])
 		else
 			printf ("\nWARNING: opzione -z/,--indiciBinari indici possono essere ASCII (default) o BINARY");
 
+	} else if (!strcmp(argv[i],"-r") || !strcmp(argv[i],"--export_author_special_characters")) { // 25/05/2021 Mataloni/SRI
+		export_author_special_characters=true;
 	} else {
 		std::cout << "Not enough or invalid arguments, please try again.\n";
 		exit(1);
@@ -1767,6 +1771,9 @@ while (configLine.ReadLine(iniFileIn)) // ReadLineWithPrefixedMaxSize
 	else if (!ini->fieldsVector->Entry(0)->Compare("_699_sintetica"))
 		_699_sintetica = true;
 
+	else if (!ini->fieldsVector->Entry(0)->Compare("export_author_special_characters"))
+		if (!ini->fieldsVector->Entry(1)->Compare("true"))
+			export_author_special_characters = true;
 
 	else
 		printf ("\nParametro sconosciuto: %s", configLine.data());
@@ -2962,9 +2969,12 @@ void printHeader()
 //					printf ("\n\nVersione 12.02.02 18/02/2021"); // Fix AUTHORITY_TITOLI_UNIFORMI (// if (POLO.isEqual("INDICE")))
 //					printf ("\n\nVersione 12.03.03 31/03/2021"); // add la funzione elaboraNota321();
 
-					printf ("\n\nVersione 12.05.01 21/05/2021"); // mantis 7699 20/05/2021 (embed 239 in 231)
+//					printf ("\n\nVersione 12.05.01 21/05/2021"); // mantis 7699 20/05/2021 (embed 239 in 231)
 																 // mantis 7700 20/05/2021 tag 500 elimina asterischi
 																 // 20/05/2021 mail Mataloni PAL0136504. $x rimosso solo nella 1ma 500. Rimuoverlo anche nelle altre
+
+					printf ("\n\nVersione 12.05.02 25/05/2021"); // 25/05/2021 Mataloni/SRI export authority autori senza rimuovere i caratteri speciali
+																 // '-r o --export_author_special_characters // 25/05/2021 Mataloni/SRI
 
 
 					//	mail Patrizia. Per quando aggiorniamo esercizio

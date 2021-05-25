@@ -59,7 +59,8 @@ bool TbAutore::loadRecord(const char *key)
 	}
 
 	// Replace markup characters
-	this->getFieldString(this->ds_nome_aut)->ChangeTo((char *)"#_", ' ');
+	if (!export_author_special_characters) // 25/05/2021 Mataloni/SRI
+		this->getFieldString(this->ds_nome_aut)->ChangeTo((char *)"#_", ' ');
 
 
 	return true;

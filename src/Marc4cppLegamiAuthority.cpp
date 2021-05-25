@@ -864,7 +864,7 @@ void Marc4cppLegamiAuthority::creaLegamiAutoreBasiDati()
 
 	vid = tbAutore->getField(tbAutore->vid);
 
-	//+++
+	//
 	if (! trIdsbnIdaltriAu->loadRecord(vid))
 	{
 		return;
@@ -1176,12 +1176,18 @@ DataField * Marc4cppLegamiAuthority::creaLegameAutoreAutore(char *entryReticoloP
 	TbAutore * tbAutoreRinvio = new TbAutore(tbAutore);
 
 
-	if (true)
-	{
+//	if (true)
+//	{
 
 	retb = tbAutoreRinvio->loadRecord(vid);
+
+//tbAutoreRinvio->dumpRecord();
+
 	if (!retb)
+	{
+		delete tbAutoreRinvio;
 		return 0; // Record non trovato
+	}
 
 	char tpNomeAut = *tbAutoreRinvio->getField(tbAutoreRinvio->tp_nome_aut);
 	if ( tpNomeAut == 'A' ||
@@ -1198,6 +1204,7 @@ DataField * Marc4cppLegamiAuthority::creaLegameAutoreAutore(char *entryReticoloP
 		}
 		else {
 			SignalAnError(__FILE__, __LINE__, "\nTipo legame autore/autore sconosciuto %c", tipoLegame);
+			delete tbAutoreRinvio;
 			return df;
 		}
 	}
@@ -1212,12 +1219,13 @@ DataField * Marc4cppLegamiAuthority::creaLegameAutoreAutore(char *entryReticoloP
 		}
 		else {
 			SignalAnError(__FILE__, __LINE__, "\nTipo legame autore/autore sconosciuto %c", tipoLegame);
+			delete tbAutoreRinvio;
 			return df;
 		}
 
 
 	}
-	}
+//	}
 	delete tbAutoreRinvio;
 	return df;
 } // End Marc4cppLegamiAuthority::creaLegameAutoreAutore
@@ -1271,6 +1279,7 @@ void Marc4cppLegamiAuthority::creaTag_40x(DataField *df, TbAutore * tbAutoreRinv
 {
 	Subfield *sf;
 	string str;
+
 	char *nomePtr = tbAutoreRinvio->getField(tbAutoreRinvio->ds_nome_aut);
 	char *breakPtr=0;
 	df->setIndicator1(' ');
@@ -1295,9 +1304,14 @@ void Marc4cppLegamiAuthority::creaTag_40x(DataField *df, TbAutore * tbAutoreRinv
 	else
 		len = tbAutoreRinvio->getFieldLength(tbAutoreRinvio->ds_nome_aut);
 
-
-
-	sf = new Subfield('a', nomePtr, len);
+	if (!export_author_special_characters) // 25/05/2021 Mataloni/SRI
+	{
+		CString s = nomePtr;
+		s.removeCharacterOccurances('*');
+		sf = new Subfield('a', &s);
+	}
+	else
+		sf = new Subfield('a', nomePtr, len);
 
 
 	//sf->setData(); // tbAutore->getField(tbAutore->ds_nome_aut)
@@ -1390,22 +1404,30 @@ void Marc4cppLegamiAuthority::creaTag_41x(DataField *df, TbAutore * tbAutoreRinv
 		len = tbAutoreRinvio->getFieldLength(tbAutoreRinvio->ds_nome_aut);
 
 
+    CString s, s2;
+	if (!export_author_special_characters) // 25/05/2021 Mataloni/SRI
+	{
+	    if (ptr = strchr (nomePtr, '*')) // abbiamo almeno un asterisco?
+	    {
+	    	if (ptr != nomePtr)
+	    	{
+				*ptr = 0;
+				s = NSB.data();	// No sort begin
+				s.AppendString(nomePtr, ptr-nomePtr);
+				s.AppendString(&NSE); // No sort end
+	    	}
+	    	nomePtr = ptr+1;
+	    }
 
-    CString s;
-    if (ptr = strchr (nomePtr, '*')) // abbiamo almeno un asterisco?
-    {
-    	if (ptr != nomePtr)
-    	{
-			*ptr = 0;
-			s = NSB.data();	// No sort begin
-			s.AppendString(nomePtr, ptr-nomePtr);
-			s.AppendString(&NSE); // No sort end
-    	}
-    	nomePtr = ptr+1;
-    }
+	    s2 = nomePtr;
+	    s2.removeCharacterOccurances('*');
+	}
+	else
+		s2=nomePtr;
 
-    CString s2;s2 = nomePtr;
-    s2.removeCharacterOccurances('*');
+
+
+
 
     s.AppendString(&s2);
 

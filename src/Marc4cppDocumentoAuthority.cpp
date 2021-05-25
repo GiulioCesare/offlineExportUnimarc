@@ -881,75 +881,43 @@ DataField * Marc4cppDocumentoAuthority::creaTag200()
 
 	if (stringVect.length() == 1)
 	{
+
 		stringVect.Entry(0)->Split(stringVect2, '<');
+if (!export_author_special_characters) // 25/05/2021 Mataloni/SRI
+	stringVect.Entry(0)->removeCharacterOccurances('*');
+
 		sf = new Subfield('a', stringVect2.Entry(0));
 		df->addSubfield(sf);
 
 		if (stringVect2.length() > 1)
-		{
 			creaSottocampiQualificazione(df, stringVect2.Entry(1));
-
-//			stringVect2.Entry(1)->PrependChar('<');
-//
-//			stringVect2.Entry(1)->Split(stringVect3, ';');	// 03/05/2017 Specificazione in 2 parti?
-//			for (int i=0; i < stringVect3.length(); i++)
-//			{
-//				cs = stringVect3.Entry(i)->data();
-//				cs.Strip(CString::leading, '<');
-//				cs.Strip(CString::trailing, '>');
-//				cs.Strip(CString::both, ' ');
-//
-//				if (CMisc::isDate(cs.data()))
-//					sf = new Subfield('f', &cs);
-//				else
-//					sf = new Subfield('c', &cs);
-//				df->addSubfield(sf);
-//			}
-//
-//			stringVect3.DeleteAndClear();
-		}
-
 		stringVect2.DeleteAndClear(); //20/10/2009 11.11
 	}
 	else
 	{
+if (!export_author_special_characters) // 25/05/2021 Mataloni/SRI
+	stringVect.Entry(0)->removeCharacterOccurances('*');
+
 		sf = new Subfield('a', stringVect.Entry(0));
 		df->addSubfield(sf);
 
 		if (stringVect.length() > 1)
 		{
+
 			stringVect.Entry(1)->Split(stringVect2, '<');
+if (!export_author_special_characters) // 25/05/2021 Mataloni/SRI
+	stringVect2.Entry(0)->removeCharacterOccurances('*');
 
 			if (!stringVect2.Entry(0)->IsEmpty())	// 04/06/15
 			{
 				stringVect2.Entry(0)->PrependChar(',');
 				sf = new Subfield('b', stringVect2.Entry(0));
-				//sf->setData();
 				df->addSubfield(sf);
 			}
 
 			if (stringVect2.length() > 1)
 			{
 				creaSottocampiQualificazione(df, stringVect2.Entry(1));
-
-//				stringVect2.Entry(1)->PrependChar('<');
-//
-//				stringVect2.Entry(1)->Split(stringVect3, ';');	// 03/05/2017 Specificazione in 2 parti?
-//				for (int i=0; i < stringVect3.length(); i++)
-//				{
-//					cs = stringVect3.Entry(i)->data();
-//					cs.Strip(CString::leading, '<');
-//					cs.Strip(CString::trailing, '>');
-//					cs.Strip(CString::both, ' ');
-//
-//					if (CMisc::isDate(cs.data()))
-//						sf = new Subfield('f', &cs);
-//					else
-//						sf = new Subfield('c', &cs);
-//					df->addSubfield(sf);
-//				}
-//
-//				stringVect3.DeleteAndClear();
 			}
 			stringVect2.DeleteAndClear(); //20/10/2009 11.11
 		}
@@ -1132,15 +1100,16 @@ DataField * Marc4cppDocumentoAuthority::creaTag210()
 		df->setIndicator2('2'); // Sembra fisso da scarico indice 26/08/2010, Name entered under name in direct order
 
 
+if (!export_author_special_characters) // 25/05/2021 Mataloni/SRI
 	stringVect.Entry(0)->removeCharacterOccurances('*');
 
 	if (stringVect.length() > 1)
-	{
-		stringVect.Entry(1)->removeCharacterOccurances('*');
 		stringVect.Entry(1)->Split(stringVect2, '<');
-	}
 	else
 		stringVect.Entry(0)->Split(stringVect2, '<');
+
+if (!export_author_special_characters) // 25/05/2021 Mataloni/SRI
+	stringVect2.Entry(0)->removeCharacterOccurances('*');
 
 
 	if (stringVect.length() > 1)
