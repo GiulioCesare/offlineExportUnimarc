@@ -597,7 +597,7 @@ bool Tb::loadRecord(const char *key)
 
 	if (!retb)
 	{
-	    SignalAnError(__FILE__, __LINE__, "Record non trovato per chiave %s", key);
+//	    SignalAnError(__FILE__, __LINE__, "Record non trovato per chiave %s", key);
 		return false;
 	}
 

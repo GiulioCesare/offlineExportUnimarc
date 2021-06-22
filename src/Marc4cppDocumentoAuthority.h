@@ -109,7 +109,7 @@ class Marc4cppDocumentoAuthority {
 
     void creaSottocampiQualificazione(DataField *df, CString *csPtr);
 
-//	bool elabra200(DataField * df, C200 *c200);
+    //	bool elabra200(DataField * df, C200 *c200);
 //	DataField * creaTag205(char *areaStartPtr, char *areaEndPtr);
 //	void creaTag205Antico(C205 *c205, char *area205);
 //	void creaTag205NonAntico(C205 *c205, char *area205);
@@ -132,6 +132,7 @@ class Marc4cppDocumentoAuthority {
 	void init(MarcRecord *marcRecord, char *polo, char *tagsToGenerateBufferPtr, int tagsToGenerate, int authority);
 
 public:
+    void doQualificazioni(DataField *df, ATTValVector <CString *> stringVect2); // 22/06/2021
 
 	Marc4cppDocumentoAuthority(MarcRecord *marcRecord, TbAutore *tbAutore, char *polo, char *tagsToGenerateBufferPtr, int tagsToGenerate, int authority);
 	Marc4cppDocumentoAuthority(MarcRecord *marcRecord, TbSoggetto *tbSoggetto, TbDescrittore *tbDescrittore, char *polo, char *tagsToGenerateBufferPtr, int tagsToGenerate, int authority);

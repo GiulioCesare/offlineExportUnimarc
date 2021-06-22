@@ -1279,8 +1279,11 @@ void Marc4cppLegamiAuthority::creaTag_40x(DataField *df, TbAutore * tbAutoreRinv
 {
 	Subfield *sf;
 	string str;
+	CString dsNomeAut;
 
 	char *nomePtr = tbAutoreRinvio->getField(tbAutoreRinvio->ds_nome_aut);
+	dsNomeAut = tbAutoreRinvio->getField(tbAutoreRinvio->ds_nome_aut);
+
 	char *breakPtr=0;
 	df->setIndicator1(' ');
 	const char *tpNome = tbAutoreRinvio->getField(tbAutoreRinvio->tp_nome_aut);
@@ -1317,31 +1320,113 @@ void Marc4cppLegamiAuthority::creaTag_40x(DataField *df, TbAutore * tbAutoreRinv
 	//sf->setData(); // tbAutore->getField(tbAutore->ds_nome_aut)
 	df->addSubfield(sf);
 
+
+
+
+	ATTValVector <CString *> stringVect;
+	ATTValVector <CString *> stringVect2;
 	if (*tpNome == 'C' || *tpNome == 'c' || *tpNome == 'D' || *tpNome == 'd')
 	{
 		if (breakPtr)
 		{
 			*breakPtr = ','; // rimetti
-			sf = new Subfield('b', breakPtr, tbAutoreRinvio->getFieldLength(tbAutoreRinvio->ds_nome_aut)-len);
-			//sf->setData();
-			df->addSubfield(sf);
-		}
+//			sf = new Subfield('b', breakPtr, tbAutoreRinvio->getFieldLength(tbAutoreRinvio->ds_nome_aut)-len);
+//			df->addSubfield(sf);
 
-	}
+			// 25/05/2021 Mataloni/SRI
+			CString s=breakPtr;
 
-	//Qualificazione
-	if (*tpNome == 'A' || *tpNome == 'a' || *tpNome == 'B' || *tpNome == 'b')
-	{
-		if (breakPtr)
-		{
-
-			sf = new Subfield('c', breakPtr+1, tbAutoreRinvio->getFieldLength(tbAutoreRinvio->ds_nome_aut)-len-1);
-//			sf->setData();
+			s.Split(stringVect2, '<');
+			sf = new Subfield('b', stringVect2.Entry(0));
 			df->addSubfield(sf);
 
-		}
 
+//			s.Split(stringVect, '<');
+//			sf = new Subfield('b', stringVect.Entry(0));
+//			df->addSubfield(sf);
+//
+//			if (stringVect.length() > 1)
+//			{
+//				if (!export_author_special_characters) // 25/05/2021 Mataloni/SRI
+//					stringVect.Last()->ExtractLastChar();
+//
+//				ATTValVector <CString *> stringVect3;
+//				stringVect.Entry(1)->Split(stringVect3, ';');
+//
+//				// 29/01/2013 Gestione $c e tpNomeAut 'E'
+//				bool numeroMeetingDone=false;
+//				bool dateMeetingDone=false;
+//				bool luogoMeetingDone=false;
+//
+//				int ctr=1;
+//				for (int i=0; i < stringVect3.Length(); i++)
+//				{
+//					stringVect3.Entry(i)->Strip(CString::both, ' ');
+//
+//					char qualificazione = getQualificazioneType(stringVect3.Entry(i)->Data(), i, *tpNome);
+//					if (qualificazione == 'd') // Number of meeting
+//						numeroMeetingDone=true;
+//					if (qualificazione == 'f' && dateMeetingDone == false)
+//						dateMeetingDone = true;
+//					if (qualificazione == 'e')
+//					{
+//						luogoMeetingDone = true;
+//						if (*tpNome == 'E' || ctr > 3)
+//							qualificazione = 'c';	// generic info
+//					}
+//
+//					if (export_author_special_characters) // 25/05/2021 Mataloni/SRI
+//						stringVect3.Entry(i)->PrependChar('<');
+//
+//					sf = new Subfield(qualificazione, stringVect3.Entry(i));
+//					df->addSubfield(sf);
+//					ctr++;
+//					stringVect3.DeleteAndClear();
+//				}
+//
+//
+//			}
+//
+//			stringVect.DeleteAndClear();
+//
+//
+		}
 	}
+//
+//	//Qualificazione
+//	if (*tpNome == 'A' || *tpNome == 'a' || *tpNome == 'B' || *tpNome == 'b')
+//	{
+//		if (breakPtr)
+//		{
+//			if (export_author_special_characters) // 25/05/2021 Mataloni/SRI
+//				sf = new Subfield('c', breakPtr, tbAutoreRinvio->getFieldLength(tbAutoreRinvio->ds_nome_aut)-len);
+//			else
+//				sf = new Subfield('c', breakPtr+1, tbAutoreRinvio->getFieldLength(tbAutoreRinvio->ds_nome_aut)-len-1);
+//			df->addSubfield(sf);
+//		}
+//
+//	}
+
+
+//	ATTValVector <CString *> stringVect;
+
+//	dsNomeAut.Split(stringVect, ':');
+	if (!stringVect2.length())
+		dsNomeAut.Split(stringVect2, '<');
+
+	if (stringVect2.length() > 1)
+	{// Gestiamo le qualificazioni
+		sf->appendData("<"); // on last subfield
+		marc4cppDocumentoAuthority->doQualificazioni(df, stringVect2);
+	} // End qualificazioni
+
+	stringVect.DeleteAndClear();	// 20/10/2009 11.11
+	stringVect2.DeleteAndClear(); 	// 20/10/2009 11.11
+
+
+
+
+
 
 //tbAutoreRinvio->dumpRecord();
 
@@ -1373,8 +1458,10 @@ void Marc4cppLegamiAuthority::creaTag_41x(DataField *df, TbAutore * tbAutoreRinv
     string str;
     char *tpNome;
     char *ptr, *breakPtr;
+    CString dsNomeAut;
 
     char *nomePtr = tbAutoreRinvio->getField(tbAutoreRinvio->ds_nome_aut);
+	dsNomeAut = tbAutoreRinvio->getField(tbAutoreRinvio->ds_nome_aut);
 
     tpNome = tbAutoreRinvio->getField(tbAutoreRinvio->tp_nome_aut);
     if (*tpNome == 'E' || *tpNome == 'e' || *tpNome == 'G' || *tpNome == 'g')
@@ -1425,10 +1512,6 @@ void Marc4cppLegamiAuthority::creaTag_41x(DataField *df, TbAutore * tbAutoreRinv
 	else
 		s2=nomePtr;
 
-
-
-
-
     s.AppendString(&s2);
 
     sf = new Subfield('a', &s);
@@ -1449,16 +1532,42 @@ void Marc4cppLegamiAuthority::creaTag_41x(DataField *df, TbAutore * tbAutoreRinv
     	}
     }
 
-    //Qualificazione
-    if (breakPtr && *(breakPtr+1) == '<')
-    {
-        if(ptr = strstr (breakPtr, " ; "))
-            *ptr = 0;
 
-        sf = new Subfield('c', breakPtr+1, tbAutoreRinvio->getFieldLength(tbAutoreRinvio->ds_nome_aut)-len-1);
-        //sf->setData();
-        df->addSubfield(sf);
-    }
+    //Qualificazione
+//    if (breakPtr && *(breakPtr+1) == '<')
+//    {
+//        if(ptr = strstr (breakPtr, " ; "))
+//            *ptr = 0;
+//
+//        sf = new Subfield('c', breakPtr+1, tbAutoreRinvio->getFieldLength(tbAutoreRinvio->ds_nome_aut)-len-1);
+//        //sf->setData();
+//        df->addSubfield(sf);
+//    }
+
+
+	ATTValVector <CString *> stringVect;
+	ATTValVector <CString *> stringVect2;
+
+	dsNomeAut.Split(stringVect, ':');
+	if (stringVect.length() > 1)
+		stringVect.Entry(1)->Split(stringVect2, '<');
+	else
+		stringVect.Entry(0)->Split(stringVect2, '<');
+
+	if (stringVect2.length() > 1)
+	{// Gestiamo le qualificazioni
+		sf->appendData("<"); // on last subfield
+		marc4cppDocumentoAuthority->doQualificazioni(df, stringVect2);
+	} // End qualificazioni
+
+	stringVect.DeleteAndClear();	// 20/10/2009 11.11
+	stringVect2.DeleteAndClear(); 	// 20/10/2009 11.11
+
+
+
+
+
+
 
 //    sf->setData(tbAutoreRinvio->getField(tbAutoreRinvio->vid));
 	char * vid = tbAutoreRinvio->getField(tbAutoreRinvio->vid);
@@ -1479,9 +1588,6 @@ void Marc4cppLegamiAuthority::creaTag_41x(DataField *df, TbAutore * tbAutoreRinv
 	    sf = new Subfield('3', &id);
 		//sf->setData();
 	}
-
-
-
 
 
     df->addSubfield(sf);

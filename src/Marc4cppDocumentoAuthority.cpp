@@ -890,7 +890,10 @@ if (!export_author_special_characters) // 25/05/2021 Mataloni/SRI
 		df->addSubfield(sf);
 
 		if (stringVect2.length() > 1)
+		{
+			sf->appendData("<"); // on last subfield
 			creaSottocampiQualificazione(df, stringVect2.Entry(1));
+		}
 		stringVect2.DeleteAndClear(); //20/10/2009 11.11
 	}
 	else
@@ -917,6 +920,7 @@ if (!export_author_special_characters) // 25/05/2021 Mataloni/SRI
 
 			if (stringVect2.length() > 1)
 			{
+				sf->appendData("<"); // on last subfield
 				creaSottocampiQualificazione(df, stringVect2.Entry(1));
 			}
 			stringVect2.DeleteAndClear(); //20/10/2009 11.11
@@ -950,10 +954,10 @@ void Marc4cppDocumentoAuthority::creaSottocampiQualificazione(DataField *df, CSt
 		else
 			sf = new Subfield('c');
 
-		if (!i)
-			cs.PrependChar('<');
-		else
-			cs.PrependString(" ; ");
+//		if (!i)
+//			cs.PrependChar('<');
+//		else
+//			cs.PrependString(" ; ");
 		sf->setData(&cs);
 
 		df->addSubfield(sf);
@@ -1055,7 +1059,7 @@ DataField * Marc4cppDocumentoAuthority::creaTag210()
 	DataField *df=0;
 	Subfield *sf;
 //	CString *sPtr;
-	CString daData;
+	CString daData, s;
 	ATTValVector <CString *> stringVect;
 	ATTValVector <CString *> stringVect2;
 //	bool retb;
@@ -1088,16 +1092,7 @@ DataField * Marc4cppDocumentoAuthority::creaTag210()
 	else
 		df->setIndicator1('0');	// Corporate name
 
-
-//	if (tpNomeAut == 'E')
-//		df->setIndicator2('0');
-//
-//	else if (tpNomeAut == 'R')
-//		df->setIndicator2('1');
-//	else if (tpNomeAut == 'G')
-//		df->setIndicator2('2');
-//	else
-		df->setIndicator2('2'); // Sembra fisso da scarico indice 26/08/2010, Name entered under name in direct order
+	df->setIndicator2('2'); // Sembra fisso da scarico indice 26/08/2010, Name entered under name in direct order
 
 
 if (!export_author_special_characters) // 25/05/2021 Mataloni/SRI
@@ -1108,8 +1103,8 @@ if (!export_author_special_characters) // 25/05/2021 Mataloni/SRI
 	else
 		stringVect.Entry(0)->Split(stringVect2, '<');
 
-if (!export_author_special_characters) // 25/05/2021 Mataloni/SRI
-	stringVect2.Entry(0)->removeCharacterOccurances('*');
+	if (!export_author_special_characters) // 25/05/2021 Mataloni/SRI
+		stringVect2.Entry(0)->removeCharacterOccurances('*');
 
 
 	if (stringVect.length() > 1)
@@ -1130,61 +1125,10 @@ if (!export_author_special_characters) // 25/05/2021 Mataloni/SRI
 	}
 
 	if (stringVect2.length() > 1)
-	{// Gestiamo le qualificazioni
-		stringVect2.Last()->ExtractLastChar();
-		ATTValVector <CString *> stringVect3;
-		stringVect2.Entry(1)->Split(stringVect3, ';');
-
-		// 29/01/2013 Gestione $c e tpNomeAut 'E'
-		bool numeroMeetingDone=false;
-		bool dateMeetingDone=false;
-		bool luogoMeetingDone=false;
-
-		int ctr=1;
-		for (int i=0; i < stringVect3.Length(); i++)
-		{
-			stringVect3.Entry(i)->Strip(CString::both, ' ');
-
-
-			char qualificazione = getQualificazioneType(stringVect3.Entry(i));
-			if (qualificazione == 'd') // Number of meeting
-			{
-				numeroMeetingDone=true;
-			}
-			if (qualificazione == 'f' && dateMeetingDone == false)
-				dateMeetingDone = true;
-
-//				else
-//				{
-//					if ()
-//					qualificazione = 'c'; // data gia' fatta. Probabilmente manca il numero di meeting
-//				}
-			if (qualificazione == 'e')
-			{
-				luogoMeetingDone = true;
-
-				if (tpNomeAut == 'E' || ctr > 3)
-					qualificazione = 'c';	// generic info
-			}
-
-
-//				if ((tpNomeAut == 'E' &&
-//					qualificazione == 'e') || // luogo meeting
-//					ctr > 3) // numero/data/luogo + altro
-//					qualificazione = 'c';	// generic infog
-
-			sf = new Subfield(qualificazione, stringVect3.Entry(i));
-			df->addSubfield(sf);
-			ctr++;
-		}
-
-
-
-
-		stringVect3.DeleteAndClear();
-
-	} // End qualificazioni
-
+	{
+		sf->appendData("<"); // on last subfield
+		doQualificazioni(df, stringVect2); // Gestiamo le qualificazioni
+	}
 
 	stringVect.DeleteAndClear();	// 20/10/2009 11.11
 	stringVect2.DeleteAndClear(); 	// 20/10/2009 11.11
@@ -1194,17 +1138,88 @@ if (!export_author_special_characters) // 25/05/2021 Mataloni/SRI
 	return df;
 } // End creaTag210
 
+
+void Marc4cppDocumentoAuthority::doQualificazioni(DataField *df, ATTValVector <CString *> stringVect2)
+{
+	CString s;
+	Subfield *sf;
+		ATTValVector <CString *> stringVect3, stringVect4;
+		stringVect2.Entry(1)->Split(stringVect3, '>');
+
+		stringVect3.Entry(0)->Split(stringVect4, ';');
+
+		// 29/01/2013 Gestione $c e tpNomeAut 'E'
+		bool numeroMeetingDone=false;
+		bool dateMeetingDone=false;
+		bool luogoMeetingDone=false;
+
+		int ctr=1;
+		int v4Len=stringVect4.Length();
+		for (int i=0; i < v4Len; i++)
+		{
+			stringVect4.Entry(i)->Strip(CString::both, ' ');
+
+
+			char qualificazione = getQualificazioneType(stringVect4.Entry(i));
+			if (qualificazione == 'd') // Number of meeting
+			{
+				numeroMeetingDone=true;
+			}
+			if (qualificazione == 'f' && dateMeetingDone == false)
+				dateMeetingDone = true;
+
+			if (qualificazione == 'e')
+			{
+				luogoMeetingDone = true;
+
+//				if (tpNomeAut == 'E' || ctr > 3)
+					qualificazione = 'c';	// generic info
+			}
+
+//				if (!i)
+//					stringVect4.Entry(i)->PrependChar('<');
+
+
+				s = stringVect4.Entry(i)->Data();
+				if (i == (v4Len-1) )
+				{
+					s.AppendChar('>');
+					if (stringVect3.length() > 1)
+						s.AppendString(stringVect3.Entry(1));
+				}
+
+			sf = new Subfield(qualificazione, &s);
+			df->addSubfield(sf);
+			ctr++;
+		}
+		stringVect3.DeleteAndClear();
+		stringVect4.DeleteAndClear();
+} // End doQualificazioni
+
+
+
 char Marc4cppDocumentoAuthority::getQualificazioneType(CString *parteDiQualificazione)
 {
-	// Controllo semantico
-	if (parteDiQualificazione->GetLastChar() == '.')
-		return 'd'; // numero di meeting
+//	// Controllo semantico
+//	if (parteDiQualificazione->GetLastChar() == '.')
+//		return 'd'; // numero di meeting
+//
+//	char chr = parteDiQualificazione->GetFirstChar();
+//	if ( chr >= '0' && chr <= '9')
+//		return 'f'; // Data di meeting
+//	else
+//		return 'e'; // luogo di meeting
+//
 
-	char chr = parteDiQualificazione->GetFirstChar();
-	if ( chr >= '0' && chr <= '9')
-		return 'f'; // Data di meeting
-	else
-		return 'e'; // luogo di meeting
+
+	if (CMisc::isDate(parteDiQualificazione->data()))
+		return 'f';
+
+	if (parteDiQualificazione->GetLastChar() == '.')
+		return 'd'; // numero di parte
+
+	return 'c';
+
 
 } // end getQualificazioneType
 

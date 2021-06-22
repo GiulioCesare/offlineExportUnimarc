@@ -189,8 +189,7 @@ class Marc4cppLegami {
     void creaLegameSoggettoVariante();	// 15/01/2018
     DataField * creaSoggettoVarianteSS(CString *key_des,  CKeyValueVector *variantiKV, DataField *df, int idx, char subfieldID); // 03/04/2018
 //    void creaSoggettoCompostoNonPreferito(CKeyValueVector *scomposizioniKVV); // , DataField * df
-
-    DataField * creaSoggettoCompostoNonPreferito(CKeyValueVector *scomposizioniKVV, DataField *df);
+//    DataField * creaSoggettoCompostoNonPreferito(CKeyValueVector *scomposizioniKVV, DataField *df);
     DataField * creaSoggettoCNP1(CKeyValueVector *scomposizioniKVV, DataField *df, int i, int ctr);
     DataField * creaCompostoNonPreferito(CKeyValueVector *scomposizioniKVV, DataField *df);
 

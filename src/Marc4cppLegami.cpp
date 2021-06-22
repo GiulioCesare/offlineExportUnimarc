@@ -4281,55 +4281,55 @@ void Marc4cppLegami::creaLegameSoggettoVariante() {
 
 
 
-DataField * Marc4cppLegami::creaSoggettoCompostoNonPreferito(CKeyValueVector *scomposizioniKVV, DataField *df=0) {
-	Subfield *sf;
-	char subfieldId;
-//	DataField * df;
-	CString s;
-	// Ordiniamo le scomposizioni per composto non preferito
-			scomposizioniKVV->SortAscendingByKey();
-
-			int ctr = 0;
-			int i=1;
-			for (; i < scomposizioniKVV->Length(); i++)
-			{
-
-				if (!strcmp((char *)scomposizioniKVV->GetKey(i), (char *)scomposizioniKVV->GetKey(i-1)))
-				{ // Stringhe uguali
-					if (!ctr)
-						ctr=2;
-					else
-						ctr++;
-				}
-				else
-				{ // Stringhe diverse
-					if (ctr)
-					{
-//printf ("\n%s, %d occ., %s", (char *)scomposizioniKVV->GetKey(i-1), ctr, (char *)scomposizioniKVV->GetValue(i-1));
-//printf ("\n%s", (char *)scomposizioniKVV->GetKey(i-1));
-
-//						int occ = *((int *)composto_non_preferitoKV->GetValuePtrFromSortedKey((char *)scomposizioniKVV->GetKey(i-1)));
-
-						int occ;
-						int *intPtr = (int *)composto_non_preferito_ctr_KV->GetValuePtrFromSortedKey((char *)scomposizioniKVV->GetKey(i-1));
-						if (intPtr)
-							occ = *(intPtr);
-
-						if (occ && ctr >= occ)
-						{
-							df = creaSoggettoCNP1(scomposizioniKVV, df, i, ctr);
-						}
-						ctr = 0;
-					}
-				}
-			} // end for
-
-			if (ctr)
-			{
-				df = creaSoggettoCNP1(scomposizioniKVV, df, i, ctr);
-			}
-	return df;
-} // End creaSoggettoCompostoNonPreferito
+//DataField * Marc4cppLegami::creaSoggettoCompostoNonPreferito(CKeyValueVector *scomposizioniKVV, DataField *df=0) {
+//	Subfield *sf;
+//	char subfieldId;
+////	DataField * df;
+//	CString s;
+//	// Ordiniamo le scomposizioni per composto non preferito
+//			scomposizioniKVV->SortAscendingByKey();
+//
+//			int ctr = 0;
+//			int i=1;
+//			for (; i < scomposizioniKVV->Length(); i++)
+//			{
+//
+//				if (!strcmp((char *)scomposizioniKVV->GetKey(i), (char *)scomposizioniKVV->GetKey(i-1)))
+//				{ // Stringhe uguali
+//					if (!ctr)
+//						ctr=2;
+//					else
+//						ctr++;
+//				}
+//				else
+//				{ // Stringhe diverse
+//					if (ctr)
+//					{
+////printf ("\n%s, %d occ., %s", (char *)scomposizioniKVV->GetKey(i-1), ctr, (char *)scomposizioniKVV->GetValue(i-1));
+////printf ("\n%s", (char *)scomposizioniKVV->GetKey(i-1));
+//
+////						int occ = *((int *)composto_non_preferitoKV->GetValuePtrFromSortedKey((char *)scomposizioniKVV->GetKey(i-1)));
+//
+//						int occ;
+//						int *intPtr = (int *)composto_non_preferito_ctr_KV->GetValuePtrFromSortedKey((char *)scomposizioniKVV->GetKey(i-1));
+//						if (intPtr)
+//							occ = *(intPtr);
+//
+//						if (occ && ctr >= occ)
+//						{
+//							df = creaSoggettoCNP1(scomposizioniKVV, df, i, ctr);
+//						}
+//						ctr = 0;
+//					}
+//				}
+//			} // end for
+//
+//			if (ctr)
+//			{
+//				df = creaSoggettoCNP1(scomposizioniKVV, df, i, ctr);
+//			}
+//	return df;
+//} // End creaSoggettoCompostoNonPreferito
 
 
 DataField * Marc4cppLegami::creaCompostoNonPreferito(CKeyValueVector *compostoNonPreferitoKVV, DataField *df) {

@@ -48,6 +48,7 @@ Switch overrides
    '-j o --idXunimarc'
    '-l o --logOgniXRighe N'
    '-m o --markFileOut'
+   '-n o --txtMarkFileOut'
    '-p o --processLog'
    '-q o --esportaSoloInventariCollocati'
    '-s o --tipoScarico'
@@ -151,6 +152,7 @@ char const * switchOverrides = "Switch overrides:\n\
    '-j o --idXunimarc',\n\
    '-l o --logOgniXRighe N',\n\
    '-m o --markFileOut',\n\
+   '-n o --txtMarkFileOut',\n\
    '-p o --processLog',\n\
    '-q o --esportaSoloInventariCollocati',\n\
    '-s o --tipoScarico',\n\
@@ -1094,8 +1096,14 @@ int offlineExport(int argc, const char* argv[])
                 } else if (!strcmp(argv[i],"-m") || !strcmp(argv[i],"--markFileOut")) {
                 	MARKFILEOUT.assign((char *)argv[i+1]);
 
+                } else if (!strcmp(argv[i],"-n") || !strcmp(argv[i],"--txtMarkFileOut")) {
+                	MARKFILEOUTTXT .assign((char *)argv[i+1]);
+
+
                 } else if (!strcmp(argv[i],"-x") || !strcmp(argv[i],"--xmlMarkFileOut")) {
                 	MARKFILEOUTXML.assign((char *)argv[i+1]);
+
+
 
 	} else if (!strcmp(argv[i],"-y") || !strcmp(argv[i],"--sistemaNumerico")) {
 		if(!strcmp(argv[i+1],"decimale"))
@@ -2973,9 +2981,16 @@ void printHeader()
 																 // mantis 7700 20/05/2021 tag 500 elimina asterischi
 																 // 20/05/2021 mail Mataloni PAL0136504. $x rimosso solo nella 1ma 500. Rimuoverlo anche nelle altre
 
-					printf ("\n\nVersione 12.05.02 25/05/2021"); // 25/05/2021 Mataloni/SRI export authority autori senza rimuovere i caratteri speciali
+//					printf ("\n\nVersione 12.05.02 25/05/2021"); // 25/05/2021 Mataloni/SRI export authority autori senza rimuovere i caratteri speciali
 																 // '-r o --export_author_special_characters // 25/05/2021 Mataloni/SRI
 
+//					printf ("\n\nVersione 12.05.03 30/05/2021"); // 25/05/2021 Mataloni/SRI export authority mantenere (solo per SRI) le uncinate per le qaulificazionei
+
+					printf ("\n\nVersione 12.06.01 22/06/2021"); // 22/06/2021 Carla. Auth autori
+																 // IT\ICCU\BVEV\018386: mettere uncinate in 210, $f -> $d
+																 // messo sottocampi uncinate all'interno delle stesse
+																 // Uniformato chiamata a doQualificazioni
+																 // Aggiunto switch -n o --txtMarkFileOut
 
 					//	mail Patrizia. Per quando aggiorniamo esercizio
 //					DB
