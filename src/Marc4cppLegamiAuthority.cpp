@@ -2084,10 +2084,11 @@ Di seguito alcuni BID i cui record UNIMARC risultano errati:
 CMP0302784
 CMP0207441
 CMP0145197
+
+CMP0361036 Mail Critina del 23/06/2021
 */
-if (!has_author)
-{
-	printf ("\nmettiamo la 239 nella 231 se presente");
+//if (!has_author)
+//{
 	if (isTitoloOpera)
 	{
 		DataField *df1=0;
@@ -2095,6 +2096,7 @@ if (!has_author)
 		DataField *df231 = marcRecord->getDataField("231");
 		if (df231)
 		{
+//			printf ("\nmettiamo la 239 nella 231 se presente");
 
 			// Accodiamo la 239 (titolo completo se presente)
 			DataField *df239 = marcRecord->getDataField((char *)"239");
@@ -2109,7 +2111,7 @@ if (!has_author)
 
 		}
 	}
-}
+//}
 
 
 

@@ -2986,11 +2986,12 @@ void printHeader()
 
 //					printf ("\n\nVersione 12.05.03 30/05/2021"); // 25/05/2021 Mataloni/SRI export authority mantenere (solo per SRI) le uncinate per le qaulificazionei
 
-					printf ("\n\nVersione 12.06.01 22/06/2021"); // 22/06/2021 Carla. Auth autori
+//					printf ("\n\nVersione 12.06.01 22/06/2021"); // 22/06/2021 Carla. Auth autori
 																 // IT\ICCU\BVEV\018386: mettere uncinate in 210, $f -> $d
 																 // messo sottocampi uncinate all'interno delle stesse
 																 // Uniformato chiamata a doQualificazioni
 																 // Aggiunto switch -n o --txtMarkFileOut
+					printf ("\n\nVersione 12.06.02 23/06/2021"); // Fix 231
 
 					//	mail Patrizia. Per quando aggiorniamo esercizio
 //					DB
