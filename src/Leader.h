@@ -99,8 +99,9 @@ private:
 							//    Sempre 4 in UNIMARC
 							// 21 Posizioni per il carattere di partenza del campo
 							//	  Sempre 5 in UNIMARC
+
 							// 22 Lunghezza della parte dell'Indice definita dall'implementazione
-							//	  Sempre 0 in UNIMARC
+							//	  Sempre 0 in UNIMARC - Sempre ' ' space for authority
 							// 23 Non definito
 
 

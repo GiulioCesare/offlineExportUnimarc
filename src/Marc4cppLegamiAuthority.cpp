@@ -623,8 +623,9 @@ DataField * Marc4cppLegamiAuthority::creaTag_81xRepertorio(char *tag)
 	CString repertorio;
 
 	repertorio = trRepAut->getField(trRepAut->id_repertorio);
-
 	repertorio.leftPadding('0', 10);
+
+	char *note_rep_aut = trRepAut->getField(trRepAut->note_rep_aut);
 
 	// Andiamo sulla tabella di repertorio a prendere le info
 	if (tbRepertorio->loadRecord(repertorio.data()))
@@ -635,8 +636,15 @@ DataField * Marc4cppLegamiAuthority::creaTag_81xRepertorio(char *tag)
 		df->setTag(tag);
 
 		sf = new Subfield('a', tbRepertorio->getFieldString(tbRepertorio->ds_repertorio));
-	    //sf->setData();
 		df->addSubfield(sf);
+
+		// 27/08/2021 Evolutiva (mail Mataloni)
+		if (*note_rep_aut)
+		{
+			sf = new Subfield('b', note_rep_aut);
+			df->addSubfield(sf);
+		}
+
 
 		marcRecord->addDataField(df);
 	}
@@ -1281,156 +1289,14 @@ void Marc4cppLegamiAuthority::creaTag_40x(DataField *df, TbAutore * tbAutoreRinv
 	string str;
 	CString dsNomeAut;
 
-	char *nomePtr = tbAutoreRinvio->getField(tbAutoreRinvio->ds_nome_aut);
-	dsNomeAut = tbAutoreRinvio->getField(tbAutoreRinvio->ds_nome_aut);
-
-	char *breakPtr=0;
-	df->setIndicator1(' ');
-	const char *tpNome = tbAutoreRinvio->getField(tbAutoreRinvio->tp_nome_aut);
-	if (*tpNome == 'A' || *tpNome == 'a' || *tpNome == 'B' || *tpNome == 'b')
-		df->setIndicator2('0');
-	else
-		df->setIndicator2('1');
-
-
-	if (*tpNome == 'A' || *tpNome == 'a' || *tpNome == 'B' || *tpNome == 'b')
-		breakPtr = strstr(nomePtr, " <");
-	else if (*tpNome == 'C' || *tpNome == 'c' || *tpNome == 'D' || *tpNome == 'd')
-		breakPtr = strstr(nomePtr, ", ");
-
-	int len;
-	if (breakPtr)
-	{
-		*breakPtr = 0; // EOS
-		len = breakPtr-nomePtr;
-	}
-	else
-		len = tbAutoreRinvio->getFieldLength(tbAutoreRinvio->ds_nome_aut);
-
-	if (!export_author_special_characters) // 25/05/2021 Mataloni/SRI
-	{
-		CString s = nomePtr;
-		s.removeCharacterOccurances('*');
-		sf = new Subfield('a', &s);
-	}
-	else
-		sf = new Subfield('a', nomePtr, len);
-
-
-	//sf->setData(); // tbAutore->getField(tbAutore->ds_nome_aut)
-	df->addSubfield(sf);
-
-
-
-
-	ATTValVector <CString *> stringVect;
-	ATTValVector <CString *> stringVect2;
-	if (*tpNome == 'C' || *tpNome == 'c' || *tpNome == 'D' || *tpNome == 'd')
-	{
-		if (breakPtr)
-		{
-			*breakPtr = ','; // rimetti
-//			sf = new Subfield('b', breakPtr, tbAutoreRinvio->getFieldLength(tbAutoreRinvio->ds_nome_aut)-len);
-//			df->addSubfield(sf);
-
-			// 25/05/2021 Mataloni/SRI
-			CString s=breakPtr;
-
-			s.Split(stringVect2, '<');
-			sf = new Subfield('b', stringVect2.Entry(0));
-			df->addSubfield(sf);
-
-
-//			s.Split(stringVect, '<');
-//			sf = new Subfield('b', stringVect.Entry(0));
-//			df->addSubfield(sf);
-//
-//			if (stringVect.length() > 1)
-//			{
-//				if (!export_author_special_characters) // 25/05/2021 Mataloni/SRI
-//					stringVect.Last()->ExtractLastChar();
-//
-//				ATTValVector <CString *> stringVect3;
-//				stringVect.Entry(1)->Split(stringVect3, ';');
-//
-//				// 29/01/2013 Gestione $c e tpNomeAut 'E'
-//				bool numeroMeetingDone=false;
-//				bool dateMeetingDone=false;
-//				bool luogoMeetingDone=false;
-//
-//				int ctr=1;
-//				for (int i=0; i < stringVect3.Length(); i++)
-//				{
-//					stringVect3.Entry(i)->Strip(CString::both, ' ');
-//
-//					char qualificazione = getQualificazioneType(stringVect3.Entry(i)->Data(), i, *tpNome);
-//					if (qualificazione == 'd') // Number of meeting
-//						numeroMeetingDone=true;
-//					if (qualificazione == 'f' && dateMeetingDone == false)
-//						dateMeetingDone = true;
-//					if (qualificazione == 'e')
-//					{
-//						luogoMeetingDone = true;
-//						if (*tpNome == 'E' || ctr > 3)
-//							qualificazione = 'c';	// generic info
-//					}
-//
-//					if (export_author_special_characters) // 25/05/2021 Mataloni/SRI
-//						stringVect3.Entry(i)->PrependChar('<');
-//
-//					sf = new Subfield(qualificazione, stringVect3.Entry(i));
-//					df->addSubfield(sf);
-//					ctr++;
-//					stringVect3.DeleteAndClear();
-//				}
-//
-//
-//			}
-//
-//			stringVect.DeleteAndClear();
-//
-//
-		}
-	}
-//
-//	//Qualificazione
-//	if (*tpNome == 'A' || *tpNome == 'a' || *tpNome == 'B' || *tpNome == 'b')
-//	{
-//		if (breakPtr)
-//		{
-//			if (export_author_special_characters) // 25/05/2021 Mataloni/SRI
-//				sf = new Subfield('c', breakPtr, tbAutoreRinvio->getFieldLength(tbAutoreRinvio->ds_nome_aut)-len);
-//			else
-//				sf = new Subfield('c', breakPtr+1, tbAutoreRinvio->getFieldLength(tbAutoreRinvio->ds_nome_aut)-len-1);
-//			df->addSubfield(sf);
-//		}
-//
-//	}
-
-
-//	ATTValVector <CString *> stringVect;
-
-//	dsNomeAut.Split(stringVect, ':');
-	if (!stringVect2.length())
-		dsNomeAut.Split(stringVect2, '<');
-
-	if (stringVect2.length() > 1)
-	{// Gestiamo le qualificazioni
-		sf->appendData("<"); // on last subfield
-		marc4cppDocumentoAuthority->doQualificazioni(df, stringVect2);
-	} // End qualificazioni
-
-	stringVect.DeleteAndClear();	// 20/10/2009 11.11
-	stringVect2.DeleteAndClear(); 	// 20/10/2009 11.11
-
-
-
-
-
-
 //tbAutoreRinvio->dumpRecord();
 
-//	sf->setData(tbAutoreRinvio->getField(tbAutoreRinvio->vid));
+	char *nomePtr = tbAutoreRinvio->getField(tbAutoreRinvio->ds_nome_aut);
+	dsNomeAut = tbAutoreRinvio->getField(tbAutoreRinvio->ds_nome_aut);
+	char *nota_aut = tbAutoreRinvio->getField(tbAutoreRinvio->nota_aut);
+
+
+	// 18/08/2021 Mail Incelli: Come regola generale il $3 che contiene il VID dovrebbe precedere i sottocampi alfabetici
 	char * vid = tbAutoreRinvio->getField(tbAutoreRinvio->vid);
 	if (TIPO_SCARICO == TIPO_SCARICO_UNIMARC
 			&& DATABASE_ID != DATABASE_INDICE  // 08/03/2013
@@ -1450,37 +1316,29 @@ void Marc4cppLegamiAuthority::creaTag_40x(DataField *df, TbAutore * tbAutoreRinv
 	}
 	df->addSubfield(sf);
 
-} // End creaTag_40x
+	if (*nota_aut)	// 27/08/2021 mail Mataloni
+	{
+		sf = new Subfield('9', nota_aut);
+		df->addSubfield(sf);
+	}
 
-void Marc4cppLegamiAuthority::creaTag_41x(DataField *df, TbAutore * tbAutoreRinvio)
-{
-    Subfield *sf;
-    string str;
-    char *tpNome;
-    char *ptr, *breakPtr;
-    CString dsNomeAut;
 
-    char *nomePtr = tbAutoreRinvio->getField(tbAutoreRinvio->ds_nome_aut);
-	dsNomeAut = tbAutoreRinvio->getField(tbAutoreRinvio->ds_nome_aut);
+	char *breakPtr=0;
+	df->setIndicator1(' ');
+	char *tpNome = tbAutoreRinvio->getField(tbAutoreRinvio->tp_nome_aut);
+	*tpNome = toupper(*tpNome); // make sure it's upper case
 
-    tpNome = tbAutoreRinvio->getField(tbAutoreRinvio->tp_nome_aut);
-    if (*tpNome == 'E' || *tpNome == 'e' || *tpNome == 'G' || *tpNome == 'g')
-        df->setIndicator1('0');
-    else
-        df->setIndicator1('1');
+	if (*tpNome == AUTORE_NOME_SEMPLICE_A || *tpNome == AUTORE_NOME_COMPOSTO_B)
+		df->setIndicator2('0');
+	else
+		df->setIndicator2('1');
 
-    if (*tpNome == 'G' || *tpNome == 'g')
-        df->setIndicator2('1');
-    else
-        df->setIndicator2('2');
 
-     breakPtr = strstr(nomePtr, " <");
+	if (*tpNome == AUTORE_NOME_SEMPLICE_A || *tpNome == AUTORE_NOME_COMPOSTO_B)
+		breakPtr = strstr(nomePtr, " <");
+	else if (*tpNome == AUTORE_COGNOME_SEMPLICE_C || *tpNome == AUTORE_COGNOME_COMPOSTO_D)
+		breakPtr = strstr(nomePtr, ", ");
 
-    if ((*tpNome == 'G' || *tpNome == 'g') && !breakPtr)
-        breakPtr = strstr(nomePtr, " : ");
-
-//    if (breakPtr)
-//        *breakPtr = 0; // EOS
 	int len;
 	if (breakPtr)
 	{
@@ -1490,74 +1348,41 @@ void Marc4cppLegamiAuthority::creaTag_41x(DataField *df, TbAutore * tbAutoreRinv
 	else
 		len = tbAutoreRinvio->getFieldLength(tbAutoreRinvio->ds_nome_aut);
 
-
-    CString s, s2;
 	if (!export_author_special_characters) // 25/05/2021 Mataloni/SRI
 	{
-	    if (ptr = strchr (nomePtr, '*')) // abbiamo almeno un asterisco?
-	    {
-	    	if (ptr != nomePtr)
-	    	{
-				*ptr = 0;
-				s = NSB.data();	// No sort begin
-				s.AppendString(nomePtr, ptr-nomePtr);
-				s.AppendString(&NSE); // No sort end
-	    	}
-	    	nomePtr = ptr+1;
-	    }
-
-	    s2 = nomePtr;
-	    s2.removeCharacterOccurances('*');
+		CString s = nomePtr;
+		s.removeCharacterOccurances('*');
+		sf = new Subfield('a', &s);
 	}
 	else
-		s2=nomePtr;
-
-    s.AppendString(&s2);
-
-    sf = new Subfield('a', &s);
-    //sf->setData(); // nomePtr
-    df->addSubfield(sf);
-
-
-    if (*tpNome == 'G' || *tpNome == 'g')
-    {
-    	if (breakPtr)
-    	{
-            *breakPtr = ' ';
-            s = breakPtr;
-            s.removeCharacterOccurances('*');
-            sf = new Subfield('b', &s);
-            //sf->setData();
-            df->addSubfield(sf);
-    	}
-    }
-
-
-    //Qualificazione
-//    if (breakPtr && *(breakPtr+1) == '<')
-//    {
-//        if(ptr = strstr (breakPtr, " ; "))
-//            *ptr = 0;
-//
-//        sf = new Subfield('c', breakPtr+1, tbAutoreRinvio->getFieldLength(tbAutoreRinvio->ds_nome_aut)-len-1);
-//        //sf->setData();
-//        df->addSubfield(sf);
-//    }
-
-
+		sf = new Subfield('a', nomePtr, len);
+	//sf->setData(); // tbAutore->getField(tbAutore->ds_nome_aut)
+	df->addSubfield(sf);
 	ATTValVector <CString *> stringVect;
 	ATTValVector <CString *> stringVect2;
+	if (*tpNome == AUTORE_COGNOME_SEMPLICE_C || *tpNome == AUTORE_COGNOME_COMPOSTO_D)
+	{
+		if (breakPtr)
+		{
+			*breakPtr = ','; // rimetti
+			// 25/05/2021 Mataloni/SRI
+			CString s=breakPtr;
+			s.Split(stringVect2, '<');
+			sf = new Subfield('b', stringVect2.Entry(0));
+			df->addSubfield(sf);
+		}
+	}
 
-	dsNomeAut.Split(stringVect, ':');
-	if (stringVect.length() > 1)
-		stringVect.Entry(1)->Split(stringVect2, '<');
-	else
-		stringVect.Entry(0)->Split(stringVect2, '<');
+	if (!stringVect2.length())
+		dsNomeAut.Split(stringVect2, '<');
 
 	if (stringVect2.length() > 1)
 	{// Gestiamo le qualificazioni
-		sf->appendData("<"); // on last subfield
-		marc4cppDocumentoAuthority->doQualificazioni(df, stringVect2);
+
+		if (sf->getDataString()->GetLastChar() == ' ') // 18/08/2021 (mail Incelli) Metto lo spazio dopo il primo sottocampo davanti all'uncinata. M
+			sf->getDataString()->ExtractLastChar();
+
+		marc4cppDocumentoAuthority->doQualificazioni(df, stringVect2, *tpNome);
 	} // End qualificazioni
 
 	stringVect.DeleteAndClear();	// 20/10/2009 11.11
@@ -1565,12 +1390,22 @@ void Marc4cppLegamiAuthority::creaTag_41x(DataField *df, TbAutore * tbAutoreRinv
 
 
 
+} // End creaTag_40x
 
 
+void Marc4cppLegamiAuthority::creaTag_41x(DataField *df, TbAutore * tbAutoreRinvio)
+{
+    Subfield *sf;
+    string str;
+    char *tpNome;
+    char *ptr, *breakPtr;
+    CString dsNomeAut;
+	ATTValVector <CString *> stringVect, stringVect2;
 
-
-//    sf->setData(tbAutoreRinvio->getField(tbAutoreRinvio->vid));
+	// 18/08/2021 Mail Incelli: Come regola generale il $3 che contiene il VID dovrebbe precedere i sottocampi alfabetici
 	char * vid = tbAutoreRinvio->getField(tbAutoreRinvio->vid);
+	char *nota_aut = tbAutoreRinvio->getField(tbAutoreRinvio->nota_aut);
+
 	if (TIPO_SCARICO == TIPO_SCARICO_UNIMARC
 			&& DATABASE_ID != DATABASE_INDICE  // 08/03/2013
 			)
@@ -1588,9 +1423,73 @@ void Marc4cppLegamiAuthority::creaTag_41x(DataField *df, TbAutore * tbAutoreRinv
 	    sf = new Subfield('3', &id);
 		//sf->setData();
 	}
-
-
     df->addSubfield(sf);
+
+    if (*nota_aut)	// 27/08/2021 mail Mataloni
+	{
+		sf = new Subfield('9', nota_aut);
+		df->addSubfield(sf);
+	}
+
+
+    char *nomePtr = tbAutoreRinvio->getField(tbAutoreRinvio->ds_nome_aut);
+	dsNomeAut = tbAutoreRinvio->getField(tbAutoreRinvio->ds_nome_aut);
+
+    tpNome = tbAutoreRinvio->getField(tbAutoreRinvio->tp_nome_aut);
+    *tpNome = toupper((char) *tpNome); // make sure it's upper case
+
+      if (*tpNome == AUTORE_ENTE_NOME_E || *tpNome == AUTORE_ENTE_GERARCHICO_G)
+        df->setIndicator1('0');
+    else
+        df->setIndicator1('1');
+
+    if (*tpNome == AUTORE_ENTE_GERARCHICO_G)
+        df->setIndicator2('1');
+    else
+        df->setIndicator2('2');
+
+     breakPtr = strstr(nomePtr, "<");
+
+
+ 	dsNomeAut.Split(stringVect, ':');
+
+ 	if (!export_author_special_characters) // 25/05/2021 Mataloni/SRI
+ 		stringVect.Entry(0)->removeCharacterOccurances('*');
+ 	if (stringVect.length() > 1)
+ 		stringVect.Entry(1)->Split(stringVect2, '<');
+ 	else
+ 		stringVect.Entry(0)->Split(stringVect2, '<');
+ 	if (!export_author_special_characters) // 25/05/2021 Mataloni/SRI
+ 		stringVect2.Entry(0)->removeCharacterOccurances('*');
+ 	if (stringVect.length() > 1)
+ 		sf = new Subfield('a', stringVect.Entry(0));
+ 	else
+ 		sf = new Subfield('a', stringVect2.Entry(0));
+ 	df->addSubfield(sf);
+ 	if (stringVect.length() > 1)
+ 	{
+		if (sf->getDataString()->GetLastChar() == ' ') // 18/08/2021 (mail Incelli) Metto lo spazio dopo il primo sottocampo davanti all'uncinata. M
+			sf->getDataString()->ExtractLastChar();
+
+ 		stringVect2.Entry(0)->PrependString(" :");
+ 		sf = new Subfield('b', stringVect2.Entry(0));
+ 		df->addSubfield(sf);
+ 	}
+ 	if (stringVect2.length() > 1)
+ 	{
+		if (sf->getDataString()->GetLastChar() == ' ') // 18/08/2021 (mail Incelli) Metto lo spazio dopo il primo sottocampo davanti all'uncinata. M
+			sf->getDataString()->ExtractLastChar();
+ 		marc4cppDocumentoAuthority->doQualificazioni(df, stringVect2, *tpNome); // Gestiamo le qualificazioni
+ 	}
+ 	stringVect.DeleteAndClear();	// 20/10/2009 11.11
+ 	stringVect2.DeleteAndClear(); 	// 20/10/2009 11.11
+
+
+
+
+
+
+
 
 } // End creaTag_41x
 

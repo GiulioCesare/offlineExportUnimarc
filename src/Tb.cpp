@@ -677,8 +677,8 @@ bool Tb::loadNextRecord()
 
 */
 	stringRecord->Split_assign(*fieldsVector, (const char *)recordSeparator.data());
+//dumpRecord();
 
-//	dumpRecord();
 	return true;
 } // End loadNextRecord
 

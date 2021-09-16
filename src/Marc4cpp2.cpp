@@ -589,6 +589,13 @@ bool Marc4cpp::creaRecordAuthority(MarcRecord *marcRecord, const tree<std::strin
 	{
 	    if (!tbAutore->loadRecord(id))
 	    	return false;
+
+		// Controlliamo che sia una forma Accettata 'A' e non di Rinvio 'R'
+	    char tp_forma_aut = *tbAutore->getField(tbAutore->tp_forma_aut);
+		if (tp_forma_aut == 'R') // 18/08/2021
+			return false;
+
+
 	}
 	else if (authority == AUTHORITY_LUOGHI) // 05/11/2020
 	{

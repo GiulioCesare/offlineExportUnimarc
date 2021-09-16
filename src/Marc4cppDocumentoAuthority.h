@@ -124,7 +124,7 @@ class Marc4cppDocumentoAuthority {
 
 //	bool isAntico();
 //	bool isModerno();
-	char getQualificazioneType(CString *parteDiQualificazione);
+	char getQualificazioneType(CString *parteDiQualificazione, char tipoNome);
 
 
 //	void ricalcolaAreeIsbdUtf8(const char *isbd, ATTValVector<CString *>  *areeVect);
@@ -132,7 +132,9 @@ class Marc4cppDocumentoAuthority {
 	void init(MarcRecord *marcRecord, char *polo, char *tagsToGenerateBufferPtr, int tagsToGenerate, int authority);
 
 public:
-    void doQualificazioni(DataField *df, ATTValVector <CString *> stringVect2); // 22/06/2021
+//    void doQualificazioni(DataField *df, ATTValVector <CString *> stringVect2); // 22/06/2021
+    void doQualificazioni(DataField *df, ATTValVector <CString *> stringVect2, char tipoNome); // 27/08/2021
+
 
 	Marc4cppDocumentoAuthority(MarcRecord *marcRecord, TbAutore *tbAutore, char *polo, char *tagsToGenerateBufferPtr, int tagsToGenerate, int authority);
 	Marc4cppDocumentoAuthority(MarcRecord *marcRecord, TbSoggetto *tbSoggetto, TbDescrittore *tbDescrittore, char *polo, char *tagsToGenerateBufferPtr, int tagsToGenerate, int authority);

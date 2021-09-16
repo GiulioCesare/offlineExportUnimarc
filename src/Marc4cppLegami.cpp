@@ -2489,6 +2489,11 @@ void Marc4cppLegami::creaLegamiTitoloTitolo() {
 
 					elabora46y(bid, tbReticoloTit); // , sequenza.data()
 
+if (DATABASE_ID == DATABASE_SBNWEB) // 15/09/2021
+{ // Richiesta Calogiuri per estrarre le 421 anche in presenza di 461 (esempio del polo GEA bid GEA0173468)
+	elabora42x(bid);
+}
+
 					siArg = 0; // 09/02/2011 Mancato reset causava CRASH casuali
 
 					//				if (tpLegame.isEqual("01"))

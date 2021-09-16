@@ -278,5 +278,19 @@
 #define SISTEMA_NUMERICO_ESADECIMALE	2
 
 
+// 16/08/2021
+//Tipo nome (tabella codici 'AUTO')
+#define AUTORE_NOME_SEMPLICE_A 'A'
+#define AUTORE_NOME_COMPOSTO_B 'B'
+#define AUTORE_COGNOME_SEMPLICE_C 'C'
+#define AUTORE_COGNOME_COMPOSTO_D 'D'
+#define AUTORE_ENTE_NOME_E 'E'
+#define AUTORE_ENTE_GERARCHICO_G 'G'
+#define AUTORE_ENTE_CONGRESSO_R 'R'
+
+//const char LOWER_UPPER_CASE_OFFSET = 'a' - 'A'; // A = 0x41, a = 0x61
+//#define toUpperChar(char *ptr) (*ptr = (*ptr >= 'a' && *ptr <= 'z') ? *ptr -= LOWER_UPPER_CASE_OFFSET : *ptr;)
+
+
 #endif // __MARC_CONSTANTS_H__
 

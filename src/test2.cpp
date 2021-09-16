@@ -2991,7 +2991,10 @@ void printHeader()
 																 // messo sottocampi uncinate all'interno delle stesse
 																 // Uniformato chiamata a doQualificazioni
 																 // Aggiunto switch -n o --txtMarkFileOut
-					printf ("\n\nVersione 12.06.02 23/06/2021"); // Fix 231
+//					printf ("\n\nVersione 12.06.02 23/06/2021"); // Fix 231
+//					printf ("\n\nVersione 12.08.01 19/08/2021"); // Fix export autori per OPAC/SRI
+
+					printf ("\n\nVersione 12.09.01 15/09/2021"); // export 421 anche in presenza della 461
 
 					//	mail Patrizia. Per quando aggiorniamo esercizio
 //					DB

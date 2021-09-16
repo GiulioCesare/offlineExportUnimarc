@@ -883,15 +883,18 @@ DataField * Marc4cppDocumentoAuthority::creaTag200()
 	{
 
 		stringVect.Entry(0)->Split(stringVect2, '<');
-if (!export_author_special_characters) // 25/05/2021 Mataloni/SRI
-	stringVect.Entry(0)->removeCharacterOccurances('*');
+		if (!export_author_special_characters) // 25/05/2021 Mataloni/SRI
+			stringVect.Entry(0)->removeCharacterOccurances('*');
 
 		sf = new Subfield('a', stringVect2.Entry(0));
 		df->addSubfield(sf);
 
 		if (stringVect2.length() > 1)
 		{
-			sf->appendData("<"); // on last subfield
+		if (sf->getDataString()->GetLastChar() == ' ') // 18/08/2021 (mail Incelli) Metto lo spazio dopo il primo sottocampo davanti all'uncinata. M
+			sf->getDataString()->ExtractLastChar();
+
+
 			creaSottocampiQualificazione(df, stringVect2.Entry(1));
 		}
 		stringVect2.DeleteAndClear(); //20/10/2009 11.11
@@ -920,7 +923,8 @@ if (!export_author_special_characters) // 25/05/2021 Mataloni/SRI
 
 			if (stringVect2.length() > 1)
 			{
-				sf->appendData("<"); // on last subfield
+				if (sf->getDataString()->GetLastChar() == ' ') // 18/08/2021 (mail Incelli) Metto lo spazio dopo il primo sottocampo davanti all'uncinata. M
+					sf->getDataString()->ExtractLastChar();
 				creaSottocampiQualificazione(df, stringVect2.Entry(1));
 			}
 			stringVect2.DeleteAndClear(); //20/10/2009 11.11
@@ -954,10 +958,13 @@ void Marc4cppDocumentoAuthority::creaSottocampiQualificazione(DataField *df, CSt
 		else
 			sf = new Subfield('c');
 
-//		if (!i)
-//			cs.PrependChar('<');
-//		else
-//			cs.PrependString(" ; ");
+		if (!i)
+			cs.PrependString(" <");
+		else
+			cs.PrependString(" ; ");
+
+
+
 		sf->setData(&cs);
 
 		df->addSubfield(sf);
@@ -1065,8 +1072,6 @@ DataField * Marc4cppDocumentoAuthority::creaTag210()
 //	bool retb;
 	CString luogoDiStampa;
 
-
-
 	// Controlliamo che sia una forma Accettata 'A' e non di Rinvio 'R'
 // 11/03/2013 Rimosso controllo forma accettata
 //	if (*tbAutore->getField(tbAutore->tp_forma_aut) == 'R')
@@ -1075,19 +1080,24 @@ DataField * Marc4cppDocumentoAuthority::creaTag210()
 
 	// Controlliamo se e' un autore personale
 	char tpNomeAut = *tbAutore->getField(tbAutore->tp_nome_aut);
-	if (tpNomeAut != 'E' && tpNomeAut != 'G' && tpNomeAut != 'R')
+
+	tpNomeAut = toupper(tpNomeAut); // make sure it's upper case
+
+	if (tpNomeAut != AUTORE_ENTE_NOME_E && tpNomeAut != AUTORE_ENTE_GERARCHICO_G && tpNomeAut != AUTORE_ENTE_CONGRESSO_R)
 		return df; // Sara' un individuo
 
 	CString dsNomeAut;
 	dsNomeAut = tbAutore->getField(tbAutore->ds_nome_aut);
 
-	dsNomeAut.Split(stringVect, ':');
+//	dsNomeAut.Split(stringVect, ':'); mail 11/08/202 Egidio Incelli. I due punti introducono un complemento del titolo,	non un rapporto gerarchico
+//	stringVect.Add(new CString (dsNomeAut));
 
+	dsNomeAut.Split(stringVect, '\x01');  // dummy separator
 
 	df = new DataField();
 	df->setTag("210");
 
-	if (tpNomeAut == 'R')
+	if (tpNomeAut == AUTORE_ENTE_CONGRESSO_R)
 		df->setIndicator1('1');	// Meeting
 	else
 		df->setIndicator1('0');	// Corporate name
@@ -1113,21 +1123,17 @@ if (!export_author_special_characters) // 25/05/2021 Mataloni/SRI
 		sf = new Subfield('a', stringVect2.Entry(0));
 	df->addSubfield(sf);
 
-
-
-
 	if (stringVect.length() > 1)
 	{
-		stringVect2.Entry(0)->PrependString(" :");
-		sf = new Subfield('b', stringVect2.Entry(0));
-		//sf->setData();
-		df->addSubfield(sf);
+ 	 SignalAWarning(__FILE__, __LINE__, "210 non dovrebbe arrivare qui!");
 	}
 
 	if (stringVect2.length() > 1)
 	{
-		sf->appendData("<"); // on last subfield
-		doQualificazioni(df, stringVect2); // Gestiamo le qualificazioni
+		if (sf->getDataString()->GetLastChar() == ' ') // 18/08/2021 (mail Incelli) Metto lo spazio dopo il primo sottocampo davanti all'uncinata. M
+			sf->getDataString()->ExtractLastChar();
+
+		doQualificazioni(df, stringVect2, tpNomeAut); // Gestiamo le qualificazioni
 	}
 
 	stringVect.DeleteAndClear();	// 20/10/2009 11.11
@@ -1139,14 +1145,14 @@ if (!export_author_special_characters) // 25/05/2021 Mataloni/SRI
 } // End creaTag210
 
 
-void Marc4cppDocumentoAuthority::doQualificazioni(DataField *df, ATTValVector <CString *> stringVect2)
+void Marc4cppDocumentoAuthority::doQualificazioni(DataField *df, ATTValVector <CString *> stringVect2, char tipoNome)
 {
 	CString s;
 	Subfield *sf;
 		ATTValVector <CString *> stringVect3, stringVect4;
 		stringVect2.Entry(1)->Split(stringVect3, '>');
-
 		stringVect3.Entry(0)->Split(stringVect4, ';');
+
 
 		// 29/01/2013 Gestione $c e tpNomeAut 'E'
 		bool numeroMeetingDone=false;
@@ -1154,13 +1160,13 @@ void Marc4cppDocumentoAuthority::doQualificazioni(DataField *df, ATTValVector <C
 		bool luogoMeetingDone=false;
 
 		int ctr=1;
-		int v4Len=stringVect4.Length();
-		for (int i=0; i < v4Len; i++)
+		int v4len = stringVect4.Length();
+		for (int i=0; i < v4len; i++)
 		{
 			stringVect4.Entry(i)->Strip(CString::both, ' ');
 
 
-			char qualificazione = getQualificazioneType(stringVect4.Entry(i));
+			char qualificazione = getQualificazioneType(stringVect4.Entry(i), tipoNome);
 			if (qualificazione == 'd') // Number of meeting
 			{
 				numeroMeetingDone=true;
@@ -1171,22 +1177,24 @@ void Marc4cppDocumentoAuthority::doQualificazioni(DataField *df, ATTValVector <C
 			if (qualificazione == 'e')
 			{
 				luogoMeetingDone = true;
-
-//				if (tpNomeAut == 'E' || ctr > 3)
-					qualificazione = 'c';	// generic info
+//				qualificazione = 'c';	// generic info NO 27/08/2021 mail Mataloni
 			}
 
-//				if (!i)
-//					stringVect4.Entry(i)->PrependChar('<');
+			if (!i)
+				stringVect4.Entry(i)->PrependString(" <");
+			else
+				stringVect4.Entry(i)->PrependString(" ; ");
 
 
-				s = stringVect4.Entry(i)->Data();
-				if (i == (v4Len-1) )
-				{
-					s.AppendChar('>');
-					if (stringVect3.length() > 1)
-						s.AppendString(stringVect3.Entry(1));
-				}
+			s = stringVect4.Entry(i)->Data();
+
+			if (i == (v4len-1) )
+			{
+				s.AppendChar('>');
+				if (stringVect3.length() > 1)
+					s.AppendString(stringVect3.Entry(1));
+			}
+
 
 			sf = new Subfield(qualificazione, &s);
 			df->addSubfield(sf);
@@ -1198,19 +1206,8 @@ void Marc4cppDocumentoAuthority::doQualificazioni(DataField *df, ATTValVector <C
 
 
 
-char Marc4cppDocumentoAuthority::getQualificazioneType(CString *parteDiQualificazione)
+char Marc4cppDocumentoAuthority::getQualificazioneType(CString *parteDiQualificazione, char tipoNome)
 {
-//	// Controllo semantico
-//	if (parteDiQualificazione->GetLastChar() == '.')
-//		return 'd'; // numero di meeting
-//
-//	char chr = parteDiQualificazione->GetFirstChar();
-//	if ( chr >= '0' && chr <= '9')
-//		return 'f'; // Data di meeting
-//	else
-//		return 'e'; // luogo di meeting
-//
-
 
 	if (CMisc::isDate(parteDiQualificazione->data()))
 		return 'f';
@@ -1218,7 +1215,13 @@ char Marc4cppDocumentoAuthority::getQualificazioneType(CString *parteDiQualifica
 	if (parteDiQualificazione->GetLastChar() == '.')
 		return 'd'; // numero di parte
 
-	return 'c';
+	if (tipoNome == AUTORE_ENTE_NOME_E || tipoNome == 'e' ||
+		tipoNome == AUTORE_ENTE_CONGRESSO_R || tipoNome == 'r' ||
+		tipoNome == AUTORE_ENTE_GERARCHICO_G || tipoNome == 'g')
+		return 'e'; // qualificazione geografica
+	else
+		return 'c'; // espressione verbale
+
 
 
 } // end getQualificazioneType
@@ -1599,7 +1602,8 @@ DataField * Marc4cppDocumentoAuthority::creaTag801FonteDiProvenienza()
 
 	if (authority == AUTHORITY_AUTORI)
 	{
-		cdPaese = tbAutore->getField(tbAutore->cd_paese);
+//		cdPaese = tbAutore->getField(tbAutore->cd_paese);
+		cdPaese = "IT"; // 27/08/2021 Mail Mataloni
 		tsIns = tbAutore->getField(tbAutore->ts_ins);
 	}
 	else if (authority == AUTHORITY_LUOGHI)

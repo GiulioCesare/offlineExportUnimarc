@@ -80,6 +80,6 @@ bool TbTermineTesauro::loadRecord(const char *key)
 	else
 		offset = atoi (entryPtr+BID_KEY_LENGTH); // OFFSET in ASCII
 
-
+//printf("TbTermineTesauro::loadRecord DEBUG Record: '%s', offset=%ld", this->stringRecord->data(), offset);
 	return this->loadRecordFromOffset(offset); // atol (entryPtr+key_length)
 } // End loadRecord

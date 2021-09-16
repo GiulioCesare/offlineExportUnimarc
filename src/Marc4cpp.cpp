@@ -1423,9 +1423,7 @@ bool Marc4cpp::elaboraLeader()
 		}
 		if (authority == AUTHORITY_AUTORI)
 		{
-
 //tbAutore->dumpRecord();
-
 			if (*(tbAutore->getField(tbAutore->fl_canc)) == 'S' || *(tbAutore->getField(tbAutore->fl_canc)) == 's')
 				leader->setRecordStatus('d');	// cancellato
 			else
@@ -1434,15 +1432,21 @@ bool Marc4cpp::elaboraLeader()
 			leader->setLivelloBibliografico(' '); // undefined
 			leader->setLivelloGerarchico(' '); // undefined
 
-//			char tpNomeAut = *(tbAutore->getField(tbAutore->tp_nome_aut));
-//			if (tpNomeAut != 'A' && tpNomeAut != 'B' && tpNomeAut != 'C' && tpNomeAut != 'D')
-//				leader->setCharCodingScheme_typeOfEntity('a');				// 1, decimo
-//			else
-//				leader->setCharCodingScheme_typeOfEntity('b');				// 1, decimo
-			leader->setPos9Undefined(BLANK);
+			char tpNomeAut = *(tbAutore->getField(tbAutore->tp_nome_aut));
+
+			if (tpNomeAut == AUTORE_NOME_SEMPLICE_A ||
+				tpNomeAut == AUTORE_NOME_COMPOSTO_B ||
+				tpNomeAut == AUTORE_COGNOME_SEMPLICE_C ||
+				tpNomeAut == AUTORE_COGNOME_COMPOSTO_D) // riprstino 12/08/2021
+				leader->setPos9Undefined('a');// 1, decimo - type of entity Autore personale
+			else
+				leader->setPos9Undefined('b'); // 1, decimo type of entity ENTE
+
+//			leader->setPos9Undefined(BLANK);
 
 			leader->setLivelloDiCodifica(' ');
 			leader->setTipoDiCatalogazioneDescrittiva(' ');
+			leader->setEntryMap(" 45  ");
 		}
 		else if (authority == AUTHORITY_LUOGHI)
 		{
@@ -1484,6 +1488,7 @@ bool Marc4cpp::elaboraLeader()
 
 			leader->setLivelloDiCodifica(' ');
 			leader->setTipoDiCatalogazioneDescrittiva(' ');
+			leader->setEntryMap(" 45  ");
 		}
 
 
@@ -1503,12 +1508,8 @@ bool Marc4cpp::elaboraLeader()
 				leader->setLivelloDiCodifica(' ');
 			else if (livelloAuthority >= 5 && livelloAuthority <= 71)
 				leader->setLivelloDiCodifica('3');
-
-
 			leader->setTipoDiCatalogazioneDescrittiva(' ');
-
 			leader->setEntryMap(" 45  ");
-
 		}
 
 
