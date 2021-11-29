@@ -15,7 +15,7 @@
   * along with this program. If not, see <http://www.gnu.org/licenses/>.
   ******************************************************************************/
 /***************************************************************************
-* Program : SignalError.CPP                                                       *
+* Program : SignalError.cpp                                                *
 * Purpose : Eror handling                                                  *
 * Author  : Argentino Trombin                                              *
 ****************************************************************************/

@@ -29,8 +29,7 @@
 
 
 
-extern void SignalAnError(	const OrsChar *Module, OrsInt Line, const OrsChar * MsgFmt, ...);
-extern void SignalAWarning(	const OrsChar *Module, OrsInt Line, const OrsChar * MsgFmt, ...);
+extern void logToStdout(	const OrsChar *Module, OrsInt Line, int level, const OrsChar * MsgFmt, ...);
 
 
 
@@ -76,7 +75,8 @@ Subfield::Subfield(char code, char* data, int len) {
 
 if (len < 0)
 {
-	SignalAnError(__FILE__, __LINE__, "Subfield::Subfield len %d < 0, code=%c data=%s", len, code, data);
+//	SignalAnError(__FILE__, __LINE__, "Subfield::Subfield len %d < 0, code=%c data=%s", len, code, data);
+	logToStdout(__FILE__, __LINE__, LOG_ERROR, "Subfield::Subfield len %d < 0, code=%c data=%s", len, code, data);
 	return;
 }
 

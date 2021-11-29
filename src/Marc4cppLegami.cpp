@@ -42,8 +42,7 @@
 
 using namespace std;
 
-extern void SignalAnError(const OrsChar *Module, OrsInt Line, const OrsChar * MsgFmt, ...);
-extern void SignalAWarning(const OrsChar *Module, OrsInt Line, const OrsChar * MsgFmt, ...);
+extern void logToStdout(	const OrsChar *Module, OrsInt Line, int level, const OrsChar * MsgFmt, ...);
 
 Marc4cppLegami::Marc4cppLegami(MarcRecord *marcRecord,
 		Marc4cppDocumento *marc4cppDocumento, TbTitolo *tbTitolo,
@@ -1083,8 +1082,8 @@ DataField * Marc4cppLegami::creaLegameTitoloAutore(char *vid,
 				df = creaTag712_NomeDiEnte_ResponsabilitaSecondaria(cdRelazione, tipoResponsabilita, cdStrumentoMusicale);
 			}
 	} else {
-		SignalAWarning(__FILE__, __LINE__,
-				"Tipo responsabilita' %c sconosciuto", tipoResponsabilita); // *(entryReticoloPtr + pos + 5 + 11)
+//		SignalAWarning(__FILE__, __LINE__, "Tipo responsabilita' %c sconosciuto", tipoResponsabilita); // *(entryReticoloPtr + pos + 5 + 11)
+		logToStdout(__FILE__, __LINE__, LOG_WARNING,"Tipo responsabilita' %c sconosciuto", tipoResponsabilita); // *(entryReticoloPtr + pos + 5 + 11)
 		return 0;
 	}
 	return df;
@@ -2099,7 +2098,8 @@ void Marc4cppLegami::addAutoreFormaAccettata(DataField *df, char tipoLegame, cha
 //	SignalAnError(__FILE__, __LINE__, "Non posso caricare autore con vid base %s", vid);
 //	}
 	if (!tbAutore->loadRecord(vidPadre)) {
-		SignalAnError(__FILE__, __LINE__, "Non posso caricare autore con vid base %s", vidPadre);
+//		SignalAnError(__FILE__, __LINE__, "Non posso caricare autore con vid base %s", vidPadre);
+		logToStdout(__FILE__, __LINE__, LOG_ERROR, "Non posso caricare autore con vid base %s", vidPadre);
 	}
 
 	CString *ds_nome = tbAutore->getFieldString(tbAutore->ds_nome_aut);
@@ -2514,7 +2514,8 @@ if (DATABASE_ID == DATABASE_SBNWEB) // 15/09/2021
 						tbComposizione->loadNextRecord(tbReticoloTit->getField(tbReticoloTit->bid));
 						bool retb = tbMusica->loadRecord(tbReticoloTit->getField(tbReticoloTit->bid));
 						if (!retb)
-							SignalAWarning(__FILE__, __LINE__,	"Bid di composizione %s non presente in tb_musica" , tbReticoloTit->getField(tbReticoloTit->bid));
+//							SignalAWarning(__FILE__, __LINE__,	"Bid di composizione %s non presente in tb_musica" , tbReticoloTit->getField(tbReticoloTit->bid));
+							logToStdout(__FILE__, __LINE__, LOG_WARNING, "Bid di composizione %s non presente in tb_musica" , tbReticoloTit->getField(tbReticoloTit->bid));
 
 //printf ("\ntbTitolo->getField(tbTitolo->bid)=%s", tbTitolo->getField(tbTitolo->bid));
 						if (IS_TAG_TO_GENERATE(928))
@@ -4012,7 +4013,8 @@ DataField * Marc4cppLegami::creaLegameDescrittoreDescrittore() {
 					retb = tbDescrittore->loadRecord(didColl);
 					if (!retb)
 					{
-						SignalAnError(__FILE__, __LINE__, "\nDescrittore base % s per descrittore coll %s", didSource, didColl);
+//						SignalAnError(__FILE__, __LINE__, "\nDescrittore base % s per descrittore coll %s", didSource, didColl);
+						logToStdout(__FILE__, __LINE__, LOG_ERROR, "Descrittore base % s per descrittore coll %s", didSource, didColl);
 						continue;
 					}
 
@@ -4178,7 +4180,8 @@ void Marc4cppLegami::creaLegameSoggettoVariante() {
 			retb = tbDescrittore->loadRecord(didSource);
 			if (!retb)
 			{
-				SignalAnError(__FILE__, __LINE__, "\nDescrittore base %s ", didSource);  // per descrittore coll %s , didColl
+//				SignalAnError(__FILE__, __LINE__, "\nDescrittore base %s ", didSource);  // per descrittore coll %s , didColl
+				logToStdout(__FILE__, __LINE__, LOG_ERROR, "Descrittore base %s ", didSource);  // per descrittore coll %s , didColl
 				continue;
 			}
 			CString *key_des = tbDescrittore->getFieldString(tbDescrittore->ky_norm_descritt);

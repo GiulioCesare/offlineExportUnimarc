@@ -25,8 +25,7 @@
 #include "TbReticolo.h"
 #include "library/CTokenizer.h"
 
-extern void SignalAnError(const OrsChar *Module, OrsInt Line, const OrsChar * MsgFmt, ...);
-extern void SignalAWarning(const OrsChar *Module, OrsInt Line,	const OrsChar * MsgFmt, ...);
+extern void logToStdout(	const OrsChar *Module, OrsInt Line, int level, const OrsChar * MsgFmt, ...);
 
 
 TbReticolo::TbReticolo(char *record) {
@@ -48,7 +47,8 @@ char * TbReticolo::getField(int aFieldId) {
 	if (aFieldId < fieldsVector->Length())
 		return fieldsVector->Entry(aFieldId)->data();
 	else {
-		SignalAnError(__FILE__, __LINE__, "TbReticolo::getField: n out of range: %d", aFieldId);
+//		SignalAnError(__FILE__, __LINE__, "TbReticolo::getField: n out of range: %d", aFieldId);
+		logToStdout(__FILE__, __LINE__, LOG_ERROR, "TbReticolo::getField: n out of range: %d", aFieldId);
 		return (char *)"";
 	}
 }
@@ -57,7 +57,8 @@ CString * TbReticolo::getFieldString(int aFieldId) {
 	if (aFieldId < fieldsVector->Length())
 		return fieldsVector->Entry(aFieldId);
 	else {
-		SignalAnError(__FILE__, __LINE__, "TbReticolo::getField: n out of range: %d", aFieldId);
+//		SignalAnError(__FILE__, __LINE__, "TbReticolo::getField: n out of range: %d", aFieldId);
+		logToStdout(__FILE__, __LINE__, LOG_ERROR, "TbReticolo::getField: n out of range: %d", aFieldId);
 		return 0;
 	}
 }

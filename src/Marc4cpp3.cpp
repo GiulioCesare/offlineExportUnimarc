@@ -41,8 +41,7 @@
 #ifdef TRACK_MEMORY_LEAKS
     #include "nvwa/debug_new.h"
 #endif
-extern void SignalAnError(	const OrsChar *Module, OrsInt Line, const OrsChar * MsgFmt, ...);
-extern void SignalAWarning(	const OrsChar *Module, OrsInt Line, const OrsChar * MsgFmt, ...);
+extern void logToStdout(	const OrsChar *Module, OrsInt Line, int level, const OrsChar * MsgFmt, ...);
 
 
 
@@ -52,7 +51,8 @@ bool  Marc4cpp::loadTbfBibliotecaInPoloRecords(char *tbfBibliotecaInPoloFilename
 	tbfBibliotecaInPoloIn = new CFile(tbfBibliotecaInPoloFilename, AL_READ_FILE);
 	if (!tbfBibliotecaInPoloIn)
 	{
-	    SignalAnError(__FILE__, __LINE__, "Cannot open %s", tbfBibliotecaInPoloFilename);
+//	    SignalAnError(__FILE__, __LINE__, "Cannot open %s", tbfBibliotecaInPoloFilename);
+	    logToStdout(__FILE__, __LINE__, LOG_ERROR, "Cannot open %s", tbfBibliotecaInPoloFilename);
 		return false;
 	}
 	CString *recordPtr = new CString (2048);
@@ -175,7 +175,8 @@ printf ("\nAPRI FILE RELAZIONI: %s", sPtr->data());
 
 		else
 		{
-		    SignalAnError(__FILE__, __LINE__, "Relazione %s non identificata", tabella);
+//		    SignalAnError(__FILE__, __LINE__, "Relazione %s non identificata", tabella);
+		    logToStdout(__FILE__, __LINE__, LOG_ERROR, "Relazione %s non identificata", tabella);
 			return false;
 		}
 	}
@@ -904,6 +905,23 @@ bool Marc4cpp::loadOffsetFiles()
 	}
 
 
+	// Carichiamo gli offset della entita relazioni autori/autori 17/09/2021
+	if (trAutAutOffsetIn)
+	{
+		trAutAutOffsetIn->SeekToEnd();
+		fileSize = trAutAutOffsetIn->CurOffset();
+		elements = elementsTrAutAut = fileSize/keyPlusOffsetPlusLfLength;
+		if ((offsetFileVectorInMem.FindByValue(trAutAutInvOffsetIn) != -1))
+		{
+			printf ("\nCarico in memoria indice %s, keyOffsetLen=%d, elements=%ld", trAutAutInvOffsetIn->GetName(), keyPlusOffsetPlusLfLength, elements);
+			offsetBufferTrAutAutPtr = (char *)malloc(elements*(keyPlusOffsetPlusLfLength)); // n righe di BID+Offset
+			if (!offsetBufferTrAutAutPtr)	{
+				printf ("\n!!!! ALLOCAZIONE MEMORIA FALLITA");
+				return false;	}
+			loadOffsetFiles2(trAutAutOffsetIn, offsetBufferTrAutAutPtr);
+		}
+	}
+
 	// Carichiamo gli offset della entita relazioni inverse autori/autori
 	if (trAutAutInvOffsetIn)
 	{
@@ -920,7 +938,6 @@ bool Marc4cpp::loadOffsetFiles()
 			loadOffsetFiles2(trAutAutInvOffsetIn, offsetBufferTrAutAutInvPtr);
 		}
 	}
-
 
 
 	// Carichiamo gli offset delle relazioni autori/autori
@@ -1546,9 +1563,11 @@ try {
 			trAutAutRelInvOffsetIn = cFileIn;
 
 
+		else if (!strcmp(tabella, "tr_aut_aut_off")) // 17/09/2021
+			trAutAutOffsetIn = cFileIn;
+
 		else if (!strcmp(tabella, "tr_aut_aut_inv_off"))
 			trAutAutInvOffsetIn = cFileIn;
-
 
 
 		else if (!strcmp(tabella, "tb_numero_std_off"))
@@ -1673,7 +1692,8 @@ try {
 
 		else
 		{
-		    SignalAnError(__FILE__, __LINE__, "File offset %s non identificato", tabella);
+//		    SignalAnError(__FILE__, __LINE__, "File offset %s non identificato", tabella);
+		    logToStdout(__FILE__, __LINE__, LOG_ERROR, "File offset %s non identificato", tabella);
 			return false;
 		}
 	}
@@ -1868,8 +1888,12 @@ printf ("\nAPRI FILE ENTITA': %s", sPtr->data());
 			tbMusicaIn = cFileIn;
 		else if (!strcmp(tabella, "tr_tit_aut"))
 			trTitAutIn = cFileIn;
+
+		else if (!strcmp(tabella, "tr_aut_aut")) // 17/09/2021
+			trAutAutIn = cFileIn;
 		else if (!strcmp(tabella, "tr_aut_aut_inv"))
 			trAutAutInvIn = cFileIn;
+
 		else if (!strcmp(tabella, "tr_tit_bib"))
 			trTitBibIn = cFileIn;
 		else if (!strcmp(tabella, "tb_composizione"))
@@ -1940,7 +1964,8 @@ printf ("\nAPRI FILE ENTITA': %s", sPtr->data());
 
 		else
 		{
-		    SignalAnError(__FILE__, __LINE__, "Entita %s non identificata", tabella);
+//		    SignalAnError(__FILE__, __LINE__, "Entita %s non identificata", tabella);
+		    logToStdout(__FILE__, __LINE__, LOG_ERROR, "Entita %s non identificata", tabella);
 			return false;
 
 		}

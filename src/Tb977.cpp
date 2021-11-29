@@ -28,8 +28,7 @@
     #include "nvwa/debug_new.h"
 #endif
 
-extern void SignalAnError(	const OrsChar *Module, OrsInt Line, const OrsChar * MsgFmt, ...);
-extern void SignalAWarning(	const OrsChar *Module, OrsInt Line, const OrsChar * MsgFmt, ...);
+extern void logToStdout(	const OrsChar *Module, OrsInt Line, int level, const OrsChar * MsgFmt, ...);
 
 Tb977::Tb977(CFile *tbIn, CFile *tbOffsetIn, char *offsetBufferTbPtr, long elementsTb, int keyPlusOffsetPlusLfLength, int key_length) :
 	Tb (tbIn, tbOffsetIn, offsetBufferTbPtr, elementsTb, keyPlusOffsetPlusLfLength, key_length)
@@ -45,7 +44,9 @@ bool Tb977::loadRecord(const char *key)
 
 	if (!Tb::loadRecord(key))
 	{
-		SignalAnError(__FILE__, __LINE__, "Derived class Tb977::loadRecord");
+//		SignalAnError(__FILE__, __LINE__, "Derived class Tb977::loadRecord");
+//		SignalAnError(__FILE__, __LINE__, "Record non trovato per chiave %s", key);
+		logToStdout(__FILE__, __LINE__, LOG_INFO, "Record non trovato per chiave %s", key);
 		return false;
 	}
 	return true;

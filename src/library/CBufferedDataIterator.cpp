@@ -29,9 +29,6 @@
 
 //#include "ors\cerr.h"
 
-extern void SignalAnError(	OrsChar *Module,
-							OrsInt Line,
-							OrsChar * MsgFmt, ...);
 #ifndef EOF
 	#define EOF -1
 #endif

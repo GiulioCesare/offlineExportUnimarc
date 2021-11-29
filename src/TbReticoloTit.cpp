@@ -27,8 +27,6 @@
     #include "nvwa/debug_new.h"
 #endif
 
-//extern void SignalAnError(	const OrsChar *Module, OrsInt Line, const OrsChar * MsgFmt, ...);
-//extern void SignalAWarning(	const OrsChar *Module, OrsInt Line, const OrsChar * MsgFmt, ...);
 
 TbReticoloTit::TbReticoloTit (char *record) : TbReticolo (record){
 }

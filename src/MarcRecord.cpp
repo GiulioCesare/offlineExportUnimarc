@@ -27,8 +27,7 @@
     #include "nvwa/debug_new.h"
 #endif
 
-extern void SignalAnError(const OrsChar *Module, OrsInt Line,		const OrsChar * MsgFmt, ...);
-extern void SignalAWarning(const OrsChar *Module, OrsInt Line,		const OrsChar * MsgFmt, ...);
+extern void logToStdout(	const OrsChar *Module, OrsInt Line, int level, const OrsChar * MsgFmt, ...);
 
 MarcRecord::MarcRecord() {
 	init();
@@ -379,7 +378,8 @@ CString *MarcRecord::toCString()
 			stringed.AppendString(sPtr);
 		}
 		else
-			SignalAnError(__FILE__, __LINE__, "ERRORE: Datafield %d (partendo da 0) non instanziato (datafields=%d)", i, dataFieldsVector->Length());
+//			SignalAnError(__FILE__, __LINE__, "ERRORE: Datafield %d (partendo da 0) non instanziato (datafields=%d)", i, dataFieldsVector->Length());
+			logToStdout(__FILE__, __LINE__, LOG_ERROR, "Datafield %d (partendo da 0) non instanziato (datafields=%d)", i, dataFieldsVector->Length());
 
 	}
 

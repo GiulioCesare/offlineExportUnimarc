@@ -29,7 +29,6 @@
 #include <stdlib.h>
 #include "GenericError.h"
 
-extern void SignalAnError(	const OrsChar *Module, OrsInt Line, const OrsChar * MsgFmt, ...);
 
 CFileInMemory::CFileInMemory( const char *aFilename, FILE* aFilep) : CFile( aFilename, aFilep)
 {

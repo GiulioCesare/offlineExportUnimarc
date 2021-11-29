@@ -25,8 +25,7 @@
 #include "MarcGlobals.h"
 
 
-extern void SignalAnError(	const OrsChar *Module, OrsInt Line, const OrsChar * MsgFmt, ...);
-extern void SignalAWarning(	const OrsChar *Module, OrsInt Line, const OrsChar * MsgFmt, ...);
+extern void logToStdout(	const OrsChar *Module, OrsInt Line, int level, const OrsChar * MsgFmt, ...);
 
 BufferedMarcStreamWriter::BufferedMarcStreamWriter(long bufSize) {
 	init(bufSize);
@@ -145,7 +144,8 @@ bool BufferedMarcStreamWriter::write(MarcRecord* marcRecord) {
     {
 		if (!writeBuffer())
 		{
-			SignalAnError(__FILE__, __LINE__, "Errore nella scrittura del buffer");
+//			SignalAnError(__FILE__, __LINE__, "Errore nella scrittura del buffer");
+			logToStdout(__FILE__, __LINE__, LOG_ERROR, "Errore nella scrittura del buffer");
 			return false;
 		}
 //		byteScritti=recordLength;
@@ -156,31 +156,36 @@ bool BufferedMarcStreamWriter::write(MarcRecord* marcRecord) {
     // Scriviamo nella datawarehose
 	if (!dataWarehouse->AddString(ldrStr->data()))
 	{
-		SignalAnError(__FILE__, __LINE__, "Errore nella scrittura di ldrStr");
+//		SignalAnError(__FILE__, __LINE__, "Errore nella scrittura di ldrStr");
+		logToStdout(__FILE__, __LINE__, LOG_ERROR, "Errore nella scrittura di ldrStr");
 		return false;
 	}
 
 	if (!dataWarehouse->AddBinaryData(directoryData->Data(), directoryData->GetUsedBytes())) //
 	{
-		SignalAnError(__FILE__, __LINE__, "Errore nella scrittura di directoryData");
+//		SignalAnError(__FILE__, __LINE__, "Errore nella scrittura di directoryData");
+		logToStdout(__FILE__, __LINE__, LOG_ERROR, "Errore nella scrittura di directoryData");
 		return false;
 	}
 	if (!dataWarehouse->AddBinaryData(recordData->Data(), recordData->GetUsedBytes())) //
 	{
-		SignalAnError(__FILE__, __LINE__, "Errore nella scrittura di recordData");
+//		SignalAnError(__FILE__, __LINE__, "Errore nella scrittura di recordData");
+		logToStdout(__FILE__, __LINE__, LOG_ERROR, "Errore nella scrittura di recordData");
 		return false;
 	}
 
 	if (!dataWarehouse->AddChar(RECORD_TERMINATOR))
 	{
-		SignalAnError(__FILE__, __LINE__, "Errore nella scrittura di RECORD_TERMINATOR");
+//		SignalAnError(__FILE__, __LINE__, "Errore nella scrittura di RECORD_TERMINATOR");
+		logToStdout(__FILE__, __LINE__, LOG_ERROR, "Errore nella scrittura di RECORD_TERMINATOR");
 		return false;
 	}
 
 	if (RECORDUNIMARCSUSINGOLARIGA == 1)
 		if (!dataWarehouse->AddChar('\n'))
 		{
-			SignalAnError(__FILE__, __LINE__, "Errore nella scrittura di NEWLINE");
+//			SignalAnError(__FILE__, __LINE__, "Errore nella scrittura di NEWLINE");
+			logToStdout(__FILE__, __LINE__, LOG_ERROR, "Errore nella scrittura di NEWLINE");
 			return false;
 		}
 

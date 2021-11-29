@@ -14,6 +14,7 @@ CPP_SRCS += \
 ../src/library/CTokenizer.cpp \
 ../src/library/Cini.cpp \
 ../src/library/GenericError.cpp \
+../src/library/LogToStdout.cpp \
 ../src/library/SignalError.cpp \
 ../src/library/SignalFatalError.cpp \
 ../src/library/SignalWarning.cpp 
@@ -29,6 +30,7 @@ OBJS += \
 ./src/library/CTokenizer.o \
 ./src/library/Cini.o \
 ./src/library/GenericError.o \
+./src/library/LogToStdout.o \
 ./src/library/SignalError.o \
 ./src/library/SignalFatalError.o \
 ./src/library/SignalWarning.o 
@@ -44,6 +46,7 @@ CPP_DEPS += \
 ./src/library/CTokenizer.d \
 ./src/library/Cini.d \
 ./src/library/GenericError.d \
+./src/library/LogToStdout.d \
 ./src/library/SignalError.d \
 ./src/library/SignalFatalError.d \
 ./src/library/SignalWarning.d 

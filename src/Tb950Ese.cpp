@@ -29,8 +29,8 @@
 #ifdef TRACK_MEMORY_LEAKS
     #include "nvwa/debug_new.h"
 #endif
-extern void SignalAnError(	const OrsChar *Module, OrsInt Line, const OrsChar * MsgFmt, ...);
-extern void SignalAWarning(	const OrsChar *Module, OrsInt Line, const OrsChar * MsgFmt, ...);
+
+extern void logToStdout(	const OrsChar *Module, OrsInt Line, int level, const OrsChar * MsgFmt, ...);
 
 
 Tb950Ese::Tb950Ese(CFile *tbIn, CFile *tbOffsetIn, char *offsetBufferTbPtr, long elementsTb, int keyPlusOffsetPlusLfLength, int key_length) :
@@ -54,7 +54,9 @@ bool Tb950Ese::loadRecord(const char *key)
 
 	if (!Tb::loadRecord(key))
 	{
-		SignalAnError(__FILE__, __LINE__, "Derived class Tb950Ese::loadRecord");
+//		SignalAnError(__FILE__, __LINE__, "Derived class Tb950Ese::loadRecord");
+//		SignalAnError(__FILE__, __LINE__, "Record non trovato per chiave %s", key);
+		logToStdout(__FILE__, __LINE__, LOG_INFO, "Record non trovato per chiave %s", key);
 		return false;
 	}
 	return true;

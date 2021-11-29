@@ -39,8 +39,7 @@ extern CKeyValueVector *codiciNotaKV;
     #include "nvwa/debug_new.h"
 #endif
 
-extern void SignalAnError(const OrsChar *Module, OrsInt Line,		const OrsChar * MsgFmt, ...);
-extern void SignalAWarning(const OrsChar *Module, OrsInt Line,		const OrsChar * MsgFmt, ...);
+extern void logToStdout(	const OrsChar *Module, OrsInt Line, int level, const OrsChar * MsgFmt, ...);
 
 char *padding[] = { // const
 		//	"                       ",
@@ -460,7 +459,8 @@ bool Marc4cppCollocazione::addBiblioteca(char *cdBib) {
         }
     else
     {
-		SignalAnError(	__FILE__, __LINE__,	"Biblioetca mancante per biblioteca '%s', bid '%s' e key_loc %s", cdBib, tb950Inv->getField(tb950Inv->bid),	tb950Inv->getField(tb950Inv->tbinv_key_loc));
+//		SignalAnError(	__FILE__, __LINE__,	"Biblioetca mancante per biblioteca '%s', bid '%s' e key_loc %s", cdBib, tb950Inv->getField(tb950Inv->bid),	tb950Inv->getField(tb950Inv->tbinv_key_loc));
+		logToStdout(__FILE__, __LINE__, LOG_ERROR, "Biblioetca mancante per biblioteca '%s', bid '%s' e key_loc %s", cdBib, tb950Inv->getField(tb950Inv->bid),	tb950Inv->getField(tb950Inv->tbinv_key_loc));
 		dsBibliotecaPtr = cdBib;
     }
 
@@ -1124,9 +1124,12 @@ bool Marc4cppCollocazione::creaPossessore(Tb950Inv * tb950InvPtr, Tb950Coll *tb9
 			s.Strip(s.trailing, ' ');
 			}
 			else
-				SignalAnError(
-						__FILE__, __LINE__,
-						"KeyLoc non coincidono  tb950Coll.key_loc='%s', tb950InvPtr.key_loc='%s'",
+//				SignalAnError(
+//						__FILE__, __LINE__,
+//						"KeyLoc non coincidono  tb950Coll.key_loc='%s', tb950InvPtr.key_loc='%s'",
+//						tb950CollPtr->getField(tb950CollPtr->tbcol_key_loc),
+//						tb950InvPtr->getField(tb950InvPtr->tbinv_key_loc));
+				logToStdout(__FILE__, __LINE__, LOG_ERROR, "KeyLoc non coincidono  tb950Coll.key_loc='%s', tb950InvPtr.key_loc='%s'",
 						tb950CollPtr->getField(tb950CollPtr->tbcol_key_loc),
 						tb950InvPtr->getField(tb950InvPtr->tbinv_key_loc));
 

@@ -44,8 +44,7 @@ using namespace std;
 
 extern CKeyValueVector *codiciOrgaKV; // 26/01/2015
 
-extern void SignalAnError(const OrsChar *Module, OrsInt Line, const OrsChar * MsgFmt, ...);
-extern void SignalAWarning(const OrsChar *Module, OrsInt Line, const OrsChar * MsgFmt, ...);
+extern void logToStdout(	const OrsChar *Module, OrsInt Line, int level, const OrsChar * MsgFmt, ...);
 
 /*!
 \brief <b>Tag 314 - Nota legame titolo/autore</b>
@@ -917,7 +916,8 @@ DataField * Marc4cppLegami::creaTag500_TitoloUniforme(
 			bool retb = tbAutore->loadRecord(idBuffer);
 			if (!retb)
 			{
-				SignalAnError(__FILE__, __LINE__,"Non trovo autore con vid %s", idBuffer);
+//				SignalAnError(__FILE__, __LINE__,"Non trovo autore con vid %s", idBuffer);
+				logToStdout(__FILE__, __LINE__, LOG_ERROR, "Non trovo autore con vid %s", idBuffer);
 			}
 			else
 			{
@@ -1949,7 +1949,8 @@ DataField * Marc4cppLegami::creaTag921_Marca() {
 			s.assign(trRepMar->getFieldString(trRepMar->id_repertorio));
 			if (!tbRepertorio->loadRecord(s.data()))
 			{
-				 SignalAWarning(__FILE__, __LINE__, "Repertorio non trovato per marca %s, id_repertorio%s", midPtr, s.data());
+//				 SignalAWarning(__FILE__, __LINE__, "Repertorio non trovato per marca %s, id_repertorio%s", midPtr, s.data());
+				logToStdout(__FILE__, __LINE__, LOG_WARNING, "Repertorio non trovato per marca %s, id_repertorio%s", midPtr, s.data());
 			}
 			else
 			{
@@ -2107,7 +2108,8 @@ DataField * Marc4cppLegami::creaTag560_RaccoltaFattizia(char *bid_base) {
 		}
 		if (length < 0)
 		{
-			SignalAWarning(	__FILE__, __LINE__,	"Lunnghezza area ISBD (%d) invalida per area %s, bid=%s", length, areeVect.Entry(i)->data(), tbTitolo->getField(tbTitolo->bid));
+//			SignalAWarning(	__FILE__, __LINE__,	"Lunnghezza area ISBD (%d) invalida per area %s, bid=%s", length, areeVect.Entry(i)->data(), tbTitolo->getField(tbTitolo->bid));
+			logToStdout(__FILE__, __LINE__, LOG_WARNING, "Lunnghezza area ISBD (%d) invalida per area %s, bid=%s", length, areeVect.Entry(i)->data(), tbTitolo->getField(tbTitolo->bid));
 			continue;
 		}
 

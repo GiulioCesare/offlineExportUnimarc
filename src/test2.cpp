@@ -115,6 +115,7 @@ using namespace std;
 #include "BinarySearch.h"
 #include "../include/library/CFile.h"
 #include "library/CMisc.h"
+#include <ors/Const.h>
 
 CKeyValueVector *codiciNotaKV = 0;
 
@@ -212,6 +213,8 @@ bool 	logNaturaErrata = false;
 bool	stampaRecordCancellato = false; // 02/02/2018
 
 bool	esportaSoloInventariCollocati = false; // 31/05/2018
+int 	log_level = LOG_ERROR;
+extern OrsChar *log_level_msg[];
 
 
 // 29/01/2018 Gestione parametrica delle nature da esportare
@@ -290,18 +293,6 @@ char const *descTipoPeriodicita [] =    // Come da tb_codici.tp_tabella PPER
 };
 
 
-
-
-
-
-//CString titoliUnimarcRidotto, titoliVariati, titoliErrati; // titoliCancellati, titoliFusi, titoliLocDaCanc, titoliUnimarc
-//CFile *titoliUnimarcRidottoOut, *titoliVariatiOut, *titoliErratiOut; // , *titoliUnimarcOut, *titoliCancellatiOut, *titoliFusiOut, *titoliLocDaCancOut,
-
-// End global variables
-
-
-extern void SignalAnError(	OrsChar *Module, OrsInt Line, OrsChar * MsgFmt, ...);
-extern void SignalAWarning(	OrsChar *Module, OrsInt Line, OrsChar * MsgFmt, ...);
 
 // Forward declaration
 void testCFile();
@@ -998,8 +989,9 @@ int offlineExport(int argc, const char* argv[])
 	printHeader();
 	if (argc < 2)
 	{
-		printf ("\nUso: offlineExportUnimarc fileDiConfig.txt [switch overrides] \n"); // Fix vari per la 960 (Mail pasqualetti del 24/11/09)
-		printTagsGestiti();
+		printf ("\nUso: offlineExportUnimarc [-h or --help] OR fileDiConfig.txt [switch overrides] \n"); // Fix vari per la 960 (Mail pasqualetti del 24/11/09)
+//		printf ("\n%s", switchOverrides);
+//		printTagsGestiti();
 		return 1;
 	}
 	time ( &rawtimeStart );
@@ -1007,17 +999,25 @@ int offlineExport(int argc, const char* argv[])
 	printf ("\n---------------------------------------------------------------");
 
 
-	printf ( "\nSwitches overriden : ");
-	if (argc < 3)
-		printf (" NONE");
-	else
-	{
+	printf ( "\nSwitches overridden : ");
+//	if (argc < 3)
+//		printf (" NONE");
+//	else
+//	{
+    	if (argc == 2 && !strcmp(argv[1],"-h")|| !strcmp(argv[1],"--help"))
+		{
+			printf ("\n%s", switchOverrides);
+			printTagsGestiti();
+			return 0;
+		}
+
+    	// Print arguments
 		for (int i = 2; i < argc; i++)
 		{
 			printf ("\n%s %s", argv[i], argv[i+1]);
 			i++;
 		}
-	}
+//	}
 	printf ("\n----------------------------");
 
 
@@ -1047,7 +1047,7 @@ int offlineExport(int argc, const char* argv[])
                                           * Note that we're starting on 2 because we don't need to know the
                                           * path of the program and the config file, which is stored in argv[0] and argv[1] */
             if (i < argc) // Check that we haven't finished parsing already
-                if (!strcmp(argv[i],"-t") || !strcmp(argv[i],"--tags")) {
+            	if (!strcmp(argv[i],"-t") || !strcmp(argv[i],"--tags")) {
                 	tagsFilename = argv[i + 1]; // // We know the next argument *should* be the tags filename:
                 } else if (!strcmp(argv[i],"-e") || !strcmp(argv[i],"--elaboraNRighe")) {
                 	elaboraNRigheSwitch = atol(argv[i + 1]);
@@ -1620,6 +1620,9 @@ while (configLine.ReadLine(iniFileIn)) // ReadLineWithPrefixedMaxSize
 		//NSE = ini->fieldsVector->Entry(1)->data();
 
 	}
+
+	else if (!ini->fieldsVector->Entry(0)->Compare("log_level"))	// 09/11/2021
+		log_level = atoi(ini->fieldsVector->Entry(1)->data());
 
 	else if (!ini->fieldsVector->Entry(0)->Compare("idXunimarc"))
 		IDXUNIMARC.assign(ini->fieldsVector->Entry(1));
@@ -2994,7 +2997,28 @@ void printHeader()
 //					printf ("\n\nVersione 12.06.02 23/06/2021"); // Fix 231
 //					printf ("\n\nVersione 12.08.01 19/08/2021"); // Fix export autori per OPAC/SRI
 
-					printf ("\n\nVersione 12.09.01 15/09/2021"); // export 421 anche in presenza della 461
+//					printf ("\n\nVersione 12.09.01 15/09/2021"); // export 421 anche in presenza della 461
+
+
+//					printf ("\n\nVersione 12.09.02 16/09/2021"); // Export titolo dell'opera solo ae in forma accettata (cd_natura = 'A')
+
+//					printf ("\n\nVersione 12.09.03 20/09/2021"); // Fix vari export authority (autori, Opere, Luoghi soggetti) come da mail Mataloni del 16/09/21
+
+//					printf ("\n\nVersione 12.09.04 21/09/2021"); // Fix $9 in 4xx e 5xx, mail Mataloni del 21/09/21
+//					printf ("\n\nVersione 12.09.05 22/09/2021"); // Fix $9 = "nota al legame" in 4xx mail Mataloni del 22/09/21
+//					printf ("\n\nVersione 12.09.06 27/09/2021"); // Fix test per 010 con 10 per autori (non veniva esportata etichetta 010)
+//					printf ("\n\nVersione 12.11.01 10/11/2021"); // Implementata la logToStdout e sostituito la SignalError, SignalFaralError, SignalWarninf
+
+
+//					printf ("\n\nVersione 12.11.02 10/11/2021"); // Fixed bug in OrsBool CString::Replace(const char *fromString, const char *toString, int occurance ) // 0 = all
+//					printf ("\n\nVersione 12.11.03 10/11/2021"); // Fix Marc4cppLegamiAuthority::Marc4cppLegamiAuthority(Marc4cppDocumentoAuthority *marc4cppDocumentoAuthority, char* offsetBufferTrAutAutRelPtr, // 10/11/2020
+//					printf ("\n\nVersione 12.11.04 17/11/2021"); // Fix if (poloBibCnc.GetLastChar() == '\n') // 17/11/2021, if (poloBibCnm.GetLastChar() == '\n') // 17/11/2021 e // 18/11/2021
+					printf ("\n\nVersione 12.11.05 25/11/2021"); // Fix 511 per authority titoli uniformi
+
+
+
+
+
 
 					//	mail Patrizia. Per quando aggiorniamo esercizio
 //					DB
@@ -3005,8 +3029,8 @@ void printHeader()
 
 
 
-			printf ("\n%s", switchOverrides);
-			printf ("\n\nExport per viaf = %s", EXPORT_VIAF ? "true" : "false");
+//			printf ("\n%s", switchOverrides);
+//			printf ("\n\nExport per viaf = %s", EXPORT_VIAF ? "true" : "false");
 
 
 			printf ("\n");

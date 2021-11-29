@@ -46,9 +46,7 @@
 #endif
 
 
-//#include "C210.h"
-extern void SignalAnError(const OrsChar *Module, OrsInt Line, const OrsChar * MsgFmt, ...);
-extern void SignalAWarning(const OrsChar *Module, OrsInt Line,	const OrsChar * MsgFmt, ...);
+extern void logToStdout(	const OrsChar *Module, OrsInt Line, int level, const OrsChar * MsgFmt, ...);
 
 
 /*
@@ -583,7 +581,8 @@ DataField * Marc4cppDocumento::creaTag205_AreaEdizione(char *areaStartPtr, char 
 	else
 	{
 		// undefined!!!!
-		SignalAnError(__FILE__,__LINE__,"creaTag205_AreaEdizione. Impossibile stabilire trattasi di antico o moderno: %s", tbTitolo->getField(tbTitolo->bid));
+//		SignalAnError(__FILE__,__LINE__,"creaTag205_AreaEdizione. Impossibile stabilire trattasi di antico o moderno: %s", tbTitolo->getField(tbTitolo->bid));
+		logToStdout(__FILE__, __LINE__, LOG_ERROR, "creaTag205_AreaEdizione. Impossibile stabilire trattasi di antico o moderno: %s", tbTitolo->getField(tbTitolo->bid));
 	}
 
 	// Dalla c200 crea il datafield
@@ -2640,7 +2639,8 @@ DataField * Marc4cppDocumento::creaTag300_321_NoteGenerali_ConRiferimenti(char *
 	CString s;
 	if (!tbNota300->loadRecord(bid))
         {
-		 SignalAnError(__FILE__,__LINE__,"Nota generale con riferimento mancante per bid %s", bid);
+//		 SignalAnError(__FILE__,__LINE__,"Nota generale con riferimento mancante per bid %s", bid);
+		 logToStdout(__FILE__, __LINE__, LOG_ERROR, "Nota generale con riferimento mancante per bid %s", bid);
 		return df;
         }
 //tbNota300->dumpRecord();

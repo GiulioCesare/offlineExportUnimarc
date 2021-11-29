@@ -35,8 +35,7 @@
     #include "nvwa/debug_new.h"
 #endif
 
-extern void SignalAnError(	const OrsChar *Module, OrsInt Line, const OrsChar * MsgFmt, ...);
-extern void SignalAWarning(	const OrsChar *Module, OrsInt Line, const OrsChar * MsgFmt, ...);
+extern void logToStdout(	const OrsChar *Module, OrsInt Line, int level, const OrsChar * MsgFmt, ...);
 
 //Tb950Coll::Tb950Coll(CFile * trTitCollIn, CFile *trTitCollOffsetBidIn, CFile *trTitCollOffsetKlocIn, char *offsetBufferTrTitCollPtr, long elementsTrTitColl, int keyPlusOffsetPlusLfLength, int key_length) {
 Tb950Coll::Tb950Coll(CFile * tbTitCollIn,
@@ -154,7 +153,9 @@ if (aFieldId < fieldsVector->Length())
 	return fieldsVector->Entry(aFieldId)->data();
 else
 {
-SignalAnError(__FILE__, __LINE__, "TrTitoloCollocazione::getField: n out of range: %d", aFieldId);
+//SignalAnError(__FILE__, __LINE__, "TrTitoloCollocazione::getField: n out of range: %d", aFieldId);
+logToStdout(__FILE__, __LINE__, LOG_INFO, "TrTitoloCollocazione::getField: n out of range: %d", aFieldId);
+
 return (char *)"";
 }
 }
@@ -165,7 +166,7 @@ if (aFieldId < fieldsVector->Length())
 	return fieldsVector->Entry(aFieldId)->Length();
 else
 {
-SignalAnError(__FILE__, __LINE__, "TrTitoloCollocazione::getFieldLength: n out of range: %d", aFieldId);
+	logToStdout(__FILE__, __LINE__, LOG_INFO, "TrTitoloCollocazione::getFieldLength: n out of range: %d", aFieldId);
 return 0;
 }
 }
@@ -176,7 +177,7 @@ CString * Tb950Coll::getFieldString(int aFieldId)
 		return fieldsVector->Entry(aFieldId);
 	else
 	{
-	SignalAnError(__FILE__, __LINE__, "TrTitoloCollocazione::getField: n out of range: %d", aFieldId);
+		logToStdout(__FILE__, __LINE__, LOG_INFO, "TrTitoloCollocazione::getField: n out of range: %d", aFieldId);
 	return 0;
 	}
 }
@@ -234,8 +235,10 @@ bool Tb950Coll::loadRecord(char *key)
 
 	if (!retb)
 	{
-		SignalAnError(__FILE__, __LINE__, "Record trTitoloCollocazione non trovato per bid %s", key);
-		return false;
+//		SignalAnError(__FILE__, __LINE__, "Record trTitoloCollocazione non trovato per bid %s", key);
+//		SignalAnError(__FILE__, __LINE__, "Record non trovato per chiave %s", key);
+		logToStdout(__FILE__, __LINE__, LOG_INFO, "Record non trovato per chiave %s", key);
+	return false;
 	}
 
 	// Dalla posizione prendiamo l'offset
@@ -369,7 +372,8 @@ long Tb950Coll::existsRecordByKeyLoc(char *keyLoc)
 
 	if (!retb)
 	{
-		SignalAnError(__FILE__, __LINE__, "Record trTitoloCollocazione non trovato per bid %s", bid);
+//		SignalAnError(__FILE__, __LINE__, "Record trTitoloCollocazione non trovato per bid %s", bid);
+		logToStdout(__FILE__, __LINE__, LOG_DEBUG, "Record non trovato per chiave %s", keyLoc);
 		return false;
 	}
 

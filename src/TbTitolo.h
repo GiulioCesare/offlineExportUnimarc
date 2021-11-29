@@ -46,6 +46,7 @@ public:
 						P titolo parallelo
 						T titolo subordinato
 						D titolo sviluppato o estrapolato
+						V Rinvio 16/09/21
 						W vol. particolare privo di tit. significativo */
 		cd_paese,
 		cd_lingua_1,

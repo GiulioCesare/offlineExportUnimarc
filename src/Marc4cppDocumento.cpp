@@ -41,11 +41,8 @@
 
 #define NOTA_DA_ISDB 0
 #define NOTA_DA_TB_NOTA 1
-//#include "C210.h"
-extern void SignalAnError(const OrsChar *Module, OrsInt Line,
-		const OrsChar * MsgFmt, ...);
-extern void SignalAWarning(const OrsChar *Module, OrsInt Line,
-		const OrsChar * MsgFmt, ...);
+
+extern void logToStdout(	const OrsChar *Module, OrsInt Line, int level, const OrsChar * MsgFmt, ...);
 
 Marc4cppDocumento::Marc4cppDocumento(MarcRecord *marcRecord,
 		TbTitolo *tbTitolo, TbImpronta * tbImpronta,
@@ -159,8 +156,8 @@ void Marc4cppDocumento::init(char *polo)
 		poloId = POLO_NAP;
 	else
 	{
-		SignalAWarning(__FILE__, __LINE__, "ERRORE: ID mancante per polo '%s'",polo);
-
+//		SignalAWarning(__FILE__, __LINE__, "ERRORE: ID mancante per polo '%s'",polo);
+		logToStdout(__FILE__, __LINE__, LOG_WARNING, "ID mancante per polo '%s'",polo);
 		poloId = POLO_SCONOSCIUTO;
 	}
 }
@@ -3396,7 +3393,8 @@ bool Marc4cppDocumento::elaboraDatiDocumento() {
 		}
 		if (length < 0)
 		{
-			SignalAWarning(	__FILE__, __LINE__,	"Lunnghezza area ISBD (%d) invalida per area %s, bid=%s", length, areeVect.Entry(i)->data(), tbTitolo->getField(tbTitolo->bid));
+//			SignalAWarning(	__FILE__, __LINE__,	"Lunnghezza area ISBD (%d) invalida per area %s, bid=%s", length, areeVect.Entry(i)->data(), tbTitolo->getField(tbTitolo->bid));
+			logToStdout(__FILE__, __LINE__, LOG_WARNING, "Lunnghezza area ISBD (%d) invalida per area %s, bid=%s", length, areeVect.Entry(i)->data(), tbTitolo->getField(tbTitolo->bid));
 			continue;
 		}
 
@@ -3879,7 +3877,8 @@ if (tbTitset1->loadRecord(tbTitolo->getField(tbTitolo->bid)))
 
 	else
 		// undefined!!!!
-		SignalAnError(__FILE__,__LINE__,"isModerno105(). Impossibile stabilire se si tratta di antico o moderno: %s.", tbTitolo->getField(tbTitolo->bid));
+//		SignalAnError(__FILE__,__LINE__,"isModerno105(). Impossibile stabilire se si tratta di antico o moderno: %s.", tbTitolo->getField(tbTitolo->bid));
+		logToStdout(__FILE__, __LINE__, LOG_WARNING, "isModerno105(). Impossibile stabilire se si tratta di antico o moderno: %s.", tbTitolo->getField(tbTitolo->bid));
 
 }
 return false;

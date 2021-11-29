@@ -38,8 +38,7 @@ CharMask Mask;
 #endif
 
 
-extern void SignalAnError(	const OrsChar *Module, OrsInt Line, const OrsChar * MsgFmt, ...);
-extern void SignalAWarning(	const OrsChar *Module, OrsInt Line, const OrsChar * MsgFmt, ...);
+extern void logToStdout(	const OrsChar *Module, OrsInt Line, int level, const OrsChar * MsgFmt, ...);
 
 
 
@@ -66,7 +65,7 @@ OrsBool	CString::MoveRightBy(OrsLong n)
 	if	(n < 0)
 		{
 //	    SignalAnError(__FILE__, __LINE__, "MoveRightBy: n out of range");
-	    SignalAnError(__FILE__, __LINE__, "MoveRightBy: n out of range");
+		logToStdout(__FILE__, __LINE__, LOG_ERROR, "MoveRightBy: n out of range");
 
 		return OrsFALSE;
 		}
@@ -74,14 +73,16 @@ OrsBool	CString::MoveRightBy(OrsLong n)
 	// Enough room on the right to allow move?
 	if	(n > UnusedRightBytes)
 		{
-	    SignalAnError(__FILE__, __LINE__, "MoveRightBy: free space on the right non enough");
+//	    SignalAnError(__FILE__, __LINE__, "MoveRightBy: free space on the right non enough");
+	    logToStdout(__FILE__, __LINE__, LOG_ERROR, "MoveRightBy: free space on the right non enough");
 		return OrsFALSE;
 		}
 
 	// Something to move?
 	if	(!UsedBytes)
 		{
-	    SignalAWarning(__FILE__, __LINE__, "MoveRightBy: Buffer holds no data");
+//	    SignalAWarning(__FILE__, __LINE__, "MoveRightBy: Buffer holds no data");
+	    logToStdout(__FILE__, __LINE__, LOG_WARNING, "MoveRightBy: Buffer holds no data");
 		return OrsTRUE;
 		}
 
@@ -344,14 +345,16 @@ OrsBool	CString::MoveRightFromBy(OrsLong From, OrsLong By)
 	// In range?
 	if	(By < 0 || From > UsedBytes)
 		{
-	    SignalAnError(__FILE__, __LINE__, "MoveRightBy: n out of range");
+//	    SignalAnError(__FILE__, __LINE__, "MoveRightBy: n out of range");
+	    logToStdout(__FILE__, __LINE__, LOG_ERROR, "MoveRightBy: n out of range");
 		return OrsFALSE;
 		}
 
 	// Enough room on the right to allow move?
 	if	(By > UnusedRightBytes)
 		{
-	    SignalAnError(__FILE__, __LINE__, "MoveRightBy: free space on the right non enough");
+//	    SignalAnError(__FILE__, __LINE__, "MoveRightBy: free space on the right non enough");
+	    logToStdout(__FILE__, __LINE__, LOG_ERROR, "MoveRightBy: free space on the right non enough");
 		return OrsFALSE;
 		}
 
@@ -379,7 +382,8 @@ OrsBool CString::InsertStringAt(const OrsChar *aString, OrsLong Pos)
 
 	if	(Pos > UsedBytes)
 		{
-	    SignalAnError(__FILE__, __LINE__, "InsertStringAt: Pos (%d) out of range", Pos);
+//	    SignalAnError(__FILE__, __LINE__, "InsertStringAt: Pos (%d) out of range", Pos);
+	    logToStdout(__FILE__, __LINE__, LOG_ERROR, "InsertStringAt: Pos (%d) out of range", Pos);
 		return OrsFALSE;
 		}
 
@@ -435,7 +439,8 @@ OrsBool CString::InsertCharAt(OrsChar aChar, OrsLong Pos)
 
 	if	(Pos > UsedBytes)
 		{
-	    SignalAnError(__FILE__, __LINE__, "InsertCharAt: Pos (%d) out of range", Pos);
+//	    SignalAnError(__FILE__, __LINE__, "InsertCharAt: Pos (%d) out of range", Pos);
+	    logToStdout(__FILE__, __LINE__, LOG_ERROR, "InsertCharAt: Pos (%d) out of range", Pos);
 		return OrsFALSE;
 		}
 
@@ -477,7 +482,8 @@ OrsChar CString::ExtractFirstChar()
 
 	if	(UsedBytes<2)
 		{
-	    SignalAWarning(__FILE__, __LINE__, "ExtractFirstChar: buffer is empty");
+//	    SignalAWarning(__FILE__, __LINE__, "ExtractFirstChar: buffer is empty");
+	    logToStdout(__FILE__, __LINE__, LOG_WARNING, "ExtractFirstChar: buffer is empty");
 		return 0;
 		}
 
@@ -663,14 +669,16 @@ OrsBool	CString::CropLeftBy(OrsLong n)
 	// In range?
 	if	(n <= 0)
 		{
-	    SignalAnError(__FILE__, __LINE__, "CropLeftBy: range invalid");
+//	    SignalAnError(__FILE__, __LINE__, "CropLeftBy: range invalid");
+	    logToStdout(__FILE__, __LINE__, LOG_ERROR, "CropLeftBy: range invalid");
 		return OrsFALSE;
 		}
 
 	// Something to crop?
 	if	(n > UsedBytes)
 		{
-	    SignalAWarning(__FILE__, __LINE__, "CropLeftBy: range too big");
+//	    SignalAWarning(__FILE__, __LINE__, "CropLeftBy: range too big");
+	    logToStdout(__FILE__, __LINE__, LOG_WARNING, "CropLeftBy: range too big");
 		return OrsTRUE;
 		}
 
@@ -788,7 +796,8 @@ OrsChar& CString::operator[](int i)
 	// In range?
 	if	(i < 0 || i >= UsedBytes)
 		{
-	    SignalAnError(__FILE__, __LINE__, "CString::operator[]: i out of range");
+//	    SignalAnError(__FILE__, __LINE__, "CString::operator[]: i out of range");
+	    logToStdout(__FILE__, __LINE__, LOG_ERROR, "CString::operator[]: i out of range");
 		return *BufTailPtr;
 		}
 	return Buffer[i];
@@ -892,7 +901,8 @@ OrsBool	CString::RestoreFrom(FILE *aFilePtr)
 	ret = fread(&StoreSize, sizeof(StoreSize), 1, aFilePtr);
 	if	(ret != 1)
 		{
-        SignalAnError(__FILE__, __LINE__, "CString::RestoreFrom Non posso leggere");
+//        SignalAnError(__FILE__, __LINE__, "CString::RestoreFrom Non posso leggere");
+        logToStdout(__FILE__, __LINE__, LOG_ERROR, "CString::RestoreFrom Non posso leggere");
 		return OrsFALSE;
 		}
 	GrowBuffer(StoreSize);
@@ -900,7 +910,8 @@ OrsBool	CString::RestoreFrom(FILE *aFilePtr)
 	if	(ret != 1)
 		{
 
-        SignalAnError(__FILE__, __LINE__, "CString::RestoreFrom Non posso leggere");
+//        SignalAnError(__FILE__, __LINE__, "CString::RestoreFrom Non posso leggere");
+        logToStdout(__FILE__, __LINE__, LOG_ERROR, "CString::RestoreFrom Non posso leggere");
 		return OrsFALSE;
 		}
 	UsedBytes += (StoreSize--); // Get rid of extra EOS
@@ -918,14 +929,16 @@ OrsBool	CString::SaveOn(FILE *aFilePtr)
 	ret = fwrite(&UsedBytes, sizeof(UsedBytes), 1, aFilePtr);
 	if	(ret != 1)
 		{
-        SignalAnError(__FILE__, __LINE__, "CString::SaveOn Non posso scrivere");
+//        SignalAnError(__FILE__, __LINE__, "CString::SaveOn Non posso scrivere");
+        logToStdout(__FILE__, __LINE__, LOG_ERROR, "CString::SaveOn Non posso scrivere");
 		return OrsFALSE;
 		}
 	// Write the stringitself
 	ret = fwrite(Buffer, UsedBytes, 1, aFilePtr);
 	if	(ret != 1)
 		{
-        SignalAnError(__FILE__, __LINE__, "CString::SaveOn Non posso scrivere");
+//        SignalAnError(__FILE__, __LINE__, "CString::SaveOn Non posso scrivere");
+        logToStdout(__FILE__, __LINE__, LOG_ERROR, "CString::SaveOn Non posso scrivere");
 		return OrsFALSE;
 		}
 	return OrsTRUE;
@@ -936,12 +949,14 @@ OrsBool	CString::SaveOn(CFile & aCFileRef)
   // Store the number of characters, then the string itself:
 	if( !aCFileRef.Write(UsedBytes) )
 		{
-        SignalAnError(__FILE__, __LINE__, "CString::SaveOn Non posso scrivere");
+//        SignalAnError(__FILE__, __LINE__, "CString::SaveOn Non posso scrivere");
+        logToStdout(__FILE__, __LINE__, LOG_ERROR, "CString::SaveOn Non posso scrivere");
 		return OrsFALSE;
 		}
 	if( !aCFileRef.Write(data(), UsedBytes))
 		{
-        SignalAnError(__FILE__, __LINE__, "CString::SaveOn Non posso scrivere");
+//        SignalAnError(__FILE__, __LINE__, "CString::SaveOn Non posso scrivere");
+        logToStdout(__FILE__, __LINE__, LOG_ERROR, "CString::SaveOn Non posso scrivere");
 		return OrsFALSE;
 		}
 	return OrsTRUE;
@@ -953,7 +968,8 @@ OrsBool	CString::RestoreFrom(CFile & aCFileRef)
 	OrsLong StoreSize;
 	if( !aCFileRef.Read(StoreSize))
 		{
-        SignalAnError(__FILE__, __LINE__, "CString::SaveOn Non posso leggere");
+//        SignalAnError(__FILE__, __LINE__, "CString::SaveOn Non posso leggere");
+        logToStdout(__FILE__, __LINE__, LOG_ERROR, "CString::SaveOn Non posso leggere");
 		return OrsFALSE;
 		}
 
@@ -961,7 +977,8 @@ OrsBool	CString::RestoreFrom(CFile & aCFileRef)
 
 	if( !aCFileRef.Read(BufTailPtr, StoreSize))
 		{
-        SignalAnError(__FILE__, __LINE__, "CString::SaveOn Non posso leggere");
+//        SignalAnError(__FILE__, __LINE__, "CString::SaveOn Non posso leggere");
+        logToStdout(__FILE__, __LINE__, LOG_ERROR, "CString::SaveOn Non posso leggere");
 		return OrsFALSE;
 		}
 
@@ -1059,7 +1076,8 @@ OrsBool CString::GrowBuffer(OrsLong GrowBy)
 	Buffer = (OrsChar *) realloc(Buffer, Size);
 	if	(!Buffer)
 		{
-	    SignalAnError(__FILE__, __LINE__, "CString ralloc failed for size=%ld, GrowBy=%ld", Size, GrowBy);
+//	    SignalAnError(__FILE__, __LINE__, "CString ralloc failed for size=%ld, GrowBy=%ld", Size, GrowBy);
+	    logToStdout(__FILE__, __LINE__, LOG_ERROR, "CString ralloc failed for size=%ld, GrowBy=%ld", Size, GrowBy);
 		return OrsFALSE;
 		}
 
@@ -1089,7 +1107,8 @@ OrsBool	CString::CropRightBy(OrsLong n)
 	// In range?
 	if	(n <= 0)
 		{
-	    SignalAnError(__FILE__, __LINE__, "CropRightBy: range invalid");
+//	    SignalAnError(__FILE__, __LINE__, "CropRightBy: range invalid");
+	    logToStdout(__FILE__, __LINE__, LOG_ERROR, "CropRightBy: range invalid");
 		return OrsFALSE;
 		}
 
@@ -1097,7 +1116,8 @@ OrsBool	CString::CropRightBy(OrsLong n)
 //	if	(n > UsedBytes)
 	if	(n > (UsedBytes-1)) // 17/04/2015
 		{
-	    SignalAWarning(__FILE__, __LINE__, "CropRightBy: range too big");
+//	    SignalAWarning(__FILE__, __LINE__, "CropRightBy: range too big");
+	    logToStdout(__FILE__, __LINE__, LOG_ERROR, "CropRightBy: range too big");
 //		return OrsTRUE;
 		return OrsFALSE;
 		}
@@ -1126,14 +1146,16 @@ OrsBool	CString::CropRightFrom(OrsLong From)
 	// In range?
 	if	(From < 0) // <=
 		{
-	    SignalAnError(__FILE__, __LINE__, "CropRightFrom: range invalid");
+//	    SignalAnError(__FILE__, __LINE__, "CropRightFrom: range invalid");
+	    logToStdout(__FILE__, __LINE__, LOG_ERROR, "CropRightFrom: range invalid");
 		return OrsFALSE;
 		}
 
 	// Something to crop?
 	if	(From > UsedBytes)
 		{
-	    SignalAWarning(__FILE__, __LINE__, "CropRightFrom: range too big");
+//	    SignalAWarning(__FILE__, __LINE__, "CropRightFrom: range too big");
+	    logToStdout(__FILE__, __LINE__, LOG_ERROR, "CropRightFrom: range too big");
 		return OrsFALSE; // OrsTRUE
 		}
 
@@ -1158,14 +1180,16 @@ OrsBool	CString::CropRightAfterChar(OrsLong From, char *delimiters)
 	// In range?
 	if	(From < 0) // <=
 		{
-	    SignalAnError(__FILE__, __LINE__, "CropRightFrom: range invalid");
+//	    SignalAnError(__FILE__, __LINE__, "CropRightFrom: range invalid");
+	    logToStdout(__FILE__, __LINE__, LOG_ERROR, "CropRightFrom: range invalid");
 		return OrsFALSE;
 		}
 
 	// Something to crop?
 	if	(From > UsedBytes)
 		{
-	    SignalAWarning(__FILE__, __LINE__, "CropRightFrom: range too big");
+//	    SignalAWarning(__FILE__, __LINE__, "CropRightFrom: range too big");
+	    logToStdout(__FILE__, __LINE__, LOG_ERROR, "CropRightFrom: range too big");
 		return OrsFALSE; // OrsTRUE
 		}
 
@@ -1380,7 +1404,8 @@ OrsChar *CString::SubstringData(OrsLong From, OrsLong count)
 	// In range?
 	if	(From < 0 || From >= UsedBytes || count < 0 || count >= UsedBytes)
 		{
-	    SignalAnError(__FILE__, __LINE__, "SubstringData out of range, from=%d, length=%d, strlen=%d string=%s", From, count, UsedBytes-1, this->Buffer);
+//	    SignalAnError(__FILE__, __LINE__, "SubstringData out of range, from=%d, length=%d, strlen=%d string=%s", From, count, UsedBytes-1, this->Buffer);
+	    logToStdout(__FILE__, __LINE__, LOG_ERROR, "SubstringData out of range, from=%d, length=%d, strlen=%d string=%s", From, count, UsedBytes-1, this->Buffer);
 		return OrsNULL;
 		}
 
@@ -1394,7 +1419,8 @@ OrsChar *CString::SubstringData(OrsLong From, OrsLong count)
 		BufferSubString = (OrsChar *)malloc (count +1); // Con EOS
 		if	(!BufferSubString)
 			{
-			SignalAnError(__FILE__, __LINE__, "CString malloc failed for Length %d", count);
+//			SignalAnError(__FILE__, __LINE__, "CString malloc failed for Length %d", count);
+			logToStdout(__FILE__, __LINE__, LOG_ERROR, "CString malloc failed for Length %d", count);
 			return OrsFALSE;
 			}
 		BufferSubStringSize = count + 1;
@@ -2223,7 +2249,8 @@ OrsBool CString::Resize(OrsLong NewSize)
 	{
 	if	(NewSize < 0 )
 		{
-	    SignalAnError(__FILE__, __LINE__, "CString::Resize: NewSize deve essere > 0");
+//	    SignalAnError(__FILE__, __LINE__, "CString::Resize: NewSize deve essere > 0");
+	    logToStdout(__FILE__, __LINE__, LOG_ERROR, "CString::Resize: NewSize deve essere > 0");
 		return OrsFALSE;
 		}
 	if	(NewSize == 0 )
@@ -2239,7 +2266,8 @@ OrsBool CString::Resize(OrsLong NewSize)
 	Buffer = (OrsChar *) realloc(Buffer, Size+1);
 	if	(!Buffer)
 		{
-	    SignalAnError(__FILE__, __LINE__, "CString ralloc failed");
+//	    SignalAnError(__FILE__, __LINE__, "CString ralloc failed");
+	    logToStdout(__FILE__, __LINE__, LOG_ERROR, "CString ralloc failed");
 		return OrsFALSE;
 		}
 
@@ -2273,7 +2301,8 @@ OrsBool CString::ResizeNew(OrsLong NewSize)
 	{
 	if	(NewSize < 0 )
 		{
-	    SignalAnError(__FILE__, __LINE__, "CString::Resize: NewSize deve essere > 0");
+//	    SignalAnError(__FILE__, __LINE__, "CString::Resize: NewSize deve essere > 0");
+	    logToStdout(__FILE__, __LINE__, LOG_ERROR, "CString::Resize: NewSize deve essere > 0" );
 		return OrsFALSE;
 		}
 	if	(NewSize == 0 )
@@ -2765,7 +2794,8 @@ long CString::IndexSubStringFrom(const char *aSubString, int from)
 	// Something to crop?
 	if	(from >= UsedBytes)
 		{
-	    SignalAWarning(__FILE__, __LINE__, "IndexSubStringFrom: range too big");
+//	    SignalAWarning(__FILE__, __LINE__, "IndexSubStringFrom: range too big");
+	    logToStdout(__FILE__, __LINE__, LOG_WARNING, "IndexSubStringFrom: range too big");
 		return OrsTRUE;
 		}
 
@@ -2788,7 +2818,8 @@ long CString::IndexSubStringFrom(const char *aSubString, int from, int direction
 	// Something to crop?
 	if	(from >= UsedBytes)
 		{
-	    SignalAWarning(__FILE__, __LINE__, "IndexSubStringFrom: range too big");
+//	    SignalAWarning(__FILE__, __LINE__, "IndexSubStringFrom: range too big");
+	    logToStdout(__FILE__, __LINE__, LOG_ERROR, "IndexSubStringFrom: range too big");
 		return OrsTRUE;
 		}
 
@@ -2859,7 +2890,8 @@ long CString::IndexCharFrom(char aChar, int from, int direction)
 	// Something to crop?
 	if	(from >= UsedBytes)
 		{
-	    SignalAWarning(__FILE__, __LINE__, "IndexCharFrom: range too big");
+//	    SignalAWarning(__FILE__, __LINE__, "IndexCharFrom: range too big");
+	    logToStdout(__FILE__, __LINE__, LOG_WARNING, "IndexCharFrom: range too big");
 		return OrsTRUE;
 		}
 
@@ -3262,7 +3294,8 @@ OrsBool CString::MakeNewBuffer(OrsLong Size)
 	Buffer = (OrsChar *)malloc (Size);
 	if	(!Buffer)
 		{
-	    SignalAnError(__FILE__, __LINE__, "CString malloc failed for size %d", Size);
+//	    SignalAnError(__FILE__, __LINE__, "CString malloc failed for size %d", Size);
+	    logToStdout(__FILE__, __LINE__, LOG_ERROR, "CString malloc failed for size %d", Size);
 		return OrsFALSE;
 		}
 	BufferSize = Size;
@@ -3293,7 +3326,8 @@ void CString::init()
 	Buffer = (OrsChar *)malloc (ResizeBy);
 	if	(!Buffer)
 		{
-		SignalAnError(__FILE__, __LINE__, "CString malloc failed for size %d", ResizeBy);
+//		SignalAnError(__FILE__, __LINE__, "CString malloc failed for size %d", ResizeBy);
+		logToStdout(__FILE__, __LINE__, LOG_ERROR, "CString malloc failed for size %d", ResizeBy);
 		return;
 		}
 	BufferSize = ResizeBy;
@@ -3520,6 +3554,9 @@ OrsBool CString::Replace(const char *fromString, const char *toString, int occur
 		InsertStringAt(toString, From);
 
 		From+=toStringLen;
+
+		if (occurance)
+			return true; // 10/11/2021 stop dopo replace della occurance N.
 		} // end else
 
 		From = IndexSubStringFrom(fromString, From);
@@ -3558,7 +3595,8 @@ OrsBool CString::ReadBytes(CFile *aFilePtr, int nBytes)
 
 	if (!aFilePtr->Read(BufTailPtr, nBytes))
 	{
-		SignalAnError(__FILE__, __LINE__, "Could not read %d bytes", nBytes);
+//		SignalAnError(__FILE__, __LINE__, "Could not read %d bytes", nBytes);
+		logToStdout(__FILE__, __LINE__, LOG_ERROR, "Could not read %d bytes", nBytes);
 		return OrsFALSE;
 	}
 
@@ -3619,7 +3657,8 @@ void CString::Clear()
 	Buffer = (OrsChar *)malloc (SizeToAllocate);
 	if	(!Buffer)
 		{
-		SignalAnError(__FILE__, __LINE__, "CString malloc failed for size %d", SizeToAllocate);
+//		SignalAnError(__FILE__, __LINE__, "CString malloc failed for size %d", SizeToAllocate);
+		logToStdout(__FILE__, __LINE__, LOG_ERROR, "CString malloc failed for size %d", SizeToAllocate);
 		return;
 		}
 	BufferSize = SizeToAllocate;

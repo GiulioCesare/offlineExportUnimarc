@@ -40,8 +40,7 @@ using namespace std;
 
 extern CKeyValueVector *codiciPaesKV; // 17/11/2020
 
-extern void SignalAnError(	const OrsChar *Module, OrsInt Line, const OrsChar * MsgFmt, ...);
-extern void SignalAWarning(	const OrsChar *Module, OrsInt Line, const OrsChar * MsgFmt, ...);
+extern void logToStdout(	const OrsChar *Module, OrsInt Line, int level, const OrsChar * MsgFmt, ...);
 
 //#define EXPORT_VIAF_TITOLI_UNIFORMI
 
@@ -84,7 +83,9 @@ Marc4cppLegamiAuthority::Marc4cppLegamiAuthority(Marc4cppDocumentoAuthority *mar
 		TrRepAut *trRepAut,
 
 		TbRepertorio *tbRepertorio,
-		CFile* trAutAutIn, CFile* trAutAutOffsetIn,	char* offsetBufferTrAutAutPtr, long elementsTrAutAut,
+		TrAutAut *trAutAut,
+//		CFile* trAutAutIn, CFile* trAutAutOffsetIn,	char* offsetBufferTrAutAutPtr, long elementsTrAutAut,
+
 		CFile* trTitAutRelInvIn, CFile* trTitAutRelInvOffsetIn, char* offsetBufferTrTitAutRelInvPtr, long elementsTrTitAutInvRel,
 		TrIdsbnIdaltri *trIdsbnIdaltriAu,
 		CFile* trIdsbnIdaltriAuRelIn, CFile* trIdsbnIdaltriAuRelOffsetIn, char* offsetBuffertrIdsbnIdaltriAuRelPtr, long elementstrIdsbnIdaltriAuRel,
@@ -104,10 +105,11 @@ Marc4cppLegamiAuthority::Marc4cppLegamiAuthority(Marc4cppDocumentoAuthority *mar
 		this->trRepAut = trRepAut;
 		this->tbRepertorio = tbRepertorio;
 
-		this->trAutAutIn = trAutAutIn;
-		this->trAutAutOffsetIn = trAutAutOffsetIn;
-		this->offsetBufferTrAutAutPtr = offsetBufferTrAutAutPtr;
-		this->elementsTrAutAut = elementsTrAutAut;
+		this->trAutAut = trAutAut;
+//		this->trAutAutIn = trAutAutIn;
+//		this->trAutAutOffsetIn = trAutAutOffsetIn;
+//		this->offsetBufferTrAutAutPtr = offsetBufferTrAutAutPtr;
+//		this->elementsTrAutAut = elementsTrAutAut;
 
 
 		this->trTitAutRelInvIn = trTitAutRelInvIn;
@@ -165,18 +167,27 @@ Marc4cppLegamiAuthority::Marc4cppLegamiAuthority(Marc4cppDocumentoAuthority *mar
 
 Marc4cppLegamiAuthority::Marc4cppLegamiAuthority(Marc4cppDocumentoAuthority *marc4cppDocumentoAuthority,
 		MarcRecord *marcRecord, // Titoli uniformi
+
 		TbTitolo *tbTitolo,
 		TbAutore *tbAutore,
-//		TrRepAut *trRepAut,
+
 		TrRepTit *trRepTit,
+		TrAutAut *trAutAut,
+
 		TbRepertorio *tbRepertorio,
 
-		CFile* trTitAutRelIn, CFile* trTitAutRelOffsetIn,
-		CFile* trTitTitRelIn, CFile* trTitTitRelOffsetIn,
+		CFile* trTitAutRelIn,
+		CFile* trTitAutRelOffsetIn,
 
-		CFile* trAutAutRelIn, CFile* trAutAutRelOffsetIn, // 05/06/2020 per 500 $9
+		CFile* trTitTitRelIn,
+		CFile* trTitTitRelOffsetIn,
+
+		CFile* trAutAutRelIn,
+		CFile* trAutAutRelOffsetIn, // 05/06/2020 per 500 $9
 
 		char* offsetBufferTrTitAutRelPtr,
+		char* offsetBufferTrAutAutRelPtr, // 10/11/2020
+
 		long elementsTrTitAutRel,
 		long elementsTrAutAutRel,
 
@@ -195,6 +206,7 @@ Marc4cppLegamiAuthority::Marc4cppLegamiAuthority(Marc4cppDocumentoAuthority *mar
 
 //		this->trRepAut = trRepAut;
 		this->trRepTit = trRepTit;
+		this->trAutAut = trAutAut;
 
 		this->tbRepertorio = tbRepertorio;
 
@@ -207,6 +219,9 @@ Marc4cppLegamiAuthority::Marc4cppLegamiAuthority(Marc4cppDocumentoAuthority *mar
 
 
 		this->offsetBufferTrTitAutRelPtr = offsetBufferTrTitAutRelPtr;
+		this->offsetBufferTrAutAutRelPtr = offsetBufferTrAutAutRelPtr; // 10/11/2020
+
+
 		this->elementsTrTitAutRel = elementsTrTitAutRel;
 		this->elementsTrAutAutRel = elementsTrAutAutRel;
 
@@ -583,12 +598,16 @@ DataField * Marc4cppLegamiAuthority::creaTag500_VediAncheAutorePersonale(TbAutor
 	df = new DataField();
 
 	df->setTag((char *)"500");
+
 	creaTag_40x(df, tbAutoreRinvio);
 
 	marcRecord->addDataField(df);
 
 	return df;
-	} // End creaTag790_RinvioAutorePersonale
+	} // End creaTag500_VediAncheAutorePersonale
+
+
+
 
 
 
@@ -635,22 +654,30 @@ DataField * Marc4cppLegamiAuthority::creaTag_81xRepertorio(char *tag)
 		df = new DataField();
 		df->setTag(tag);
 
-		sf = new Subfield('a', tbRepertorio->getFieldString(tbRepertorio->ds_repertorio));
-		df->addSubfield(sf);
-
 		// 27/08/2021 Evolutiva (mail Mataloni)
+
 		if (*note_rep_aut)
 		{
-			sf = new Subfield('b', note_rep_aut);
+//			sf = new Subfield('b', note_rep_aut);
+
+//	Mataloni mail 16/09/2021
+//	- nel tag 810 (e 815) preferiremmo che venissero riportate in $a solo le sigle dei repertori (come si fa nell'export del titolo dell'opera),
+//	eventualmente con il loro $9 in presenza di una 'nota al legame' nome-repertorio
+			sf = new Subfield('9', note_rep_aut);
 			df->addSubfield(sf);
 		}
+
+//		sf = new Subfield('a', tbRepertorio->getFieldString(tbRepertorio->ds_repertorio));
+		sf = new Subfield('a', tbRepertorio->getFieldString(tbRepertorio->cd_sig_repertorio));
+		df->addSubfield(sf);
 
 
 		marcRecord->addDataField(df);
 	}
 	else
 	{
-		SignalAnError(__FILE__, __LINE__, "\nRepertorio %s non trovato nella tabella dei repertori", repertorio.data());
+//		SignalAnError(__FILE__, __LINE__, "\nRepertorio %s non trovato nella tabella dei repertori", repertorio.data());
+		logToStdout(__FILE__, __LINE__, LOG_ERROR, "Repertorio %s non trovato nella tabella dei repertori", repertorio.data());
 	}
 
 	return df;
@@ -691,7 +718,8 @@ DataField * Marc4cppLegamiAuthority::creaTag_81xLuogoRepertorio(char *tag)
 	}
 	else
 	{
-		SignalAnError(__FILE__, __LINE__, "\nRepertorio %s non trovato nella tabella dei repertori", repertorio.data());
+//		SignalAnError(__FILE__, __LINE__, "\nRepertorio %s non trovato nella tabella dei repertori", repertorio.data());
+		logToStdout(__FILE__, __LINE__, LOG_ERROR, "Repertorio %s non trovato nella tabella dei repertori", repertorio.data());
 	}
 
 	return df;
@@ -725,7 +753,8 @@ DataField * Marc4cppLegamiAuthority::creaTag_81xRepertorio_Titolo(char *tag)
 	}
 	else
 	{
-		SignalAnError(__FILE__, __LINE__, "\nRepertorio %s non trovato nella tabella dei repertori", repertorio.data());
+//		SignalAnError(__FILE__, __LINE__, "\nRepertorio %s non trovato nella tabella dei repertori", repertorio.data());
+		logToStdout(__FILE__, __LINE__, LOG_ERROR, "Repertorio %s non trovato nella tabella dei repertori", repertorio.data());
 	}
 
 	return df;
@@ -797,7 +826,8 @@ void Marc4cppLegamiAuthority::creaLegamiSoggettoDescrittori()
 				retb = tbDescrittore->loadRecord(trSogDes->getField(trSogDes->did)); // Carica il record del descrittore
 				if (!retb)
 				{
-					SignalAnError(__FILE__, __LINE__, "\nDescrittore % s per soggetto %s", trSogDes->getField(trSogDes->did), cid);
+//					SignalAnError(__FILE__, __LINE__, "\nDescrittore % s per soggetto %s", trSogDes->getField(trSogDes->did), cid);
+					logToStdout(__FILE__, __LINE__, LOG_ERROR, "Descrittore % s per soggetto %s", trSogDes->getField(trSogDes->did), cid);
 					continue;
 				}
 				creaTag931_LegameSoggettoDescrittore();
@@ -872,6 +902,7 @@ void Marc4cppLegamiAuthority::creaLegamiAutoreBasiDati()
 
 	vid = tbAutore->getField(tbAutore->vid);
 
+	CString *sPtr2;
 	//
 	if (! trIdsbnIdaltriAu->loadRecord(vid))
 	{
@@ -923,8 +954,11 @@ void Marc4cppLegamiAuthority::creaLegamiAutoreBasiDati()
 		// Dall'offset del file delle relazioni andiamo a prendere la relazione titolo/titolo
 		trIdsbnIdaltriAuRelIn->SeekTo(offset);
 		if (!sPtr->ReadLineWithPrefixedMaxSize(trIdsbnIdaltriAuRelIn))
-			SignalAnError(__FILE__, __LINE__, "read failed");
-
+		{
+//			SignalAnError(__FILE__, __LINE__, "ReadLineWithPrefixedMaxSize failed");
+			logToStdout(__FILE__, __LINE__, LOG_ERROR, "trIdsbnIdaltriAuRelIn ReadLineWithPrefixedMaxSize failed");
+			return;
+		}
 		//printf("\nlegami: '%s'",sPtr->Data());
 
 		// Splittiamo la riga negli n elementi che la compongono
@@ -939,13 +973,23 @@ void Marc4cppLegamiAuthority::creaLegamiAutoreBasiDati()
 			if (stringVect[1]->StartsWith("CNC"))
 				{
 				if(poloBibCnc.IsEmpty())
-					poloBibCnc=stringVect[1]->data();
+				{
+					sPtr2 = stringVect[1];
+					if (sPtr2->GetLastChar() == '\n') // 18/11/2021
+						sPtr2->ExtractLastChar();
+					poloBibCnc=sPtr2->data();
+				}
 				cncIds.Add(stringVect[0]);
 				}
 			else
 			{
 				if(poloBibCnm.IsEmpty())
-					poloBibCnm=stringVect[1]->data();
+				{
+					sPtr2 = stringVect[1];
+					if (sPtr2->GetLastChar() == '\n') // 18/11/2021
+						sPtr2->ExtractLastChar();
+					poloBibCnm=sPtr2->data();
+				}
 				cnmIds.Add(stringVect[0]);
 			}
 			delete stringVect[1]; // eliminiamo il DB che non ci serve +
@@ -958,7 +1002,9 @@ void Marc4cppLegamiAuthority::creaLegamiAutoreBasiDati()
 		//	printf("\ncdPoloBib '%s'",cdPoloBib.Data());
 			if (! tbfBiblioteca->loadRecord(poloBibCnc.Data()))
 			{
-				SignalAnError(__FILE__, __LINE__, "\nCodice polo biblioteca sconosciuto %c", poloBibCnc.Data());
+//				SignalAnError(__FILE__, __LINE__, "\nCodice polo biblioteca sconosciuto %c", poloBibCnc.Data());
+				logToStdout(__FILE__, __LINE__, LOG_ERROR, "Codice polo biblioteca sconosciuto %c", poloBibCnc.Data());
+
 			}else{
 
 			df = new DataField();
@@ -982,7 +1028,9 @@ void Marc4cppLegamiAuthority::creaLegamiAutoreBasiDati()
 		{
 			if (! tbfBiblioteca->loadRecord(poloBibCnm.Data()))
 						{
-				SignalAnError(__FILE__, __LINE__, "\nCodice polo biblioteca sconosciuto %c", poloBibCnm.Data());
+//				SignalAnError(__FILE__, __LINE__, "\nCodice polo biblioteca sconosciuto %c", poloBibCnm.Data());
+				logToStdout(__FILE__, __LINE__, LOG_ERROR, "Codice polo biblioteca sconosciuto %c", poloBibCnm.Data());
+
 						}else{
 			df = new DataField();
 			df->setTag("999");
@@ -1211,7 +1259,9 @@ DataField * Marc4cppLegamiAuthority::creaLegameAutoreAutore(char *entryReticoloP
 			df = creaTag500_VediAncheAutorePersonale(tbAutoreRinvio);
 		}
 		else {
-			SignalAnError(__FILE__, __LINE__, "\nTipo legame autore/autore sconosciuto %c", tipoLegame);
+//			SignalAnError(__FILE__, __LINE__, "\nTipo legame autore/autore sconosciuto %c", tipoLegame);
+			logToStdout(__FILE__, __LINE__, LOG_ERROR, "Tipo legame autore/autore sconosciuto %c", tipoLegame);
+
 			delete tbAutoreRinvio;
 			return df;
 		}
@@ -1226,7 +1276,9 @@ DataField * Marc4cppLegamiAuthority::creaLegameAutoreAutore(char *entryReticoloP
 			df = creaTag510_VediAncheAutoreCollettivo(tbAutoreRinvio);
 		}
 		else {
-			SignalAnError(__FILE__, __LINE__, "\nTipo legame autore/autore sconosciuto %c", tipoLegame);
+//			SignalAnError(__FILE__, __LINE__, "\nTipo legame autore/autore sconosciuto %c", tipoLegame);
+			logToStdout(__FILE__, __LINE__, LOG_ERROR, "Tipo legame autore/autore sconosciuto %c", tipoLegame);
+
 			delete tbAutoreRinvio;
 			return df;
 		}
@@ -1287,7 +1339,8 @@ void Marc4cppLegamiAuthority::creaTag_40x(DataField *df, TbAutore * tbAutoreRinv
 {
 	Subfield *sf;
 	string str;
-	CString dsNomeAut;
+	CString dsNomeAut, *sPtr;
+	char * tag = df->getTagString()->Data();
 
 //tbAutoreRinvio->dumpRecord();
 
@@ -1316,11 +1369,43 @@ void Marc4cppLegamiAuthority::creaTag_40x(DataField *df, TbAutore * tbAutoreRinv
 	}
 	df->addSubfield(sf);
 
-	if (*nota_aut)	// 27/08/2021 mail Mataloni
+
+//	if (*nota_aut)	// 27/08/2021 mail Mataloni
+//	{
+//		sf = new Subfield('9', nota_aut);
+
+	if (*tag == '4') // solo 4xx (Mail Mataloni 21/09)
 	{
-		sf = new Subfield('9', nota_aut);
-		df->addSubfield(sf);
+		// Mail Mataloni 16/09/2021 Nota del LEGAME non dell'autore!!!
+		bool retb = trAutAut->loadRecord(vid);
+		if (retb)
+		{
+			sPtr = trAutAut->getFieldString(trAutAut->nota_aut_aut);
+			if (!sPtr->IsEmpty())
+			{
+				sf = new Subfield('9', sPtr->Data());
+				df->addSubfield(sf);
+			}
+		}
 	}
+//		else
+//		{
+//			SignalAnError(__FILE__, __LINE__, "\nRecord legame autore %s verso autore XXX non trovato", vid);
+//
+//		}
+//	}
+
+
+//	if (*nota_aut && *tag == '4')	// solo 4xx (Mail Mataloni 21/09)
+//	{
+//		sf = new Subfield('9', nota_aut);
+//		df->addSubfield(sf);
+//	}
+
+
+
+
+
 
 
 	char *breakPtr=0;
@@ -1388,8 +1473,6 @@ void Marc4cppLegamiAuthority::creaTag_40x(DataField *df, TbAutore * tbAutoreRinv
 	stringVect.DeleteAndClear();	// 20/10/2009 11.11
 	stringVect2.DeleteAndClear(); 	// 20/10/2009 11.11
 
-
-
 } // End creaTag_40x
 
 
@@ -1399,8 +1482,9 @@ void Marc4cppLegamiAuthority::creaTag_41x(DataField *df, TbAutore * tbAutoreRinv
     string str;
     char *tpNome;
     char *ptr, *breakPtr;
-    CString dsNomeAut;
+    CString dsNomeAut, *sPtr;
 	ATTValVector <CString *> stringVect, stringVect2;
+	char * tag = df->getTagString()->Data();
 
 	// 18/08/2021 Mail Incelli: Come regola generale il $3 che contiene il VID dovrebbe precedere i sottocampi alfabetici
 	char * vid = tbAutoreRinvio->getField(tbAutoreRinvio->vid);
@@ -1425,10 +1509,26 @@ void Marc4cppLegamiAuthority::creaTag_41x(DataField *df, TbAutore * tbAutoreRinv
 	}
     df->addSubfield(sf);
 
-    if (*nota_aut)	// 27/08/2021 mail Mataloni
+//    if (*nota_aut)	// 27/08/2021 mail Mataloni
+//    if (*nota_aut && *tag == '4')	// 21/09/2021 mail Mataloni
+//	{
+//		sf = new Subfield('9', nota_aut);
+//		df->addSubfield(sf);
+//	}
+
+	if (*tag == '4') // solo 4xx (Mail Mataloni 21/09)
 	{
-		sf = new Subfield('9', nota_aut);
-		df->addSubfield(sf);
+		// Mail Mataloni 16/09/2021 Nota del LEGAME non dell'autore!!!
+		bool retb = trAutAut->loadRecord(vid);
+		if (retb)
+		{
+			sPtr = trAutAut->getFieldString(trAutAut->nota_aut_aut);
+			if (!sPtr->IsEmpty())
+			{
+				sf = new Subfield('9', sPtr->Data());
+				df->addSubfield(sf);
+			}
+		}
 	}
 
 
@@ -1485,12 +1585,6 @@ void Marc4cppLegamiAuthority::creaTag_41x(DataField *df, TbAutore * tbAutoreRinv
  	stringVect2.DeleteAndClear(); 	// 20/10/2009 11.11
 
 
-
-
-
-
-
-
 } // End creaTag_41x
 
 
@@ -1534,7 +1628,8 @@ void Marc4cppLegamiAuthority::creaLegamiDescrittoriDescrittori(char *didBasePtr)
 				retb = tbDescrittore->loadRecord(didColl);
 				if (!retb)
 				{
-					SignalAnError(__FILE__, __LINE__, "\nDescrittore base % s per descrittore coll %s", didBase.data(), didColl);
+//					SignalAnError(__FILE__, __LINE__, "\nDescrittore base % s per descrittore coll %s", didBase.data(), didColl);
+					logToStdout(__FILE__, __LINE__, LOG_ERROR, "\nDescrittore base % s per descrittore coll %s", didBase.data(), didColl);
 					continue;
 				}
 				creaTag932_LegameDescrittoreDescrittore(trDesDes->getFieldString(trDesDes->tp_legame), &didBase);
@@ -1673,7 +1768,8 @@ if (retb)
 	trTitAutRelInvIn->SeekTo(offset);
 	if (!sPtr->ReadLine(trTitAutRelInvIn))
 	{
-        SignalAnError(__FILE__, __LINE__, "read file delle relazioni failed");
+//        SignalAnError(__FILE__, __LINE__, "read file delle relazioni failed");
+		logToStdout(__FILE__, __LINE__, LOG_ERROR, "read file delle relazioni failed");
         return false;
 	}
 
@@ -1804,7 +1900,8 @@ bool Marc4cppLegamiAuthority::getTitoliViafConResponabilita(CString *sPtr, char 
 			// Cerchiamo nella tbTitolo il titolo
 			if (!tbTitolo->loadRecord(Token))
 			{
-		        SignalAnError(__FILE__, __LINE__, "read file dei titoli failed");
+//		        SignalAnError(__FILE__, __LINE__, "read file dei titoli failed");
+				logToStdout(__FILE__, __LINE__, LOG_ERROR, "read file dei titoli failed");
 		        return false;
 			}
 //			tbTitolo->dumpRecord();
@@ -1967,6 +2064,7 @@ void Marc4cppLegamiAuthority::creaLegamiTitoloAutore(bool isTitoloOpera)
 //			if ((pos=str.find(':'))!=string::npos)
 				df = creaLegameTitoloAutore((char *)str.data(), pos, isTitoloOpera);
 				has_author=true;
+//break;
 			}
 
 		}
@@ -2105,7 +2203,8 @@ DataField * Marc4cppLegamiAuthority::creaLegameTitoloTitolo(char *entryReticoloP
 	bool hasTitolo=true;
 	if (!tbTitolo->loadRecord(bid))
 	{
-        SignalAnError(__FILE__, __LINE__, "read file dei titoli failed");
+//        SignalAnError(__FILE__, __LINE__, "read file dei titoli failed");
+		logToStdout(__FILE__, __LINE__, LOG_ERROR, "read file dei titoli failed");
 //        return df;
         hasTitolo=false;
 	}
@@ -2287,7 +2386,8 @@ printf ("\nN.%d: Token=%s", ++ctr, Token);
 			// Cerchiamo nella tbTitolo il titolo
 			if (!tbTitolo->loadRecord(Token))
 			{
-		        SignalAnError(__FILE__, __LINE__, "read file dei titoli failed");
+//		        SignalAnError(__FILE__, __LINE__, "read file dei titoli failed");
+				logToStdout(__FILE__, __LINE__, LOG_ERROR, "read file dei titoli failed");
 		        return false;
 			}
 //			tbTitolo->dumpRecord();
@@ -2580,7 +2680,8 @@ void Marc4cppLegamiAuthority::creaLegamiautoriDiRinvio(DataField *df, char *vid)
 		CString *sPtr = new CString(4096);
 
 		if (!sPtr->ReadLineWithPrefixedMaxSize(trAutAutRelIn))
-	        SignalAnError(__FILE__, __LINE__, "read failed");
+//	        SignalAnError(__FILE__, __LINE__, "read failed");
+			logToStdout(__FILE__, __LINE__, LOG_ERROR, "ReadLineWithPrefixedMaxSize failed");
 
 		CTokenizer *Tokenizer = new CTokenizer("|");
 
@@ -2610,7 +2711,8 @@ void Marc4cppLegamiAuthority::creaLegamiautoriDiRinvio(DataField *df, char *vid)
 			if (!retb)
 			{
 				//return 0; // Record non trovato
-				SignalAnError(__FILE__, __LINE__, "\nVID %s non trovato nella tabella degli autori", vid);
+//				SignalAnError(__FILE__, __LINE__, "\nVID %s non trovato nella tabella degli autori", vid);
+				logToStdout(__FILE__, __LINE__, LOG_ERROR, "VID %s non trovato nella tabella degli autori", vid);
 				continue;
 			}
 
@@ -2981,8 +3083,7 @@ DataField *df241 = marcRecord->getDataField("241");
 			{
 				df->setTag((char *)"500");
 			}
-			else if (tipoResponsabilita == TP_RESP_3_RESPONSABILITA_SECONDARIA
-					|| tipoResponsabilita == TP_RESP_2_RESPONSABILITA_ALTERNATIVA)
+			else // if (tipoResponsabilita == TP_RESP_3_RESPONSABILITA_SECONDARIA	|| tipoResponsabilita == TP_RESP_2_RESPONSABILITA_ALTERNATIVA)
 			{
 				df->setTag((char *)"501");
 			}
@@ -2999,7 +3100,7 @@ DataField *df241 = marcRecord->getDataField("241");
 				df->setTag((char *)"510");
 //				creaTag50x(df, ds_nome_autore_ptr , tp_nome, vidPtr, &cdRelazione);
 			}
-			else if (tipoResponsabilita == TP_RESP_3_RESPONSABILITA_SECONDARIA)
+			else // if (tipoResponsabilita == TP_RESP_3_RESPONSABILITA_SECONDARIA	|| tipoResponsabilita == TP_RESP_2_RESPONSABILITA_ALTERNATIVA)
 			{
 				df->setTag((char *)"511");
 //				creaTag50x(df, ds_nome_autore_ptr , tp_nome, vidPtr, &cdRelazione);

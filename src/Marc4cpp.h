@@ -632,7 +632,17 @@ private:
 	TrTitAut *trTitAut;
 
 
-	// Entita autore->autore inverse 08/10/2009 13.58
+	// Relazioni autore->autore inverse 17/09/2021
+	// ------------------------
+	CFile* trAutAutIn;
+	CFile* trAutAutOffsetIn;
+	long elementsTrAutAut;	// Numero di relazioni
+	char *offsetBufferTrAutAutPtr;
+	TrAutAut *trAutAut;
+
+
+
+	// Relazioni autore->autore inverse 08/10/2009 13.58
 	// ------------------------
 	CFile* trAutAutInvIn;
 	CFile* trAutAutInvOffsetIn;

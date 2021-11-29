@@ -46,7 +46,7 @@
 //	/opt/freeware/lib/gcc/powerpc-ibm-aix5.2.0.0/4.2.4/include/c++/cstdio:109: error: '::fgetpos' has not been declared
 
 
-extern void SignalAnError(	const OrsChar *Module, OrsInt Line, const OrsChar * MsgFmt, ...);
+extern void logToStdout(	const OrsChar *Module, OrsInt Line, int level, const OrsChar * MsgFmt, ...);
 
 //#include "rw/defs.h"
 //#include "rw/coreerr.h"
@@ -338,8 +338,8 @@ CFile::CFile( const char* name)
 		if (Filep == NULL)
 			{
 	//			RWThrow( RWErrObject(CORE_OPERR, RWDEFAULT, __CFile), Filename);
-			SignalAnError(__FILE__, __LINE__, "CFile::CFile: bad filename");
-
+//			SignalAnError(__FILE__, __LINE__, "CFile::CFile: bad filename");
+			logToStdout(__FILE__, __LINE__, LOG_ERROR, "CFile::CFile: bad filename");
 			}
 		}
 

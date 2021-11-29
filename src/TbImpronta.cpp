@@ -29,8 +29,7 @@
     #include "nvwa/debug_new.h"
 #endif
 
-extern void SignalAnError(	const OrsChar *Module, OrsInt Line, const OrsChar * MsgFmt, ...);
-extern void SignalAWarning(	const OrsChar *Module, OrsInt Line, const OrsChar * MsgFmt, ...);
+extern void logToStdout(	const OrsChar *Module, OrsInt Line, int level, const OrsChar * MsgFmt, ...);
 
 
 
@@ -53,6 +52,8 @@ bool TbImpronta::loadRecord(const char *key)
 	{
 		// Troppi titoli senza impronta, messaggi inutili.
 		// SignalAnError(__FILE__, __LINE__, "Derived class TbImpronta::loadRecord: Record non trovato per chiave %s", key);
+//		SignalAnError(__FILE__, __LINE__, "Record non trovato per chiave %s", key);
+		logToStdout(__FILE__, __LINE__, LOG_INFO, "Record non trovato per chiave %s", key);
 		return false;
 	}
 	return true;

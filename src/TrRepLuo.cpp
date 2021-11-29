@@ -34,8 +34,7 @@
 
 #include "MarcConstants.h"
 
-extern void SignalAnError(	const OrsChar *Module, OrsInt Line, const OrsChar * MsgFmt, ...);
-extern void SignalAWarning(	const OrsChar *Module, OrsInt Line, const OrsChar * MsgFmt, ...);
+extern void logToStdout(	const OrsChar *Module, OrsInt Line, int level, const OrsChar * MsgFmt, ...);
 
 
 
@@ -59,7 +58,9 @@ bool TrRepLuo::loadRecord(const char *key)
 
 	if (!Tb::loadRecord(key))
 	{
-		SignalAnError(__FILE__, __LINE__, "Derived class TrLuoLuo::loadRecord key=%s",key);
+//		SignalAnError(__FILE__, __LINE__, "Derived class TrLuoLuo::loadRecord key=%s",key);
+//	    SignalAnError(__FILE__, __LINE__, "Record non trovato per chiave %s", key);
+		logToStdout(__FILE__, __LINE__, LOG_INFO, "Record non trovato per chiave %s", key);
 		return false;
 	}
 	return true;
@@ -123,7 +124,8 @@ bool TrRepLuo::loadNextRecordDaIndice(const char *key, bool inverted)
 		}
 		else
 		{
-			SignalAnError(__FILE__, __LINE__, "OFFSET type not 4(long) or 8(long long) %d", offsetLen);
+//			SignalAnError(__FILE__, __LINE__, "OFFSET type not 4(long) or 8(long long) %d", offsetLen);
+			logToStdout(__FILE__, __LINE__, LOG_ERROR, "OFFSET type not 4(long) or 8(long long) %d", offsetLen);
 			return false;
 		}
 	}

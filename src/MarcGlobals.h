@@ -121,4 +121,6 @@ extern bool esportaSoloInventariCollocati;
 
 extern bool export_author_special_characters;
 
+extern int log_level;
+
 #endif /* MARCGLOBALS_H_ */

@@ -78,10 +78,12 @@ class Marc4cppLegamiAuthority {
 	TrDesDes *trDesDes;
 	TrDesDes *trDesDesInv;
 
-	CFile* trAutAutIn;
-	CFile* trAutAutOffsetIn;
-	char* offsetBufferTrAutAutPtr;
-	long elementsTrAutAut;
+//	CFile* trAutAutIn;
+//	CFile* trAutAutOffsetIn;
+//	char* offsetBufferTrAutAutPtr;
+//	long elementsTrAutAut;
+
+	TrAutAut *trAutAut;
 
 	CFile* trTitAutRelInvIn;
 	CFile* trTitAutRelInvOffsetIn;
@@ -202,7 +204,8 @@ public:
 			TbAutore *tbAutore,
 			TrRepAut *trRepAut,
 			TbRepertorio *tbRepertorio,
-			CFile* trAutAutIn, CFile* trAutAutOffsetIn,	char* offsetBufferTrAutAutPtr, long elementsTrAutAut,
+			TrAutAut *trAutAut, // 17/09/2021
+//			CFile* trAutAutIn, CFile* trAutAutOffsetIn,	char* offsetBufferTrAutAutPtr, long elementsTrAutAut,
 			CFile* trTitAutRelInvIn, CFile* trTitAutRelInvOffsetIn, char* offsetBufferTrTitAutRelInvPtr, long elementsTrTitAutInvRel,
 			TrIdsbnIdaltri *trIdsbnIdaltriAu,
 			CFile* trIdsbnIdaltriAuRelIn, CFile* trIdsbnIdaltriAuRelOffsetIn, char* offsetBuffertrIdsbnIdaltriAuRel, long elementstrIdsbnIdaltriAuRel,
@@ -234,15 +237,24 @@ public:
 			TbTitolo *tbTitolo,
 			TbAutore *tbAutore,
 
-//			TrRepAut *trRepAut,
 			TrRepTit *trRepTit,
+			TrAutAut *trAutAut,
+
 			TbRepertorio *tbRepertorio,
 
-			CFile* trTitAutRelIn, CFile* trTitAutRelOffsetIn,
-			CFile* trTitTitRelIn, CFile* trTitTitRelOffsetIn, // 08/05/2020
-			CFile* trAutAutRelIn, CFile* trAutAutRelOffsetIn, // 05/06/2020 per 500 $9
+			CFile* trTitAutRelIn,
+			CFile* trTitAutRelOffsetIn,
+
+			CFile* trTitTitRelIn,
+			CFile* trTitTitRelOffsetIn, // 08/05/2020
+
+			CFile* trAutAutRelIn,
+			CFile* trAutAutRelOffsetIn, // 05/06/2020 per 500 $9
+
 
 			char* offsetBufferTrTitAutRelPtr,
+			char* offsetBufferTrAutAutRelPtr, // 10/11/2020
+
 			long elementsTrTitAutRel,
 			long elementsTrAutAutRel,
 

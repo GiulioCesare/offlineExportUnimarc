@@ -29,8 +29,7 @@
     #include "nvwa/debug_new.h"
 #endif
 
-extern void SignalAnError(	const OrsChar *Module, OrsInt Line, const OrsChar * MsgFmt, ...);
-extern void SignalAWarning(	const OrsChar *Module, OrsInt Line, const OrsChar * MsgFmt, ...);
+extern void logToStdout(	const OrsChar *Module, OrsInt Line, int level, const OrsChar * MsgFmt, ...);
 
 Biblio950::Biblio950(const char *idBiblioteca, const char *descBiblioteca) {
 	this->idBiblioteca = idBiblioteca;
@@ -513,7 +512,8 @@ bool Biblio950::addInventario_coll_noColl(Tb950Inv *tb950Inv, Tb950Coll *tb950Co
 
 		if (!retb)
 		{
-			SignalAnError(__FILE__, __LINE__, "Collocazione non trovata per KeyLoc %s (inventario %s)", keyLoc->data(), tb950Inv->getField(tb950Inv->tbinv_cd_inven));
+//			SignalAnError(__FILE__, __LINE__, "Collocazione non trovata per KeyLoc %s (inventario %s)", keyLoc->data(), tb950Inv->getField(tb950Inv->tbinv_cd_inven));
+			logToStdout(__FILE__, __LINE__, LOG_ERROR, "Collocazione non trovata per KeyLoc %s (inventario %s)", keyLoc->data(), tb950Inv->getField(tb950Inv->tbinv_cd_inven));
 			delete keyLoc;
 			return false;
 		}

@@ -40,9 +40,7 @@
     #include "nvwa/debug_new.h"
 #endif
 
-extern void SignalAnError(	const OrsChar *Module, OrsInt Line, const OrsChar * MsgFmt, ...);
-extern void SignalAWarning(	const OrsChar *Module, OrsInt Line, const OrsChar * MsgFmt, ...);
-
+extern void logToStdout(	const OrsChar *Module, OrsInt Line, int level, const OrsChar * MsgFmt, ...);
 
 
 bool Marc4cpp::CreaUnimarcAuthority(long iniziaElaborazioneDaRiga, bool positionByOffset, long elaboraNRighe, int logOgniXRighe)
@@ -90,19 +88,30 @@ bool Marc4cpp::CreaUnimarcAuthority(long iniziaElaborazioneDaRiga, bool position
 
 		ctr++;
 		if (!logOgniXRighe || (!(ctr & logOgniXRighe))) //  0xff
-			printf ("\nElaborati %ld records, ultimo bid: %s", ctr, sPtr->data());
+		{
+//		printf ("\nElaborati %ld records, ultimo bid: %s", ctr, sPtr->data());
+		sPtr->ExtractLastChar(); // Remove newline
+		logToStdout(__FILE__, __LINE__, LOG_PROGRESS, "Elaborati %ld records, ultimo bid: %s", ctr, sPtr->data());
+
+		}
 
 
 		if (elaboraNRighe && (ctr == elaboraNRighe))
 			break;
 	}
 
-	printf ("\n\nTotale record %ld", ctr);
-	printf ("\nTotale record errati %ld", erratoCtr);
-	printf ("\nTotale record scritti %ld", ctr-erratoCtr);
+//	printf ("\n\nTotale record %ld", ctr);
+//	printf ("\nTotale record errati %ld", erratoCtr);
+//	printf ("\nTotale record scritti %ld", ctr-erratoCtr);
+//	printf ("\n\nTotale records non documento %ld", recordsNonDocumento); // marc4cpp->
+//	printf ("\nTotale records elaborati %ld", ctr-recordsNonDocumento); // marc4cpp->
 
-	printf ("\n\nTotale records non documento %ld", recordsNonDocumento); // marc4cpp->
-	printf ("\nTotale records elaborati %ld", ctr-recordsNonDocumento); // marc4cpp->
+	logToStdout(__FILE__, __LINE__, LOG_PROGRESS, "Totale record %ld", ctr);
+	logToStdout(__FILE__, __LINE__, LOG_PROGRESS, "Totale record errati %ld", erratoCtr);
+	logToStdout(__FILE__, __LINE__, LOG_PROGRESS, "Totale record scritti %ld", ctr-erratoCtr);
+	logToStdout(__FILE__, __LINE__, LOG_PROGRESS, "Totale records non documento %ld", recordsNonDocumento);
+	logToStdout(__FILE__, __LINE__, LOG_PROGRESS, "Totale records elaborati %ld", ctr-recordsNonDocumento);
+
 
 	delete sPtr;
 	return true;
@@ -384,7 +393,8 @@ void Marc4cpp::CreaReticoloAutoreAddNodeChildren(tree<std::string>* reticolo, tr
 		// Dall'offset del file delle relazioni andiamo a prendere la relazione titolo/titolo
 		trAutAutRelIn->SeekTo(offset);
 		if (!sPtr->ReadLineWithPrefixedMaxSize(trAutAutRelIn))
-	        SignalAnError(__FILE__, __LINE__, "read failed");
+//	        SignalAnError(__FILE__, __LINE__, "read failed");
+			logToStdout(__FILE__, __LINE__, LOG_ERROR, "trAutAutRelIn read failed");
 
 
 		// Splittiamo la riga negli n elementi che la compongono
@@ -431,7 +441,8 @@ void Marc4cpp::CreaReticoloAutoreAddNodeChildren(tree<std::string>* reticolo, tr
 		// Dall'offset del file delle relazioni andiamo a prendere la relazione titolo/titolo
 		trAutAutRelInvIn->SeekTo(offset);
 		if (!sPtr->ReadLineWithPrefixedMaxSize(trAutAutRelInvIn))
-	        SignalAnError(__FILE__, __LINE__, "read failed");
+//	        SignalAnError(__FILE__, __LINE__, "read failed");
+			logToStdout(__FILE__, __LINE__, LOG_ERROR, "trAutAutRelInvIn read failed");
 
 
 		// Splittiamo la riga negli n elementi che la compongono
@@ -513,15 +524,15 @@ bool Marc4cpp::setupAuthAutori(
 
 
 	tabelleVector.Add(tbTitolo = new TbTitolo(tbTitoloIn, tbTitoloOffsetIn, offsetBufferTbTitoloPtr, elementsTbTitolo, keyPlusOffsetPlusLfLength, BID_KEY_LENGTH));
-
 	tabelleVector.Add(tbAutore = new TbAutore(tbAutoreIn, tbAutoreOffsetIn, offsetBufferTbAutorePtr, elementsTbAutore, keyPlusOffsetPlusLfLength, BID_KEY_LENGTH));
     tabelleVector.Add(tbRepertorio = new TbRepertorio(tbRepertorioIn, tbRepertorioOffsetIn, offsetBufferTbRepertorioPtr, elementsTbRepertorio, keyPlusOffsetPlusLfLength, BID_KEY_LENGTH));
     tabelleVector.Add(trRepAut = new TrRepAut(trRepAutIn, trRepAutOffsetIn, offsetBufferTrRepAutPtr, elementsTrRepAut, keyPlusOffsetPlusLfLength, BID_KEY_LENGTH));
     tabelleVector.Add(trIdsbnIdaltriAu = new TrIdsbnIdaltri(trIdsbnIdaltriAuIn, trIdsbnIdaltriAuOffsetIn, offsetBuffertrIdsbnIdaltriAuPtr, elementstrIdsbnIdaltriAu, keyPlusOffsetPlusLfLength, VID_KEY_LENGTH));
-
     tabelleVector.Add(tbfBiblioteca = new TbfBiblioteca(tbfBibliotecaIn, tbfBibliotecaOffsetIn, offsetBufferTbfBibliotecaPtr, elementsTbfBiblioteca, bibliotecaKeyPlusOffsetPlusLfLength, BIBLIOTECA_KEY_LENGTH)); // BIBLIOTECA_KEY_LENGTH+OFFSET_LENGTH+LF_LENGTH
 
 //	tabelleVector.Add(trTitAutRelInv = new TrTitAutRel(trTitAutRelInvIn, trTitAutRelInvOffsetIn, offsetBufferTrTitAutRelInvPtr, elementsTrTitAutInvRel, keyPlusOffsetPlusLfLength, BID_KEY_LENGTH));
+
+    tabelleVector.Add(trAutAut = new TrAutAut(trAutAutIn, trAutAutOffsetIn, offsetBufferTrAutAutPtr, elementsTrAutAut, keyPlusOffsetPlusLfLength, VID_KEY_LENGTH));
 
 
 
@@ -538,12 +549,11 @@ bool Marc4cpp::setupAuthAutori(
 			tbAutore,
 			trRepAut,
 			tbRepertorio,
-
-trAutAutRelIn, trAutAutRelOffsetIn, offsetBufferTrAutAutRelPtr, elementsTrAutAutRel,
-trTitAutRelInvIn, trTitAutRelInvOffsetIn, offsetBufferTrTitAutRelInvPtr, elementsTrTitAutInvRel,
-trIdsbnIdaltriAu,
-trIdsbnIdaltriAuRelIn, trIdsbnIdaltriAuRelOffsetIn, offsetBuffertrIdsbnIdaltriAuRel, elementstrIdsbnIdaltriAuRel,
-tbfBiblioteca,
+			trAutAut, // 17/09/2021
+			trTitAutRelInvIn, trTitAutRelInvOffsetIn, offsetBufferTrTitAutRelInvPtr, elementsTrTitAutInvRel,
+			trIdsbnIdaltriAu,
+			trIdsbnIdaltriAuRelIn, trIdsbnIdaltriAuRelOffsetIn, offsetBuffertrIdsbnIdaltriAuRel, elementstrIdsbnIdaltriAuRel,
+			tbfBiblioteca,
 			tbfBibliotecaInPoloKV,
 			keyPlusOffsetPlusLfLength,
 			trKeyPlusOffsetPlusLfLength,
@@ -611,8 +621,13 @@ bool Marc4cpp::creaRecordAuthority(MarcRecord *marcRecord, const tree<std::strin
 	{
 	    if (!tbTitolo->loadRecord(id))
 	    	return false;
+
+	    char cd_natura = *tbTitolo->getField(tbTitolo->cd_natura);
+	    if (cd_natura != 'A') // 16/09/2021 solo forma accettata (mail Mataloni prima meta' 09/2021)
+	    	return false;
+
 	 //   if (POLO.isEqual("INDICE"))
-		    if (POLO.isEqual("IND"))
+	    if (POLO.isEqual("IND"))
 	    {
 			isTitoloOpera=true; // SEMPRE
 //		    if (!tbTitSet2->loadRecord(id)) // 20/07/2017
@@ -732,6 +747,10 @@ bool Marc4cpp::setupAuthTitoliUniformi(
     tabelleVector.Add(tbComposizione = new TbComposizione(tbComposizioneIn, tbComposizioneOffsetIn, offsetBufferTbComposizionePtr, elementsTbComposizione, keyPlusOffsetPlusLfLength, BID_KEY_LENGTH));
     tabelleVector.Add(tbMusica = new TbMusica(tbMusicaIn, tbMusicaOffsetIn, offsetBufferTbMusicaPtr, elementsTbMusica, keyPlusOffsetPlusLfLength, BID_KEY_LENGTH));
 
+    // 20/09/2021
+    tabelleVector.Add(trAutAut = new TrAutAut(trAutAutIn, trAutAutOffsetIn, offsetBufferTrAutAutPtr, elementsTrAutAut, keyPlusOffsetPlusLfLength, VID_KEY_LENGTH));
+
+
 
 
 	marc4cppDocumentoAuthority = new Marc4cppDocumentoAuthority(marcRecord, tbAutore, tbTitolo, tbTitSet2, tbComposizione, tbMusica, polo, tagsToGenerateBufferPtr, tagsToGenerate, authority);
@@ -742,6 +761,7 @@ bool Marc4cpp::setupAuthTitoliUniformi(
 
 //		trRepAut,
 		trRepTit,
+		trAutAut,
 		tbRepertorio,
 
 		trTitAutRelIn, trTitAutRelOffsetIn,
@@ -752,6 +772,8 @@ bool Marc4cpp::setupAuthTitoliUniformi(
 
 
 		offsetBufferTrTitAutRelPtr,
+		offsetBufferTrAutAutRelPtr,
+
 		elementsTrTitAutRel,
 		elementsTrAutAutRel,
 
@@ -816,7 +838,8 @@ void Marc4cpp::CreaReticoloTitoloUniformeAddNodeChildren(tree<std::string>* reti
 		// Dall'offset del file delle relazioni andiamo a prendere la relazione titolo/titolo
 		trTitAutRelIn->SeekTo(offset);
 		if (!sPtr->ReadLineWithPrefixedMaxSize(trTitAutRelIn))
-	        SignalAnError(__FILE__, __LINE__, "read failed");
+//	        SignalAnError(__FILE__, __LINE__, "read failed");
+			logToStdout(__FILE__, __LINE__, LOG_ERROR, "trTitAutRelIn read failed");
 
 //#ifdef DEBUG_LEGAMI
 //printf ("\n\nBid+Offset=%s", entryPtr);
@@ -874,7 +897,8 @@ void Marc4cpp::CreaReticoloTitoloUniformeAddNodeChildren(tree<std::string>* reti
 		// Dall'offset del file delle relazioni andiamo a prendere la relazione titolo/titolo
 		trTitTitRelIn->SeekTo(offset);
 		if (!sPtr->ReadLineWithPrefixedMaxSize(trTitTitRelIn))
-	        SignalAnError(__FILE__, __LINE__, "read failed");
+//	        SignalAnError(__FILE__, __LINE__, "read failed");
+			logToStdout(__FILE__, __LINE__, LOG_ERROR, "trTitTitRelIn read failed");
 
 //#ifdef DEBUG_LEGAMI
 //printf ("\n\nBid+Offset=%s", entryPtr);
@@ -1022,7 +1046,8 @@ void Marc4cpp::CreaReticoloLuogoAddNodeChildren(tree<std::string>* reticolo, tre
 		// Dall'offset del file delle relazioni andiamo a prendere la relazione titolo/titolo
 		trLuoLuoRelIn->SeekTo(offset);
 		if (!sPtr->ReadLineWithPrefixedMaxSize(trLuoLuoRelIn))
-	        SignalAnError(__FILE__, __LINE__, "read failed");
+//	        SignalAnError(__FILE__, __LINE__, "read failed");
+			logToStdout(__FILE__, __LINE__, LOG_ERROR, "trLuoLuoRelIn read failed");
 
 
 		// Splittiamo la riga negli n elementi che la compongono
@@ -1067,7 +1092,8 @@ void Marc4cpp::CreaReticoloLuogoAddNodeChildren(tree<std::string>* reticolo, tre
 		// Dall'offset del file delle relazioni andiamo a prendere la relazione luogo/luogo
 		trLuoLuoRelInvIn->SeekTo(offset);
 		if (!sPtr->ReadLineWithPrefixedMaxSize(trLuoLuoRelInvIn))
-	        SignalAnError(__FILE__, __LINE__, "read failed");
+//	        SignalAnError(__FILE__, __LINE__, "read failed");
+			logToStdout(__FILE__, __LINE__, LOG_ERROR, "trLuoLuoRelInvIn read failed");
 
 
 		// Splittiamo la riga negli n elementi che la compongono

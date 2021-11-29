@@ -46,9 +46,7 @@
 
 extern CKeyValueVector *codiciPaesKV; // 17/11/2020
 
-//#include "C210.h"
-extern void SignalAnError(	const OrsChar *Module, OrsInt Line, const OrsChar * MsgFmt, ...);
-extern void SignalAWarning(	const OrsChar *Module, OrsInt Line, const OrsChar * MsgFmt, ...);
+extern void logToStdout(	const OrsChar *Module, OrsInt Line, int level, const OrsChar * MsgFmt, ...);
 
 //Authority luogo 05/11/2020
 Marc4cppDocumentoAuthority::Marc4cppDocumentoAuthority(MarcRecord *marcRecord, TbLuogo *tbLuogo, char *polo, char *tagsToGenerateBufferPtr, int tagsToGenerate, int aurthority)
@@ -1089,10 +1087,6 @@ DataField * Marc4cppDocumentoAuthority::creaTag210()
 	CString dsNomeAut;
 	dsNomeAut = tbAutore->getField(tbAutore->ds_nome_aut);
 
-//	dsNomeAut.Split(stringVect, ':'); mail 11/08/202 Egidio Incelli. I due punti introducono un complemento del titolo,	non un rapporto gerarchico
-//	stringVect.Add(new CString (dsNomeAut));
-
-	dsNomeAut.Split(stringVect, '\x01');  // dummy separator
 
 	df = new DataField();
 	df->setTag("210");
@@ -1104,40 +1098,78 @@ DataField * Marc4cppDocumentoAuthority::creaTag210()
 
 	df->setIndicator2('2'); // Sembra fisso da scarico indice 26/08/2010, Name entered under name in direct order
 
+	//	dsNomeAut.Split(stringVect, ':'); mail 11/08/2021 Egidio Incelli. I due punti introducono un complemento del titolo,	non un rapporto gerarchico
+	//	stringVect.Add(new CString (dsNomeAut));
 
-if (!export_author_special_characters) // 25/05/2021 Mataloni/SRI
-	stringVect.Entry(0)->removeCharacterOccurances('*');
-
-	if (stringVect.length() > 1)
-		stringVect.Entry(1)->Split(stringVect2, '<');
+	if (tpNomeAut == AUTORE_ENTE_GERARCHICO_G)
+		dsNomeAut.Split(stringVect, " : "); // mail 16/09/2021 Mataloni
 	else
-		stringVect.Entry(0)->Split(stringVect2, '<');
-
-	if (!export_author_special_characters) // 25/05/2021 Mataloni/SRI
-		stringVect2.Entry(0)->removeCharacterOccurances('*');
+		dsNomeAut.Split(stringVect, '\x01');  // dummy separator
 
 
-	if (stringVect.length() > 1)
-		sf = new Subfield('a', stringVect.Entry(0));
-	else
-		sf = new Subfield('a', stringVect2.Entry(0));
-	df->addSubfield(sf);
+//	if (!export_author_special_characters) // 25/05/2021 Mataloni/SRI
+//		stringVect.Entry(0)->removeCharacterOccurances('*');
 
-	if (stringVect.length() > 1)
-	{
- 	 SignalAWarning(__FILE__, __LINE__, "210 non dovrebbe arrivare qui!");
-	}
 
-	if (stringVect2.length() > 1)
-	{
-		if (sf->getDataString()->GetLastChar() == ' ') // 18/08/2021 (mail Incelli) Metto lo spazio dopo il primo sottocampo davanti all'uncinata. M
-			sf->getDataString()->ExtractLastChar();
 
-		doQualificazioni(df, stringVect2, tpNomeAut); // Gestiamo le qualificazioni
-	}
+//	if (stringVect.length() > 1)
+//		stringVect.Entry(1)->Split(stringVect2, '<');
+//	else
+//		stringVect.Entry(0)->Split(stringVect2, '<');
+//
+//	if (!export_author_special_characters) // 25/05/2021 Mataloni/SRI
+//		stringVect2.Entry(0)->removeCharacterOccurances('*');
+//
+//
+//	if (stringVect.length() > 1)
+//		sf = new Subfield('a', stringVect.Entry(0));
+//	else
+//		sf = new Subfield('a', stringVect2.Entry(0));
+//	df->addSubfield(sf);
+//
+//	if (stringVect.length() > 1)
+//	{
+// 	 SignalAWarning(__FILE__, __LINE__, "210 non dovrebbe arrivare qui!");
+//	}
+//
+//	if (stringVect2.length() > 1)
+//	{
+//		if (sf->getDataString()->GetLastChar() == ' ') // 18/08/2021 (mail Incelli) Metto lo spazio dopo il primo sottocampo davanti all'uncinata.
+//			sf->getDataString()->ExtractLastChar();
+//
+//		doQualificazioni(df, stringVect2, tpNomeAut); // Gestiamo le qualificazioni
+//	}
+
+	for (int i=0;i < stringVect.length(); i++)
+		{
+		if (!export_author_special_characters) // 25/05/2021 Mataloni/SRI
+			stringVect.Entry(i)->removeCharacterOccurances('*');
+
+		stringVect.Entry(i)->Split(stringVect2, '<');
+
+		if (!i)
+			sf = new Subfield('a', stringVect2.Entry(0));
+		else
+		{
+			CString field = " : ";
+			field.AppendString(stringVect2.Entry(0));
+			sf = new Subfield('b', field.data());
+		}
+		df->addSubfield(sf);
+
+		if (stringVect2.length() > 1)
+		{
+			if (sf->getDataString()->GetLastChar() == ' ') // 18/08/2021 (mail Incelli) Metto lo spazio dopo il primo sottocampo davanti all'uncinata.
+				sf->getDataString()->ExtractLastChar();
+
+			doQualificazioni(df, stringVect2, tpNomeAut); // Gestiamo le qualificazioni
+		}
+		stringVect2.DeleteAndClear();
+		}
+
 
 	stringVect.DeleteAndClear();	// 20/10/2009 11.11
-	stringVect2.DeleteAndClear(); 	// 20/10/2009 11.11
+//	stringVect2.DeleteAndClear(); 	// 20/10/2009 11.11
 
 	marcRecord->addDataField(df);
 
@@ -1215,9 +1247,16 @@ char Marc4cppDocumentoAuthority::getQualificazioneType(CString *parteDiQualifica
 	if (parteDiQualificazione->GetLastChar() == '.')
 		return 'd'; // numero di parte
 
-	if (tipoNome == AUTORE_ENTE_NOME_E || tipoNome == 'e' ||
-		tipoNome == AUTORE_ENTE_CONGRESSO_R || tipoNome == 'r' ||
-		tipoNome == AUTORE_ENTE_GERARCHICO_G || tipoNome == 'g')
+	if (
+//		Mataloni, mail 16/09/2021
+//		- per quanto riguarda le qualificazioni generiche (ed è una qualificazione generica anche un nome di luogo nella denominazione di un ente
+//			che non sia un congresso, es. RMGV005472)  il sottocampo deve essere $c; per lo stesso problema si veda anche VEAV533857,
+//			che nell'export 27.08 mostra invece una qualificazione generica in $e
+
+		// tipoNome == AUTORE_ENTE_NOME_E || tipoNome == 'e' ||
+		//tipoNome == AUTORE_ENTE_GERARCHICO_G || tipoNome == 'g' ||
+		tipoNome == AUTORE_ENTE_CONGRESSO_R || tipoNome == 'r'
+		)
 		return 'e'; // qualificazione geografica
 	else
 		return 'c'; // espressione verbale
@@ -1946,7 +1985,8 @@ DataField * Marc4cppDocumentoAuthority::creaTag931(char *areaStartPtr, char *are
 bool Marc4cppDocumentoAuthority::elaboraDatiDocumento(bool isTitoloOpera)
 {
 	creaTag001_IdentificatoreRecord(); // Numero di record
-	if (authority == AUTHORITY_TITOLI_UNIFORMI && DATABASE_ID == DATABASE_INDICE && IS_TAG_TO_GENERATE(003)) // 22/04/2020)
+//	if (authority == AUTHORITY_TITOLI_UNIFORMI && DATABASE_ID == DATABASE_INDICE && IS_TAG_TO_GENERATE(003)) // 22/04/2020)
+	if (authority == AUTHORITY_TITOLI_UNIFORMI && DATABASE_ID == DATABASE_INDICE && IS_TAG_TO_GENERATE(3)) // 27/09/2021)
 	{
 		creaTag003_Permalink();
 	}
@@ -1954,7 +1994,11 @@ bool Marc4cppDocumentoAuthority::elaboraDatiDocumento(bool isTitoloOpera)
 
 	if (authority == AUTHORITY_AUTORI)
 	{
-		if (IS_TAG_TO_GENERATE(010))
+//		char show = *(tagsToGenerateBufferPtr + 10);
+
+
+//		if (IS_TAG_TO_GENERATE(010))
+		if (IS_TAG_TO_GENERATE(10)) // 27/09/2021 mail Mataloni
 			creaTag010_Isni();
 	}
 	else if (authority == AUTHORITY_LUOGHI)

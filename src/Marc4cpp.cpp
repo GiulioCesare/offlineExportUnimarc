@@ -47,8 +47,7 @@
 
 #define TEST_EXPORT_DA_LISTA
 
-extern void SignalAnError(	const OrsChar *Module, OrsInt Line, const OrsChar * MsgFmt, ...);
-extern void SignalAWarning(	const OrsChar *Module, OrsInt Line, const OrsChar * MsgFmt, ...);
+extern void logToStdout(	const OrsChar *Module, OrsInt Line, int level, const OrsChar * MsgFmt, ...);
 
 
 extern bool logNaturaErrata;
@@ -510,6 +509,14 @@ void Marc4cpp::zeroInit() {
 	trAutAutRelInvOffsetIn = 0;
 	elementsTrAutAutInvRel = 0;
 	offsetBufferTrAutAutRelInvPtr = 0;
+
+//	17/09/2021
+	trAutAutIn = 0;
+	trAutAutOffsetIn = 0;
+	elementsTrAutAut = 0;
+	offsetBufferTrAutAutPtr = 0;
+	trAutAut = 0;
+
 
 
 	trAutAutInvIn = 0;
@@ -1421,7 +1428,7 @@ bool Marc4cpp::elaboraLeader()
 				leader->setLivelloDiCodifica('3');
 			// else 72-97 defaults to ' ';
 		}
-		if (authority == AUTHORITY_AUTORI)
+		else if (authority == AUTHORITY_AUTORI)
 		{
 //tbAutore->dumpRecord();
 			if (*(tbAutore->getField(tbAutore->fl_canc)) == 'S' || *(tbAutore->getField(tbAutore->fl_canc)) == 's')
@@ -1444,7 +1451,15 @@ bool Marc4cpp::elaboraLeader()
 
 //			leader->setPos9Undefined(BLANK);
 
-			leader->setLivelloDiCodifica(' ');
+//			leader->setLivelloDiCodifica(' ');
+
+			// pos. 17 livelli 90-97 con blank, livelli 05-71 con ‘3’ Mataloni Mail 17/09/2021
+			int livelloAuthority = atoi (tbAutore->getField(tbAutore->cd_livello));
+			if (livelloAuthority >= 90 && livelloAuthority <= 97)
+				leader->setLivelloDiCodifica(' ');
+			else if (livelloAuthority >= 5 && livelloAuthority <= 71)
+				leader->setLivelloDiCodifica('3');
+
 			leader->setTipoDiCatalogazioneDescrittiva(' ');
 			leader->setEntryMap(" 45  ");
 		}
@@ -1469,7 +1484,14 @@ bool Marc4cpp::elaboraLeader()
 //				leader->setCharCodingScheme_typeOfEntity('b');				// 1, decimo
 			leader->setPos9Undefined('k');
 
-			leader->setLivelloDiCodifica(' ');
+//			leader->setLivelloDiCodifica(' ');
+			// pos. 17 livelli 90-97 con blank, livelli 05-71 con ‘3’ Mataloni Mail 17/09/2021
+			int livelloAuthority = atoi (tbLuogo->getField(tbLuogo->cd_livello));
+			if (livelloAuthority >= 90 && livelloAuthority <= 97)
+				leader->setLivelloDiCodifica(' ');
+			else if (livelloAuthority >= 5 && livelloAuthority <= 71)
+				leader->setLivelloDiCodifica('3');
+
 			leader->setTipoDiCatalogazioneDescrittiva(' ');
 			leader->setEntryMap(" 45  ");
 		}
@@ -1486,7 +1508,14 @@ bool Marc4cpp::elaboraLeader()
 //			leader->setCharCodingScheme_typeOfEntity('J');		// 1, decimo
 			leader->setPos9Undefined(BLANK);		// 1, decimo
 
-			leader->setLivelloDiCodifica(' ');
+//			leader->setLivelloDiCodifica(' ');
+			// pos. 17 livelli 90-97 con blank, livelli 05-71 con ‘3’ Mataloni Mail 17/09/2021
+			int livelloAuthority = atoi (tbSoggetto->getField(tbSoggetto->cd_livello));
+			if (livelloAuthority >= 90 && livelloAuthority <= 97)
+				leader->setLivelloDiCodifica(' ');
+			else if (livelloAuthority >= 5 && livelloAuthority <= 71)
+				leader->setLivelloDiCodifica('3');
+
 			leader->setTipoDiCatalogazioneDescrittiva(' ');
 			leader->setEntryMap(" 45  ");
 		}
@@ -1713,7 +1742,8 @@ void Marc4cpp::CreaReticoloAddNodeChildren(tree<std::string>* reticolo, tree<std
 			// Dall'offset del file delle relazioni andiamo a prendere la relazione titolo/titolo
 			trAutAutRelIn->SeekTo(offset);
 			if (!sPtr->ReadLineWithPrefixedMaxSize(trAutAutRelIn))
-		        SignalAnError(__FILE__, __LINE__, "read failed");
+//		        SignalAnError(__FILE__, __LINE__, "read failed");
+				logToStdout(__FILE__, __LINE__, LOG_ERROR, "trAutAutRelIn read failed");
 
 #ifdef DEBUG_LEGAMI
 printf ("\n\nBid+Offset=%s", entryPtr);
@@ -1781,7 +1811,8 @@ printf ("\nLegami aut_aut=%s", sPtr->data());
 		// Dall'offset del file delle relazioni andiamo a prendere la relazione titolo/titolo
 		trTitTitRelIn->SeekTo(offset);
 		if (!sPtr->ReadLineWithPrefixedMaxSize(trTitTitRelIn))
-	        SignalAnError(__FILE__, __LINE__, "read failed");
+//	        SignalAnError(__FILE__, __LINE__, "read failed");
+			logToStdout(__FILE__, __LINE__, LOG_ERROR, "trTitTitRelIn read failed");
 
 #ifdef DEBUG_LEGAMI
 printf ("\n\nBid+Offset=%s", entryPtr);
@@ -1851,7 +1882,8 @@ printf ("\nLegami tit_tit=%s", sPtr->data());
 		// Dall'offset del file delle relazioni andiamo a prendere la relazione titolo/titolo
 		trTitAutRelIn->SeekTo(offset);
 		if (!sPtr->ReadLineWithPrefixedMaxSize(trTitAutRelIn))
-	        SignalAnError(__FILE__, __LINE__, "read failed");
+//	        SignalAnError(__FILE__, __LINE__, "read failed");
+			logToStdout(__FILE__, __LINE__, LOG_ERROR, "trTitAutRelIn read failed");
 
 #ifdef DEBUG_LEGAMI
 printf ("\n\nBid+Offset=%s", entryPtr);
@@ -1913,7 +1945,8 @@ printf ("\nLegami tit_aut=%s", sPtr->data());
 		// Dall'offset del file delle relazioni andiamo a prendere la relazione titolo/soggetto
 		trTitSogBibIn->SeekTo(offset);
 		if (!sPtr->ReadLineWithPrefixedMaxSize(trTitSogBibIn))
-	        SignalAnError(__FILE__, __LINE__, "read failed");
+//	        SignalAnError(__FILE__, __LINE__, "read failed");
+		logToStdout(__FILE__, __LINE__, LOG_ERROR, "trTitSogBibIn read failed");
 
 #ifdef DEBUG_LEGAMI
 printf ("\n\nBid+Offset=%s", entryPtr);
@@ -1969,7 +2002,8 @@ printf ("\nLegami tit_sogBib=%s", sPtr->data());
 		// Dall'offset del file delle relazioni andiamo a prendere la relazione titolo/classe
 		trTitClaIn->SeekTo(offset);
 		if (!sPtr->ReadLineWithPrefixedMaxSize(trTitClaIn))
-	        SignalAnError(__FILE__, __LINE__, "read failed");
+//	        SignalAnError(__FILE__, __LINE__, "read failed");
+			logToStdout(__FILE__, __LINE__, LOG_ERROR, "trTitClaIn read failed");
 
 #ifdef DEBUG_LEGAMI
 printf ("\n\nBid+Offset=%s", entryPtr);
@@ -2023,7 +2057,8 @@ printf ("\nLegami tit_cla=%s", sPtr->data());
 		// Dall'offset del file delle relazioni andiamo a prendere la relazione titolo/titolo
 		trTitMarRelIn->SeekTo(offset);
 		if (!sPtr->ReadLineWithPrefixedMaxSize(trTitMarRelIn))
-	        SignalAnError(__FILE__, __LINE__, "read failed");
+//	        SignalAnError(__FILE__, __LINE__, "read failed");
+			logToStdout(__FILE__, __LINE__, LOG_ERROR, "trTitMarRelIn read failed");
 
 #ifdef DEBUG_LEGAMI
 printf ("\n\nBid+Offset=%s", entryPtr);
@@ -2076,7 +2111,8 @@ printf ("\nLegami tit_mar=%s", sPtr->data());
 		// Dall'offset del file delle relazioni andiamo a prendere la relazione titolo/titolo
 		trTitLuoIn->SeekTo(offset);
 		if (!sPtr->ReadLineWithPrefixedMaxSize(trTitLuoIn))
-	        SignalAnError(__FILE__, __LINE__, "read failed");
+//	        SignalAnError(__FILE__, __LINE__, "read failed");
+			logToStdout(__FILE__, __LINE__, LOG_ERROR, "trTitLuoIn read failed");
 
 
 #ifdef DEBUG_LEGAMI
@@ -2135,7 +2171,8 @@ printf ("\nLegami tit_luo=%s", sPtr->data());
 		// Dall'offset del file delle relazioni andiamo a prendere la relazione titolo/classe
 		trsTerminiTitoliBibliotecheRelIn->SeekTo(offset);
 		if (!sPtr->ReadLineWithPrefixedMaxSize(trsTerminiTitoliBibliotecheRelIn))
-	        SignalAnError(__FILE__, __LINE__, "read failed");
+//	        SignalAnError(__FILE__, __LINE__, "read failed");
+		logToStdout(__FILE__, __LINE__, LOG_ERROR, "trsTerminiTitoliBibliotecheRelIn read failed");
 
 #ifdef DEBUG_LEGAMI
 printf ("\n\nBid+Offset=%s", entryPtr);
@@ -2280,7 +2317,9 @@ bool Marc4cpp::CreaUnimarcBibliografico(int recordUnimarcSuSingolaRiga, long ini
 			minuti 	= ((int)diff/60)%60;
 			secondi = (int)diff%60;
 
-			printf ("\nElaborati %ld record (impiegato %0.2d:%0.2d:%0.2d ), elaborando bid: %s", ctr, ore, minuti, secondi, sPtr->data());
+//			printf ("\nElaborati %ld record (impiegato %0.2d:%0.2d:%0.2d ), elaborando bid: %s", ctr, ore, minuti, secondi, sPtr->data());
+			sPtr->ExtractLastChar(); // 11/11/2021 remove \n
+			logToStdout(__FILE__, __LINE__, LOG_PROGRESS, "Elaborati %ld record (impiegato %0.2d:%0.2d:%0.2d ), elaborando bid: %s", ctr, ore, minuti, secondi, sPtr->data());
 
 			timeStart = timeEnd;
 
@@ -2398,7 +2437,8 @@ bool Marc4cpp::creaRecordBibliografico(MarcRecord *marcRecord, const tree<std::s
     if (!strchr(natureValide, natura)) // 26/02/10
     	{
     	if (logNaturaErrata)
-    		SignalAWarning(__FILE__, __LINE__, "Record non documento per bid %s, natura %c", bid, natura);
+//    		SignalAWarning(__FILE__, __LINE__, "Record non documento per bid %s, natura %c", bid, natura);
+    		logToStdout(__FILE__, __LINE__, LOG_WARNING, "Record non documento per bid %s, natura %c", bid, natura);
 		recordsNonDocumento++;
 		return false;
     	}

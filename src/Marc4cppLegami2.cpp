@@ -205,8 +205,7 @@ RML0057134  # Lotte sveve
 //#endif
 using namespace std;
 
-extern void SignalAnError(const OrsChar *Module, OrsInt Line, const OrsChar * MsgFmt, ...);
-extern void SignalAWarning(const OrsChar *Module, OrsInt Line, const OrsChar * MsgFmt, ...);
+extern void logToStdout(	const OrsChar *Module, OrsInt Line, int level, const OrsChar * MsgFmt, ...);
 
 
 
@@ -367,6 +366,7 @@ DataField  *Marc4cppLegami::creaLegameAutoreAltriDB(char *entryReticoloPtr, int 
 		if (retb)
 		{
 			CString *sPtr=new CString();
+			CString *sPtr2;
 			CTokenizer *Tokenizer = new CTokenizer("|");
 			char* tokenPtr;
 			CString token;
@@ -384,11 +384,17 @@ DataField  *Marc4cppLegami::creaLegameAutoreAltriDB(char *entryReticoloPtr, int 
 			// Dall'offset del file delle relazioni andiamo a prendere la relazione titolo/titolo
 			trIdsbnIdaltriAuRelIn->SeekTo(offset);
 			if (!sPtr->ReadLineWithPrefixedMaxSize(trIdsbnIdaltriAuRelIn))
-				SignalAnError(__FILE__, __LINE__, "read failed");
-
+			{
+//				SignalAnError(__FILE__, __LINE__, "read failed");
+				logToStdout(__FILE__, __LINE__, LOG_ERROR, "trIdsbnIdaltriAuRelIn read failed");
+				return 0;
+			}
 			//printf("\nlegami: '%s'",sPtr->Data());
 
 			// Splittiamo la riga negli n elementi che la compongono
+//if (sPtr->GetLastChar() == '\n')
+//	sPtr->ExtractLastChar();
+
 			Tokenizer->Assign(sPtr->data());
 			tokenPtr = Tokenizer->GetToken(); // Remove root
 			CString poloBibCnc,poloBibCnm;
@@ -400,13 +406,22 @@ DataField  *Marc4cppLegami::creaLegameAutoreAltriDB(char *entryReticoloPtr, int 
 				if (stringVect[1]->StartsWith("CNC"))
 					{
 					if(poloBibCnc.IsEmpty())
+					{
 						poloBibCnc=stringVect[1]->data();
+						if (poloBibCnc.GetLastChar() == '\n') // 17/11/2021
+							poloBibCnc.ExtractLastChar();
+					}
 					cncIds.Add(stringVect[0]);
 					}
 				else
 				{
 					if(poloBibCnm.IsEmpty())
+					{
 						poloBibCnm=stringVect[1]->data();
+						if (poloBibCnm.GetLastChar() == '\n') // 17/11/2021
+							poloBibCnm.ExtractLastChar();
+
+					}
 					cnmIds.Add(stringVect[0]);
 				}
 				delete stringVect[1]; // eliminiamo il DB che non ci serve +
@@ -420,7 +435,8 @@ DataField  *Marc4cppLegami::creaLegameAutoreAltriDB(char *entryReticoloPtr, int 
 			//	printf("\ncdPoloBib '%s'",cdPoloBib.Data());
 				if (! tbfBiblioteca->loadRecord(poloBibCnc.Data()))
 				{
-					SignalAnError(__FILE__, __LINE__, "\nCodice polo biblioteca sconosciuto %c", poloBibCnc.Data());
+//					SignalAnError(__FILE__, __LINE__, "\nCodice polo biblioteca sconosciuto %c", poloBibCnc.Data());
+					logToStdout(__FILE__, __LINE__, LOG_ERROR, "Codice polo biblioteca sconosciuto %c", poloBibCnc.Data());
 				}else{
 
 				df = new DataField();
@@ -435,7 +451,8 @@ DataField  *Marc4cppLegami::creaLegameAutoreAltriDB(char *entryReticoloPtr, int 
 				df->addSubfield(sf);
 				for(int i=0;i<cncIds.length();i++)
 				{
-					sf = new Subfield('9',cncIds.Entry(i));
+					sPtr2 = cncIds.Entry(i);
+					sf = new Subfield('9',sPtr2);
 					df->addSubfield(sf);
 				}
 				marcRecord->addDataField(df);
@@ -445,9 +462,14 @@ DataField  *Marc4cppLegami::creaLegameAutoreAltriDB(char *entryReticoloPtr, int 
 			if (cnmIds.length())
 			{
 				if (! tbfBiblioteca->loadRecord(poloBibCnm.Data()))
+
+
 							{
-					SignalAnError(__FILE__, __LINE__, "\nCodice polo biblioteca sconosciuto %c", poloBibCnm.Data());
+//					SignalAnError(__FILE__, __LINE__, "\nCodice polo biblioteca sconosciuto %c", poloBibCnm.Data());
+					logToStdout(__FILE__, __LINE__, LOG_ERROR, "Codice polo biblioteca sconosciuto %c", poloBibCnm.Data());
 							}else{
+//tbfBiblioteca->dumpRecord();
+
 				df = new DataField();
 				df->setTag("999");
 				cdAnaBib = tbfBiblioteca->getField(tbfBiblioteca->cd_ana_biblioteca);
@@ -461,7 +483,8 @@ DataField  *Marc4cppLegami::creaLegameAutoreAltriDB(char *entryReticoloPtr, int 
 				df->addSubfield(sf);
 				for(int i=0;i<cnmIds.length();i++)
 				{
-					sf = new Subfield('9',cnmIds.Entry(i));
+					sPtr2 = cnmIds.Entry(i);
+					sf = new Subfield('9',sPtr2);
 					df->addSubfield(sf);
 				}
 				marcRecord->addDataField(df);
@@ -555,84 +578,6 @@ void Marc4cppLegami::creaLegamiTitoloIncipit() {
 } // End Marc4cppLegami::creaLegamiTitoloIncipit
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 void Marc4cppLegami::creatTag7xxNidificato(DataField *df, CString *bid)
 {
 	DataField *df7xx;
@@ -694,7 +639,8 @@ void Marc4cppLegami::creatTag7xxNidificato(DataField *df, CString *bid)
 	// Dall'offset del file delle relazioni andiamo a prendere la relazione titolo/autore
 	trTitAutRel->getTbIn()->SeekTo(offset);
 	if (!lineRead->ReadLineWithPrefixedMaxSize(trTitAutRel->getTbIn()))
-        SignalAnError(__FILE__, __LINE__, "read failed");
+//        SignalAnError(__FILE__, __LINE__, "read failed");
+		logToStdout(__FILE__, __LINE__, LOG_ERROR, "trTitAutRel read failed");
 
 //printf ("\nlineRead = '%s'", lineRead->data());
 
@@ -1163,7 +1109,8 @@ void Marc4cppLegami::elabora44x(char *bid) {
 	// Dall'offset del file delle relazioni andiamo a prendere la relazione titolo/titolo
 	trTitTitInvRelIn->SeekTo(offset);
 	if (!sPtr->ReadLineWithPrefixedMaxSize(trTitTitInvRelIn))
-        SignalAnError(__FILE__, __LINE__, "read failed");
+//        SignalAnError(__FILE__, __LINE__, "read failed");
+		logToStdout(__FILE__, __LINE__, LOG_ERROR, "trTitTitInvRelIn read failed");
 
 	// Splittiamo la riga negli n elementi che la compongono
 	CTokenizer Tokenizer(sPtr->data(), "|");
@@ -1280,7 +1227,8 @@ bool Marc4cppLegami::getBidColl(char *bid, CString *bidColl)
 	trTitTitRelIn->SeekTo(offset);
 
 	if (!sPtr->ReadLineWithPrefixedMaxSize(trTitTitRelIn))
-        SignalAnError(__FILE__, __LINE__, "read failed");
+//        SignalAnError(__FILE__, __LINE__, "read failed");
+		logToStdout(__FILE__, __LINE__, LOG_ERROR, "trTitTitRelIn read failed");
 
 
 	// Splittiamo la riga negli n elementi che la compongono
@@ -1372,7 +1320,8 @@ bool Marc4cppLegami::isPartenzaLegame01MW(char *bid) {
 	trTitTitRelIn->SeekTo(offset);
 
 	if (!sPtr->ReadLineWithPrefixedMaxSize(trTitTitRelIn))
-        SignalAnError(__FILE__, __LINE__, "read failed");
+//        SignalAnError(__FILE__, __LINE__, "read failed");
+		logToStdout(__FILE__, __LINE__, LOG_ERROR, "trTitTitRelIn read failed");
 
 
 	// Splittiamo la riga negli n elementi che la compongono
@@ -1458,8 +1407,8 @@ int Marc4cppLegami::contaBidColl(char *bid)
 	// Dall'offset del file delle relazioni andiamo a prendere la relazione titolo/titolo
 	trTitTitInvRelIn->SeekTo(offset);
 	if (!sPtr->ReadLineWithPrefixedMaxSize(trTitTitInvRelIn))
-        SignalAnError(__FILE__, __LINE__, "read failed");
-
+//        SignalAnError(__FILE__, __LINE__, "read failed");
+		logToStdout(__FILE__, __LINE__, LOG_ERROR, "trTitTitInvRelIn read failed");
 
 	// Splittiamo la riga negli n elementi che la compongono
 	CTokenizer Tokenizer(sPtr->data(), "|");
@@ -1545,7 +1494,9 @@ int Marc4cppLegami::contaBidBase(char *bid)
 	trTitTitRelIn->SeekTo(offset);
 	if (!sPtr->ReadLineWithPrefixedMaxSize(trTitTitRelIn))
 	{
-        SignalAnError(__FILE__, __LINE__, "read failed");
+//        SignalAnError(__FILE__, __LINE__, "read failed");
+		logToStdout(__FILE__, __LINE__, LOG_ERROR, "trTitTitRelIn read failed");
+
 	}
 
 
@@ -1657,7 +1608,8 @@ void Marc4cppLegami::elabora42x(char *bid) {
 	// Dall'offset del file delle relazioni andiamo a prendere la relazione titolo/titolo
 	trTitTitInvRelIn->SeekTo(offset);
 	if (!sPtr->ReadLineWithPrefixedMaxSize(trTitTitInvRelIn))
-        SignalAnError(__FILE__, __LINE__, "read failed");
+//        SignalAnError(__FILE__, __LINE__, "read failed");
+		logToStdout(__FILE__, __LINE__, LOG_ERROR, "trTitTitInvRelIn read failed");
 
 	// Splittiamo la riga negli n elementi che la compongono
 	CTokenizer Tokenizer(sPtr->data(), "|");
@@ -2577,7 +2529,8 @@ DataField * Marc4cppLegami::creaTag899_Localizzazione(bool has430, bool has440) 
     if (!tbfBiblioteca->loadRecord(kPoloBiblioteca.data()))
     {
 //tbfBiblioteca->dumpRecord();
-    	SignalAWarning(__FILE__, __LINE__, "Biblioteca non trovata per '%s'",	kPoloBiblioteca.data());
+//    	SignalAWarning(__FILE__, __LINE__, "Biblioteca non trovata per '%s'",	kPoloBiblioteca.data());
+		logToStdout(__FILE__, __LINE__, LOG_ERROR, "Biblioteca non trovata per '%s'",	kPoloBiblioteca.data());
 		return df;
     }
 
@@ -3360,7 +3313,8 @@ void Marc4cppLegami::creaTag927_PersonaggiEInterpreti() {
 				// Dall'offset del file delle relazioni andiamo a prendere la relazione titolo/titolo
 				trTitAutRel->getTbIn()->SeekTo(offset);
 				if (!lineRead->ReadLineWithPrefixedMaxSize(trTitAutRel->getTbIn()))
-			        SignalAnError(__FILE__, __LINE__, "read failed");
+//			        SignalAnError(__FILE__, __LINE__, "read failed");
+					logToStdout(__FILE__, __LINE__, LOG_ERROR, "trTitAutRel read failed");
 
 //printf ("\nsPtr(trPerInt->vid) = '%s'", sPtr->data());
 //printf ("\nlineRead = '%s'", lineRead->data());
@@ -3760,7 +3714,8 @@ bool Marc4cppLegami::creaTag951_Ordine() {
         }
     else
     {
-    	SignalAWarning(__FILE__, __LINE__, "Biblioteca non trovata per '%s'",	tbaOrdini->getField(tbaOrdini->cd_bib));
+//    	SignalAWarning(__FILE__, __LINE__, "Biblioteca non trovata per '%s'",	tbaOrdini->getField(tbaOrdini->cd_bib));
+		logToStdout(__FILE__, __LINE__, LOG_WARNING, "Biblioteca non trovata per '%s'",	tbaOrdini->getField(tbaOrdini->cd_bib));
     	dsBiblioteca = tbaOrdini->getFieldString(tbaOrdini->cd_bib);
     }
 
@@ -3881,7 +3836,8 @@ bool Marc4cppLegami::creaTag961_Ordine() {
         }
     else
     {
-    	SignalAWarning(__FILE__, __LINE__, "Biblioteca non trovata per '%s'",	tbaOrdini->getField(tbaOrdini->cd_bib));
+//    	SignalAWarning(__FILE__, __LINE__, "Biblioteca non trovata per '%s'",	tbaOrdini->getField(tbaOrdini->cd_bib));
+    	logToStdout(__FILE__, __LINE__, LOG_WARNING, "Biblioteca non trovata per '%s'",	tbaOrdini->getField(tbaOrdini->cd_bib));
     	dsBiblioteca = tbaOrdini->getField(tbaOrdini->cd_bib);
     }
 
@@ -4113,7 +4069,8 @@ void Marc4cppLegami::elabora46x(char *bid, bool bidHaPadre) // , char *sequenza
  		retb = sPtr->ReadLineWithPrefixedMaxSize(trTitTitInvRelIn);
  	}
 	if (!retb)
-	    SignalAnError(__FILE__, __LINE__, "read failed");
+//	    SignalAnError(__FILE__, __LINE__, "read failed");
+		logToStdout(__FILE__, __LINE__, LOG_ERROR, "trTitTitInvRelIn read failed");
 
 //printf ("\n%s", sPtr->data());
 
@@ -4444,7 +4401,8 @@ void Marc4cppLegami::contaBidColl_MN(char *bid, int *mCtr, int *nCtr)
 	// Dall'offset del file delle relazioni andiamo a prendere la relazione titolo/titolo
 	trTitTitInvRelIn->SeekTo(offset);
 	if (!sPtr->ReadLineWithPrefixedMaxSize(trTitTitInvRelIn))
-        SignalAnError(__FILE__, __LINE__, "read failed");
+//        SignalAnError(__FILE__, __LINE__, "read failed");
+		logToStdout(__FILE__, __LINE__, LOG_ERROR, "trTitTitInvRelIn read failed");
 
 
 	// Splittiamo la riga negli n elementi che la compongono
@@ -4619,7 +4577,8 @@ bool Marc4cppLegami::isRiferimentoLegame01MW(char *bid) {
 	// Dall'offset del file delle relazioni andiamo a prendere la relazione titolo/titolo
 	trTitTitInvRelIn->SeekTo(offset);
 	if (!sPtr->ReadLineWithPrefixedMaxSize(trTitTitInvRelIn))
-        SignalAnError(__FILE__, __LINE__, "read failed");
+//        SignalAnError(__FILE__, __LINE__, "read failed");
+		logToStdout(__FILE__, __LINE__, LOG_ERROR, "trTitTitInvRelIn read failed");
 
 
 	// Splittiamo la riga negli n elementi che la compongono
@@ -4717,7 +4676,8 @@ bool Marc4cppLegami::isRiferimentoLegame01MW_2(char *bid, char *bid_base) {
 	// Dall'offset del file delle relazioni andiamo a prendere la relazione titolo/titolo
 	trTitTitInvRelIn->SeekTo(offset);
 	if (!sPtr->ReadLineWithPrefixedMaxSize(trTitTitInvRelIn))
-        SignalAnError(__FILE__, __LINE__, "read failed");
+//        SignalAnError(__FILE__, __LINE__, "read failed");
+		logToStdout(__FILE__, __LINE__, LOG_ERROR, "trTitTitInvRelIn read failed");
 
 
 	// Splittiamo la riga negli n elementi che la compongono
