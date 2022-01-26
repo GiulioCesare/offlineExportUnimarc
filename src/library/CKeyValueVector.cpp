@@ -187,7 +187,6 @@ OrsBool CKeyValueVector::Add(const char* aKey, const char* aValue)
 	CKeyValue *NV = new CKeyValue();
 	if	(!NV)
 		{
-//	    SignalAnError(__FILE__, __LINE__, "CKeyValueVector::Add non posso creare CKeyValue()");
 	    logToStdout(__FILE__, __LINE__, LOG_ERROR, "CKeyValueVector::Add non posso creare CKeyValue()");
 		return OrsFALSE;
 		}
@@ -229,7 +228,6 @@ OrsBool CKeyValueVector::Add(int aKey, int aValue)
 	CKeyValue *NV = new CKeyValue();
 	if	(!NV)
 		{
-//	    SignalAnError(__FILE__, __LINE__, "CKeyValueVector::Add non posso creare CKeyValue()");
 	    logToStdout(__FILE__, __LINE__, LOG_ERROR, "CKeyValueVector::Add non posso creare CKeyValue()");
 		return OrsFALSE;
 		}
@@ -256,7 +254,6 @@ OrsBool CKeyValueVector::Add(long aKey, long aValue)
 	CKeyValue *NV = new CKeyValue();
 	if	(!NV)
 		{
-//	    SignalAnError(__FILE__, __LINE__, "CKeyValueVector::Add non posso creare CKeyValue()");
 	    logToStdout(__FILE__, __LINE__, LOG_ERROR, "CKeyValueVector::Add non posso creare CKeyValue()");
 		return OrsFALSE;
 		}
@@ -771,7 +768,6 @@ OrsBool CKeyValueVector::Add(const char* aKey, void* aValue)
 	CKeyValue *NV = new CKeyValue();
 	if	(!NV)
 		{
-//	    SignalAnError(__FILE__, __LINE__, "CKeyValueVector::Add non posso creare CKeyValue()");
 	    logToStdout(__FILE__, __LINE__, LOG_ERROR, "CKeyValueVector::Add non posso creare CKeyValue()");
 		return OrsFALSE;
 		}
@@ -802,7 +798,6 @@ OrsBool CKeyValueVector::Add(const char* aKey, int aValue)
 	CKeyValue *NV = new CKeyValue();
 	if	(!NV)
 		{
-//	    SignalAnError(__FILE__, __LINE__, "CKeyValueVector::Add non posso creare CKeyValue()");
 	    logToStdout(__FILE__, __LINE__, LOG_ERROR, "CKeyValueVector::Add non posso creare CKeyValue()");
 		return OrsFALSE;
 		}

@@ -75,7 +75,6 @@ Subfield::Subfield(char code, char* data, int len) {
 
 if (len < 0)
 {
-//	SignalAnError(__FILE__, __LINE__, "Subfield::Subfield len %d < 0, code=%c data=%s", len, code, data);
 	logToStdout(__FILE__, __LINE__, LOG_ERROR, "Subfield::Subfield len %d < 0, code=%c data=%s", len, code, data);
 	return;
 }

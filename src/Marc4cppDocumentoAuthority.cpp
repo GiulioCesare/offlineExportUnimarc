@@ -194,12 +194,34 @@ bool Marc4cppDocumentoAuthority::contieneAnno(CString &stringa) {
 */
 
 /*
-	// 001 Identificativo di record
-	Obbligatorio
-	Non ripetibile
+	// 001
+
+
 	Nessun indicatore di campo
 	Nessun indicatore di sottocampo
 */
+/*!
+\brief <b>Tag 001 - Identificativo di record</b>
+
+[ authority autore, soggetto, luogo, titolo uniforme ]
+ <table>
+ <tr>
+ <th valign=top>Definizione</th><th>Descrizione</th></tr>
+ <tr><td valign=top>Tag</td><td>001</td></tr>
+ <tr><td valign=top>Descrizione</td><td>Identificativo di record</td></tr>
+ <tr><td valign=top>Obbligatorieta'</td><td>Obbligatorio</td></tr>
+ <tr><td valign=top>Ripetibilita'</td><td>Non ripetibile</td></tr>
+ <tr><td valign=top>Indicatore 1</td><td>Blank</td></tr>
+ <tr><td valign=top>Indicatore 2</td><td>Blank</td></tr>
+  <tr><td valign=top>Sottocampi</td><td>Nessuno</td></tr>
+  <tr><td valign=top>Formato</td>
+     <td></td>
+  </tr>
+  <tr><td valign=top>NOTE</td>
+     <td>...</td></tr>
+ </table>
+ */
+
 ControlField * Marc4cppDocumentoAuthority::creaTag001_IdentificatoreRecord()
 {
 	ControlField *cf;
@@ -238,28 +260,26 @@ ControlField * Marc4cppDocumentoAuthority::creaTag001_IdentificatoreRecord()
 } // End creaTag001
 
 
-/**
- \brief <b>Tag 003 - Permanent link</b>
+/*!
+\brief <b>Tag 003 - Permanent link</b>
+
+[ authority titolo uniforme ]
  <table>
  <tr>
  <th valign=top>Definizione</th><th>Descrizione</th></tr>
- <tr><td valign=top>Tag</td>
-     <td>001</td></tr>
- <tr><td valign=top>Descrizione</td>
-     <td>Identificatico del record</td></tr>
- <tr><td valign=top>Obbligatorieta'</td>
-     <td>Opzionale</td></tr>
- <tr><td valign=top>Ripetibilita'</td>
-     <td>Non Ripetibile</td></tr>
- <tr><td valign=top>Indicatore 1</td>
-     <td>Nessuno</td></tr>
- <tr><td valign=top>Indicatore 2</td>
-     <td>Nessuno</td></tr>
+ <tr><td valign=top>Tag</td><td>003</td></tr>
+ <tr><td valign=top>Descrizione</td><td>Identificatico del record permanente</td></tr>
+ <tr><td valign=top>Obbligatorieta'</td><td>Opzionale</td></tr>
+ <tr><td valign=top>Ripetibilita'</td> <td>Non Ripetibile</td></tr>
+ <tr><td valign=top>Indicatore 1</td><td>Blank</td></tr>
+ <tr><td valign=top>Indicatore 2</td> <td>Blank</td></tr>
   <tr><td valign=top>Sottocampi</td>
      <td>Nessuno</td></tr>
   <tr><td valign=top>Formato</td>
      <td>
-         \li  URL
+     	 <ul>
+         <li>URL</li>
+         </ul>
      </td></tr>
 
   <tr><td valign=top>NOTE</td>
@@ -283,13 +303,29 @@ ControlField * Marc4cppDocumentoAuthority::creaTag003_Permalink() { // 22/04/202
 	return cf;
 } // End creaTag003_Permalink
 
-/*
-	// 005 Identificatore della versione
-	Facoltativo (raccomandato)
-	Non ripetibile
-	Nessun indicatore di campo
-	Nessun indicatore di sottocampo
-*/
+
+/*!
+\brief <b>Tag 005 - N. identificativo di versione</b>
+
+[ authority autore, soggetto, luogo, titolo uniforme]
+ <table>
+ <tr>
+ <th valign=top>Definizione</th><th>Descrizione</th></tr>
+ <tr><td valign=top>Tag</td>
+     <td>001</td></tr>
+ <tr><td valign=top>Descrizione</td><td>Identificatico di versione</td></tr>
+ <tr><td valign=top>Obbligatorieta'</td> <td>Opzionale (raccomandato)</td></tr>
+ <tr><td valign=top>Ripetibilita'</td><td>Non Ripetibile</td></tr>
+ <tr><td valign=top>Indicatore 1</td><td>Blank</td></tr>
+ <tr><td valign=top>Indicatore 2</td><td>Blank</td></tr>
+  <tr><td valign=top>Sottocampi</td><td>Nessuno</td></tr>
+  <tr><td valign=top>Formato</td><td></td></tr>
+  <tr><td valign=top>NOTE</td>
+     <td></td></tr>
+ </table>
+ */
+
+
 ControlField * Marc4cppDocumentoAuthority::creaTag005_IdentificatoreVersione()
 {
 	ControlField *cf;
@@ -343,11 +379,33 @@ ControlField * Marc4cppDocumentoAuthority::creaTag005_IdentificatoreVersione()
 } // End creaTag005
 
 
-/*
-	 015 International Standard Authority Data Number
-	 Optional. Non Repeatable.
-	 Indicatori non definiti
-	 Sottocampi:
+/*-----!
+UNUSED \ brief <b>Tag 015 - International Standard Authority Data Number</b>
+
+ [ authority autore, soggetto, luogo, titolo uniforme ]
+ <table>
+ <tr>
+ <th valign=top>Definizione</th><th>Descrizione</th></tr>
+ <tr><td valign=top>Tag</td><td>015</td></tr>
+ <tr><td valign=top>Descrizione</td><td>International Standard Authority Data Number</td></tr>
+ <tr><td valign=top>Obbligatorieta'</td><td>Optional</td></tr>
+ <tr><td valign=top>Ripetibilita'</td><td>Non Repeatable</td></tr>
+ <tr><td valign=top>Indicatore 1</td><td>Blank</td></tr>
+ <tr><td valign=top>Indicatore 2</td><td>Blank</td></tr>
+  <tr><td valign=top>Sottocampi</td>
+  <td>
+    <ul>
+     <li></li>
+    </ul>
+  </td>
+  </tr>
+  <tr><td valign=top>Formato</td>
+     <td>
+     </td>
+     </tr>
+  <tr><td valign=top>NOTE</td>
+     <td>...</td></tr>
+ </table>
  */
 
 DataField * Marc4cppDocumentoAuthority::creaTag015_Isadn()
@@ -373,6 +431,36 @@ DataField * Marc4cppDocumentoAuthority::creaTag015_Isadn()
 	return df;
 }// End creaTag015
 
+/*!
+\brief <b>Tag 010 - ISNI</b>
+
+[ authority autore ]
+ <table>
+ <tr>
+ <th valign=top>Definizione</th><th>Descrizione</th></tr>
+ <tr><td valign=top>Tag</td><td>010</td></tr>
+ <tr><td valign=top>Descrizione</td><td>ISNI</td></tr>
+ <tr><td valign=top>Obbligatorieta'</td><td>Facoltativo</td></tr>
+ <tr><td valign=top>Ripetibilita'</td><td>Ripetibile</td></tr>
+ <tr><td valign=top>Indicatore 1</td><td>Blank</td></tr>
+ <tr><td valign=top>Indicatore 2</td><td>Blank</td></tr>
+  <tr><td valign=top>Sottocampi</td>
+  <td>
+       <ul>
+         <li>a - Number (ISNI)</li>
+         <li>y - Cancelled ISNI</li>
+         <li>z - Erroneous ISNI</li>
+         <li>6 - Interfield linking data</li>
+       </ul>
+  </td>
+  </tr>
+  <tr><td valign=top>Formato</td>
+     <td></td>
+  </tr>
+  <tr><td valign=top>NOTE</td>
+     <td>SNI consists  of  15  digits  followed  by  a  check  character. </td></tr>
+ </table>
+*/
 
 // 17/11/15 I dati ISADN sono tati sostituiti con i dati ISNI
 DataField * Marc4cppDocumentoAuthority::creaTag010_Isni()
@@ -401,6 +489,34 @@ DataField * Marc4cppDocumentoAuthority::creaTag010_Isni()
 }// End creaTag010
 
 // 05/11/2020 X Authority Luoghi
+
+/*!
+\brief <b>Tag 035 - Codice ISTAT</b>
+
+ [ authority luogo]
+ <table>
+ <tr>
+ <th valign=top>Definizione</th><th>Descrizione</th></tr>
+ <tr><td valign=top>Tag</td><td>035</td></tr>
+ <tr><td valign=top>Descrizione</td><td>Codice ISTAT</td></tr>
+ <tr><td valign=top>Obbligatorieta'</td><td>Optional.</td></tr>
+ <tr><td valign=top>Ripetibilita'</td><td>Repeatable.</td></tr>
+ <tr><td valign=top>Indicatore 1</td><td>Blank</td></tr>
+ <tr><td valign=top>Indicatore 2</td><td>Blank</td></tr>
+  <tr><td valign=top>Sottocampi</td>
+  <td>
+	<li>a - System control number. A code for the organisation in parentheses followed by the system control number for the record in that organisation's database. Since there are no internationally accepted codes, the codes from the MARC Code List for Organisations are recommended. Otherwise the full name of the agency or a national code may be used. Not repeatable.</li>
+	<li>z - Cancelled or invalid control number. Repeatable.</li>  </td>
+  </tr>
+  <tr><td valign=top>Formato</td>
+     <td>
+     </td>
+     </tr>
+  <tr><td valign=top>NOTE</td>
+     <td></td></tr>
+ </table>
+ */
+
 DataField * Marc4cppDocumentoAuthority::creaTag035_Istat()
 {
 	if (authority == AUTHORITY_LUOGHI)
@@ -524,6 +640,45 @@ DataField * Marc4cppDocumentoAuthority::creaTag035_Istat()
 				1 = right to left
 
 */
+/*!
+\brief <b>Tag 100 - General Processing Data</b>
+
+ [ authority autore, soggetto, luogo, titolo uniforme ]
+ <table>
+ <tr>
+ <th valign=top>Definizione</th><th>Descrizione</th></tr>
+ <tr><td valign=top>Tag</td><td>100</td></tr>
+ <tr><td valign=top>Descrizione</td><td>General Processing Data</td></tr>
+ <tr><td valign=top>Obbligatorieta'</td><td>Mandatory</td></tr>
+ <tr><td valign=top>Ripetibilita'</td><td>Not repeatable</td></tr>
+ <tr><td valign=top>Indicatore 1</td><td>Blank</td></tr>
+ <tr><td valign=top>Indicatore 2</td><td>Blank</td></tr>
+  <tr><td valign=top>Sottocampi</td>
+  <td>
+    <ul>
+     <li>a General processing data. Mandatory. Not repeatable</li>
+    	<ul>
+<li>0-7 Date entered on file (Mandatory)</li>
+<li>  8 Status of authorit y heading code </li>
+<li>9-11 Language of cataloguing (Mandatory)</li>
+<li>12 Transliteration code</li>
+<li>13-16 Character set (Mandatory)</li>
+<li>17-20 Additional character set</li>
+<li>21-22 Script of cataloguing</li>
+<li>23 Direction of script of cataloguing</li>
+		</ul>
+	</ul>
+
+  </td>
+  </tr>
+  <tr><td valign=top>Formato</td>
+     <td>
+     </td>
+     </tr>
+  <tr><td valign=top>NOTE</td>
+     <td>...</td></tr>
+ </table>
+ */
 
 DataField * Marc4cppDocumentoAuthority::creaTag100()
 {
@@ -589,20 +744,35 @@ DataField * Marc4cppDocumentoAuthority::creaTag100()
 }// End creaTag100
 
 
-/*
-	//
+/*!
+\brief <b>Tag 101 - Lingua della identita'</b>
 
-	Tag+Def:		101 LINGUA DELLA ENTITA'
-					This field contains coded information relating to the language or languages used by the entity identified by 2--.
-					The entity may be an author (i.e., a person, a family, a corporate body) or a work
-	--------
-	Obbligatorieta':
-	Ripetibilita':	Non Ripetibile
-	Indicatore1:	Non definito
-	Indicatore2:	Non definito
-	Sottocampi:
-	    a - Language used by the entity
-*/
+ [ authority autore, titolo uniforme ]
+ <table>
+ <tr>
+ <th valign=top>Definizione</th><th>Descrizione</th></tr>
+ <tr><td valign=top>Tag</td><td>101</td></tr>
+ <tr><td valign=top>Descrizione</td><td>This field contains coded information relating to the language or languages used by the entity identified by 2--. The entity may be an author (i.e., a person, a family, a corporate body) or a work</td></tr>
+ <tr><td valign=top>Obbligatorieta'</td><td>Optional</td></tr>
+ <tr><td valign=top>Ripetibilita'</td><td>Non ripetibile</td></tr>
+ <tr><td valign=top>Indicatore 1</td><td>Blank</td></tr>
+ <tr><td valign=top>Indicatore 2</td><td>Blank</td></tr>
+  <tr><td valign=top>Sottocampi</td>
+  <td>
+	<ul>
+	 <li>a - Language used by the entity</li>
+	</ul>
+  </td>
+  </tr>
+  <tr><td valign=top>Formato</td>
+	 <td>
+	 </td>
+	 </tr>
+  <tr><td valign=top>NOTE</td>
+	 <td>...</td></tr>
+ </table>
+ */
+
 DataField * Marc4cppDocumentoAuthority::creaTag101_autore()
 {
 	DataField *df = 0;
@@ -621,6 +791,35 @@ DataField * Marc4cppDocumentoAuthority::creaTag101_autore()
 	marcRecord->addDataField(df);
 	return df;
 } // End creaTag101_autore
+
+///*!
+//\brief <b>Tag 101 - Lingua della identita'</b>
+//
+// [ authority titolo ]
+// <table>
+// <tr>
+// <th valign=top>Definizione</th><th>Descrizione</th></tr>
+// <tr><td valign=top>Tag</td><td>101</td></tr>
+// <tr><td valign=top>Descrizione</td><td>This field contains coded information relating to the language or languages used by the entity identified by 2--. The entity may be an author (i.e., a person, a family, a corporate body) or a work</td></tr>
+// <tr><td valign=top>Obbligatorieta'</td><td>...</td></tr>
+// <tr><td valign=top>Ripetibilita'</td><td>Non Ripetibile</td></tr>
+// <tr><td valign=top>Indicatore 1</td><td>Blank</td></tr>
+// <tr><td valign=top>Indicatore 2</td><td>Blank</td></tr>
+//  <tr><td valign=top>Sottocampi</td>
+//  <td>
+//	<ul>
+//	 <li>a - Language used by the entity</li>
+//	</ul>
+//  </td>
+//  </tr>
+//  <tr><td valign=top>Formato</td>
+//	 <td>
+//	 </td>
+//	 </tr>
+//  <tr><td valign=top>NOTE</td>
+//	 <td>...</td></tr>
+// </table>
+// */
 
 DataField * Marc4cppDocumentoAuthority::creaTag101_titolo()
 {
@@ -662,19 +861,36 @@ DataField * Marc4cppDocumentoAuthority::creaTag101_titolo()
 } // End creaTag101_titolo
 
 
+/*!
+\brief <b>Tag 102 - Nationality of the Entity</b>
 
-/*
-	Tag+Def:		102 Nationality of the Entity
-					This field contains coded information relating to the nationality of a person,  corporate body,
-					family, a trademark and a work.
-	Obbligatorieta':	Mandatory when applicable.
-	Ripetibilita':	Non Ripetibile
-	Indicatore1:	Non definito
-	Indicatore2:	Non definito
-	Sottocampi:
-	    a - Country of nationality
-	    b - Locality
-*/
+ [ authority autore, luogo, titolo uniforme ]
+ <table>
+ <tr>
+ <th valign=top>Definizione</th><th>Descrizione</th></tr>
+ <tr><td valign=top>Tag</td><td>102</td></tr>
+ <tr><td valign=top>Descrizione</td><td>This field contains coded information relating to the nationality of a person,  corporate body, family, a trademark and a work.</td></tr>
+ <tr><td valign=top>Obbligatorieta'</td><td>Mandatory when applicable</td></tr>
+ <tr><td valign=top>Ripetibilita'</td><td>Non Ripetibile</td></tr>
+ <tr><td valign=top>Indicatore 1</td><td>Blank</td></tr>
+ <tr><td valign=top>Indicatore 2</td><td>Blank</td></tr>
+  <tr><td valign=top>Sottocampi</td>
+  <td>
+    <ul>
+     <li>a - Country of nationality</li>
+     <li>b - Locality</li>
+    </ul>
+  </td>
+  </tr>
+  <tr><td valign=top>Formato</td>
+     <td>
+     </td>
+     </tr>
+  <tr><td valign=top>NOTE</td>
+     <td>...</td></tr>
+ </table>
+ */
+
 DataField * Marc4cppDocumentoAuthority::creaTag102()
 {
 	DataField *df;
@@ -709,6 +925,35 @@ DataField * Marc4cppDocumentoAuthority::creaTag102()
 }// End creaTag102
 
 
+///*!
+//\brief <b>Tag 102 - Nationality of the Entity</b>
+//
+// [ authority titoli uniformi ]
+// <table>
+// <tr>
+// <th valign=top>Definizione</th><th>Descrizione</th></tr>
+// <tr><td valign=top>Tag</td><td>102</td></tr>
+// <tr><td valign=top>Descrizione</td><td>This field contains coded information relating to the nationality of a person,  corporate body, family, a trademark and a work.</td></tr>
+// <tr><td valign=top>Obbligatorieta'</td><td>Mandatory when applicable</td></tr>
+// <tr><td valign=top>Ripetibilita'</td><td>Non Ripetibile</td></tr>
+// <tr><td valign=top>Indicatore 1</td><td>Blank</td></tr>
+// <tr><td valign=top>Indicatore 2</td><td>Blank</td></tr>
+//  <tr><td valign=top>Sottocampi</td>
+//  <td>
+//    <ul>
+//     <li>a - Country of nationality</li>
+//     <!-- <li>b - Locality</li> -->
+//    </ul>
+//  </td>
+//  </tr>
+//  <tr><td valign=top>Formato</td>
+//     <td>
+//     </td>
+//     </tr>
+//  <tr><td valign=top>NOTE</td>
+//     <td>...</td></tr>
+// </table>
+// */
 DataField * Marc4cppDocumentoAuthority::creaTag102TitoliUniformi()
 {
 	DataField *df = 0;
@@ -730,10 +975,34 @@ DataField * Marc4cppDocumentoAuthority::creaTag102TitoliUniformi()
 }// End creaTag102TitoliUniformi
 
 
-/*
- * Rules
- * This field identifies the rule system under which the
- * 2-- heading and its accompanying reference structure were formulated.
+/*!
+\brief <b>Tag 152 - Regole di catalogazione</b>
+
+ [ authority autore, titolo uniforme ]
+ <table>
+ <tr>
+ <th valign=top>Definizione</th><th>Descrizione</th></tr>
+ <tr><td valign=top>Tag</td><td>152</td></tr>
+ <tr><td valign=top>Descrizione</td><td>Regole di catalogazione</td></tr>
+ <tr><td valign=top>Obbligatorieta'</td><td>Obbligatorio</td></tr>
+ <tr><td valign=top>Ripetibilita'</td><td>non ripetibile</td></tr>
+ <tr><td valign=top>Indicatore 1</td><td>blank</td></tr>
+ <tr><td valign=top>Indicatore 2</td><td>blank</td></tr>
+  <tr><td valign=top>Sottocampi</td>
+  <td>
+    <ul>
+     <li>a - Cataloguing rules. Optional. Not repeatable</li>
+     <li>b - Subject system. Optional. Not repeatable.</li>
+    </ul>
+  </td>
+  </tr>
+  <tr><td valign=top>Formato</td>
+     <td>
+     </td>
+     </tr>
+  <tr><td valign=top>NOTE</td>
+     <td></td></tr>
+ </table>
  */
 
 DataField * Marc4cppDocumentoAuthority::creaTag152_autore()
@@ -840,6 +1109,53 @@ DataField * Marc4cppDocumentoAuthority::creaTag152_autore()
 		cataloguing rules in use by the agency which creates it.
 
 */
+
+/*!
+\brief <b>Tag 200 - Autore personale</b>
+
+ [ authority autore ]
+ <table>
+ <tr>
+ <th valign=top>Definizione</th><th>Descrizione</th></tr>
+ <tr><td valign=top>Tag</td><td>200</td></tr>
+ <tr><td valign=top>Descrizione</td><td>Autore personale</td></tr>
+ <tr><td valign=top>Obbligatorieta'</td><td>Obbligatorio</td></tr>
+ <tr><td valign=top>Ripetibilita'</td><td>Non ripetibile</td></tr>
+ <tr><td valign=top>Indicatore 1</td><td>blank</td></tr>
+ <tr><td valign=top>Indicatore 2</td><td>
+    <ul>
+     <li>0 - forma diretta</li>
+     <li>1 - forma inversa (cognome, nome)</li>
+    </ul>
+ </td></tr>
+  <tr><td valign=top>Sottocampi</td>
+  <td>
+    <ul>
+     <li>a - Entry element</li>
+     <li>b - Part of name other than entry element</li>
+     <li>c - Additions to names other than dates</li>
+     <li>d - Roman numerals</li>
+     <li>f - Dates</li>
+     <li>g - Expansion of initials of forename</li>
+     <li>4 - Relator code</li>
+     <li>j - Form subdivision</li>
+     <li>x - Topical subdivision</li>
+     <li>y - Geographical subdivision</li>
+     <li>z - Chronological subdivision</li>
+     <li>7 - Script of cataloguing and script of the base heading</li>
+     <li>8 - Language of cataloguing and language of the base heading</li>
+    </ul>
+  </td>
+  </tr>
+  <tr><td valign=top>Formato</td>
+     <td>
+     </td>
+     </tr>
+  <tr><td valign=top>NOTE</td>
+     <td>...</td></tr>
+ </table>
+ */
+
 DataField * Marc4cppDocumentoAuthority::creaTag200()
 {
 	DataField *df=0;
@@ -880,9 +1196,10 @@ DataField * Marc4cppDocumentoAuthority::creaTag200()
 	if (stringVect.length() == 1)
 	{
 
-		stringVect.Entry(0)->Split(stringVect2, '<');
 		if (!export_author_special_characters) // 25/05/2021 Mataloni/SRI
 			stringVect.Entry(0)->removeCharacterOccurances('*');
+
+		stringVect.Entry(0)->Split(stringVect2, '<'); // 30/11/2021 spostato dopo la if
 
 		sf = new Subfield('a', stringVect2.Entry(0));
 		df->addSubfield(sf);
@@ -1059,6 +1376,64 @@ void Marc4cppDocumentoAuthority::creaSottocampiQualificazione(DataField *df, CSt
 		cataloguing rules in use by the agency which creates it.
 
 */
+
+
+
+/*!
+\brief <b>Tag 210 - Autore Ente</b>
+
+ [ authority autore ]
+ <table>
+ <tr>
+ <th valign=top>Definizione</th><th>Descrizione</th></tr>
+ <tr><td valign=top>Tag</td><td>210</td></tr>
+ <tr><td valign=top>Descrizione</td><td>Autore Ente</td></tr>
+ <tr><td valign=top>Obbligatorieta'</td><td>Obbligatorio</td></tr>
+ <tr><td valign=top>Ripetibilita'</td><td>Non ripetibile</td></tr>
+ <tr><td valign=top>Indicatore 1</td><td>
+    <ul>
+     <li>0 - Corporate name</li>
+     <li>1 - Meeting</li>
+    </ul>
+ </td></tr>
+ <tr><td valign=top>Indicatore 2</td><td>
+    <ul>
+     <li>0 - Name in inverted form</li>
+     <li>1 - Name entered under place or jurisdiction</li>
+     <li>2 - Name entered under name in direct order</li>
+    </ul>
+ </td></tr>
+  <tr><td valign=top>Sottocampi</td>
+  <td>
+    <ul>
+     <li>a Entry element</li>
+     <li>b Subdivision</li>
+     <li>c Addition to name or qualifier</li>
+     <li>d Number of meeting and/or number of part of meeting</li>
+     <li>e Location of meeting</li>
+     <li>f Date of meeting</li>
+     <li>g Inverted element</li>
+     <li>h Part of name other than entry element and inverted element</li>
+     <li>4 Relator code</li>
+     <li>j Form subdivision</li>
+     <li>x Topical subdivision</li>
+     <li>y Geographical subdivision</li>
+     <li>z Chronological subdivision</li>
+     <li>7 Script of cataloguing and script of the base heading</li>
+     <li>8 Language of cataloguing and language of the base heading</li>
+    </ul>
+  </td>
+  </tr>
+  <tr><td valign=top>Formato</td>
+     <td>
+     </td>
+     </tr>
+  <tr><td valign=top>NOTE</td>
+     <td></td></tr>
+ </table>
+ */
+
+
 DataField * Marc4cppDocumentoAuthority::creaTag210()
 {
 	DataField *df=0;
@@ -1311,6 +1686,47 @@ char Marc4cppDocumentoAuthority::getQualificazioneType(CString *parteDiQualifica
 				system in use by the agency which created the record.
 
 */
+
+/*!
+\brief <b>Tag 250 - Soggetti</b>
+
+ [ authority soggetto ]
+ <table>
+ <tr>
+ <th valign=top>Definizione</th><th>Descrizione</th></tr>
+ <tr><td valign=top>Tag</td><td>250</td></tr>
+ <tr><td valign=top>Descrizione</td><td>Soggetti</td></tr>
+ <tr><td valign=top>Obbligatorieta'</td><td>Optional</td></tr>
+ <tr><td valign=top>Ripetibilita'</td><td>Repeatable for alternative script forms.</td></tr>
+ <tr><td valign=top>Indicatore 1</td><td>Blank</td></tr>
+ <tr><td valign=top>Indicatore 2</td><td>Blank</td></tr>
+  <tr><td valign=top>Sottocampi</td>
+  <td>
+    Data Subfields
+<ul>
+<li>a - Topical subject. The term in the form prescribed by the system of subject headings used. Not repeatable.</li>
+<li>j - Form subdivision. A term added to a subject heading to further specify the kind(s) or genre(s) or material (EX 4). Agencies not using this subdivision should use $x instead (EX 5). Repeatable.</li>
+<li>x - Topical subdivision. A term added to a subject heading to further specify the topic the subject heading represents (EX 2).  Repeatable.</li>
+<li>y - Geographical subdivision. A term added to a subject heading to specify a place in relation to a topic that the subject heading represents (EX 1). Repeatable.</li>
+<li>z - Chronological subdivision. A term added to a subject heading to specify the period in time in relation to a topic that the subject  heading represents (EX 3). Repeatable.</li>
+</ul>
+
+    Control Subfields
+ <ul>
+<li>7 - Script of cataloguing and script of the base heading. See specification of Control Subfields above.  Not repeatable.</li>
+<li>8 - Language of cataloguing and language of the base heading. See specification of Control Subfields above.  Not repeatable.</li>
+</ul>
+  </td>
+  </tr>
+  <tr><td valign=top>Formato</td>
+     <td>
+     </td>
+     </tr>
+  <tr><td valign=top>NOTE</td>
+     <td>Notes on field contents: The field contains the authorized form of a topical subject heading formulated in accordance with the subject
+        system in use by the agency which created the record.</td></tr>
+ </table>
+ */
 DataField * Marc4cppDocumentoAuthority::creaTag250Soggetti()
 {
 	DataField *df;
@@ -1404,6 +1820,44 @@ Sottocampi:
 			This field contains a place access heading formulated in accordance with the rules in use by the agency which
 			creates the record.
 */
+
+/*!
+\brief <b>Tag 260 - Luogo di pubblicazione</b>
+
+ [ authority luogo]
+ <table>
+ <tr>
+ <th valign=top>Definizione</th><th>Descrizione</th></tr>
+ <tr><td valign=top>Tag</td><td>260</td></tr>
+ <tr><td valign=top>Descrizione</td><td>Luogo di pubblicazione normalizzato</td></tr>
+ <tr><td valign=top>Obbligatorieta'</td><td>Optional.</td></tr>
+ <tr><td valign=top>Ripetibilita'</td><td>Repeatable for alternative script forms.</td></tr>
+ <tr><td valign=top>Indicatore 1</td><td>Blank</td></tr>
+ <tr><td valign=top>Indicatore 2</td><td>Blank</td></tr>
+  <tr><td valign=top>Sottocampi</td>
+  <td>
+	Data Subfields
+	<ul>
+	<li>a - Country Not repeatable.</li>
+	<li>b - State or Province etc. Not repeatable.</li>
+	<li>c - County Not repeatable.</li>
+	<li>d - City Not repeatable.</li>
+	</ul>
+	Control Subfields
+	<ul>
+	<li>7 Script of cataloguing and script of the base heading. See specification of Control Subfields above. Not repeatable.</li>
+	<li>8 Language of cataloguing and language of the base heading. See specification of Control Subfields above. Not repeatable.</li>
+	</ul>
+  </td>
+  </tr>
+  <tr><td valign=top>Formato</td>
+     <td>
+     </td>
+     </tr>
+  <tr><td valign=top>NOTE</td>
+     <td></td></tr>
+ </table>
+ */
 DataField * Marc4cppDocumentoAuthority::creaTag260LuogoDiPubblicazioneNormalizzzato()
 {
 	DataField *df;
@@ -1457,6 +1911,42 @@ DataField * Marc4cppDocumentoAuthority::creaTag260LuogoDiPubblicazioneNormalizzz
 				See specification of Control Subfields above.  Not repeatable.
 
  */
+
+/*!
+\brief <b>Tag 300 - Note generali</b>
+
+ [ authority autore, soggetto, luogo, titolo uniforme ]
+ <table>
+ <tr>
+ <th valign=top>Definizione</th><th>Descrizione</th></tr>
+ <tr><td valign=top>Tag</td><td>300</td></tr>
+ <tr><td valign=top>Descrizione</td><td>Note generali</td></tr>
+ <tr><td valign=top>Obbligatorieta'</td><td>Optional</td></tr>
+ <tr><td valign=top>Ripetibilita'</td><td>Repeatable</td></tr>
+ <tr><td valign=top>Indicatore 1</td><td>
+ <ul>
+     <li>0 - Note concerns name or title use of heading</li>
+     <li>1 - Note concerns subject use of heading</li>
+ </ul>
+ </td></tr>
+ <tr><td valign=top>Indicatore 2</td><td>blank</td></tr>
+  <tr><td valign=top>Sottocampi</td>
+  <td>
+    <ul>
+     <li>a - Information note</li>
+     <li>6 - Interfield linking data</li>
+     <li>7 - Script of cataloguing and baseheading</li>
+    </ul>
+  </td>
+  </tr>
+  <tr><td valign=top>Formato</td>
+     <td>
+     </td>
+     </tr>
+  <tr><td valign=top>NOTE</td>
+     <td>...</td></tr>
+ </table>
+ */
 DataField * Marc4cppDocumentoAuthority::creaTag300Note()
 {
 	DataField *df=0;
@@ -1500,6 +1990,49 @@ DataField * Marc4cppDocumentoAuthority::creaTag300Note()
 } // End creaTag300
 
 
+
+
+///*!
+//\brief <b>Tag 305 - Nota pubblica al rinvio di tipo “vedi anche”</b>
+//
+// [ authority autore, soggetto, luogo, titolo uniforme ]
+// <table>
+// <tr>
+// <th valign=top>Definizione</th><th>Descrizione</th></tr>
+// <tr><td valign=top>Tag</td><td>305</td></tr>
+// <tr><td valign=top>Descrizione</td><td>Nota pubblica al rinvio di tipo “vedi anche”</td></tr>
+// <tr><td valign=top>Obbligatorieta'</td><td>Optional</td></tr>
+// <tr><td valign=top>Ripetibilita'</td><td>Repeatable</td></tr>
+// <tr><td valign=top>Indicatore 1</td><td>
+// <ul>
+//     <li>0 - Note concerns name or title use of heading</li>
+//     <li>1 - Note concerns subject use of heading</li>
+// </ul>
+// </td></tr>
+// <tr><td valign=top>Indicatore 2</td><td>blank</td></tr>
+//  <tr><td valign=top>Sottocampi</td>
+//  <td>
+//  	Data Subfields
+//    <ul>
+//     <li>a - Instruction phrase</li>
+//     <li>b - Heading referred to</li>
+//    </ul>
+//    Control Subfields
+//    <ul>
+//     <li>6 - Interfield linking data</li>
+//     <li>7 - Script of cataloguing and script of the base heading</li>
+//    </ul>
+//  </td>
+//  </tr>
+//  <tr><td valign=top>Formato</td>
+//     <td>
+//     </td>
+//     </tr>
+//  <tr><td valign=top>NOTE</td>
+//     <td>...</td></tr>
+// </table>
+// */
+
 DataField * Marc4cppDocumentoAuthority::creaTag305(char *areaStartPtr, char *areaEndPtr)
 {
 	DataField *df;
@@ -1525,6 +2058,44 @@ DataField * Marc4cppDocumentoAuthority::creaTag305(char *areaStartPtr, char *are
 	    a - Numero
 	    v - Edizione
 */
+
+/*!
+\brief <b>Tag 676 - Classificazione Decimale Dewey</b>
+
+ [ authority autore ]
+ <table>
+ <tr>
+ <th valign=top>Definizione</th><th>Descrizione</th></tr>
+ <tr><td valign=top>Tag</td><td>676</td></tr>
+ <tr><td valign=top>Descrizione</td><td>Classificazione Decimale Dewey</td></tr>
+ <tr><td valign=top>Obbligatorieta'</td><td>Facoltativo</td></tr>
+ <tr><td valign=top>Ripetibilita'</td><td>Ripetibile</td></tr>
+ <tr><td valign=top>Indicatore 1</td><td>Blank</td></tr>
+ <tr><td valign=top>Indicatore 2</td><td>Blank</td></tr>
+  <tr><td valign=top>Sottocampi</td>
+  <td>
+Data Subfields
+<ul>
+<li>a - DDC number, single or beginning of a range.The number as taken from the Dewey Decimal Classification schedules. Prime marks are indicated by /.Not repeatable.</li>
+<li>b - DDC number, end of a range. The number as taken from the Dewey Decimal Classification schedules. Prime marks are indicated by /. Not repeatable.</li>
+<li>c - Explanatory terms. Explanatory terms associated with the class number in $a (and if applicable $b) as taken from the DDC schedules (EX 1). Repeatable.</li>
+<li>v - DDC edition. The number of the edition used (EX 1, 2). An 'a' is added to the number to indicate abridged edition. Not repeatable.</li>
+<li>z - Language of edition. The language, in coded form, of the edition from which the number in subfield $a is taken (EX 2). For codes see ISO 639-2 Standard, or Appendix A in UNIMARC Manual - Bibliographic Format. Not repeatable.</li>
+</u>
+Control Subfields
+<ul>
+<li>$3 Authority record identifier. Link to classification format. Not repeatable.</li>
+</u>  </td>
+  </tr>
+  <tr><td valign=top>Formato</td>
+     <td>
+     </td>
+     </tr>
+  <tr><td valign=top>NOTE</td>
+     <td></td></tr>
+ </table>
+ */
+
 DataField * Marc4cppDocumentoAuthority::creaTag676()
 {
 	DataField *df;
@@ -1566,6 +2137,45 @@ DataField * Marc4cppDocumentoAuthority::creaTag676()
 	    c - Suddivizione della classificazione
 	    2 - Sistema di codifica
 */
+
+/*!
+\brief <b>Tag 686 - Altra classificazione</b>
+
+ [ authority autore ]
+ <table>
+ <tr>
+ <th valign=top>Definizione</th><th>Descrizione</th></tr>
+ <tr><td valign=top>Tag</td><td>686</td></tr>
+ <tr><td valign=top>Descrizione</td><td>Altra classificazione</td></tr>
+ <tr><td valign=top>Obbligatorieta'</td><td>Optional.</td></tr>
+ <tr><td valign=top>Ripetibilita'</td><td>Repeatable.</td></tr>
+ <tr><td valign=top>Indicatore 1</td><td>Blank</td></tr>
+ <tr><td valign=top>Indicatore 2</td><td>Blank</td></tr>
+  <tr><td valign=top>Sottocampi</td>
+  <td>
+	Data Subfields
+	<ul>
+	<li>a - Class number, single or beginning of a range. The class number taken from the classification scheme. Not repeatable.</li>
+	<li>b - Class number, end of a range. The class number applied by the assigning agency. Not repeatable.</li>
+	<li>c - Explanatory terms. A subdivision of the class number taken from the classification scheme. Repeatable.</li>
+	</ul>
+
+	Control Subfields
+	<ul>
+	<li>2 - Subject system code. A code for the classification scheme used in formulating the number. For a list of system codes, see UNIMARC Manual - Bibliographic Format Appendix G. Not repeatable.</li>
+	<li>3 - Authority record identifier. Link to classification format. Not repeatable.</li>
+	</ul>
+  </td>
+  </tr>
+  <tr><td valign=top>Formato</td>
+     <td>
+     </td>
+     </tr>
+  <tr><td valign=top>NOTE</td>
+     <td>...</td></tr>
+ </table>
+ */
+
 DataField * Marc4cppDocumentoAuthority::creaTag686()
 {
 	DataField *df;
@@ -1629,6 +2239,44 @@ DataField * Marc4cppDocumentoAuthority::creaTag686()
 
 
 */
+
+/*!
+\brief <b>Tag 801 - Fonte di provenienza</b>
+
+ [ authority autore, soggetto, luogo, titolo uniforme ]
+ <table>
+ <tr>
+ <th valign=top>Definizione</th><th>Descrizione</th></tr>
+ <tr><td valign=top>Tag</td><td>801</td></tr>
+ <tr><td valign=top>Descrizione</td><td>This field identifies the agency responsible for the creation of the record and the date of the entry. </td></tr>
+ <tr><td valign=top>Obbligatorieta'</td><td>Mandatory.</td></tr>
+ <tr><td valign=top>Ripetibilita'</td><td>Repeatable.</td></tr>
+ <tr><td valign=top>Indicatore 1</td><td>Blank</td></tr>
+ <tr><td valign=top>Indicatore 2</td><td>specifies the function performed by the agency:
+<ul>
+<li>0 - Original cataloguing agency</li>
+<li>1 - Transcribing agency</li>
+<li>2 - Modifying agency</li>
+<li>3 - Issuing agency</li>
+</ul>
+</td></tr>
+  <tr><td valign=top>Sottocampi</td>
+  <td>
+	<ul>
+	<li>a - Country. The country of the issuing agency in 2 character form.The country is coded according to ISO 3166. The full list of codes will be found in the UNIMARC Manual - Bibliographic Format, Appendix B. Not repeatable.</li>
+	<li>b - Agency. The name of the agency may be in coded form using the identifiers found in the Guidelines for Authority and Reference Entries, Appendix B; the codes from MARC Code List for Organisations which include many non-U.S. library agencies; or the full name of the agency or a national code. Not repeatable.</li>
+	<li>c - Date of latest transaction. The date of latest transaction should be recorded according to ISO 8601, i.e., in the form YYYYMMDD. Not repeatable</li>
+	</ul>
+  </td>
+  </tr>
+  <tr><td valign=top>Formato</td>
+     <td>
+     </td>
+     </tr>
+  <tr><td valign=top>NOTE</td>
+     <td>...</td></tr>
+ </table>
+ */
 DataField * Marc4cppDocumentoAuthority::creaTag801FonteDiProvenienza()
 	{
 //	bool retb;
@@ -1776,6 +2424,34 @@ DataField * Marc4cppDocumentoAuthority::creaTag801FonteDiProvenienza_titoli()
 
 */
 
+/*!
+\brief <b>Tag 830 - Note del catalogatore</b>
+
+ [ authority autore, luogo, titolo uniforme ]
+ <table>
+ <tr>
+ <th valign=top>Definizione</th><th>Descrizione</th></tr>
+ <tr><td valign=top>Tag</td><td>830</td></tr>
+ <tr><td valign=top>Descrizione</td><td>Note del catalogatore</td></tr>
+ <tr><td valign=top>Obbligatorieta'</td><td>Optional.</td></tr>
+ <tr><td valign=top>Ripetibilita'</td><td>Repeatable.</td></tr>
+ <tr><td valign=top>Indicatore 2</td><td>Blank</td></tr>
+ <tr><td valign=top>Indicatore 1</td><td>Blank</td></tr>
+  <tr><td valign=top>Sottocampi</td>
+  <td>
+    <ul>
+     <li>a - Note text. Repeatable</li>
+    </ul>
+  </td>
+  </tr>
+  <tr><td valign=top>Formato</td>
+     <td>
+     </td>
+     </tr>
+  <tr><td valign=top>NOTE</td>
+     <td></td></tr>
+ </table>
+ */
 DataField * Marc4cppDocumentoAuthority::creaTag830NoteCatalogatoreAutore()
 {
 	DataField *df=0;
@@ -1810,7 +2486,6 @@ DataField * Marc4cppDocumentoAuthority::creaTag830NoteCatalogatoreAutore()
 
 	return df;
 }
-
 
 DataField * Marc4cppDocumentoAuthority::creaTag999Sbn()
 {
@@ -1849,6 +2524,34 @@ DataField * Marc4cppDocumentoAuthority::creaTag999Sbn()
 
 	return df;
 }
+///*!
+//\brief <b>Tag 830 - Note del catalogatore</b>
+//
+// [ authority titolo uniforme ]
+// <table>
+// <tr>
+// <th valign=top>Definizione</th><th>Descrizione</th></tr>
+// <tr><td valign=top>Tag</td><td>830</td></tr>
+// <tr><td valign=top>Descrizione</td><td>del catalogatore</td></tr>
+// <tr><td valign=top>Obbligatorieta'</td><td>...</td></tr>
+// <tr><td valign=top>Ripetibilita'</td><td>...</td></tr>
+// <tr><td valign=top>Indicatore 1</td><td>...</td></tr>
+// <tr><td valign=top>Indicatore 2</td><td>...</td></tr>
+//  <tr><td valign=top>Sottocampi</td>
+//  <td>
+//    <ul>
+//     <li></li>
+//    </ul>
+//  </td>
+//  </tr>
+//  <tr><td valign=top>Formato</td>
+//     <td>
+//     </td>
+//     </tr>
+//  <tr><td valign=top>NOTE</td>
+//     <td>...</td></tr>
+// </table>
+// */
 
 DataField * Marc4cppDocumentoAuthority::creaTag830NoteCatalogatoreTitolo()
 {
@@ -2065,7 +2768,9 @@ bool Marc4cppDocumentoAuthority::elaboraDatiDocumento(bool isTitoloOpera)
 
 	if (IS_TAG_TO_GENERATE(801))
 		{
-		if(authority == AUTHORITY_AUTORI || authority == AUTHORITY_SOGGETTI || authority == AUTHORITY_LUOGHI)
+		if(authority == AUTHORITY_AUTORI ||
+			authority == AUTHORITY_SOGGETTI ||
+			authority == AUTHORITY_LUOGHI)
 			creaTag801FonteDiProvenienza();
 
 		else if (authority == AUTHORITY_TITOLI_UNIFORMI)//hassan 17/11/2020
@@ -2078,7 +2783,7 @@ bool Marc4cppDocumentoAuthority::elaboraDatiDocumento(bool isTitoloOpera)
 	else if (authority == AUTHORITY_AUTORI || authority == AUTHORITY_LUOGHI  )
 		creaTag830NoteCatalogatoreAutore();
 	}
-	creaTag999Sbn();
+//	creaTag999Sbn(); // 24/01/2022 la 999 ha riferimenti ad altre banche dati ed e' trattata altrove
 	return true;
 } // End Marc4cppDocumentoAuthority::elaboraDatiDocumento
 
@@ -2102,11 +2807,34 @@ DataField * Marc4cppDocumentoAuthority::creaTag856()
 }
 
 
-/*
- * Rules
- * This field identifies the rule system under which the
- * 2-- heading and its accompanying reference structure were formulated.
- */
+///*!
+//\brief <b>Tag 152 - Regole di catalogazione</b>
+//
+// [ authority titolo uniforme ]
+// <table>
+// <tr>
+// <th valign=top>Definizione</th><th>Descrizione</th></tr>
+// <tr><td valign=top>Tag</td><td>102</td></tr>
+// <tr><td valign=top>Descrizione</td><td>Regole di catalogazione</td></tr>
+// <tr><td valign=top>Obbligatorieta'</td><td>Obbligatorio</td></tr>
+// <tr><td valign=top>Ripetibilita'</td><td>non ripetibile</td></tr>
+// <tr><td valign=top>Indicatore 1</td><td>Blank</td></tr>
+// <tr><td valign=top>Indicatore 2</td><td>Blank</td></tr>
+//  <tr><td valign=top>Sottocampi</td>
+//  <td>
+//    <ul>
+//     <li></li>
+//    </ul>
+//  </td>
+//  </tr>
+//  <tr><td valign=top>Formato</td>
+//     <td>
+//     </td>
+//     </tr>
+//  <tr><td valign=top>NOTE</td>
+//     <td>...</td></tr>
+// </table>
+// */
 
 DataField * Marc4cppDocumentoAuthority::creaTag152_titolo()
 {
@@ -2221,7 +2949,63 @@ DataField * Marc4cppDocumentoAuthority::creaTag152_titolo()
 			cataloguing rules or subject system in use by the agency which creates it.
 
 */
-	DataField * Marc4cppDocumentoAuthority::creaTag230TitoloUniforme()
+//
+
+
+/*!
+\brief <b>Tag 230 - Titolo uniforme</b>
+
+ [ authority titolo uniforme ]
+ <table>
+ <tr>
+ <th valign=top>Definizione</th><th>Descrizione</th></tr>
+ <tr><td valign=top>Tag</td><td>230</td></tr>
+ <tr><td valign=top>Descrizione</td><td>This field contains a uniform title heading.  A uniform title heading is intended to bring together the records for issues of a work that has been published under different titles or items in series.</td></tr>
+ <tr><td valign=top>Obbligatorieta'</td><td>Optional</td></tr>
+ <tr><td valign=top>Ripetibilita'</td><td>Repeatable for alternative script forms.</td></tr>
+ <tr><td valign=top>Indicatore 1</td><td>Blank</td></tr>
+ <tr><td valign=top>Indicatore 2</td><td>Blank</td></tr>
+  <tr><td valign=top>Sottocampi</td>
+  <td>
+Data Subfields
+<ul>
+<li>a - Entry element. The title by which the work is known without any qualifications or mention of any part. This subfield should be present whenever field 230 is used. Not repeatable.</li>
+<li>b - General material designation. Text of general material designation. Repeatable. Non gestito</li>
+<li>h - Number of section or part. The number of a part when the item to which the uniform title is being applied is only a part of the work named in the uniform title (EX 10). Repeatable for a subdivided part (EX 11). Non gestito</li>
+<li>i - Name of section or part. The name of a part when the item to which the uniform title is being applied is only a part of the work named in the uniform title (EX 11). Repeatable for a subdivided part. Non gestito</li>
+<li>k - Date of publication. The date of publication of the item when it is added to the uniform title. Not repeatable. Non gestito</li>
+<li>1 - Form subheading. Standard phrase added to a heading to further specify the uniform title (EX 1). Not repeatable. Non gestito</li>
+<li>m - Language (when part of a heading). The language of the item, when required as part of the uniform title (EX 1, 5, 10). Not repeatable. If the work is in more than one language, both languages should be entered in a single subfield $m (EX 13). Non gestito</li>
+<li>n - Miscellaneous information. Any information not provided for in any other subfield. Repeatable. </li>
+<li>q - Version (or date of version). An identification of the version of the work represented by the item; this may be the name or the original date of the version (EX 1). Not repeatable. Non gestito</li>
+<li>r - Medium of performance (for music). The instrumentation, etc., of the item (EX 12). Repeatable. I dati musicali si gestisco con i campi 928 e 929</li>
+<li>s - Numeric designation (for music). A number assigned by the composer or others to distinguish works. The number may be the serial, opus (EX 12) or thematic index number or date used as a number. Repeatable. I dati musicali si gestisco con i campi 928 e 929</li>
+<li>u - Key (for music). The musical key used as part of the uniform title (EX 12). Not repeatable. I dati musicali si gestisco con i campi 928 e 929</li>
+<li>w - Arranged statement (for music). The statement that a musical work is an arrangement (EX 2). Not repeatable. I dati musicali si gestisco con i campi 928 e 929</li>
+<li>j - Form subdivision. A term added to a subject heading to further specify the kind(s) or genre(s) of material (EX 3). Agencies not using this subdivision should use $x instead. Repeatable. Non gestito</li>
+<li>x - Topical subdivision. A term added to a subject heading to specify further the topic that the heading represents (EX 3, 6). Repeatable. Non gestito</li>
+<li>y - Geographical subdivision. A term added to a subject heading to specify a place in relation to a uniform title which the subject heading represents (EX 6). Repeatable. Non gestito</li>
+<li>z - Chronological subdivision. A term added to a subject heading to specify the period in time in relation to a uniform title which the subject heading represents. Repeatable. Non gestito</li>
+</ul>
+
+Control Subfields
+<ul>
+<li>7 Script of cataloguing and script of the base heading. See specification of Control Subfields above. Not repeatable.</li>
+<li>8 Language of cataloguing and language of the base heading. See specification of Control Subfields above. Not repeatable.</li>
+</ul>
+</td>
+  </tr>
+  <tr><td valign=top>Formato</td>
+     <td>
+     </td>
+     </tr>
+  <tr><td valign=top>NOTE</td>
+     <td></td></tr>
+ </table>
+ */
+
+
+DataField * Marc4cppDocumentoAuthority::creaTag230TitoloUniforme()
 	{
 		DataField *df;
 		Subfield *sf;
@@ -2255,6 +3039,46 @@ DataField * Marc4cppDocumentoAuthority::creaTag152_titolo()
 		return df;
 	}
 
+/*!
+\brief <b>Tag 231 - Titolo dell'opera</b>
+
+ [ authority titolo uniforme ]
+ <table>
+ <tr>
+ <th valign=top>Definizione</th><th>Descrizione</th></tr>
+ <tr><td valign=top>Tag</td><td>231</td></tr>
+ <tr><td valign=top>Descrizione</td><td>Titolo dell'opera</td></tr>
+ <tr><td valign=top>Obbligatorieta'</td><td>Optional</td></tr>
+ <tr><td valign=top>Ripetibilita'</td><td>Repeatable for alternative script forms.</td></tr>
+ <tr><td valign=top>Indicatore 1</td><td>blank</td></tr>
+ <tr><td valign=top>Indicatore 2</td><td>blank</td></tr>
+  <tr><td valign=top>Sottocampi</td>
+  <td>
+	<ul>
+	 <li>a - Titolo</li>
+	 <li>c - Materiale musica: Codice forma dell'opera</li>
+	 <li>d - Materiale musica: Datazione</li>
+	 <li>i - Materiale musica: ky_est_den</li>
+	 <li>k - Materiale musica: Descrizione sezioni</li>
+	 <li>r - Materiale musica: Organico sintetico</li>
+	 <li>s - Materiale musica: Ripetibile</li>
+	 <ul>
+	 <li>Numero d'ordine</li>
+	 <li>Numero d'opera</li>
+	 <li>Numero di catalogo tematico</li>
+	</ul>
+	 <li>u - Materiale musica: Codice Tonalita'</li>
+	</ul>
+  </td>
+  </tr>
+  <tr><td valign=top>Formato</td>
+	 <td>
+	 </td>
+	 </tr>
+  <tr><td valign=top>NOTE</td>
+	 <td>...</td></tr>
+ </table>
+ */
 	DataField * Marc4cppDocumentoAuthority::creaTag231TitoloDellOpera()
 	{
 		DataField *df;

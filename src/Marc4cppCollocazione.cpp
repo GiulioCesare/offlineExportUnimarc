@@ -443,7 +443,7 @@ bool Marc4cppCollocazione::addBiblioteca(char *cdBib) {
 //	TbfBibliotecaInPolo *tbfBibliotecaInPolo = (TbfBibliotecaInPolo*) tbfBibliotecaKV->GetValueFromKey(cdBiblioteca);
 //	if (!tbfBibliotecaInPolo) {
 //		//	    SignalAWarning(__FILE__, __LINE__, "Descrizione biblioteca non trovata per '%s'", cdBiblioteca);
-//		SignalAnError(	__FILE__, __LINE__,	"Biblioetca mancante per biblioteca '%s', bid '%s' e key_loc %s", cdBiblioteca, tb950Inv->getField(tb950Inv->bid),	tb950Inv->getField(tb950Inv->tbinv_key_loc));
+//		logToStdout(	__FILE__, __LINE__,	"Biblioetca mancante per biblioteca '%s', bid '%s' e key_loc %s", cdBiblioteca, tb950Inv->getField(tb950Inv->bid),	tb950Inv->getField(tb950Inv->tbinv_key_loc));
 //		descrizioneBib = cdBiblioteca;
 //	} else
 //		descrizioneBib = tbfBibliotecaInPolo->getField(	tbfBibliotecaInPolo->ds_biblioteca);
@@ -459,7 +459,6 @@ bool Marc4cppCollocazione::addBiblioteca(char *cdBib) {
         }
     else
     {
-//		SignalAnError(	__FILE__, __LINE__,	"Biblioetca mancante per biblioteca '%s', bid '%s' e key_loc %s", cdBib, tb950Inv->getField(tb950Inv->bid),	tb950Inv->getField(tb950Inv->tbinv_key_loc));
 		logToStdout(__FILE__, __LINE__, LOG_ERROR, "Biblioetca mancante per biblioteca '%s', bid '%s' e key_loc %s", cdBib, tb950Inv->getField(tb950Inv->bid),	tb950Inv->getField(tb950Inv->tbinv_key_loc));
 		dsBibliotecaPtr = cdBib;
     }
@@ -899,14 +898,14 @@ void Marc4cppCollocazione::crea960CollocazioneNormalizzata(CString &s, Tb950Inv 
 <tr><td valign=top>Descrizione</td><td>Nota alla copia posseduta</td></tr>
 <tr><td valign=top>Obbligatorieta'</td><td>Facoltativo</td></tr>
 <tr><td valign=top>Ripetibilita'</td><td>Ripetibile</td></tr>
-<tr><td valign=top>Indicatore 1</td><td>Non definito</td></tr>
-<tr><td valign=top>Indicatore 2</td><td>Non definito</td></tr>
+<tr><td valign=top>Indicatore 1</td><td>Blank</td></tr>
+<tr><td valign=top>Indicatore 2</td><td>Blank</td></tr>
  <tr><td valign=top>Sottocampi</td>
     <td>
     <UL>
-        <li>a - Precis di inv. Non ripetibile.
-        <li>d - Collocazione. Non ripetibile.
-        <li>5 - Istituzione della copia posseduta. Non ripetibile.
+        <li>a - Precis di inv. Non ripetibile.</li>
+        <li>d - Collocazione. Non ripetibile.</li>
+        <li>5 - Istituzione della copia posseduta. Non ripetibile.</li>
     </UL>
     </td></tr>
  <tr><td valign=top>NOTE</td><td></td></tr>
@@ -968,13 +967,13 @@ void Marc4cppCollocazione::creaTag316_NotaAllaCopiaPosseduta(Tb950Inv * tb950Inv
 <tr><td valign=top>Descrizione</td><td>Nota di provenienza</td></tr>
 <tr><td valign=top>Obbligatorieta'</td><td>Facoltativo</td></tr>
 <tr><td valign=top>Ripetibilita'</td><td>Ripetibile</td></tr>
-<tr><td valign=top>Indicatore 1</td><td>Non definito</td></tr>
-<tr><td valign=top>Indicatore 2</td><td>Non definito</td></tr>
+<tr><td valign=top>Indicatore 1</td><td>Blank</td></tr>
+<tr><td valign=top>Indicatore 2</td><td>Blank</td></tr>
  <tr><td valign=top>Sottocampi</td>
     <td>
     <UL>
-        <li>a - Testo della nota. Non ripetibile.
-        <li>5 - Istituzione della copia posseduta. Non ripetibile.
+        <li>a - Testo della nota. Non ripetibile.</li>
+        <li>5 - Istituzione della copia posseduta. Non ripetibile.</li>
     </UL>
     </td></tr>
  <tr><td valign=top>NOTE</td><td></td></tr>
@@ -1124,11 +1123,6 @@ bool Marc4cppCollocazione::creaPossessore(Tb950Inv * tb950InvPtr, Tb950Coll *tb9
 			s.Strip(s.trailing, ' ');
 			}
 			else
-//				SignalAnError(
-//						__FILE__, __LINE__,
-//						"KeyLoc non coincidono  tb950Coll.key_loc='%s', tb950InvPtr.key_loc='%s'",
-//						tb950CollPtr->getField(tb950CollPtr->tbcol_key_loc),
-//						tb950InvPtr->getField(tb950InvPtr->tbinv_key_loc));
 				logToStdout(__FILE__, __LINE__, LOG_ERROR, "KeyLoc non coincidono  tb950Coll.key_loc='%s', tb950InvPtr.key_loc='%s'",
 						tb950CollPtr->getField(tb950CollPtr->tbcol_key_loc),
 						tb950InvPtr->getField(tb950InvPtr->tbinv_key_loc));
@@ -1200,28 +1194,28 @@ bool Marc4cppCollocazione::creaPossessore(Tb950Inv * tb950InvPtr, Tb950Coll *tb9
 <tr><td valign=top>Descrizione</td><td>Dati gestionali</td></tr>
 <tr><td valign=top>Obbligatorieta'</td><td>Facoltativo</td></tr>
 <tr><td valign=top>Ripetibilita'</td><td>Ripetibile</td></tr>
-<tr><td valign=top>Indicatore 1</td><td>Non definito</td></tr>
+<tr><td valign=top>Indicatore 1</td><td>Blank</td></tr>
 <tr><td valign=top>Indicatore 2</td><td>
 Livello gerqrchico:
     <UL>
-        <li> 0 = senza livelli (monografie senza livelli e periodici)
-        <li> 1 = livello alto (monografia superiore)
-        <li> 2 = livello basso (monografia inferiore o intermedia)
+        <li> 0 = senza livelli (monografie senza livelli e periodici)</li>
+        <li> 1 = livello alto (monografia superiore)</li>
+        <li> 2 = livello basso (monografia inferiore o intermedia)</li>
     </UL>
 </td></tr>
  <tr><td valign=top>Sottocampi</td>
     <td>
     <UL>
-        <li> a - descrizione della biblioteca
-        <li> b - consistenza dell'esemplare
-        <li> c - consistenza della collocazione
-        <li> d - dati di collocazione
-        <li> e - dati di inventariazione
-        <li> f - categoria di fruizione
-        <li> h - data di ingresso
-        <li> i - data di accessionamento
-        <li> l - note all'inventario
-        <li> m - ?? (dedica)
+        <li> a - descrizione della biblioteca</li>
+        <li> b - consistenza dell'esemplare</li>
+        <li> c - consistenza della collocazione</li>
+        <li> d - dati di collocazione</li>
+        <li> e - dati di inventariazione</li>
+        <li> f - categoria di fruizione</li>
+        <li> h - data di ingresso</li>
+        <li> i - data di accessionamento</li>
+        <li> l - note all'inventario</li>
+        <li> m - ?? (dedica)</li>
     </UL>
     </td></tr>
  <tr><td valign=top>NOTE</td><td></td></tr>
@@ -1787,42 +1781,6 @@ void Marc4cppCollocazione::creaTags950Collocazione_noInv(Collocazione950 *colloc
 
 
 
-/*!
-\brief <b>Tag 960 - Gestionale</b>
-<table>
-<tr>
-<th valign=top>Definizione</th><th>Descrizione</th></tr>
-<tr><td valign=top>Tag</td><td>960</td></tr>
-<tr><td valign=top>Descrizione</td><td>Gestionale</td></tr>
-<tr><td valign=top>Obbligatorieta'</td><td>Facoltativo</td></tr>
-<tr><td valign=top>Ripetibilita'</td><td>Ripetibile</td></tr>
-<tr><td valign=top>Indicatore 1</td><td>Non definito</td></tr>
-<tr><td valign=top>Indicatore 2</td><td>
-Livello gerqrchico:
-    <UL>
-        <li> 0 = senza livelli (monografie senza livelli e periodici)
-        <li> 1 = livello alto (monografia superiore)
-        <li> 2 = livello basso (monografia inferiore o intermedia)
-    </UL>
-</td></tr>
- <tr><td valign=top>Sottocampi</td>
-    <td>
-    <UL>
-        <li> a - descrizione della biblioteca. Non ripetibile.
-        <li> b - consistenza esemplare. Non ripetibile.
-        <li> c - consistenza collocazione. Ripetibile.
-        <li> d - collocazione. Ripetibile.
-        <li> e - dati di inventario. Ripetibile.
-        <li> f - collocazione definitiva. Ripetibile.
-        <li> g - collocazione normalizzata. Ripetibile.
-        <li> h - data di ingresso. Ripetibile.
-        <li> i - data di accessionamento. Ripetibile.
-        <li> l - Note all'inventario. Ripetibile.
-    </UL>
-    </td></tr>
- <tr><td valign=top>NOTE</td><td></td></tr>
-</table>
-*/
 
 
 void Marc4cppCollocazione::creaTags950Inventario(Tb950Inv *tb950Inv, Tb950Coll *tb950Coll, DataField *df) {
@@ -2091,6 +2049,42 @@ bool Marc4cppCollocazione::creaTag960_Gestionale(char *bid) {
 
 #else
 
+/*!
+\brief <b>Tag 960 - Gestionale</b>
+<table>
+<tr>
+<th valign=top>Definizione</th><th>Descrizione</th></tr>
+<tr><td valign=top>Tag</td><td>960</td></tr>
+<tr><td valign=top>Descrizione</td><td>Gestionale</td></tr>
+<tr><td valign=top>Obbligatorieta'</td><td>Facoltativo</td></tr>
+<tr><td valign=top>Ripetibilita'</td><td>Ripetibile</td></tr>
+<tr><td valign=top>Indicatore 1</td><td>Blank</td></tr>
+<tr><td valign=top>Indicatore 2</td><td>
+Livello gerqrchico:
+    <UL>
+        <li> 0 = senza livelli (monografie senza livelli e periodici)</li>
+        <li> 1 = livello alto (monografia superiore)</li>
+        <li> 2 = livello basso (monografia inferiore o intermedia)</li>
+    </UL>
+</td></tr>
+ <tr><td valign=top>Sottocampi</td>
+    <td>
+    <UL>
+        <li> a - descrizione della biblioteca. Non ripetibile.</li>
+        <li> b - consistenza esemplare. Non ripetibile.</li>
+        <li> c - consistenza collocazione. Ripetibile.</li>
+        <li> d - collocazione. Ripetibile.</li>
+        <li> e - dati di inventario. Ripetibile.</li>
+        <li> f - collocazione definitiva. Ripetibile.</li>
+        <li> g - collocazione normalizzata. Ripetibile.</li>
+        <li> h - data di ingresso. Ripetibile.</li>
+        <li> i - data di accessionamento. Ripetibile.</li>
+        <li> l - Note all'inventario. Ripetibile.</li>
+    </UL>
+    </td></tr>
+ <tr><td valign=top>NOTE</td><td></td></tr>
+</table>
+*/
 bool Marc4cppCollocazione::creaTag960_Gestionale(char *bid) {
 	//Biblio950 *biblio950;
 	//	Tb950Inv * tb950Inv;

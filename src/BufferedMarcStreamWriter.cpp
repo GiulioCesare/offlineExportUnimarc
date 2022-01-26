@@ -144,7 +144,6 @@ bool BufferedMarcStreamWriter::write(MarcRecord* marcRecord) {
     {
 		if (!writeBuffer())
 		{
-//			SignalAnError(__FILE__, __LINE__, "Errore nella scrittura del buffer");
 			logToStdout(__FILE__, __LINE__, LOG_ERROR, "Errore nella scrittura del buffer");
 			return false;
 		}
@@ -156,27 +155,23 @@ bool BufferedMarcStreamWriter::write(MarcRecord* marcRecord) {
     // Scriviamo nella datawarehose
 	if (!dataWarehouse->AddString(ldrStr->data()))
 	{
-//		SignalAnError(__FILE__, __LINE__, "Errore nella scrittura di ldrStr");
 		logToStdout(__FILE__, __LINE__, LOG_ERROR, "Errore nella scrittura di ldrStr");
 		return false;
 	}
 
 	if (!dataWarehouse->AddBinaryData(directoryData->Data(), directoryData->GetUsedBytes())) //
 	{
-//		SignalAnError(__FILE__, __LINE__, "Errore nella scrittura di directoryData");
 		logToStdout(__FILE__, __LINE__, LOG_ERROR, "Errore nella scrittura di directoryData");
 		return false;
 	}
 	if (!dataWarehouse->AddBinaryData(recordData->Data(), recordData->GetUsedBytes())) //
 	{
-//		SignalAnError(__FILE__, __LINE__, "Errore nella scrittura di recordData");
 		logToStdout(__FILE__, __LINE__, LOG_ERROR, "Errore nella scrittura di recordData");
 		return false;
 	}
 
 	if (!dataWarehouse->AddChar(RECORD_TERMINATOR))
 	{
-//		SignalAnError(__FILE__, __LINE__, "Errore nella scrittura di RECORD_TERMINATOR");
 		logToStdout(__FILE__, __LINE__, LOG_ERROR, "Errore nella scrittura di RECORD_TERMINATOR");
 		return false;
 	}
@@ -184,7 +179,6 @@ bool BufferedMarcStreamWriter::write(MarcRecord* marcRecord) {
 	if (RECORDUNIMARCSUSINGOLARIGA == 1)
 		if (!dataWarehouse->AddChar('\n'))
 		{
-//			SignalAnError(__FILE__, __LINE__, "Errore nella scrittura di NEWLINE");
 			logToStdout(__FILE__, __LINE__, LOG_ERROR, "Errore nella scrittura di NEWLINE");
 			return false;
 		}

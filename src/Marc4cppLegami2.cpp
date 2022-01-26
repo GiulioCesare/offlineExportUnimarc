@@ -385,7 +385,6 @@ DataField  *Marc4cppLegami::creaLegameAutoreAltriDB(char *entryReticoloPtr, int 
 			trIdsbnIdaltriAuRelIn->SeekTo(offset);
 			if (!sPtr->ReadLineWithPrefixedMaxSize(trIdsbnIdaltriAuRelIn))
 			{
-//				SignalAnError(__FILE__, __LINE__, "read failed");
 				logToStdout(__FILE__, __LINE__, LOG_ERROR, "trIdsbnIdaltriAuRelIn read failed");
 				return 0;
 			}
@@ -435,7 +434,6 @@ DataField  *Marc4cppLegami::creaLegameAutoreAltriDB(char *entryReticoloPtr, int 
 			//	printf("\ncdPoloBib '%s'",cdPoloBib.Data());
 				if (! tbfBiblioteca->loadRecord(poloBibCnc.Data()))
 				{
-//					SignalAnError(__FILE__, __LINE__, "\nCodice polo biblioteca sconosciuto %c", poloBibCnc.Data());
 					logToStdout(__FILE__, __LINE__, LOG_ERROR, "Codice polo biblioteca sconosciuto %c", poloBibCnc.Data());
 				}else{
 
@@ -465,7 +463,6 @@ DataField  *Marc4cppLegami::creaLegameAutoreAltriDB(char *entryReticoloPtr, int 
 
 
 							{
-//					SignalAnError(__FILE__, __LINE__, "\nCodice polo biblioteca sconosciuto %c", poloBibCnm.Data());
 					logToStdout(__FILE__, __LINE__, LOG_ERROR, "Codice polo biblioteca sconosciuto %c", poloBibCnm.Data());
 							}else{
 //tbfBiblioteca->dumpRecord();
@@ -639,7 +636,6 @@ void Marc4cppLegami::creatTag7xxNidificato(DataField *df, CString *bid)
 	// Dall'offset del file delle relazioni andiamo a prendere la relazione titolo/autore
 	trTitAutRel->getTbIn()->SeekTo(offset);
 	if (!lineRead->ReadLineWithPrefixedMaxSize(trTitAutRel->getTbIn()))
-//        SignalAnError(__FILE__, __LINE__, "read failed");
 		logToStdout(__FILE__, __LINE__, LOG_ERROR, "trTitAutRel read failed");
 
 //printf ("\nlineRead = '%s'", lineRead->data());
@@ -1109,7 +1105,6 @@ void Marc4cppLegami::elabora44x(char *bid) {
 	// Dall'offset del file delle relazioni andiamo a prendere la relazione titolo/titolo
 	trTitTitInvRelIn->SeekTo(offset);
 	if (!sPtr->ReadLineWithPrefixedMaxSize(trTitTitInvRelIn))
-//        SignalAnError(__FILE__, __LINE__, "read failed");
 		logToStdout(__FILE__, __LINE__, LOG_ERROR, "trTitTitInvRelIn read failed");
 
 	// Splittiamo la riga negli n elementi che la compongono
@@ -1227,7 +1222,6 @@ bool Marc4cppLegami::getBidColl(char *bid, CString *bidColl)
 	trTitTitRelIn->SeekTo(offset);
 
 	if (!sPtr->ReadLineWithPrefixedMaxSize(trTitTitRelIn))
-//        SignalAnError(__FILE__, __LINE__, "read failed");
 		logToStdout(__FILE__, __LINE__, LOG_ERROR, "trTitTitRelIn read failed");
 
 
@@ -1320,7 +1314,6 @@ bool Marc4cppLegami::isPartenzaLegame01MW(char *bid) {
 	trTitTitRelIn->SeekTo(offset);
 
 	if (!sPtr->ReadLineWithPrefixedMaxSize(trTitTitRelIn))
-//        SignalAnError(__FILE__, __LINE__, "read failed");
 		logToStdout(__FILE__, __LINE__, LOG_ERROR, "trTitTitRelIn read failed");
 
 
@@ -1407,7 +1400,6 @@ int Marc4cppLegami::contaBidColl(char *bid)
 	// Dall'offset del file delle relazioni andiamo a prendere la relazione titolo/titolo
 	trTitTitInvRelIn->SeekTo(offset);
 	if (!sPtr->ReadLineWithPrefixedMaxSize(trTitTitInvRelIn))
-//        SignalAnError(__FILE__, __LINE__, "read failed");
 		logToStdout(__FILE__, __LINE__, LOG_ERROR, "trTitTitInvRelIn read failed");
 
 	// Splittiamo la riga negli n elementi che la compongono
@@ -1494,7 +1486,6 @@ int Marc4cppLegami::contaBidBase(char *bid)
 	trTitTitRelIn->SeekTo(offset);
 	if (!sPtr->ReadLineWithPrefixedMaxSize(trTitTitRelIn))
 	{
-//        SignalAnError(__FILE__, __LINE__, "read failed");
 		logToStdout(__FILE__, __LINE__, LOG_ERROR, "trTitTitRelIn read failed");
 
 	}
@@ -1608,7 +1599,6 @@ void Marc4cppLegami::elabora42x(char *bid) {
 	// Dall'offset del file delle relazioni andiamo a prendere la relazione titolo/titolo
 	trTitTitInvRelIn->SeekTo(offset);
 	if (!sPtr->ReadLineWithPrefixedMaxSize(trTitTitInvRelIn))
-//        SignalAnError(__FILE__, __LINE__, "read failed");
 		logToStdout(__FILE__, __LINE__, LOG_ERROR, "trTitTitInvRelIn read failed");
 
 	// Splittiamo la riga negli n elementi che la compongono
@@ -1670,6 +1660,8 @@ void Marc4cppLegami::elabora42x(char *bid) {
 
 /*!
 \brief <b>Tag 421 - Legame titolo supplemento di</b>
+
+[ authority documento ]
 <table>
 <tr>
 <th valign=top>Definizione</th><th>Descrizione</th></tr>
@@ -1677,12 +1669,12 @@ void Marc4cppLegami::elabora42x(char *bid) {
 <tr><td valign=top>Descrizione</td><td>Legame titolo supplemento di</td></tr>
 <tr><td valign=top>Obbligatorieta'</td><td>Facoltativo</td></tr>
 <tr><td valign=top>Ripetibilita'</td><td>Ripetibile</td></tr>
-<tr><td valign=top>Indicatore 1</td><td>Non definito</td></tr>
-<tr><td valign=top>Indicatore 2</td><td>Non definito</td></tr>
+<tr><td valign=top>Indicatore 1</td><td>Blank</td></tr>
+<tr><td valign=top>Indicatore 2</td><td>Blank</td></tr>
  <tr><td valign=top>Sottocampi</td>
     <td>
     <UL>
-        <li>1 - Tag 200 embedded
+        <li>1 - Tag 200 embedded</li>
     </UL>
     </td></tr>
  <tr><td valign=top>NOTE</td><td></td></tr>
@@ -1703,6 +1695,8 @@ DataField * Marc4cppLegami::creaTag421_SupplementoDi() {
 
 /*!
 \brief <b>Tag 440 - Continuato con</b>
+
+[ authority documento ]
 <table>
 <tr>
 <th valign=top>Definizione</th><th>Descrizione</th></tr>
@@ -1710,17 +1704,17 @@ DataField * Marc4cppLegami::creaTag421_SupplementoDi() {
 <tr><td valign=top>Descrizione</td><td>Continuato con</td></tr>
 <tr><td valign=top>Obbligatorieta'</td><td>Facoltativo</td></tr>
 <tr><td valign=top>Ripetibilita'</td><td>Ripetibile</td></tr>
-<tr><td valign=top>Indicatore 1</td><td>Non definito</td></tr>
+<tr><td valign=top>Indicatore 1</td><td>Blank</td></tr>
  <tr><td valign=top>Indicatore 2</td><td>
     <UL>
-        <li>0 - non stampare la nota
-        <li>1 - stampare la nota
+        <li>0 - non stampare la nota</li>
+        <li>1 - stampare la nota</li>
     </UL>
 </td></tr>
 <tr><td valign=top>Sottocampi</td>
     <td>
     <UL>
-        <li>1 - Tag 200 embedded.
+        <li>1 - Tag 200 embedded.</li>
     </UL>
     </td></tr>
  <tr><td valign=top>NOTE</td><td></td></tr>
@@ -1737,6 +1731,37 @@ DataField * Marc4cppLegami::creaTag440_ContinuatoCon() {
 	return df;
 } // creaTag440_ContinuatoDa
 
+
+/*!
+\brief <b>Tag 441 - Continuazione parziale di</b>
+
+[ authority documento ]
+<table>
+<tr>
+<th valign=top>Definizione</th><th>Descrizione</th></tr>
+<tr><td valign=top>Tag</td><td>441</td></tr>
+<tr><td valign=top>Descrizione</td><td>Continuazione parziale di</td></tr>
+<tr><td valign=top>Obbligatorieta'</td><td>Facoltativo</td></tr>
+<tr><td valign=top>Ripetibilita'</td><td>Ripetibile</td></tr>
+<tr><td valign=top>Indicatore 1</td><td>Blank</td></tr>
+ <tr><td valign=top>Indicatore 2</td><td>
+    <UL>
+        <li>0 - non stampare la nota</li>
+        <li>1 - stampare la nota</li>
+    </UL>
+</td></tr>
+<tr><td valign=top>Sottocampi</td>
+    <td>
+    <UL>
+        <li>1 - Tag 200 embedded.</li>
+    </UL>
+    </td></tr>
+ <tr><td valign=top>NOTE</td><td></td></tr>
+</table>
+*/
+
+
+
 DataField * Marc4cppLegami::creaTag441_HaPerContinuazioneParziale() {
 	DataField *df, *dfSubtag;
 	df = new DataField();
@@ -1751,6 +1776,8 @@ DataField * Marc4cppLegami::creaTag441_HaPerContinuazioneParziale() {
 
 /*!
 \brief <b>Tag 461 - Fa parte di livello piu' elevato (SET)</b>
+
+[ authority documento ]
 <table>
 <tr>
 <th valign=top>Definizione</th><th>Descrizione</th></tr>
@@ -1758,7 +1785,7 @@ DataField * Marc4cppLegami::creaTag441_HaPerContinuazioneParziale() {
 <tr><td valign=top>Descrizione</td><td>Fa parte di livello piu' elevato (SET)</td></tr>
 <tr><td valign=top>Obbligatorieta'</td><td>Facoltativo</td></tr>
 <tr><td valign=top>Ripetibilita'</td><td>Ripetibile</td></tr>
-<tr><td valign=top>Indicatore 1</td><td>Non definito</td></tr>
+<tr><td valign=top>Indicatore 1</td><td>Blank</td></tr>
  <tr><td valign=top>Indicatore 2</td><td>
     <UL>
         <li>0 - non stampare la nota
@@ -1858,6 +1885,8 @@ DataField * Marc4cppLegami::creaTag461_FaParteDi_NotiziaSuperiore(CString *seque
 
 /*!
 \brief <b>Tag 462 - Legame a livello intermedio</b>
+
+[ authority documento ]
 <table>
 <tr>
 <th valign=top>Definizione</th><th>Descrizione</th></tr>
@@ -1865,7 +1894,7 @@ DataField * Marc4cppLegami::creaTag461_FaParteDi_NotiziaSuperiore(CString *seque
 <tr><td valign=top>Descrizione</td><td>Legame a livello intermedio ("Comprende" se parte da notizia padre e "Fa parte di" se parte da notizia figlia)</td></tr>
 <tr><td valign=top>Obbligatorieta'</td><td>Facoltativo</td></tr>
 <tr><td valign=top>Ripetibilita'</td><td>Ripetibile</td></tr>
-<tr><td valign=top>Indicatore 1</td><td>Non definito</td></tr>
+<tr><td valign=top>Indicatore 1</td><td>Blank</td></tr>
  <tr><td valign=top>Indicatore 2</td><td>
     <UL>
         <li>0 - non stampare la nota
@@ -1943,6 +1972,8 @@ DataField * Marc4cppLegami::creaTag462_LegameALivelloIntermedio(CString *bid, CS
 
 /*!
 \brief <b>Tag 463 - Legame all'unita' singola (da spoglio a pezzo fisico)</b>
+
+[ authority documento ]
 <table>
 <tr>
 <th valign=top>Definizione</th><th>Descrizione</th></tr>
@@ -1950,7 +1981,7 @@ DataField * Marc4cppLegami::creaTag462_LegameALivelloIntermedio(CString *bid, CS
 <tr><td valign=top>Descrizione</td><td>Legame all'unita' singola (Pezzo fisico)</td></tr>
 <tr><td valign=top>Obbligatorieta'</td><td>Facoltativo</td></tr>
 <tr><td valign=top>Ripetibilita'</td><td>Ripetibile</td></tr>
-<tr><td valign=top>Indicatore 1</td><td>Non definito</td></tr>
+<tr><td valign=top>Indicatore 1</td><td>Blank</td></tr>
  <tr><td valign=top>Indicatore 2</td><td>
     <UL>
         <li>0 - non stampare la nota
@@ -2088,6 +2119,8 @@ if (TIPO_SCARICO == TIPO_SCARICO_OPAC) // 20/09/2010
 
 /*!
 \brief <b>Tag 464 - Legame all'unita' singola analitica (spoglio)</b>
+
+[ authority documento ]
 <table>
 <tr>
 <th valign=top>Definizione</th><th>Descrizione</th></tr>
@@ -2095,7 +2128,7 @@ if (TIPO_SCARICO == TIPO_SCARICO_OPAC) // 20/09/2010
 <tr><td valign=top>Descrizione</td><td>Legame all'unita' singola analitica (spoglio)</td></tr>
 <tr><td valign=top>Obbligatorieta'</td><td>Facoltativo</td></tr>
 <tr><td valign=top>Ripetibilita'</td><td>Ripetibile</td></tr>
-<tr><td valign=top>Indicatore 1</td><td>Non definito</td></tr>
+<tr><td valign=top>Indicatore 1</td><td>Blank</td></tr>
  <tr><td valign=top>Indicatore 2</td><td>
     <UL>
         <li>0 - non stampare la nota
@@ -2141,6 +2174,8 @@ DataField * Marc4cppLegami::creaTag464_AnaliticaSpoglio(CString *bid, CString *s
 
 /*!
 \brief <b>Tag 620 - Luogo di pubblicazione normalizzato (Libro Antico)</b>
+
+[ authority documento ]
 <table>
 <tr>
 <th valign=top>Definizione</th><th>Descrizione</th></tr>
@@ -2148,14 +2183,14 @@ DataField * Marc4cppLegami::creaTag464_AnaliticaSpoglio(CString *bid, CString *s
 <tr><td valign=top>Descrizione</td><td>Luogo di pubblicazione normalizzato (Libro Antico)</td></tr>
 <tr><td valign=top>Obbligatorieta'</td><td>Facoltativo</td></tr>
 <tr><td valign=top>Ripetibilita'</td><td>Ripetibile</td></tr>
-<tr><td valign=top>Indicatore 1</td><td>Non definito</td></tr>
-<tr><td valign=top>Indicatore 2</td><td>Non definito</td></tr>
+<tr><td valign=top>Indicatore 1</td><td>Blank</td></tr>
+<tr><td valign=top>Indicatore 2</td><td>Blank</td></tr>
  <tr><td valign=top>Sottocampi</td>
     <td>
     <UL>
-        <li>a - Codice paese
-        <li>d - Descrizione luogo
-        <li>3 - Identificativo luogo
+        <li>a - Codice paese</li>
+        <li>d - Descrizione luogo</li>
+        <li>3 - Identificativo luogo</li>
     </UL>
     </td></tr>
  <tr><td valign=top>NOTE</td><td></td></tr>
@@ -2200,6 +2235,8 @@ DataField * Marc4cppLegami::creaTag620_LuogoDiPubblicazione() {
 
 /*!
 \brief <b>Tag 676 - Classificazione Decimale Dewey</b>
+
+[ authority documento ]
 <table>
 <tr>
 <th valign=top>Definizione</th><th>Descrizione</th></tr>
@@ -2207,15 +2244,15 @@ DataField * Marc4cppLegami::creaTag620_LuogoDiPubblicazione() {
 <tr><td valign=top>Descrizione</td><td>Classificazione Decimale Dewey</td></tr>
 <tr><td valign=top>Obbligatorieta'</td><td>Facoltativo</td></tr>
 <tr><td valign=top>Ripetibilita'</td><td>Ripetibile</td></tr>
-<tr><td valign=top>Indicatore 1</td><td>Non definito</td></tr>
-<tr><td valign=top>Indicatore 2</td><td>Non definito</td></tr>
+<tr><td valign=top>Indicatore 1</td><td>Blank</td></tr>
+<tr><td valign=top>Indicatore 2</td><td>Blank</td></tr>
  <tr><td valign=top>Sottocampi</td>
     <td>
     <UL>
-        <li>a - Codice classificazione
-        <li>c - Descrizione classificazione (per INDICE)
-        <li>9 - Descrizione classificazione (per POLI)
-        <li>v - Codice edizione
+        <li>a - Codice classificazione</li>
+        <li>c - Descrizione classificazione (per INDICE)</li>
+        <li>9 - Descrizione classificazione (per POLI)</li>
+        <li>v - Codice edizione</li>
     </UL>
     </td></tr>
  <tr><td valign=top>NOTE</td><td></td></tr>
@@ -2309,6 +2346,8 @@ DataField * Marc4cppLegami::creaTag676_ClassificazioneDecimaleDewey() {
 
 /*!
 \brief <b>Tag 686 - Altra classificazione</b>
+
+[ authority documento ]
 <table>
 <tr>
 <th valign=top>Definizione</th><th>Descrizione</th></tr>
@@ -2316,14 +2355,14 @@ DataField * Marc4cppLegami::creaTag676_ClassificazioneDecimaleDewey() {
 <tr><td valign=top>Descrizione</td><td>Altra classificazione</td></tr>
 <tr><td valign=top>Obbligatorieta'</td><td>Facoltativo</td></tr>
 <tr><td valign=top>Ripetibilita'</td><td>Ripetibile</td></tr>
-<tr><td valign=top>Indicatore 1</td><td>Non definito</td></tr>
-<tr><td valign=top>Indicatore 2</td><td>Non definito</td></tr>
+<tr><td valign=top>Indicatore 1</td><td>Blank</td></tr>
+<tr><td valign=top>Indicatore 2</td><td>blank</td></tr>
  <tr><td valign=top>Sottocampi</td>
     <td>
     <UL>
-        <li>a - Codice classificazione
-        <li>c - Descrizione classificazione
-        <li>v - Codice edizione
+        <li>a - Codice classificazione</li>
+        <li>c - Descrizione classificazione</li>
+        <li>v - Codice edizione</li>
     </UL>
     </td></tr>
  <tr><td valign=top>NOTE</td><td></td></tr>
@@ -2373,6 +2412,8 @@ DataField * Marc4cppLegami::creaTag686_AltraClassificazione() {
 
 /*!
 \brief <b>Tag 856 - Localizzazione accesso risorsa elettronica</b>
+
+[ authority documento ]
 <table>
 <tr>
 <th valign=top>Definizione</th><th>Descrizione</th></tr>
@@ -2380,12 +2421,12 @@ DataField * Marc4cppLegami::creaTag686_AltraClassificazione() {
 <tr><td valign=top>Descrizione</td><td>Localizzazione accesso risorsa elettronica</td></tr>
 <tr><td valign=top>Obbligatorieta'</td><td>Facoltativo</td></tr>
 <tr><td valign=top>Ripetibilita'</td><td>Ripetibile</td></tr>
-<tr><td valign=top>Indicatore 1</td><td>Non definito</td></tr>
-<tr><td valign=top>Indicatore 2</td><td>Non definito</td></tr>
+<tr><td valign=top>Indicatore 1</td><td>Blank</td></tr>
+<tr><td valign=top>Indicatore 2</td><td>Blank</td></tr>
  <tr><td valign=top>Sottocampi</td>
     <td>
     <UL>
-        <li>u - Unique Resource Identifier (URI)
+        <li>u - Unique Resource Identifier (URI)</li>
     </UL>
     </td></tr>
  <tr><td valign=top>NOTE</td><td></td></tr>
@@ -2412,6 +2453,8 @@ void Marc4cppLegami::creaTag856_LinkMultimediale(const char *bid) {
 
 /*!
 \brief <b>Tag 899 - Localizzazione</b>
+
+[ authority documento ]
 <table>
 <tr>
 <th valign=top>Definizione</th><th>Descrizione</th></tr>
@@ -2419,40 +2462,40 @@ void Marc4cppLegami::creaTag856_LinkMultimediale(const char *bid) {
 <tr><td valign=top>Descrizione</td><td>Localizzazione</td></tr>
 <tr><td valign=top>Obbligatorieta'</td><td>Facoltativo</td></tr>
 <tr><td valign=top>Ripetibilita'</td><td>Ripetibile</td></tr>
-<tr><td valign=top>Indicatore 1</td><td>Non definito</td></tr>
+<tr><td valign=top>Indicatore 1</td><td>Blank</td></tr>
 <tr><td valign=top>Indicatore 2</td><td>Livello gerarchico della notizia
     <UL>
-        <li>0 - digitalizzazione parziale
-        <li>1 - digitalizzazione totale
-        <li>2 - copia di born digital
+        <li>0 - digitalizzazione parziale</li>
+        <li>1 - digitalizzazione totale</li>
+        <li>2 - copia di born digital</li>
     </UL>
 </td></tr>
  <tr><td valign=top>Sottocampi</td>
     <td>
 PER INDICE
     <UL>
-        <li> a - Codice anagrafico della biblioteca se scarico OPAC oppure Descrizione biblioteca se scarico UNIMARC
-        <li> 1 - Codice anagrafe biblioteche
-        <li> 2 - Codice della biblioteca nel DB gestionale
-        <li> 3 - Fondo
-        <li> c - Segnatura (solo per scarico OPAC)
-        <li> d - Citta'
-        <li> e - Disponibilita' formato elettronico
-        <li> f - Indicatore di tipo localizzazione
-        <li> q - indicatore di esemplare mutilo
-        <li> s - Segnatura antica (solo per scarico OPAC)
-        <li> t - Tipo di digitalizzazione (solo per scarico OPAC)
+        <li> a - Codice anagrafico della biblioteca se scarico OPAC oppure Descrizione biblioteca se scarico UNIMARC</li>
+        <li> 1 - Codice anagrafe biblioteche</li>
+        <li> 2 - Codice della biblioteca nel DB gestionale</li>
+        <li> 3 - Fondo</li>
+        <li> c - Segnatura (solo per scarico OPAC)</li>
+        <li> d - Citta'</li>
+        <li> e - Disponibilita' formato elettronico</li>
+        <li> f - Indicatore di tipo localizzazione</li>
+        <li> q - indicatore di esemplare mutilo</li>
+        <li> s - Segnatura antica (solo per scarico OPAC)</li>
+        <li> t - Tipo di digitalizzazione (solo per scarico OPAC)</li>
     </UL>
 PER POLO
     <UL>
-        <li> a - Descrizione biblioteca
-        <li> q - indicatore di esemplare mutilo (se valore diverso da 'N')
+        <li> a - Descrizione biblioteca</li>
+        <li> q - indicatore di esemplare mutilo (se valore diverso da 'N')</li>
     </UL>
 PER INDICE E POLO
     <UL>
-        <li> 4 - Consistenza e stato di conservazione
-        <li> b - Codice anagrafico della biblioteca (non per scarico OPAC)
-        <li> n - Note
+        <li> 4 - Consistenza e stato di conservazione</li>
+        <li> b - Codice anagrafico della biblioteca (non per scarico OPAC)</li>
+        <li> n - Note</li>
         <li> u - URI
     </UL>
     </td></tr>
@@ -2780,6 +2823,8 @@ DataField * Marc4cppLegami::creaTag899_Localizzazione(bool has430, bool has440) 
 
 /*!
 \brief <b>Tag 922 - Rappresentazione (mat. musicale)</b>
+
+[ authority documento ]
 <table>
 <tr>
 <th valign=top>Definizione</th><th>Descrizione</th></tr>
@@ -2787,18 +2832,18 @@ DataField * Marc4cppLegami::creaTag899_Localizzazione(bool has430, bool has440) 
 <tr><td valign=top>Descrizione</td><td>Rappresentazione (mat. musicale)</td></tr>
 <tr><td valign=top>Obbligatorieta'</td><td>Facoltativo</td></tr>
 <tr><td valign=top>Ripetibilita'</td><td>Non ripetibile</td></tr>
-<tr><td valign=top>Indicatore 1</td><td>Non definito</td></tr>
-<tr><td valign=top>Indicatore 2</td><td>Non definito</td></tr>
+<tr><td valign=top>Indicatore 1</td><td>Blank</td></tr>
+<tr><td valign=top>Indicatore 2</td><td>Blank</td></tr>
  <tr><td valign=top>Sottocampi</td>
     <td>
     <UL>
-        <li> a - genere della rappresentazione. Non Ripetibile.
-        <li> p - anno di rappresentazione. Non Ripetibile.
-        <li> q - periodo di rappresentazione. Non Ripetibile.
-        <li> r - teatro di rappresentazione. Non Ripetibile.
-        <li> s - luogo di rappresentazione. Non Ripetibile.
-        <li> t - nota alla rappresentazione. Non Ripetibile.
-        <li> u - occasione della rappresentazione. Non Ripetibile.
+        <li> a - genere della rappresentazione. Non Ripetibile.</li>
+        <li> p - anno di rappresentazione. Non Ripetibile.</li>
+        <li> q - periodo di rappresentazione. Non Ripetibile.</li>
+        <li> r - teatro di rappresentazione. Non Ripetibile.</li>
+        <li> s - luogo di rappresentazione. Non Ripetibile.</li>
+        <li> t - nota alla rappresentazione. Non Ripetibile.</li>
+        <li> u - occasione della rappresentazione. Non Ripetibile.</li>
     </UL>
     </td></tr>
  <tr><td valign=top>NOTE</td><td></td></tr>
@@ -2874,6 +2919,8 @@ void Marc4cppLegami::creaTag922_Rappresentazione() {
 
 /*!
 \brief <b>Tag 923 - Notazione (mat. musicale)</b>
+
+[ authority documento ]
 <table>
 <tr>
 <th valign=top>Definizione</th><th>Descrizione</th></tr>
@@ -2881,20 +2928,20 @@ void Marc4cppLegami::creaTag922_Rappresentazione() {
 <tr><td valign=top>Descrizione</td><td>Notazione (mat. musicale)</td></tr>
 <tr><td valign=top>Obbligatorieta'</td><td>Facoltativo</td></tr>
 <tr><td valign=top>Ripetibilita'</td><td>Non ripetibile</td></tr>
-<tr><td valign=top>Indicatore 1</td><td>Non definito</td></tr>
-<tr><td valign=top>Indicatore 2</td><td>Non definito</td></tr>
+<tr><td valign=top>Indicatore 1</td><td>Blank</td></tr>
+<tr><td valign=top>Indicatore 2</td><td>Blank</td></tr>
  <tr><td valign=top>Sottocampi</td>
     <td>
     <UL>
-        <li> b - codice stesura. Non ripetibile.
-        <li> c - indicatore di composito. Non ripetibile.
-        <li> d - indicatore di palinsesto. Non ripetibile.
-        <li> e - datazione. Non ripetibile.
-        <li> g - codice materia. Non ripetibile.
-        <li> h - illustrazioni. Non ripetibile.
-        <li> i - notazione musicale. Non ripetibile.
-        <li> l - legatura (per manoscritti). Non ripetibile.
-        <li> m - conservazione (per manoscritti). Non ripetibile.
+        <li> b - codice stesura. Non ripetibile.</li>
+        <li> c - indicatore di composito. Non ripetibile.</li>
+        <li> d - indicatore di palinsesto. Non ripetibile.</li>
+        <li> e - datazione. Non ripetibile.</li>
+        <li> g - codice materia. Non ripetibile.</li>
+        <li> h - illustrazioni. Non ripetibile.</li>
+        <li> i - notazione musicale. Non ripetibile.</li>
+        <li> l - legatura (per manoscritti). Non ripetibile.</li>
+        <li> m - conservazione (per manoscritti). Non ripetibile.</li>
     </UL>
     </td></tr>
  <tr><td valign=top>NOTE</td><td></td></tr>
@@ -2982,6 +3029,8 @@ void Marc4cppLegami::creaTag923_Notazione() {
 
 /*!
 \brief <b>Tag 926 - Incipit</b>
+
+[ authority documento ]
 <table>
 <tr>
 <th valign=top>Definizione</th><th>Descrizione</th></tr>
@@ -2989,26 +3038,26 @@ void Marc4cppLegami::creaTag923_Notazione() {
 <tr><td valign=top>Descrizione</td><td>Incipit</td></tr>
 <tr><td valign=top>Obbligatorieta'</td><td>Facoltativo</td></tr>
 <tr><td valign=top>Ripetibilita'</td><td>Ripetibile</td></tr>
-<tr><td valign=top>Indicatore 1</td><td>Non definito</td></tr>
-<tr><td valign=top>Indicatore 2</td><td>Non definito</td></tr>
+<tr><td valign=top>Indicatore 1</td><td>Blank</td></tr>
+<tr><td valign=top>Indicatore 2</td><td>Blank</td></tr>
  <tr><td valign=top>Sottocampi</td>
     <td>
     <UL>
-        <li> a - indicatore: P=precedente S=successivo. Non ripetibile.
-        <li> b - numero composizioni. Non ripetibile.
-        <li> c - contesto. Non ripetibile.
-        <li> f - numero movimento. Non ripetibile.
-        <li> g - numero progressivo movimenti. Non ripetibile.
-        <li> h - registro musicale. Non ripetibile.
-        <li> i - codice forma musicale. Non ripetibile.
-        <li> l - codice tonalita'. Non ripetibile.
-        <li> m - chiave musicale. Non ripetibile.
-        <li> n - alterazione. Non ripetibile.
-        <li> o - misura. Non ripetibile.
-        <li> p - tempo musicale. Non ripetibile.
-        <li> q - nome personaggio. Non ripetibile.
-        <li> r - Identificativo del titolo di incipit letterario. Non ripetibile.
-        <li> s - ISBD del titolo di incipit letterario. Non ripetibile.
+        <li> a - indicatore: P=precedente S=successivo. Non ripetibile.</li>
+        <li> b - numero composizioni. Non ripetibile.</li>
+        <li> c - contesto. Non ripetibile.</li>
+        <li> f - numero movimento. Non ripetibile.</li>
+        <li> g - numero progressivo movimenti. Non ripetibile.</li>
+        <li> h - registro musicale. Non ripetibile.</li>
+        <li> i - codice forma musicale. Non ripetibile.</li>
+        <li> l - codice tonalita'. Non ripetibile.</li>
+        <li> m - chiave musicale. Non ripetibile.</li>
+        <li> n - alterazione. Non ripetibile.</li>
+        <li> o - misura. Non ripetibile.</li>
+        <li> p - tempo musicale. Non ripetibile.</li>
+        <li> q - nome personaggio. Non ripetibile.</li>
+        <li> r - Identificativo del titolo di incipit letterario. Non ripetibile.</li>
+        <li> s - ISBD del titolo di incipit letterario. Non ripetibile.</li>
     </UL>
     </td></tr>
  <tr><td valign=top>NOTE</td><td></td></tr>
@@ -3190,6 +3239,8 @@ void Marc4cppLegami::creaTag926_Incipit() {
 
 /*!
 \brief <b>Tag 927 - Personaggi e interpreti (mat. musicale)</b>
+
+[ authority documento ]
 <table>
 <tr>
 <th valign=top>Definizione</th><th>Descrizione</th></tr>
@@ -3197,15 +3248,15 @@ void Marc4cppLegami::creaTag926_Incipit() {
 <tr><td valign=top>Descrizione</td><td>Personaggi e interpreti (mat. musicale)</td></tr>
 <tr><td valign=top>Obbligatorieta'</td><td>Facoltativo</td></tr>
 <tr><td valign=top>Ripetibilita'</td><td>Ripetibile</td></tr>
-<tr><td valign=top>Indicatore 1</td><td>Non definito</td></tr>
-<tr><td valign=top>Indicatore 2</td><td>Non definito</td></tr>
+<tr><td valign=top>Indicatore 1</td><td>Blank</td></tr>
+<tr><td valign=top>Indicatore 2</td><td>Blank</td></tr>
  <tr><td valign=top>Sottocampi</td>
     <td>
     <UL>
-        <li> a - personaggio. Non ripetibile.
-        <li> b - timbro vocale. Non ripetibile.
-        <li> 3 - identificativo dell'autore (interprete). Non ripetibile.
-        <li> c - Nome dell'autore. Non ripetibile.
+        <li> a - personaggio. Non ripetibile.</li>
+        <li> b - timbro vocale. Non ripetibile.</li>
+        <li> 3 - identificativo dell'autore (interprete). Non ripetibile.</li>
+        <li> c - Nome dell'autore. Non ripetibile.</li>
     </UL>
     </td></tr>
  <tr><td valign=top>NOTE</td><td></td></tr>
@@ -3313,7 +3364,6 @@ void Marc4cppLegami::creaTag927_PersonaggiEInterpreti() {
 				// Dall'offset del file delle relazioni andiamo a prendere la relazione titolo/titolo
 				trTitAutRel->getTbIn()->SeekTo(offset);
 				if (!lineRead->ReadLineWithPrefixedMaxSize(trTitAutRel->getTbIn()))
-//			        SignalAnError(__FILE__, __LINE__, "read failed");
 					logToStdout(__FILE__, __LINE__, LOG_ERROR, "trTitAutRel read failed");
 
 //printf ("\nsPtr(trPerInt->vid) = '%s'", sPtr->data());
@@ -3391,6 +3441,8 @@ void Marc4cppLegami::creaTag927_PersonaggiEInterpreti() {
 
 /*!
 \brief <b>Tag 928 - Dati codificati per titolo uniforme musicale</b>
+
+[ authority documento ]
 <table>
 <tr>
 <th valign=top>Definizione</th><th>Descrizione</th></tr>
@@ -3398,15 +3450,15 @@ void Marc4cppLegami::creaTag927_PersonaggiEInterpreti() {
 <tr><td valign=top>Descrizione</td><td>Dati codificati per titolo uniforme musicale</td></tr>
 <tr><td valign=top>Obbligatorieta'</td><td>Facoltativo</td></tr>
 <tr><td valign=top>Ripetibilita'</td><td>Ripetibile</td></tr>
-<tr><td valign=top>Indicatore 1</td><td>Non definito</td></tr>
-<tr><td valign=top>Indicatore 2</td><td>Non definito</td></tr>
+<tr><td valign=top>Indicatore 1</td><td>Blank</td></tr>
+<tr><td valign=top>Indicatore 2</td><td>Blank</td></tr>
  <tr><td valign=top>Sottocampi</td>
     <td>
     <UL>
-        <li> a - forma della composizione. Ripetibile.
-        <li> b - organico sintetico della composizione. Non ripetibile.
-        <li> c - organico analitico della composizione. Non ripetibile.
-        <li> z - legame al titolo uniforme (tag 500)
+        <li> a - forma della composizione. Ripetibile.</li>
+        <li> b - organico sintetico della composizione. Non ripetibile.</li>
+        <li> c - organico analitico della composizione. Non ripetibile.</li>
+        <li> z - legame al titolo uniforme (tag 500)</li>
     </UL>
     </td></tr>
  <tr><td valign=top>NOTE</td><td></td></tr>
@@ -3479,6 +3531,8 @@ void Marc4cppLegami::creaTag928_TitoloUniformeMusicale() {
 
 /*!
 \brief <b>Tag 929 - Composizione (mat. musicale)</b>
+
+[ authority documento ]
 <table>
 <tr>
 <th valign=top>Definizione</th><th>Descrizione</th></tr>
@@ -3486,21 +3540,21 @@ void Marc4cppLegami::creaTag928_TitoloUniformeMusicale() {
 <tr><td valign=top>Descrizione</td><td>Composizione (mat. musicale)</td></tr>
 <tr><td valign=top>Obbligatorieta'</td><td>Facoltativo</td></tr>
 <tr><td valign=top>Ripetibilita'</td><td>Non ripetibile</td></tr>
-<tr><td valign=top>Indicatore 1</td><td>Non definito</td></tr>
-<tr><td valign=top>Indicatore 2</td><td>Non definito</td></tr>
+<tr><td valign=top>Indicatore 1</td><td>Blank</td></tr>
+<tr><td valign=top>Indicatore 2</td><td>Blank</td></tr>
  <tr><td valign=top>Sottocampi</td>
     <td>
     <UL>
-        <li> a - Numero d'ordine. Non ripetibile.
-        <li> b - numero d'opera . Non ripetibile.
-        <li> c - numero di catalogo tematico. Non ripetibile.
-        <li> d - datazione della composizione. Non ripetibile.
-        <li> e - tonalita' della composizione. Non ripetibile.
-        <li> f - sezioni. Non ripetibile.
-        <li> g - titolo di ordinamento. Non ripetibile.
-        <li> h - titolo dell'estratto. Non ripetibile.
-        <li> i - appellativo. Non ripetibile.
-        <li> z - legame al titolo uniforme (tag 500)
+        <li> a - Numero d'ordine. Non ripetibile.</li>
+        <li> b - numero d'opera . Non ripetibile.</li>
+        <li> c - numero di catalogo tematico. Non ripetibile.</li>
+        <li> d - datazione della composizione. Non ripetibile.</li>
+        <li> e - tonalita' della composizione. Non ripetibile.</li>
+        <li> f - sezioni. Non ripetibile.</li>
+        <li> g - titolo di ordinamento. Non ripetibile.</li>
+        <li> h - titolo dell'estratto. Non ripetibile.</li>
+        <li> i - appellativo. Non ripetibile.</li>
+        <li> z - legame al titolo uniforme (tag 500)</li>
     </UL>
     </td></tr>
  <tr><td valign=top>NOTE</td><td></td></tr>
@@ -3657,6 +3711,8 @@ void Marc4cppLegami::creaTag929_Composizione() {
 
 /*!
 \brief <b>Tag 951 - Acquisizioni (ordini)</b>
+
+[ authority documento ]
 <table>
 <tr>
 <th valign=top>Definizione</th><th>Descrizione</th></tr>
@@ -3664,25 +3720,25 @@ void Marc4cppLegami::creaTag929_Composizione() {
 <tr><td valign=top>Descrizione</td><td>Acquisizioni (ordini)</td></tr>
 <tr><td valign=top>Obbligatorieta'</td><td>Facoltativo</td></tr>
 <tr><td valign=top>Ripetibilita'</td><td>Ripetibile</td></tr>
-<tr><td valign=top>Indicatore 1</td><td>Non definito</td></tr>
+<tr><td valign=top>Indicatore 1</td><td>Blank</td></tr>
 <tr><td valign=top>Indicatore 2</td><td>
 Livello gerqrchico:
     <UL>
-        <li> 0 = senza livelli (monografie senza livelli e periodici)
-        <li> 1 = livello alto (monografia superiore)
-        <li> 2 = livello basso (monografia inferiore o intermedia)
+        <li> 0 = senza livelli (monografie senza livelli e periodici)</li>
+        <li> 1 = livello alto (monografia superiore)</li>
+        <li> 2 = livello basso (monografia inferiore o intermedia)</li>
     </UL>
 </td></tr>
  <tr><td valign=top>Sottocampi</td>
     <td>
     <UL>
-        <li> a - descrizione della biblioteca
-        <li> b - Dati dell'ordine
+        <li> a - descrizione della biblioteca</li>
+        <li> b - Dati dell'ordine</li>
     </UL>
     </td></tr>
  <tr><td valign=top>NOTE</td><td></td></tr>
 </table>
-*/
+*/
 bool Marc4cppLegami::creaTag951_Ordine() {
 	// E' una biblioteca da esportare?
 	char *cdBib = (char*) tbaOrdini->getField(tbaOrdini->cd_bib);
@@ -3767,6 +3823,8 @@ bool Marc4cppLegami::creaTag951_Ordine() {
 
 /*!
 \brief <b>Tag 961 - Ordini</b>
+
+[ authority documento ]
 <table>
 <tr>
 <th valign=top>Definizione</th><th>Descrizione</th></tr>
@@ -3774,13 +3832,13 @@ bool Marc4cppLegami::creaTag951_Ordine() {
 <tr><td valign=top>Descrizione</td><td>Ordini</td></tr>
 <tr><td valign=top>Obbligatorieta'</td><td>Facoltativo</td></tr>
 <tr><td valign=top>Ripetibilita'</td><td>Ripetibile</td></tr>
-<tr><td valign=top>Indicatore 1</td><td>Non definito</td></tr>
-<tr><td valign=top>Indicatore 2</td><td>Non definito</td></tr>
+<tr><td valign=top>Indicatore 1</td><td>Blank</td></tr>
+<tr><td valign=top>Indicatore 2</td><td>Blank</td></tr>
  <tr><td valign=top>Sottocampi</td>
     <td>
     <UL>
-        <li> a - Nome della biblioteca
-        <li> b - Dati dell'ordine
+        <li> a - Nome della biblioteca</li>
+        <li> b - Dati dell'ordine</li>
     </UL>
     </td></tr>
  <tr><td valign=top>NOTE</td><td></td></tr>
@@ -3791,15 +3849,13 @@ bool Marc4cppLegami::creaTag951_Ordine() {
 Aggiornamenti:
 	 31/03/2010 10.48 Richieste CFI
 	 - La 961 va prodotta solo per notizie di natura S in presenza di ordini continuativi;
-		nello specifico va prodotta una 961 per ogni �primo ordine di abbonamento� sia esso
+		nello specifico va prodotta una 961 per ogni 'primo ordine di abbonamento' sia esso
 		aperto (stato=A) o chiuso (stato=C) mentre non danno seguito a produzione di 961 gli
 		ordini di rinnovo (identificabili dal fatto che hanno il riferimento al primo ordine valorizzato).
 
-		Vorrei precisare che in questa logica i dati riportati nei campi dell�etichetta 961
+		Vorrei precisare che in questa logica i dati riportati nei campi dell'etichetta 961
 		sono tutti reperiti dal primo ordine,  e quindi anche Stato_ord e data_ord sono
 		estratti dal primo ordine.
-
-
 */
 
 bool Marc4cppLegami::creaTag961_Ordine() {
@@ -4069,7 +4125,6 @@ void Marc4cppLegami::elabora46x(char *bid, bool bidHaPadre) // , char *sequenza
  		retb = sPtr->ReadLineWithPrefixedMaxSize(trTitTitInvRelIn);
  	}
 	if (!retb)
-//	    SignalAnError(__FILE__, __LINE__, "read failed");
 		logToStdout(__FILE__, __LINE__, LOG_ERROR, "trTitTitInvRelIn read failed");
 
 //printf ("\n%s", sPtr->data());
@@ -4401,7 +4456,6 @@ void Marc4cppLegami::contaBidColl_MN(char *bid, int *mCtr, int *nCtr)
 	// Dall'offset del file delle relazioni andiamo a prendere la relazione titolo/titolo
 	trTitTitInvRelIn->SeekTo(offset);
 	if (!sPtr->ReadLineWithPrefixedMaxSize(trTitTitInvRelIn))
-//        SignalAnError(__FILE__, __LINE__, "read failed");
 		logToStdout(__FILE__, __LINE__, LOG_ERROR, "trTitTitInvRelIn read failed");
 
 
@@ -4445,7 +4499,9 @@ void Marc4cppLegami::contaBidColl_MN(char *bid, int *mCtr, int *nCtr)
 
 
 /*!
-\brief <b>Tag 689 -Tesauro</b>
+\brief <b>Tag 689 - Tesauro</b>
+
+[ authority documento ]
 <table>
 <tr>
 <th valign=top>Definizione</th><th>Descrizione</th></tr>
@@ -4453,14 +4509,14 @@ void Marc4cppLegami::contaBidColl_MN(char *bid, int *mCtr, int *nCtr)
 <tr><td valign=top>Descrizione</td><td>Voce di tesauro legata al titolo</td></tr>
 <tr><td valign=top>Obbligatorieta'</td><td>Facoltativo</td></tr>
 <tr><td valign=top>Ripetibilita'</td><td>Ripetibile</td></tr>
-<tr><td valign=top>Indicatore 1</td><td>Non definito</td></tr>
-<tr><td valign=top>Indicatore 2</td><td>Non definito</td></tr>
+<tr><td valign=top>Indicatore 1</td><td>Blank</td></tr>
+<tr><td valign=top>Indicatore 2</td><td>Blank</td></tr>
  <tr><td valign=top>Sottocampi</td>
     <td>
     <UL>
-        <li>a - Descrizione termine di tesauro
-        <li>c - Ccodice tesauro di riferimento
-        <li>3 - Identificativo tesauro
+        <li>a - Descrizione termine di tesauro</li>
+        <li>c - Ccodice tesauro di riferimento</li>
+        <li>3 - Identificativo tesauro</li>
     </UL>
     </td></tr>
  <tr><td valign=top>NOTE</td><td></td></tr>
@@ -4577,7 +4633,6 @@ bool Marc4cppLegami::isRiferimentoLegame01MW(char *bid) {
 	// Dall'offset del file delle relazioni andiamo a prendere la relazione titolo/titolo
 	trTitTitInvRelIn->SeekTo(offset);
 	if (!sPtr->ReadLineWithPrefixedMaxSize(trTitTitInvRelIn))
-//        SignalAnError(__FILE__, __LINE__, "read failed");
 		logToStdout(__FILE__, __LINE__, LOG_ERROR, "trTitTitInvRelIn read failed");
 
 
@@ -4676,7 +4731,6 @@ bool Marc4cppLegami::isRiferimentoLegame01MW_2(char *bid, char *bid_base) {
 	// Dall'offset del file delle relazioni andiamo a prendere la relazione titolo/titolo
 	trTitTitInvRelIn->SeekTo(offset);
 	if (!sPtr->ReadLineWithPrefixedMaxSize(trTitTitInvRelIn))
-//        SignalAnError(__FILE__, __LINE__, "read failed");
 		logToStdout(__FILE__, __LINE__, LOG_ERROR, "trTitTitInvRelIn read failed");
 
 

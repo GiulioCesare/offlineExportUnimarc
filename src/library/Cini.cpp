@@ -102,7 +102,6 @@ OrsBool cIni::SplitIniFields(OrsChar *ptr)
     	{
 		if	(IniFields == OrsMAX_INI_PARAM) // -1
 			{
-//	        SignalAnError(__FILE__, __LINE__, "Troppi IniFields. Max %d", IniFields);
 	        logToStdout(__FILE__, __LINE__, LOG_ERROR, "Troppi IniFields. Max %d", IniFields);
 			return OrsFALSE;
 			}
@@ -147,7 +146,6 @@ OrsBool cIni::SplitIniFields(OrsChar *ptr)
 			{
 			if	(Len == OrsMAX_EXPRESS_LEN)
 				{
-//		        SignalAnError(__FILE__, __LINE__, "Espressione troppo lunga. Max %d", Len);
 		        logToStdout(__FILE__, __LINE__, LOG_ERROR, "Espressione troppo lunga. Max %d", Len);
                 return OrsFALSE;
 				}

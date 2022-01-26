@@ -8,3 +8,8 @@ offlineExportUnimarc
 *.o
 offlineExportUnimarc.launch
 /Debug/
+/doxygen/
+/extract_doc_from_source/steps/
+doxygen_log.txt
+Doxyfile
+

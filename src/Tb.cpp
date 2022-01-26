@@ -91,7 +91,6 @@ void Tb::init()
 		sPtr = new CString();
 		if (!sPtr)
 		{
-//		    SignalAnError(__FILE__, __LINE__, "failed to instantiate string for entry: %d", i);
 			logToStdout(__FILE__, __LINE__, LOG_ERROR, "failed to instantiate string for entry: %d", i);
 		    break;
 		}
@@ -244,7 +243,6 @@ char * Tb::getField(int aFieldId)
 		return fieldsVector->Entry(aFieldId)->data();
 	else
 	{
-//    SignalAnError(__FILE__, __LINE__, "Tb::getField: n out of range: %d", aFieldId);
 	logToStdout(__FILE__, __LINE__, LOG_ERROR, "Tb::getField: n out of range: %d", aFieldId);
 	return (char *)"";
 	}
@@ -263,7 +261,6 @@ int Tb::getFieldLength(int aFieldId)
 		return fieldsVector->Entry(aFieldId)->Length();
 	else
 	{
-//    SignalAnError(__FILE__, __LINE__, "Tb::getFieldLength: n out of range: %d", aFieldId);
 	logToStdout(__FILE__, __LINE__, LOG_ERROR, "Tb::getField: n out of range: %d", aFieldId);
 	return 0;
 	}
@@ -282,7 +279,6 @@ CString * Tb::getFieldString(int aFieldId)
 		return fieldsVector->Entry(aFieldId);
 	else
 	{
-//    SignalAnError(__FILE__, __LINE__, "Tb::getField: n out of range: %d", aFieldId);
 	logToStdout(__FILE__, __LINE__, LOG_ERROR, "Tb::getField: n out of range: %d", aFieldId);
 	return 0;
 	}
@@ -388,7 +384,6 @@ bool Tb::existsRecordNonUnique(const char *key)
 		}
 		else
 		{
-//			SignalAnError(__FILE__, __LINE__, "OFFSET type not 4(long) or 8(long long) %d", offsetLen);
 			logToStdout(__FILE__, __LINE__, LOG_ERROR, "OFFSET type not 4(long) or 8(long long) %d", offsetLen);
 			return false;
 		}
@@ -438,7 +433,6 @@ bool Tb::existsRecord(const char *key)
 
 	if (!retb)
 	{
-//		SignalAnError(__FILE__, __LINE__, "Record Tb950Ese non trovato per bid '%s'", bid);
 		return false;
 	}
 
@@ -471,7 +465,6 @@ bool Tb::existsRecord(const char *key)
 		}
 		else
 		{
-//			SignalAnError(__FILE__, __LINE__, "OFFSET type not 4(long) or 8(long long) %d", offsetLen);
 			logToStdout(__FILE__, __LINE__, LOG_ERROR, "OFFSET type not 4(long) or 8(long long) %d", offsetLen);
 			return false;
 		}
@@ -602,7 +595,6 @@ bool Tb::loadRecord(const char *key)
 
 	if (!retb)
 	{
-//	    SignalAnError(__FILE__, __LINE__, "Record non trovato per chiave %s", key);
 		// attivato solo in classe derivata
 		return false;
 	}
@@ -631,7 +623,6 @@ bool Tb::loadRecord(const char *key)
 		}
 		else
 		{
-//			SignalAnError(__FILE__, __LINE__, "OFFSET type not 4(long) or 8(long long) %d", offsetLen);
 			logToStdout(__FILE__, __LINE__, LOG_ERROR, "OFFSET type not 4(long) or 8(long long) %d", offsetLen);
 			return false;
 		}
@@ -780,7 +771,6 @@ bool Tb::loadNextRecordDaIndice(const char *key)
 		}
 		else
 		{
-//			SignalAnError(__FILE__, __LINE__, "OFFSET type not 4(long) or 8(long long) %d", offsetLen);
 			logToStdout(__FILE__, __LINE__, LOG_ERROR, "OFFSET type not 4(long) or 8(long long) %d", offsetLen);
 			return false;
 		}

@@ -47,7 +47,6 @@ char * TbReticolo::getField(int aFieldId) {
 	if (aFieldId < fieldsVector->Length())
 		return fieldsVector->Entry(aFieldId)->data();
 	else {
-//		SignalAnError(__FILE__, __LINE__, "TbReticolo::getField: n out of range: %d", aFieldId);
 		logToStdout(__FILE__, __LINE__, LOG_ERROR, "TbReticolo::getField: n out of range: %d", aFieldId);
 		return (char *)"";
 	}
@@ -57,7 +56,6 @@ CString * TbReticolo::getFieldString(int aFieldId) {
 	if (aFieldId < fieldsVector->Length())
 		return fieldsVector->Entry(aFieldId);
 	else {
-//		SignalAnError(__FILE__, __LINE__, "TbReticolo::getField: n out of range: %d", aFieldId);
 		logToStdout(__FILE__, __LINE__, LOG_ERROR, "TbReticolo::getField: n out of range: %d", aFieldId);
 		return 0;
 	}

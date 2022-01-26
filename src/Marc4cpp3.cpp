@@ -51,7 +51,6 @@ bool  Marc4cpp::loadTbfBibliotecaInPoloRecords(char *tbfBibliotecaInPoloFilename
 	tbfBibliotecaInPoloIn = new CFile(tbfBibliotecaInPoloFilename, AL_READ_FILE);
 	if (!tbfBibliotecaInPoloIn)
 	{
-//	    SignalAnError(__FILE__, __LINE__, "Cannot open %s", tbfBibliotecaInPoloFilename);
 	    logToStdout(__FILE__, __LINE__, LOG_ERROR, "Cannot open %s", tbfBibliotecaInPoloFilename);
 		return false;
 	}
@@ -175,7 +174,6 @@ printf ("\nAPRI FILE RELAZIONI: %s", sPtr->data());
 
 		else
 		{
-//		    SignalAnError(__FILE__, __LINE__, "Relazione %s non identificata", tabella);
 		    logToStdout(__FILE__, __LINE__, LOG_ERROR, "Relazione %s non identificata", tabella);
 			return false;
 		}
@@ -1692,7 +1690,6 @@ try {
 
 		else
 		{
-//		    SignalAnError(__FILE__, __LINE__, "File offset %s non identificato", tabella);
 		    logToStdout(__FILE__, __LINE__, LOG_ERROR, "File offset %s non identificato", tabella);
 			return false;
 		}
@@ -1707,7 +1704,7 @@ bool  Marc4cpp::loadTbcSezioneCollocazione(char *polo) // char *tbcSezioneColloc
 //  tbcSezioneCollocazioneIn = new CFile(tbcSezioneCollocazioneFilename, AL_READ_FILE);
 //  if (!tbcSezioneCollocazioneIn)
 //  {
-//      SignalAnError(__FILE__, __LINE__, "Cannot open %s", tbcSezioneCollocazioneFilename);
+//      logToStdout(__FILE__, __LINE__, "Cannot open %s", tbcSezioneCollocazioneFilename);
 //      return false;
 //  }
 
@@ -1964,7 +1961,6 @@ printf ("\nAPRI FILE ENTITA': %s", sPtr->data());
 
 		else
 		{
-//		    SignalAnError(__FILE__, __LINE__, "Entita %s non identificata", tabella);
 		    logToStdout(__FILE__, __LINE__, LOG_ERROR, "Entita %s non identificata", tabella);
 			return false;
 

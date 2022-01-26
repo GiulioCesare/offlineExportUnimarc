@@ -70,7 +70,6 @@ bool TbLuogo::loadRecord(const char *key)
 //printf ("\nFINE TbLuogo::loadRecord\n-------------------");
 	if (!retb)
 	{
-//	    SignalAnError(__FILE__, __LINE__, "Record non trovato per chiave %s", key);
 		logToStdout(__FILE__, __LINE__, LOG_INFO, "Record non trovato per chiave %s", key);
 		return false;
 	}
@@ -85,7 +84,6 @@ bool TbLuogo::loadRecord(const char *key)
 
 	if (!this->loadRecordFromOffset(offset))
 		{
-//		SignalAnError(__FILE__, __LINE__, "Next record non trovato per offset %l", offset);
 		logToStdout(__FILE__, __LINE__, LOG_INFO, "Next record non trovato per offset %l", offset);
 		return false;
 		}

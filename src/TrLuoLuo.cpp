@@ -58,8 +58,6 @@ bool TrLuoLuo::loadRecord(const char *key)
 
 	if (!Tb::loadRecord(key))
 	{
-//		SignalAnError(__FILE__, __LINE__, "Derived class TrLuoLuo::loadRecord key=%s",key);
-//	    SignalAnError(__FILE__, __LINE__, "Record non trovato per chiave %s", key);
 		logToStdout(__FILE__, __LINE__, LOG_INFO, "Record non trovato per chiave %s", key);
 		return false;
 	}
@@ -124,7 +122,6 @@ bool TrLuoLuo::loadNextRecordDaIndice(const char *key, bool inverted)
 		}
 		else
 		{
-//			SignalAnError(__FILE__, __LINE__, "OFFSET type not 4(long) or 8(long long) %d", offsetLen);
 			logToStdout(__FILE__, __LINE__, LOG_ERROR, "OFFSET type not 4(long) or 8(long long) %d", offsetLen);
 			return false;
 		}

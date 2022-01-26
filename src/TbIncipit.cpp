@@ -84,8 +84,6 @@ bool TbIncipit::loadRecord(const char *key)
 
 	if (!Tb::loadRecord(key))
 	{
-//		SignalAnError(__FILE__, __LINE__, "Derived class TbIncipit::loadRecord");
-//		SignalAnError(__FILE__, __LINE__, "Record non trovato per chiave %s", key);
 		logToStdout(__FILE__, __LINE__, LOG_INFO, "Record non trovato per chiave %s", key);
 		return false;
 	}

@@ -338,7 +338,6 @@ CFile::CFile( const char* name)
 		if (Filep == NULL)
 			{
 	//			RWThrow( RWErrObject(CORE_OPERR, RWDEFAULT, __CFile), Filename);
-//			SignalAnError(__FILE__, __LINE__, "CFile::CFile: bad filename");
 			logToStdout(__FILE__, __LINE__, LOG_ERROR, "CFile::CFile: bad filename");
 			}
 		}
@@ -459,11 +458,8 @@ void CFile::init(OrsInt aMode)
 
 	if (Filep == NULL)
 	{
-//	    SignalAnError(__FILE__, __LINE__, "CFile::CFile: Cannot open file %s", Filename);
-//		GenericError *genericError = new GenericError (__FILE__, __LINE__, IO_GENERICERROR_CODE, EXIT_ON_GENERICERROR_TRUE, "CFile::CFile: Cannot open file %s", Filename);
 		printf ("\nErrore in apertura di %s, errno=%d, errorMsg=%s", Filename, errno, strerror(errno));
 		throw (GenericError (__FILE__, __LINE__, IO_GENERICERROR_CODE, EXIT_ON_GENERICERROR_TRUE, "CFile::CFile: Cannot open file %s, errno=%d, errorMsg=%s", Filename, errno, strerror(errno)));
-//		throw (GenericError ("CFile::CFile: Cannot open file"));
 	}
 }
 

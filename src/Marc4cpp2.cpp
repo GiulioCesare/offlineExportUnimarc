@@ -393,7 +393,6 @@ void Marc4cpp::CreaReticoloAutoreAddNodeChildren(tree<std::string>* reticolo, tr
 		// Dall'offset del file delle relazioni andiamo a prendere la relazione titolo/titolo
 		trAutAutRelIn->SeekTo(offset);
 		if (!sPtr->ReadLineWithPrefixedMaxSize(trAutAutRelIn))
-//	        SignalAnError(__FILE__, __LINE__, "read failed");
 			logToStdout(__FILE__, __LINE__, LOG_ERROR, "trAutAutRelIn read failed");
 
 
@@ -401,7 +400,6 @@ void Marc4cpp::CreaReticoloAutoreAddNodeChildren(tree<std::string>* reticolo, tr
 		Tokenizer->Assign(sPtr->data());
 
 		Token = Tokenizer->GetToken(); // Remove root
-//		CString level = "1.";
 
 		while(*(Token = Tokenizer->GetToken()))
 		{
@@ -441,7 +439,6 @@ void Marc4cpp::CreaReticoloAutoreAddNodeChildren(tree<std::string>* reticolo, tr
 		// Dall'offset del file delle relazioni andiamo a prendere la relazione titolo/titolo
 		trAutAutRelInvIn->SeekTo(offset);
 		if (!sPtr->ReadLineWithPrefixedMaxSize(trAutAutRelInvIn))
-//	        SignalAnError(__FILE__, __LINE__, "read failed");
 			logToStdout(__FILE__, __LINE__, LOG_ERROR, "trAutAutRelInvIn read failed");
 
 
@@ -838,7 +835,6 @@ void Marc4cpp::CreaReticoloTitoloUniformeAddNodeChildren(tree<std::string>* reti
 		// Dall'offset del file delle relazioni andiamo a prendere la relazione titolo/titolo
 		trTitAutRelIn->SeekTo(offset);
 		if (!sPtr->ReadLineWithPrefixedMaxSize(trTitAutRelIn))
-//	        SignalAnError(__FILE__, __LINE__, "read failed");
 			logToStdout(__FILE__, __LINE__, LOG_ERROR, "trTitAutRelIn read failed");
 
 //#ifdef DEBUG_LEGAMI
@@ -897,7 +893,6 @@ void Marc4cpp::CreaReticoloTitoloUniformeAddNodeChildren(tree<std::string>* reti
 		// Dall'offset del file delle relazioni andiamo a prendere la relazione titolo/titolo
 		trTitTitRelIn->SeekTo(offset);
 		if (!sPtr->ReadLineWithPrefixedMaxSize(trTitTitRelIn))
-//	        SignalAnError(__FILE__, __LINE__, "read failed");
 			logToStdout(__FILE__, __LINE__, LOG_ERROR, "trTitTitRelIn read failed");
 
 //#ifdef DEBUG_LEGAMI
@@ -1046,7 +1041,6 @@ void Marc4cpp::CreaReticoloLuogoAddNodeChildren(tree<std::string>* reticolo, tre
 		// Dall'offset del file delle relazioni andiamo a prendere la relazione titolo/titolo
 		trLuoLuoRelIn->SeekTo(offset);
 		if (!sPtr->ReadLineWithPrefixedMaxSize(trLuoLuoRelIn))
-//	        SignalAnError(__FILE__, __LINE__, "read failed");
 			logToStdout(__FILE__, __LINE__, LOG_ERROR, "trLuoLuoRelIn read failed");
 
 
@@ -1092,7 +1086,6 @@ void Marc4cpp::CreaReticoloLuogoAddNodeChildren(tree<std::string>* reticolo, tre
 		// Dall'offset del file delle relazioni andiamo a prendere la relazione luogo/luogo
 		trLuoLuoRelInvIn->SeekTo(offset);
 		if (!sPtr->ReadLineWithPrefixedMaxSize(trLuoLuoRelInvIn))
-//	        SignalAnError(__FILE__, __LINE__, "read failed");
 			logToStdout(__FILE__, __LINE__, LOG_ERROR, "trLuoLuoRelInvIn read failed");
 
 

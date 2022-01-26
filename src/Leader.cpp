@@ -232,85 +232,142 @@ char Leader::getTipoDiCatalogazioneDescrittiva()
 
 
 /*!
-\brief <b>Tag LDR - Leader</b>
+\brief <b>Tag LDR - Record leader</b>
+
+
 <table>
 <tr>
-<th valign=top>Definizione</th><th>Descrizione</th></tr>
-<tr><td valign=top>Tag</td><td>LDR</td></tr>
-<tr><td valign=top>Descrizione</td><td>Leader</td></tr>
-<tr><td valign=top>Obligatorieta'</td><td>Obbligatorio</td></tr>
-<tr><td valign=top>Ripetibilita'</td><td>Non ripetibile</td></tr>
+<th valign=top>Definizione</th><th >Descrizione leader Bibliografico</th><th>Descrizione leader Authority</th></tr>
+<tr><td valign=top>Tag</td><td>LDR</td><td>LDR</td></tr>
+<tr><td valign=top>Descrizione</td><td><b>Bibliographic record leader</b></td><td><b>Authority record leader</b></td></tr>
+<tr><td valign=top>Obligatorieta'</td><td>Obbligatorio</td><td>Obbligatorio</td></tr>
+<tr><td valign=top>Ripetibilita'</td><td>Non ripetibile</td><td>Non ripetibile</td></tr>
 
  <tr><td valign=top>Sottocampi</td>
-    <td>
-    <UL>
-        <li> Posizione 00-04: Lunghezza record
-        <li> Posizione     5: Stato del record
-            <UL>
-                   <li> d Cancellato (non usato per scarichi OPAC)
-                   <li> n Nuovo
+    <td><!-- Leader BIBLIOGRAPHY -->
+	<UL>
+    <li> Posizione 0-4: Lunghezza record</li>
+    <li> Posizione 5: Stato del record</li>
+        <UL></li>
+               <li> d Cancellato</li>
+               <li> n Nuovo</li>
 <!--
-                   <li> c Corretto
-                   <li> o Record a livello piu' alto
-                   <li> p Precedentemente incompleto
--->
-            </UL>
+               <li> c Corretto</li>
+               <li> o Record a livello piu' alto</li>
+               <li> p Precedentemente incompleto</li>
+!-->
+    </ul>
+    <li> Codici di implementazione:</li>
+    <ul>
+    <li> Posizione 6: Tipo record</li>
+        <UL>
+               <li> a Materiale a stampa</li>
+               <li> b Materiale manoscritto</li>
+               <li> c Spartiti musicali a stampa</li>
+               <li> d Spartiti musicali manoscritti</li>
+               <li> e Materiale cartografico a stampa</li>
+               <li> f Materiale cartografico manoscritto</li>
+               <li> g Video</li>
+               <li> i Audio registrazioni, esecuzioni non musicali</li>
+               <li> j Audio registrazioni, esecuzioni musicali</li>
+               <li> k Grafica bidimensionale (disegni, dipinti etc.)</li>
+               <li> l Computer media</li>
+               <li> m Multimedia</li>
+               <li> r Opere d'arte tridimensionali</li>
+               <li> u Non valorizzato</li>
+        </UL>
 
-        <li> Posizione     6: Tipo record
-            <UL>
-                   <li> a Materiale a stampa
-                   <li> b Materiale manoscritto
-                   <li> c Spartiti musicali a stampa
-                   <li> d Spartiti musicali manoscritti
-                   <li> e Materiale cartografico a stampa
-                   <li> f Materiale cartografico manoscritto
-                   <li> g Video
-                   <li> i Audio registrazioni, esecuzioni non musicali
-                   <li> j Audio registrazioni, esecuzioni musicali
-                   <li> k Grafica bidimensionale (disegni, dipinti etc.)
-                   <li> l Computer media
-                   <li> m Multimedia
-                   <li> r Opere d'arte tridimensionali
-                   <li> u Non valorizzato
-            </UL>
+    <li> Posizione 7: Livello bibliografico</li>
+        <UL>
+               <li> a Analitico</li>
+               <li> m Monografia</li>
+               <li> s Seriale / Collane</li>
+               <!-- <li> c Collezioni fattizie -->
+        </UL>
 
-        <li> Posizione     7: Livello bibliografico
-            <UL>
-                   <li> a Analitico
-                   <li> m Monografia
-                   <li> s Seriale / Collane
-                   <!-- <li> c Collezioni fattizie -->
-            </UL>
+    <li> Posizione 8: Livello gerarchico
+        <UL>
+               <li> # Non definito</li>
+               <li> 0 Senza relazione gerarchica</li>
+               <li> 1 Livello piu' alto</li>
+               <li> 2 Al di sotto del livello piu' alto</li>
+        </UL>
+    <li> Posizione 9: Non definita</li>
+    </ul>
+    <li> Posizione 10: Lunghezza degli indicatori (2)</li>
+    <li> Posizione 11: Lunghezza identificatore di sottocampo</li>
+    <li> Posizione 12-16: Indirizzo inizio dati</li>
+    <li> Posizione 17: Livello di codifica</li>
+        <UL>
+               <li> # Completamente codificato</li>
+               <li> 1 Codifica senza l'esame del documento</li>
+               <li> 2 CIP</li>
+               <li> 3 Sottolivello 3</li>
+        </UL>
+    <li> Posizione    18: Tipo di catalogazione descrittiva</li>
+        <UL>
+               <li> # Interamente conforme ISBD</li>
+               <li> i Parzialmente conforme ISBD</li>
+               <li> n Non conforme ISBD</li>
+        </UL>
+</UL>
+    </td>
+    <td valign=top> <!-- Leader AUTHORITY -->
+	<UL>
+    <li> Posizione 0-4: Lunghezza record</li>
+    <li> Posizione 5: Stato del record</li>
+        <UL>
+               <li> d Cancellato</li>
+               <li> n Nuovo</li>
+    	</ul>
+    <li> Codici di implementazione:</li>
+    <ul>
+    <li> Posizione 6: Tipo record</li>
+        <UL>
+               <li> x = authority entry record</li>
+               <li> y = reference entry record</li>
+               <li> z = general explanatory entry record</li>
+        </UL>
+	</ul>
+    <li> Posizione 7-8: Non definiti</li>
 
-        <li> Posizione     8: Livello gerarchico
-            <UL>
-                   <li> # Non definito
-                   <li> 0 Senza relazione gerarchica
-                   <li> 1 Livello piu' alto
-                   <li> 2 Al di sotto del livello piu' alto
-            </UL>
-
-        <li> Posizione     9: Non definita
-        <li> Posizione    10: Contatore di indicatori (sempre 2 in unimarc)
-        <li> Posizione    11: Lunghezza codice di sottocampo (sempre 2 in unimarc)
-        <li> Posizione 12-16: Indirizzo base dei dati
-        <li> Posizione    17: Livello di codifica
-            <UL>
-                   <li> # Completamente codificato
-                   <li> 1 Codifica senza l'esame del documento
-                   <li> 2 CIP
-                   <li> 3 Sottolivello 3
-            </UL>
-
-        <li> Posizione    18: Tipo di catalogazione descrittiva
-            <UL>
-                   <li> # Interamente conforme ISBD
-                   <li> i Parzialmente conforme ISBD
-                   <li> n Non conforme ISBD
-            </UL>
+    <li> Posizione 9: Type of entity.</li>
+		<ul>
+		<li>a personal name entry</li>
+		<li>b corporate name entry</li>
+		<li>c territorial or geographical name</li>
+		<li>d trademark</li>
+		<li>e family name</li>
+		<li>f uniform title</li>
+		<li>g collective uniform title</li>
+		<li>h name/title</li>
+		<li>i name/collective uniform title</li>
+		<li>j topical subject</li>
+		<li>k place access</li>
+		<li>l form, genre or physical characteristics</li>
+		</ul>
+    <li> Posizione 10: Lunghezza degli indicatori (2)</li>
+    <li> Posizione 11: Lunghezza identificatore di sottocampo</li>
+    <li> Posizione 12-16: Indirizzo inizio dati</li>
+	<li> Posizione 17-19: Additional Record Definition</li>
+		<ul>
+		<li>Posizione 17: Encoding Level.</li>
+		<ul>
+		  <li># = full.</li>
+		  <li>3 = partial.</li>
+		</ul>
+		<li>Posizione 18-19: Undefined. Two blanks</li>
+		</ul>
+	<li>Posizione 20-23: Directory Map.</li>
+	<ul>
+		<li>Posizione 20: Length of "length of field"</li>
+		<li>Posizione 21: Length of "starting character position".</li>
+		<li>Posizione 22-23: Undefined. Two blanks.</li>
+	</ul>
     </UL>
-    </td></tr>
- <tr><td valign=top>NOTE</td><td></td></tr>
+    </td>
+    </tr>
+ <tr><td valign=top>NOTE</td><td></td><td></td></tr>
 </table>
 */
 void Leader::buildLeader()

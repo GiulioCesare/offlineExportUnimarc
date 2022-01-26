@@ -146,7 +146,6 @@ OrsBool CBufferedData::InsertCharAt(OrsChar aChar, OrsInt Pos)
 	// Siamo in range?
 	if	(Pos < 0 || Pos > (UsedBytes+1))
 		{
-//	    SignalAnError(__FILE__, __LINE__, "InsertCharAt: out of range");
 	    logToStdout(__FILE__, __LINE__, LOG_ERROR, "InsertCharAt: out of range");
 		return OrsFALSE;
 		}
@@ -230,7 +229,6 @@ OrsBool	CBufferedData::MoveRightBy(OrsInt n)
 	// In range?
 	if	(n < 0)
 		{
-//	    SignalAnError(__FILE__, __LINE__, "MoveRightBy: n out of range");
 	    logToStdout(__FILE__, __LINE__, LOG_ERROR, "MoveRightBy: n out of range");
 		return OrsFALSE;
 		}
@@ -238,7 +236,6 @@ OrsBool	CBufferedData::MoveRightBy(OrsInt n)
 	// Enough room on the right to allow move?
 	if	(n > UnusedRightBytes)
 		{
-//	    SignalAnError(__FILE__, __LINE__, "MoveRightBy: free space on the right non enough");
 	    logToStdout(__FILE__, __LINE__, LOG_ERROR, "MoveRightBy: free space on the right non enough");
 		return OrsFALSE;
 		}
@@ -246,8 +243,6 @@ OrsBool	CBufferedData::MoveRightBy(OrsInt n)
 	// Something to move?
 	if	(!UsedBytes)
 		{
-//	    SignalAnError(__FILE__, __LINE__, "MoveRightBy: Buffer holds no data");
-//		return OrsFALSE;
 		return OrsTRUE;
 		}
 
@@ -278,7 +273,6 @@ OrsBool	CBufferedData::MoveRightFromBy(OrsInt Pos, OrsInt n)
 	// In range?
 	if	(n < 0 || Pos > UsedBytes)
 		{
-//	    SignalAnError(__FILE__, __LINE__, "MoveRightBy: n out of range");
 	    logToStdout(__FILE__, __LINE__, LOG_ERROR, "MoveRightBy: n out of range");
 		return OrsFALSE;
 		}
@@ -286,7 +280,6 @@ OrsBool	CBufferedData::MoveRightFromBy(OrsInt Pos, OrsInt n)
 	// Enough room on the right to allow move?
 	if	(n > UnusedRightBytes)
 		{
-//	    SignalAnError(__FILE__, __LINE__, "MoveRightBy: free space on the right non enough");
 	    logToStdout(__FILE__, __LINE__, LOG_ERROR, "MoveRightBy: free space on the right non enough");
 		return OrsFALSE;
 		}
@@ -398,7 +391,6 @@ OrsBool CBufferedData::MakeNewBuffer(OrsInt Size)
 	Buffer = (OrsChar *)malloc (Size);
 	if	(!Buffer)
 		{
-//	    SignalAnError(__FILE__, __LINE__, "CBufferedData calloc failed");
 	    logToStdout(__FILE__, __LINE__, LOG_ERROR, "CBufferedData calloc failed");
 		return OrsFALSE;
 		}
@@ -427,7 +419,6 @@ OrsBool CBufferedData::GrowBuffer(OrsInt GrowBy)
 	ReallocatedBufPtr = (OrsChar *) realloc(Buffer, Size);
 	if	(!ReallocatedBufPtr)
 		{
-//	    SignalAnError(__FILE__, __LINE__, "CBufferedData realloc failed, oldSize=%d, newSize=%d", BufSize, Size);
 	    logToStdout(__FILE__, __LINE__, LOG_ERROR, "CBufferedData realloc failed, oldSize=%d, newSize=%d", BufSize, Size);
 		return OrsFALSE;
 		}
@@ -490,7 +481,6 @@ OrsBool CBufferedData::InsertBinaryDataAt(const OrsUChar *aBinaryBuf, OrsInt Siz
 	// Siamo in range?
 	if	(Pos < 0 || Pos > (UsedBytes+1))
 		{
-//	    SignalAnError(__FILE__, __LINE__, "InsertCharAt: out of range");
 	    logToStdout(__FILE__, __LINE__, LOG_ERROR, "InsertCharAt: out of range");
 		return OrsFALSE;
 		}

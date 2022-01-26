@@ -153,7 +153,6 @@ if (aFieldId < fieldsVector->Length())
 	return fieldsVector->Entry(aFieldId)->data();
 else
 {
-//SignalAnError(__FILE__, __LINE__, "TrTitoloCollocazione::getField: n out of range: %d", aFieldId);
 logToStdout(__FILE__, __LINE__, LOG_INFO, "TrTitoloCollocazione::getField: n out of range: %d", aFieldId);
 
 return (char *)"";
@@ -235,8 +234,6 @@ bool Tb950Coll::loadRecord(char *key)
 
 	if (!retb)
 	{
-//		SignalAnError(__FILE__, __LINE__, "Record trTitoloCollocazione non trovato per bid %s", key);
-//		SignalAnError(__FILE__, __LINE__, "Record non trovato per chiave %s", key);
 		logToStdout(__FILE__, __LINE__, LOG_INFO, "Record non trovato per chiave %s", key);
 	return false;
 	}
@@ -280,7 +277,7 @@ bool Tb950Coll::existsRecord(char *bid)
 
 	if (!retb)
 	{
-		//SignalAnError(__FILE__, __LINE__, "Record trTitoloCollocazione non trovato per bid %s", bid);
+		//logToStdout(__FILE__, __LINE__, "Record trTitoloCollocazione non trovato per bid %s", bid);
 		return false;
 	}
 
@@ -372,7 +369,6 @@ long Tb950Coll::existsRecordByKeyLoc(char *keyLoc)
 
 	if (!retb)
 	{
-//		SignalAnError(__FILE__, __LINE__, "Record trTitoloCollocazione non trovato per bid %s", bid);
 		logToStdout(__FILE__, __LINE__, LOG_DEBUG, "Record non trovato per chiave %s", keyLoc);
 		return false;
 	}

@@ -1,0 +1,45 @@
+/*!
+\brief <b>Tag ... - desc</b>
+
+ [ authority autore, soggetto, luogo, titolo uniforme, documento ]
+ <table>
+ <tr>
+ <th valign=top>Definizione</th><th>Descrizione</th></tr>
+ <tr><td valign=top>Tag</td><td>...</td></tr>
+ <tr><td valign=top>Descrizione</td><td>...</td></tr>
+ <tr><td valign=top>Obbligatorieta'</td><td>...</td></tr>
+ <tr><td valign=top>Ripetibilita'</td><td>...</td></tr>
+ <tr><td valign=top>Indicatore 1</td><td>...</td></tr>
+ <tr><td valign=top>Indicatore 2</td><td>...</td></tr>
+  <tr><td valign=top>Sottocampi</td>
+  <td>
+    <ul>
+     <li></li>
+    </ul>
+  </td>
+  </tr>
+  <tr><td valign=top>Formato</td>
+     <td>
+     </td>
+     </tr>
+  <tr><td valign=top>NOTE</td>
+     <td></td></tr>
+ </table>
+ */
+
+
+
+      <li>Name of Data Element Number of Characters Character Position</li>
+      
+      <li>0-7 Date entered on file (Mandatory)</li>
+      <li> -8 Status of authority heading code</li>
+<li>9-11 Language of cataloguing (Mandatory)</li>
+<li>12 Transliteration code</li>
+<li>13-16 Character set (Mandatory)</li>
+<li>17-20 Additional character set</li>
+<li>21-22 Script of cataloguing</li>
+<li>23 Direction of script of cataloguing</li>
+
+
+
+Status of authority heading code

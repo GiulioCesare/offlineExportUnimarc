@@ -44,7 +44,6 @@ void Record::init()
 		sPtr = new CString();
 		if (!sPtr)
 		{
-//		    SignalAnError(__FILE__, __LINE__, "failed to instantiate string for entry: %d", i);
 			logToStdout(__FILE__, __LINE__, LOG_ERROR, "failed to instantiate string for entry: %d", i);
 		    break;
 		}
@@ -76,7 +75,6 @@ char * Record::getField(int aFieldId)
 		return fieldsVector->Entry(aFieldId)->data();
 	else
 	{
-//    SignalAnError(__FILE__, __LINE__, "Tb::getField: n out of range: %d", aFieldId);
 	logToStdout(__FILE__, __LINE__, LOG_ERROR, "Tb::getField: n out of range: %d", aFieldId);
 	return (char *)"";
 	}
@@ -88,7 +86,6 @@ CString * Record::getFieldString(int aFieldId)
 		return fieldsVector->Entry(aFieldId);
 	else
 	{
-//    SignalAnError(__FILE__, __LINE__, "Tb::getField: n out of range: %d", aFieldId);
 	logToStdout(__FILE__, __LINE__, LOG_ERROR, "Tb::getField: n out of range: %d", aFieldId);
 	return 0;
 	}

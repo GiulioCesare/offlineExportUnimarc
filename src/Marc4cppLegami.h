@@ -185,7 +185,7 @@ class Marc4cppLegami {
     DataField * creaLegameTitoloLuogo(char *entryReticoloPtr, int pos);
     DataField * creaLegameTitoloMarca(char *entryReticoloPtr, int pos);
     DataField * creaLegameTitoloSoggetto(char *entryReticoloPtr, int pos);
-    DataField * creaLegameDescrittoreDescrittore();
+    DataField * creaTag696_LegameDescrittoreDescrittore();
     void creaLegameSoggettoVariante();	// 15/01/2018
     DataField * creaSoggettoVarianteSS(CString *key_des,  CKeyValueVector *variantiKV, DataField *df, int idx, char subfieldID); // 03/04/2018
 //    void creaSoggettoCompostoNonPreferito(CKeyValueVector *scomposizioniKVV); // , DataField * df

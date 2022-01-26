@@ -574,6 +574,53 @@ bool Marc4cppLegamiAuthority::haResponsabilitaPrincipale(const tree<std::string>
 
 
 */
+
+/*!
+\brief <b>Tag 400 - Rinvio autore personale</b>
+
+ [ authority autore ]
+ <table>
+ <tr>
+ <th valign=top>Definizione</th><th>Descrizione</th></tr>
+ <tr><td valign=top>Tag</td><td>400</td></tr>
+ <tr><td valign=top>Descrizione</td><td>Rinvio autore personale</td></tr>
+ <tr><td valign=top>Obbligatorieta'</td><td>Optional</td></tr>
+ <tr><td valign=top>Ripetibilita'</td><td>Repeatable</td></tr>
+ <tr><td valign=top>Indicatore 1</td><td>blank</td></tr>
+ <tr><td valign=top>Indicatore 2</td><td>
+    <ul>
+     <li>0 - Name entered under forename or direct order</li>
+     <li>1 - Name entered under surname</li>
+    </ul>
+ </td></tr>
+  <tr><td valign=top>Sottocampi</td>
+  <td>
+    <ul>
+     <li>a - Entry element. Not repeatable.</li>
+     <li>b - Part of name other than entry element. Not repeatable.</li>
+     <li>c - Additions to names other than dates. Repeatable.</li>
+     <li>d - Roman numerals. Not repeatable.</li>
+     <li>f - Dates. Not repeatable.</li>
+     <li>g - Expansion of initials of forename. Not repeatable.</li>
+     <li>4 - Relator code. Repeatable.</li>
+     <li>j - Form subdivision. Repeatable.</li>
+     <li>x - Topical subdivision. Repeatable.</li>
+     <li>y - Geographical subdivision. Repeatable</li>
+     <li>z - Chronological subdivision. Repeatable.</li>
+     <li>0 - Instruction phrase. Not repeatable.</li>
+     <li>2 - Subject system code. Not repeatable.</li>
+     <li>3 - Authority record identifier. Not repeatable.</li>
+     <li>5 - Tracing control. Not repeatable.</li>
+     <li>6 - Interfield linking data. Not repeatable.</li>
+     <li>7 - Script of cataloguing and script of the base heading. Not repeatable.</li>
+     <li>8 - Language of cataloguing and language of the base heading. Not repeatable.</li>
+    </ul>
+  </td>
+  </tr>
+  <tr><td valign=top>Formato</td><td></td></tr>
+  <tr><td valign=top>NOTE</td><td></td></tr>
+ </table>
+ */
 DataField * Marc4cppLegamiAuthority::creaTag400_RinvioAutorePersonale(TbAutore * tbAutoreRinvio)
 	{
 	DataField *df;
@@ -590,7 +637,61 @@ DataField * Marc4cppLegamiAuthority::creaTag400_RinvioAutorePersonale(TbAutore *
 
 
 
+/*!
+\brief <b>Tag 500 - Vedi anche autore personale</b>
 
+ [ authority autore ]
+ <table>
+ <tr>
+ <th valign=top>Definizione</th><th>Descrizione</th></tr>
+ <tr><td valign=top>Tag</td><td>500</td></tr>
+ <tr><td valign=top>Descrizione</td><td>This field contains the tracing for a uniform personal name heading that is related to the heading in the 2-- field</td></tr>
+ <tr><td valign=top>Obbligatorieta'</td><td>Optional.</td></tr>
+ <tr><td valign=top>Ripetibilita'</td><td>Repeatable.</td></tr>
+ <tr><td valign=top>Indicatore 1</td><td>Blank</td></tr>
+ <tr><td valign=top>Indicatore 2</td>
+  <td>specifies the way the name is entered
+    <ul>
+     <li>0 - Name entered under forename or direct order</li>
+     <li>1 - Name entered under surname</li>
+    </ul>
+  </td>
+ </tr>
+  <tr><td valign=top>Sottocampi</td>
+  <td>
+    <ul>
+		<li>a - Entry element Not repeatable.</li>
+		<li>b - Part of name other than entry element Not repeatable.</li>
+		<li>c - Additions to names other than dates Repeatable.</li>
+		<li>d - Roman numerals Not repeatable.</li>
+		<li>f - Dates Not repeatable.</li>
+		<li>g - Expansion of initials of forename Not repeatable.</li>
+		<li>4 - Relator code Repeatable.</li>
+		<li>j - Form subdivision Repeatable.</li>
+		<li>x - Topical subdivision Repeatable.</li>
+		<li>y - Geographical subdivision Repeatable.</li>
+		<li>z - Chronological subdivision Repeatable.</li>
+	</ul>
+	Control Subfields
+	<ul>
+		<li>0 - Instruction phrase Not repeatable.</li>
+		<li>2 - Subject system code Not repeatable.</li>
+		<li>3 - Authority record identifier Not repeatable.</li>
+		<li>5 - Tracing control Not repeatable.</li>
+		<li>6 - Interfield linking data Not repeatable.</li>
+		<li>7 - Script of cataloguing and script of the base heading Not repeatable.</li>
+		<li>8 - Language of cataloguing and language of the base heading Not repeatable</li>
+    </ul>
+  </td>
+  </tr>
+  <tr><td valign=top>Formato</td>
+     <td>
+     </td>
+     </tr>
+  <tr><td valign=top>NOTE</td>
+     <td>...</td></tr>
+ </table>
+ */
 DataField * Marc4cppLegamiAuthority::creaTag500_VediAncheAutorePersonale(TbAutore * tbAutoreRinvio)
 	{
 	DataField *df;
@@ -676,7 +777,6 @@ DataField * Marc4cppLegamiAuthority::creaTag_81xRepertorio(char *tag)
 	}
 	else
 	{
-//		SignalAnError(__FILE__, __LINE__, "\nRepertorio %s non trovato nella tabella dei repertori", repertorio.data());
 		logToStdout(__FILE__, __LINE__, LOG_ERROR, "Repertorio %s non trovato nella tabella dei repertori", repertorio.data());
 	}
 
@@ -718,7 +818,6 @@ DataField * Marc4cppLegamiAuthority::creaTag_81xLuogoRepertorio(char *tag)
 	}
 	else
 	{
-//		SignalAnError(__FILE__, __LINE__, "\nRepertorio %s non trovato nella tabella dei repertori", repertorio.data());
 		logToStdout(__FILE__, __LINE__, LOG_ERROR, "Repertorio %s non trovato nella tabella dei repertori", repertorio.data());
 	}
 
@@ -753,7 +852,6 @@ DataField * Marc4cppLegamiAuthority::creaTag_81xRepertorio_Titolo(char *tag)
 	}
 	else
 	{
-//		SignalAnError(__FILE__, __LINE__, "\nRepertorio %s non trovato nella tabella dei repertori", repertorio.data());
 		logToStdout(__FILE__, __LINE__, LOG_ERROR, "Repertorio %s non trovato nella tabella dei repertori", repertorio.data());
 	}
 
@@ -826,7 +924,6 @@ void Marc4cppLegamiAuthority::creaLegamiSoggettoDescrittori()
 				retb = tbDescrittore->loadRecord(trSogDes->getField(trSogDes->did)); // Carica il record del descrittore
 				if (!retb)
 				{
-//					SignalAnError(__FILE__, __LINE__, "\nDescrittore % s per soggetto %s", trSogDes->getField(trSogDes->did), cid);
 					logToStdout(__FILE__, __LINE__, LOG_ERROR, "Descrittore % s per soggetto %s", trSogDes->getField(trSogDes->did), cid);
 					continue;
 				}
@@ -843,6 +940,65 @@ void Marc4cppLegamiAuthority::creaLegamiSoggettoDescrittori()
 
 
 
+/*!
+\brief <b>Tag 810 - Source Data Found</b>
+
+ [ authority autore, luogo, titolo uniforme ]
+ <table>
+ <tr>
+ <th valign=top>Definizione</th><th>Descrizione</th></tr>
+ <tr><td valign=top>Tag</td><td>810</td></tr>
+ <tr><td valign=top>Descrizione</td><td>This field contains a citation to a reference source when information about the heading was found.</td></tr>
+ <tr><td valign=top>Obbligatorieta'</td><td></td></tr>
+ <tr><td valign=top>Ripetibilita'</td><td>Repeatable</td></tr>
+ <tr><td valign=top>Indicatore 1</td><td>Blank</td></tr>
+ <tr><td valign=top>Indicatore 2</td><td>Blank</td></tr>
+  <tr><td valign=top>Sottocampi</td>
+  <td>
+    <ul>
+     <li>a - Citation. Not repeatable. </li>
+     <li>b - Information found. Subfield $b contains a statement of the information found in the source cited in $a. Not repeatable.</li>
+     </ul>
+  </td>
+  </tr>
+  <tr><td valign=top>Formato</td>
+     <td>
+     </td>
+     </tr>
+  <tr><td valign=top>NOTE</td>
+     <td></td></tr>
+ </table>
+ */
+
+/*!
+\brief <b>Tag 815 - Source Data Not Found</b>
+
+ [ authority autore, luogo, titolo uniforme]
+ <table>
+ <tr>
+ <th valign=top>Definizione</th><th>Descrizione</th></tr>
+ <tr><td valign=top>Tag</td><td>815</td></tr>
+ <tr><td valign=top>Descrizione</td><td>This field contains the citations for consulted reference sources in which no information about the heading was
+found.</td></tr>
+ <tr><td valign=top>Obbligatorieta'</td><td></td></tr>
+ <tr><td valign=top>Ripetibilita'</td><td>Repeatable</td></tr>
+ <tr><td valign=top>Indicatore 1</td><td>Blank</td></tr>
+ <tr><td valign=top>Indicatore 2</td><td>Blank</td></tr>
+  <tr><td valign=top>Sottocampi</td>
+  <td>
+    <ul>
+     <li>a - Citation. The subfield is repeated for each separate source cited.</li>
+     </ul>
+  </td>
+  </tr>
+  <tr><td valign=top>Formato</td>
+     <td>
+     </td>
+     </tr>
+  <tr><td valign=top>NOTE</td>
+     <td></td></tr>
+ </table>
+ */
 
 
 void Marc4cppLegamiAuthority::creaLegamiAutoreRepertori()
@@ -884,6 +1040,38 @@ void Marc4cppLegamiAuthority::creaLegamiAutoreRepertori()
 
 
 } // End Marc4cppLegamiAuthority::creaLegamiAutoreBasiDati
+
+
+/*!
+\brief <b>Tag 999 - Nota SBN</b>
+
+ [ authority autore ]
+ <table>
+ <tr>
+ <th valign=top>Definizione</th><th>Descrizione</th></tr>
+ <tr><td valign=top>Tag</td><td>999</td></tr>
+ <tr><td valign=top>Descrizione</td><td>Legami ad altre basedati</td></tr>
+ <tr><td valign=top>Obbligatorieta'</td><td>Optional</td></tr>
+ <tr><td valign=top>Ripetibilita'</td><td>Repeatable</td></tr>
+ <tr><td valign=top>Indicatore 1</td><td>Blank</td></tr>
+ <tr><td valign=top>Indicatore 2</td><td>Blank</td></tr>
+  <tr><td valign=top>Sottocampi</td>
+  <td>
+    <ul>
+     <li>1 - Codice anagrafica biblioteca. Non ripetibile</li>
+     <li>2 - Identificativo SBN (VID). Non ripetibile</li>
+     <li>9 - Identificativo base dati esterna. Ripetibile</li>
+    </ul>
+  </td>
+  </tr>
+  <tr><td valign=top>Formato</td>
+     <td>
+     </td>
+     </tr>
+  <tr><td valign=top>NOTE</td>
+     <td>...</td></tr>
+ </table>
+ */
 
 void Marc4cppLegamiAuthority::creaLegamiAutoreBasiDati()
 {
@@ -955,7 +1143,6 @@ void Marc4cppLegamiAuthority::creaLegamiAutoreBasiDati()
 		trIdsbnIdaltriAuRelIn->SeekTo(offset);
 		if (!sPtr->ReadLineWithPrefixedMaxSize(trIdsbnIdaltriAuRelIn))
 		{
-//			SignalAnError(__FILE__, __LINE__, "ReadLineWithPrefixedMaxSize failed");
 			logToStdout(__FILE__, __LINE__, LOG_ERROR, "trIdsbnIdaltriAuRelIn ReadLineWithPrefixedMaxSize failed");
 			return;
 		}
@@ -1002,7 +1189,6 @@ void Marc4cppLegamiAuthority::creaLegamiAutoreBasiDati()
 		//	printf("\ncdPoloBib '%s'",cdPoloBib.Data());
 			if (! tbfBiblioteca->loadRecord(poloBibCnc.Data()))
 			{
-//				SignalAnError(__FILE__, __LINE__, "\nCodice polo biblioteca sconosciuto %c", poloBibCnc.Data());
 				logToStdout(__FILE__, __LINE__, LOG_ERROR, "Codice polo biblioteca sconosciuto %c", poloBibCnc.Data());
 
 			}else{
@@ -1028,7 +1214,6 @@ void Marc4cppLegamiAuthority::creaLegamiAutoreBasiDati()
 		{
 			if (! tbfBiblioteca->loadRecord(poloBibCnm.Data()))
 						{
-//				SignalAnError(__FILE__, __LINE__, "\nCodice polo biblioteca sconosciuto %c", poloBibCnm.Data());
 				logToStdout(__FILE__, __LINE__, LOG_ERROR, "Codice polo biblioteca sconosciuto %c", poloBibCnm.Data());
 
 						}else{
@@ -1101,6 +1286,8 @@ void Marc4cppLegamiAuthority::creaLegamiLuogoRepertori()
 
 
 } // End Marc4cppLegamiAuthority::creaLegamiAutoreRepertori
+
+
 
 void Marc4cppLegamiAuthority::creaLegamiTitoloRepertori()
 {
@@ -1197,6 +1384,60 @@ void Marc4cppLegamiAuthority::stop() {
 }
 
 
+/*!
+\brief <b>Tag 410 - Rinvio autore collettivo</b>
+
+ [ authority autore ]
+ <table>
+ <tr>
+ <th valign=top>Definizione</th><th>Descrizione</th></tr>
+ <tr><td valign=top>Tag</td><td>410</td></tr>
+ <tr><td valign=top>Descrizione</td><td>Rinvio autore collettivo</td></tr>
+ <tr><td valign=top>Obbligatorieta'</td><td>Optional</td></tr>
+ <tr><td valign=top>Ripetibilita'</td><td>Repeatable</td></tr>
+ <tr><td valign=top>Indicatore 1</td><td>
+    <ul>
+     <li>0 Corporate name</li>
+     <li>1 Meeting</li>
+    </ul>
+ </td></tr>
+ <tr><td valign=top>Indicatore 2</td><td>
+    <ul>
+     <li>0 Name in inverted form</li>
+     <li>1 Name entered under place or jurisdiction</li>
+     <li>2 Name entered under name in direct order</li>
+    </ul>
+ </td></tr>
+  <tr><td valign=top>Sottocampi</td>
+  <td>
+    <ul>
+     <li>a - Entry element. Not repeatable</li>
+     <li>b - Subdivision. Repeatable.</li>
+     <li>c - Addition to name or qualifier. Repeatable</li>
+     <li>d - Number of meeting and/or number of part of meeting. Not repeatable</li>
+     <li>e - Location of meeting. Not repeatable.</li>
+     <li>f - Date of meeting. Not repeatable.</li>
+     <li>g - Inverted element. Not repeatable.</li>
+     <li>h - Part of name other than entry element and inverted element. Not repeatable.</li>
+     <li>4 - Relator code. Repeatable.</li>
+     <li>j - Form subdivision. Repeatable</li>
+     <li>x - Topical subdivision. Repeatable</li>
+     <li>y - Geographical subdivision. Repeatable.</li>
+     <li>z - Chronological subdivision. Repeatable.</li>
+     <li>0 - Instruction phrase. Not repeatable.</li>
+     <li>2 - Subject system code. Not repeatable.</li>
+     <li>3 - Authority record identifier. Not repeatable.</li>
+     <li>5 - Tracing control. Not repeatable.</li>
+     <li>6 - Interfield linking data. Not repeatable.</li>
+     <li>7 - Script of cataloguing and script of the base heading. Not repeatable.</li>
+     <li>8 - Language of cataloguing and language of the base heading. Not repeatable.</li>
+    </ul>
+  </td>
+  </tr>
+  <tr><td valign=top>Formato</td><td></td></tr>
+  <tr><td valign=top>NOTE</td><td></td></tr>
+ </table>
+ */
 
 DataField * Marc4cppLegamiAuthority::creaTag410_RinvioAutoreCollettivo(TbAutore * tbAutoreRinvio)
 	{
@@ -1259,7 +1500,6 @@ DataField * Marc4cppLegamiAuthority::creaLegameAutoreAutore(char *entryReticoloP
 			df = creaTag500_VediAncheAutorePersonale(tbAutoreRinvio);
 		}
 		else {
-//			SignalAnError(__FILE__, __LINE__, "\nTipo legame autore/autore sconosciuto %c", tipoLegame);
 			logToStdout(__FILE__, __LINE__, LOG_ERROR, "Tipo legame autore/autore sconosciuto %c", tipoLegame);
 
 			delete tbAutoreRinvio;
@@ -1276,7 +1516,6 @@ DataField * Marc4cppLegamiAuthority::creaLegameAutoreAutore(char *entryReticoloP
 			df = creaTag510_VediAncheAutoreCollettivo(tbAutoreRinvio);
 		}
 		else {
-//			SignalAnError(__FILE__, __LINE__, "\nTipo legame autore/autore sconosciuto %c", tipoLegame);
 			logToStdout(__FILE__, __LINE__, LOG_ERROR, "Tipo legame autore/autore sconosciuto %c", tipoLegame);
 
 			delete tbAutoreRinvio;
@@ -1289,6 +1528,50 @@ DataField * Marc4cppLegamiAuthority::creaLegameAutoreAutore(char *entryReticoloP
 	delete tbAutoreRinvio;
 	return df;
 } // End Marc4cppLegamiAuthority::creaLegameAutoreAutore
+
+
+/*!
+\brief <b>Tag 460 - Luogo di pubblicazione normalizzato</b>
+
+ [ authority luogo ]
+ <table>
+ <tr>
+ <th valign=top>Definizione</th><th>Descrizione</th></tr>
+ <tr><td valign=top>Tag</td><td>460</td></tr>
+ <tr><td valign=top>Descrizione</td><td>This field contains the tracing for a form of place access referred from.</td></tr>
+ <tr><td valign=top>Obbligatorieta'</td><td>Optional.</td></tr>
+ <tr><td valign=top>Ripetibilita'</td><td>Repeatable.</td></tr>
+ <tr><td valign=top>Indicatore 1</td><td>Blank</td></tr>
+ <tr><td valign=top>Indicatore 2</td><td>Blank</td></tr>
+  <tr><td valign=top>Sottocampi</td>
+  <td>
+	Data subfields
+	<ul>
+	<li>a Country Not repeatable.</li>
+	<li>b State or Province etc. Not repeatable.</li>
+	<li>c County Not repeatable.</li>
+	<li>d City Not repeatable.</li>
+	</ul>
+	Control Subfields
+	<ul>
+	<li>0 Instruction phrase Not repeatable.</li>
+	<li>2 Subject system code Not repeatable.</li>
+	<li>3 Authority record identifier Not repeatable.</li>
+	<li>5 Tracing control Not repeatable.</li>
+	<li>6 Interfield linking data Not repeatable.</li>
+	<li>7 Script of cataloguing and script of the base heading Not repeatable.</li>
+	<li>8 Language of cataloguing and language of the base heading Not repeatable.</li>
+	<ul>
+  </td>
+  </tr>
+  <tr><td valign=top>Formato</td>
+     <td>
+     </td>
+     </tr>
+  <tr><td valign=top>NOTE</td>
+     <td></td></tr>
+ </table>
+ */
 
 DataField * Marc4cppLegamiAuthority::creaLegameLuogoLuogo(char *entryReticoloPtr, int pos)
 {
@@ -1388,12 +1671,6 @@ void Marc4cppLegamiAuthority::creaTag_40x(DataField *df, TbAutore * tbAutoreRinv
 			}
 		}
 	}
-//		else
-//		{
-//			SignalAnError(__FILE__, __LINE__, "\nRecord legame autore %s verso autore XXX non trovato", vid);
-//
-//		}
-//	}
 
 
 //	if (*nota_aut && *tag == '4')	// solo 4xx (Mail Mataloni 21/09)
@@ -1589,6 +1866,69 @@ void Marc4cppLegamiAuthority::creaTag_41x(DataField *df, TbAutore * tbAutoreRinv
 
 
 
+/*!
+\brief <b>Tag 510 - Vedi anche autore collettivo</b>
+
+ [ authority autore ]
+ <table>
+ <tr>
+ <th valign=top>Definizione</th><th>Descrizione</th></tr>
+ <tr><td valign=top>Tag</td><td>510</td></tr>
+ <tr><td valign=top>Descrizione</td><td>This field contains the tracing for a uniform corporate body name heading that is related to the heading in the 2--
+field.</td></tr>
+ <tr><td valign=top>Obbligatorieta'</td><td>Optional.</td></tr>
+ <tr><td valign=top>Ripetibilita'</td><td>Repeatable.</td></tr>
+ <tr><td valign=top>Indicatore 1</td><td>specifies the kind of corporate body:
+<ul>
+<li>0 - Corporate name</li>
+<li>1 - Meeting</li>
+</ul>
+</td></tr>
+ <tr><td valign=top>Indicatore 2</td><td>specifies the way the names are entered:
+<ul>
+<li>0 - Name in inverted form</li>
+<li>1 - Name entered under place or jurisdiction</li>
+<li>2 - Name entered under name in direct order</li>
+</ul></td></tr>
+  <tr><td valign=top>Sottocampi</td>
+  <td>
+	Data Subfields
+	<ul>
+	<li>a - Entry element Not repeatable.</li>
+	<li>b - Subdivision Repeatable.</li>
+	<li>c - Addition to name or qualifier Repeatable.</li>
+	<li>d - Number of meeting and/or number of part of meeting Not repeatable.</li>
+	<li>e - Location of meeting Not repeatable.</li>
+	<li>f - Date of meeting Not repeatable.</li>
+	<li>g - Inverted element Not repeatable.</li>
+	<li>h - Part of name other than entry element and inverted element Not repeatable.</li>
+	<li>4 - Relator code Repeatable.</li>
+	<li>j - Form subdivision Repeatable.</li>
+	<li>x - Topical subdivision Repeatable.</li>
+	<li>y - Geographical subdivision Repeatable.</li>
+	<li>z - Chronological subdivision Repeatable.</li>
+	</ul>
+
+	Control Subfields
+	<ul>
+	<li>0 - Instruction phrase Not repeatable.</li>
+	<li>2 - Subject system code Not repeatable.</li>
+	<li>3 - Authority record identifier Not repeatable.</li>
+	<li>5 - Tracing control Not repeatable.</li>
+	<li>6 - Interfield linking data Not repeatable.</li>
+	<li>7 - Script of cataloguing and script of the base heading Not repeatable.</li>
+	<li>8 - Language of cataloguing and language of the base heading Not repeatable.</li>
+	</ul>
+  </td>
+  </tr>
+  <tr><td valign=top>Formato</td>
+     <td>
+     </td>
+     </tr>
+  <tr><td valign=top>NOTE</td>
+     <td>...</td></tr>
+ </table>
+ */
 DataField * Marc4cppLegamiAuthority::creaTag510_VediAncheAutoreCollettivo(TbAutore * tbAutoreRinvio)
 	{
 	DataField *df;
@@ -1628,7 +1968,6 @@ void Marc4cppLegamiAuthority::creaLegamiDescrittoriDescrittori(char *didBasePtr)
 				retb = tbDescrittore->loadRecord(didColl);
 				if (!retb)
 				{
-//					SignalAnError(__FILE__, __LINE__, "\nDescrittore base % s per descrittore coll %s", didBase.data(), didColl);
 					logToStdout(__FILE__, __LINE__, LOG_ERROR, "\nDescrittore base % s per descrittore coll %s", didBase.data(), didColl);
 					continue;
 				}
@@ -1641,7 +1980,42 @@ void Marc4cppLegamiAuthority::creaLegamiDescrittoriDescrittori(char *didBasePtr)
 } // End creaLegamiDescrittoriDescrittori
 
 
+/*!
+\brief <b>Tag 932 - Legame descrittore descrittore</b>
 
+ [ authority soggetto ]
+ <table>
+ <tr>
+ <th valign=top>Definizione</th><th>Descrizione</th></tr>
+ <tr><td valign=top>Tag</td><td>932</td></tr>
+ <tr><td valign=top>Descrizione</td><td>Legame descrittore descrittore</td></tr>
+ <tr><td valign=top>Obbligatorieta'</td><td>Facoltativo</td></tr>
+ <tr><td valign=top>Ripetibilita'</td><td>Ripetibile</td></tr>
+ <tr><td valign=top>Indicatore 1</td><td>Blank</td></tr>
+ <tr><td valign=top>Indicatore 2</td><td>Blank</td></tr>
+  <tr><td valign=top>Sottocampi</td>
+  <td>
+	Data Subfields
+	<ul>
+	<li>a - descrizione descrittore</li>
+	<li>b - nota descrittore</li>
+	</ul>
+
+	Control Subfields
+	<ul>
+	<li>2 - codiie soggettario</li>
+	<li>3 - identificativo descrittore (DID)</li>
+	</ul>
+  </td>
+  </tr>
+  <tr><td valign=top>Formato</td>
+     <td>
+     </td>
+     </tr>
+  <tr><td valign=top>NOTE</td>
+     <td></td></tr>
+ </table>
+ */
 void Marc4cppLegamiAuthority::creaTag932_LegameDescrittoreDescrittore(CString *tpLegame, CString *didBase)
 {
 	DataField *df=0;
@@ -1679,6 +2053,42 @@ void Marc4cppLegamiAuthority::creaTag932_LegameDescrittoreDescrittore(CString *t
 	marcRecord->addDataField(df);
 } // End creaTag932_LegameDescrittoreDescrittore
 
+/*!
+\brief <b>Tag 931 - Legame soggetto descrittore</b>
+
+ [ authority soggetto ]
+ <table>
+ <tr>
+ <th valign=top>Definizione</th><th>Descrizione</th></tr>
+ <tr><td valign=top>Tag</td><td>931</td></tr>
+ <tr><td valign=top>Descrizione</td><td>Legame soggetto descrittore</td></tr>
+ <tr><td valign=top>Obbligatorieta'</td><td>Facoltativo</td></tr>
+ <tr><td valign=top>Ripetibilita'</td><td>Ripetibile</td></tr>
+ <tr><td valign=top>Indicatore 1</td><td>Blank</td></tr>
+ <tr><td valign=top>Indicatore 2</td><td>Blank</td></tr>
+  <tr><td valign=top>Sottocampi</td>
+  <td>
+	Data Subfields
+	<ul>
+	<li>a - descrizione descrittore</li>
+	<li>b - nota descrittore</li>
+	</ul>
+
+	Control Subfields
+	<ul>
+	<li>2 - codiie soggettario</li>
+	<li>3 - identificativo descrittore (DID)</li>
+	</ul>
+  </td>
+  </tr>
+  <tr><td valign=top>Formato</td>
+     <td>
+     </td>
+     </tr>
+  <tr><td valign=top>NOTE</td>
+     <td></td></tr>
+ </table>
+ */
 void Marc4cppLegamiAuthority::creaTag931_LegameSoggettoDescrittore()
 {
 	DataField *df=0;
@@ -1768,7 +2178,6 @@ if (retb)
 	trTitAutRelInvIn->SeekTo(offset);
 	if (!sPtr->ReadLine(trTitAutRelInvIn))
 	{
-//        SignalAnError(__FILE__, __LINE__, "read file delle relazioni failed");
 		logToStdout(__FILE__, __LINE__, LOG_ERROR, "read file delle relazioni failed");
         return false;
 	}
@@ -1900,7 +2309,6 @@ bool Marc4cppLegamiAuthority::getTitoliViafConResponabilita(CString *sPtr, char 
 			// Cerchiamo nella tbTitolo il titolo
 			if (!tbTitolo->loadRecord(Token))
 			{
-//		        SignalAnError(__FILE__, __LINE__, "read file dei titoli failed");
 				logToStdout(__FILE__, __LINE__, LOG_ERROR, "read file dei titoli failed");
 		        return false;
 			}
@@ -2168,6 +2576,68 @@ void Marc4cppLegamiAuthority::creaLegamiTitoloTitolo() // bool isTitoloOpera
 
 } // End Marc4cppLegamiAuthority::creaLegamiTitoloTitolo
 
+
+/*!
+\brief <b>Tag 431 - Rinvio ad opera senza autore</b>
+
+ [ authority titolo uniforme]
+ <table>
+ <tr>
+ <th valign=top>Definizione</th><th>Descrizione</th></tr>
+ <tr><td valign=top>Tag</td><td>431</td></tr>
+ <tr><td valign=top>Descrizione</td><td>Rinvio ad opera senza autore</td></tr>
+ <tr><td valign=top>Obbligatorieta'</td><td>Facoltativo</td></tr>
+ <tr><td valign=top>Ripetibilita'</td><td>...</td></tr>
+ <tr><td valign=top>Indicatore 1</td><td>Blank</td></tr>
+ <tr><td valign=top>Indicatore 2</td><td>Blank</td></tr>
+  <tr><td valign=top>Sottocampi</td>
+  <td>
+    <ul>
+     <li>a - Titolo dell'opera</li>
+     <li>3 - BID</li>
+    </ul>
+  </td>
+  </tr>
+  <tr><td valign=top>Formato</td>
+     <td>
+     </td>
+     </tr>
+  <tr><td valign=top>NOTE</td>
+     <td></td></tr>
+ </table>
+ */
+
+/*!
+\brief <b>Tag 441 - Rinvio ad opera con autore</b>
+
+ [ authority titolo uniforme]
+ <table>
+ <tr>
+ <th valign=top>Definizione</th><th>Descrizione</th></tr>
+ <tr><td valign=top>Tag</td><td>431</td></tr>
+ <tr><td valign=top>Descrizione</td><td>Rinvio ad opera senza autore</td></tr>
+ <tr><td valign=top>Obbligatorieta'</td><td>Facoltativo</td></tr>
+ <tr><td valign=top>Ripetibilita'</td><td>...</td></tr>
+ <tr><td valign=top>Indicatore 1</td><td>Blank</td></tr>
+ <tr><td valign=top>Indicatore 2</td><td>Blank</td></tr>
+  <tr><td valign=top>Sottocampi</td>
+  <td>
+    <ul>
+     <li>a - Titolo dell'opera</li>
+     <li>3 - BID</li>
+    </ul>
+  </td>
+  </tr>
+  <tr><td valign=top>Formato</td>
+     <td>
+     </td>
+     </tr>
+  <tr><td valign=top>NOTE</td>
+     <td></td></tr>
+ </table>
+ */
+
+
 DataField * Marc4cppLegamiAuthority::creaLegameTitoloTitolo(char *entryReticoloPtr, int pos) {
 	DataField *df = 0;
 	DataField *df1 = 0;
@@ -2203,7 +2673,6 @@ DataField * Marc4cppLegamiAuthority::creaLegameTitoloTitolo(char *entryReticoloP
 	bool hasTitolo=true;
 	if (!tbTitolo->loadRecord(bid))
 	{
-//        SignalAnError(__FILE__, __LINE__, "read file dei titoli failed");
 		logToStdout(__FILE__, __LINE__, LOG_ERROR, "read file dei titoli failed");
 //        return df;
         hasTitolo=false;
@@ -2386,7 +2855,6 @@ printf ("\nN.%d: Token=%s", ++ctr, Token);
 			// Cerchiamo nella tbTitolo il titolo
 			if (!tbTitolo->loadRecord(Token))
 			{
-//		        SignalAnError(__FILE__, __LINE__, "read file dei titoli failed");
 				logToStdout(__FILE__, __LINE__, LOG_ERROR, "read file dei titoli failed");
 		        return false;
 			}
@@ -2680,7 +3148,6 @@ void Marc4cppLegamiAuthority::creaLegamiautoriDiRinvio(DataField *df, char *vid)
 		CString *sPtr = new CString(4096);
 
 		if (!sPtr->ReadLineWithPrefixedMaxSize(trAutAutRelIn))
-//	        SignalAnError(__FILE__, __LINE__, "read failed");
 			logToStdout(__FILE__, __LINE__, LOG_ERROR, "ReadLineWithPrefixedMaxSize failed");
 
 		CTokenizer *Tokenizer = new CTokenizer("|");
@@ -2711,7 +3178,6 @@ void Marc4cppLegamiAuthority::creaLegamiautoriDiRinvio(DataField *df, char *vid)
 			if (!retb)
 			{
 				//return 0; // Record non trovato
-//				SignalAnError(__FILE__, __LINE__, "\nVID %s non trovato nella tabella degli autori", vid);
 				logToStdout(__FILE__, __LINE__, LOG_ERROR, "VID %s non trovato nella tabella degli autori", vid);
 				continue;
 			}
@@ -2916,9 +3382,76 @@ char Marc4cppLegamiAuthority::getQualificazioneType(char *parteDiQualificazione,
 
 
 
+/*!
+\brief <b>Tag 240 - Titolo uniforme con autore</b>
+
+ [ authority titolo uniforme ]
+ <table>
+ <tr>
+ <th valign=top>Definizione</th><th>Descrizione</th></tr>
+ <tr><td valign=top>Tag</td><td>240</td></tr>
+ <tr><td valign=top>Descrizione</td><td>Titolo uniforme con autore legato: si usa la tecnica embedded con per le 4-- di Unimarc Bibliographic</td></tr>
+ <tr><td valign=top>Obbligatorieta'</td><td>Optional.</td></tr>
+ <tr><td valign=top>Ripetibilita'</td><td>Repeatable for alternative script forms.</td></tr>
+ <tr><td valign=top>Indicatore 1</td><td>Blank</td></tr>
+ <tr><td valign=top>Indicatore 2</td><td>Blank</td></tr>
+  <tr><td valign=top>Sottocampi</td>
+  <td>
+	Data Subfield
+	<ul>
+	<li>1 Embedded field. Contains the tag and indicator values of the embedded fields, without spacing or punctuation.Repeatable.</li>
+	</ul>
+	Control Subfields
+	<ul>
+	<li>7 Script of cataloguing and script of the base heading. See specification of Control Subfields above. Not repeatable.</li>
+	<li>8 Language of cataloguing and language of the base heading. See specification of Control Subfields above. Not repeatable.</li>
+	<ul>
+    </ul>
+  </tr>
+  <tr><td valign=top>Formato</td>
+     <td>
+     </td>
+     </tr>
+  <tr><td valign=top>NOTE</td>
+     <td></td></tr>
+ </table>
+ */
 
 
+/*!
+\brief <b>Tag 241 - Titolo uniforme senza autore</b>
 
+ [ authority titolo uniforme ]
+ <table>
+ <tr>
+ <th valign=top>Definizione</th><th>Descrizione</th></tr>
+ <tr><td valign=top>Tag</td><td>241</td></tr>
+ <tr><td valign=top>Descrizione</td><td>Titolo uniforme senza autore legato</td></tr>
+ <tr><td valign=top>Obbligatorieta'</td><td>Optional.</td></tr>
+ <tr><td valign=top>Ripetibilita'</td><td>Repeatable for alternative script forms.</td></tr>
+ <tr><td valign=top>Indicatore 1</td><td>Blank</td></tr>
+ <tr><td valign=top>Indicatore 2</td><td>Blank</td></tr>
+  <tr><td valign=top>Sottocampi</td>
+  <td>
+	Data Subfield
+	<ul>
+	<li>1 Embedded field. Contains the tag and indicator values of the embedded fields, without spacing or punctuation.Repeatable.</li>
+	</ul>
+	Control Subfields
+	<ul>
+	<li>7 Script of cataloguing and script of the base heading. See specification of Control Subfields above. Not repeatable.</li>
+	<li>8 Language of cataloguing and language of the base heading. See specification of Control Subfields above. Not repeatable.</li>
+	<ul>
+    </ul>
+  </tr>
+  <tr><td valign=top>Formato</td>
+     <td>
+     </td>
+     </tr>
+  <tr><td valign=top>NOTE</td>
+     <td></td></tr>
+ </table>
+ */
 
 
 
@@ -2982,7 +3515,7 @@ DataField * Marc4cppLegamiAuthority::creaLegameTitoloAutore(char *entryReticoloP
 			}
 
 
-DataField *df241 = marcRecord->getDataField("241");
+		DataField *df241 = marcRecord->getDataField("241");
 
 
 		if (isTitoloOpera && IS_TAG_TO_GENERATE(241))

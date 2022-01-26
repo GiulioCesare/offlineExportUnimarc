@@ -378,7 +378,6 @@ CString *MarcRecord::toCString()
 			stringed.AppendString(sPtr);
 		}
 		else
-//			SignalAnError(__FILE__, __LINE__, "ERRORE: Datafield %d (partendo da 0) non instanziato (datafields=%d)", i, dataFieldsVector->Length());
 			logToStdout(__FILE__, __LINE__, LOG_ERROR, "Datafield %d (partendo da 0) non instanziato (datafields=%d)", i, dataFieldsVector->Length());
 
 	}

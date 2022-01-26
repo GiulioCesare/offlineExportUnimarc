@@ -1397,7 +1397,8 @@ bool Marc4cpp::elaboraLeader()
 			else
 				leader->setRecordStatus('n');	// nuovo
 				chr = *(tbTitolo->getField(tbTitolo->tp_record_uni)); // 09/02/2010 16.12 per risolvere il problema del null con le collane
-//			if (chr)
+
+
 			if (chr && chr != ' ') // 05/11/2010 14.52
 				leader->setTypeOfRecord(chr); 	// pos 6
 			else
@@ -1435,6 +1436,7 @@ bool Marc4cpp::elaboraLeader()
 				leader->setRecordStatus('d');	// cancellato
 			else
 				leader->setRecordStatus('n');	// nuovo
+
 			leader->setTypeOfRecord('x'); 	// 1, 6to carattere x=authority record
 			leader->setLivelloBibliografico(' '); // undefined
 			leader->setLivelloGerarchico(' '); // undefined
@@ -1524,6 +1526,7 @@ bool Marc4cpp::elaboraLeader()
 		else if (authority == AUTHORITY_TITOLI_UNIFORMI) // 29/05/20
 		{
 			leader->setRecordStatus('n');	// nuovo
+
 			leader->setTypeOfRecord('x'); 	// 1, 7mo carattere x=authority record
 
 			leader->setLivelloBibliografico(' '); // undefined
@@ -1742,7 +1745,6 @@ void Marc4cpp::CreaReticoloAddNodeChildren(tree<std::string>* reticolo, tree<std
 			// Dall'offset del file delle relazioni andiamo a prendere la relazione titolo/titolo
 			trAutAutRelIn->SeekTo(offset);
 			if (!sPtr->ReadLineWithPrefixedMaxSize(trAutAutRelIn))
-//		        SignalAnError(__FILE__, __LINE__, "read failed");
 				logToStdout(__FILE__, __LINE__, LOG_ERROR, "trAutAutRelIn read failed");
 
 #ifdef DEBUG_LEGAMI
@@ -1811,7 +1813,6 @@ printf ("\nLegami aut_aut=%s", sPtr->data());
 		// Dall'offset del file delle relazioni andiamo a prendere la relazione titolo/titolo
 		trTitTitRelIn->SeekTo(offset);
 		if (!sPtr->ReadLineWithPrefixedMaxSize(trTitTitRelIn))
-//	        SignalAnError(__FILE__, __LINE__, "read failed");
 			logToStdout(__FILE__, __LINE__, LOG_ERROR, "trTitTitRelIn read failed");
 
 #ifdef DEBUG_LEGAMI
@@ -1882,7 +1883,6 @@ printf ("\nLegami tit_tit=%s", sPtr->data());
 		// Dall'offset del file delle relazioni andiamo a prendere la relazione titolo/titolo
 		trTitAutRelIn->SeekTo(offset);
 		if (!sPtr->ReadLineWithPrefixedMaxSize(trTitAutRelIn))
-//	        SignalAnError(__FILE__, __LINE__, "read failed");
 			logToStdout(__FILE__, __LINE__, LOG_ERROR, "trTitAutRelIn read failed");
 
 #ifdef DEBUG_LEGAMI
@@ -1945,7 +1945,6 @@ printf ("\nLegami tit_aut=%s", sPtr->data());
 		// Dall'offset del file delle relazioni andiamo a prendere la relazione titolo/soggetto
 		trTitSogBibIn->SeekTo(offset);
 		if (!sPtr->ReadLineWithPrefixedMaxSize(trTitSogBibIn))
-//	        SignalAnError(__FILE__, __LINE__, "read failed");
 		logToStdout(__FILE__, __LINE__, LOG_ERROR, "trTitSogBibIn read failed");
 
 #ifdef DEBUG_LEGAMI
@@ -2002,7 +2001,6 @@ printf ("\nLegami tit_sogBib=%s", sPtr->data());
 		// Dall'offset del file delle relazioni andiamo a prendere la relazione titolo/classe
 		trTitClaIn->SeekTo(offset);
 		if (!sPtr->ReadLineWithPrefixedMaxSize(trTitClaIn))
-//	        SignalAnError(__FILE__, __LINE__, "read failed");
 			logToStdout(__FILE__, __LINE__, LOG_ERROR, "trTitClaIn read failed");
 
 #ifdef DEBUG_LEGAMI
@@ -2057,7 +2055,6 @@ printf ("\nLegami tit_cla=%s", sPtr->data());
 		// Dall'offset del file delle relazioni andiamo a prendere la relazione titolo/titolo
 		trTitMarRelIn->SeekTo(offset);
 		if (!sPtr->ReadLineWithPrefixedMaxSize(trTitMarRelIn))
-//	        SignalAnError(__FILE__, __LINE__, "read failed");
 			logToStdout(__FILE__, __LINE__, LOG_ERROR, "trTitMarRelIn read failed");
 
 #ifdef DEBUG_LEGAMI
@@ -2111,7 +2108,6 @@ printf ("\nLegami tit_mar=%s", sPtr->data());
 		// Dall'offset del file delle relazioni andiamo a prendere la relazione titolo/titolo
 		trTitLuoIn->SeekTo(offset);
 		if (!sPtr->ReadLineWithPrefixedMaxSize(trTitLuoIn))
-//	        SignalAnError(__FILE__, __LINE__, "read failed");
 			logToStdout(__FILE__, __LINE__, LOG_ERROR, "trTitLuoIn read failed");
 
 
@@ -2171,7 +2167,6 @@ printf ("\nLegami tit_luo=%s", sPtr->data());
 		// Dall'offset del file delle relazioni andiamo a prendere la relazione titolo/classe
 		trsTerminiTitoliBibliotecheRelIn->SeekTo(offset);
 		if (!sPtr->ReadLineWithPrefixedMaxSize(trsTerminiTitoliBibliotecheRelIn))
-//	        SignalAnError(__FILE__, __LINE__, "read failed");
 		logToStdout(__FILE__, __LINE__, LOG_ERROR, "trsTerminiTitoliBibliotecheRelIn read failed");
 
 #ifdef DEBUG_LEGAMI

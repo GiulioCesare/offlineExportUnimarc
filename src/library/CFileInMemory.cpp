@@ -289,10 +289,6 @@ OrsBool CFileInMemory::ReadLine(char* string, int N)
 	if (ctr == maxLen)
 	{
 		*(string-1) = 0; // EOL
-		//throw (GenericError (__FILE__, __LINE__, IO_GENERICERROR_CODE, EXIT_ON_GENERICERROR_TRUE, "\nCFileInMemory::ReadLine: line ended before NEWLINE: '%s'", dest));
-//		SignalAnError(__FILE__, __LINE__, "%s: Buffer size: %d, End of line non raggiunta: %s", Filename, N, dest);
-//		printf ("%s: Buffer size: %d, End of line non raggiunta: %s", Filename, N, dest);
-
 		*(dest+30)=0; // 02/02/2015 Truncate
 		printf ("\n%s: Buffer size: %d, End of line non raggiunta: %s...", Filename, N, dest);
 
@@ -350,7 +346,6 @@ long	CFileInMemory::readFixedLenLine(char* string, long N)
 //		*(string-1) = 0; // EOL 19/03/2015 (per poter concatenare resto di riga)
 
 		//throw (GenericError (__FILE__, __LINE__, IO_GENERICERROR_CODE, EXIT_ON_GENERICERROR_TRUE, "\nCFileInMemory::ReadLine: line ended before NEWLINE: '%s'", dest));
-//		SignalAnError(__FILE__, __LINE__, "%s: Buffer size: %d, End of line non raggiunta: %s", Filename, N, dest);
 //		printf ("%s: Buffer size: %d, End of line non raggiunta: %s", Filename, N, dest);
 
 //		*(dest+30)=0; // 02/02/2015 Truncate

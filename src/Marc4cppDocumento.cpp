@@ -603,65 +603,10 @@ void Marc4cppDocumento::addSubfield(DataField *df, char subfieldId, CString &dat
 }
 
 
+/*!
+\brief <b>Tag 001 - Identificativo del record </b>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/**
- \brief <b>Tag 001 - Identificatico del record</b>
+[ authority documento ]
  <table>
  <tr>
  <th valign=top>Definizione</th><th>Descrizione</th></tr>
@@ -673,16 +618,16 @@ void Marc4cppDocumento::addSubfield(DataField *df, char subfieldId, CString &dat
      <td>Obbligatorio</td></tr>
  <tr><td valign=top>Ripetibilita'</td>
      <td>Non Ripetibile</td></tr>
- <tr><td valign=top>Indicatore 1</td>
-     <td>Nessuno</td></tr>
- <tr><td valign=top>Indicatore 2</td>
-     <td>Nessuno</td></tr>
+ <tr><td valign=top>Indicatore 1</td><td>Blank</td></tr>
+ <tr><td valign=top>Indicatore 2</td><td>Blank</td></tr>
   <tr><td valign=top>Sottocampi</td>
-     <td>Nessuno</td></tr>
+     <td></td></tr>
   <tr><td valign=top>Formato</td>
      <td>
-         \li  Unimarc - identificativo di 10 caratteri.<BR>
-         \li  Opac - Moderno IT\\ICCU\\XXX\\YYYYYYY, Antico IT\\ICCU\\XXXX\\YYYYYY<BR>
+     	 <ul>
+         <li>  Unimarc - identificativo di 10 caratteri.<BR></li>
+         <li>  Opac Sbn- IT\\ICCU\\XXXX\\YYYYYY<BR></li>
+         </ul>
      </td></tr>
 
   <tr><td valign=top>NOTE</td>
@@ -711,17 +656,20 @@ ControlField * Marc4cppDocumento::creaTag001_IdRecord() {
 		cf->setData(&id);
 	}
 
+
 	marcRecord->addControlField(cf);
 	return cf;
 } // End creaTag001
 
-/**
- \brief <b>Tag 003 - Permanent link</b>
+/*!
+\brief <b>Tag 003 - Permanent link</b>
+
+[ authority documento ]
  <table>
  <tr>
  <th valign=top>Definizione</th><th>Descrizione</th></tr>
  <tr><td valign=top>Tag</td>
-     <td>001</td></tr>
+     <td>003</td></tr>
  <tr><td valign=top>Descrizione</td>
      <td>Identificatico del record</td></tr>
  <tr><td valign=top>Obbligatorieta'</td>
@@ -729,18 +677,18 @@ ControlField * Marc4cppDocumento::creaTag001_IdRecord() {
  <tr><td valign=top>Ripetibilita'</td>
      <td>Non Ripetibile</td></tr>
  <tr><td valign=top>Indicatore 1</td>
-     <td>Nessuno</td></tr>
+     <td>Blank</td></tr>
  <tr><td valign=top>Indicatore 2</td>
-     <td>Nessuno</td></tr>
+     <td>Blank</td></tr>
   <tr><td valign=top>Sottocampi</td>
-     <td>Nessuno</td></tr>
+     <td></td></tr>
   <tr><td valign=top>Formato</td>
      <td>
-         \li  URL
+         URL: http://id.sbn.it/bid/XXXx999999. (XXXx999999 e' l'identificativo )
      </td></tr>
 
   <tr><td valign=top>NOTE</td>
-     <td>Nessuna restrizione sul formato dell'identificativo</td></tr>
+     <td></td></tr>
  </table>
  */
 
@@ -767,31 +715,33 @@ ControlField * Marc4cppDocumento::creaTag003_Permalink() { // 21/01/2016
 
 
 
-/**
-\brief <b>Tag 005 - Identificatore della versione</b>
+/*!
+\brief <b>Tag 005 - Identificativo della versione</b>
 
+[ authority documento ]
 <table>
 <tr>
 <th valign=top>Definizione</th><th>Descrizione</th></tr>
 <tr><td valign=top>Tag</td>
     <td>005</td></tr>
 <tr><td valign=top>Descrizione</td>
-    <td>Identificatore della versione</td></tr>
+    <td>Identificativo della versione</td></tr>
 <tr><td valign=top>Obbligatorieta'</td>
     <td>Facoltativo (raccomandato)</td></tr>
 <tr><td valign=top>Ripetibilita'</td>
     <td>Non ripetibile</td></tr>
  <tr><td valign=top>Indicatore 1</td>
-     <td>Nessuno</td></tr>
+     <td>Blank</td></tr>
  <tr><td valign=top>Indicatore 2</td>
-     <td>Nessuno</td></tr>
+     <td>Blank</td></tr>
   <tr><td valign=top>Sottocampi</td>
-     <td>Nessuno
-     </td></tr>
+     <td></td></tr>
   <tr><td valign=top>Formato</td>
      <td>
-         \li  Polo - Data corrente dell'export.<BR>
-         \li  Indice - Data di variazione in tb_titolo<BR>
+     	 <ul>
+         <li>  Polo - Data corrente dell'export.</li>
+         <li>  Indice - Data di variazione in tb_titolo</li>
+         </ul>
      </td></tr>
 
  <tr><td valign=top>NOTE</td>
@@ -837,9 +787,10 @@ ControlField * Marc4cppDocumento::creaTag005_IdentificatoreVersione() {
 } // End creaTag005
 
 
-/**
+/*!
 \brief <b>Tag 010 - Codice ISBN </b>
 
+[ authority documento ]
 <table>
 <tr>
 <th valign=top>Definizione</th><th>Descrizione</th></tr>
@@ -852,14 +803,16 @@ ControlField * Marc4cppDocumento::creaTag005_IdentificatoreVersione() {
 <tr><td valign=top>Ripetibilita'</td>
     <td>Ripetibile</td></tr>
 <tr><td valign=top>Indicatore 1</td>
-    <td>Non definito</td></tr>
+    <td>Blank</td></tr>
 <tr><td valign=top>Indicatore 2</td>
-    <td>Non definito</td></tr>
+    <td>Blank</td></tr>
  <tr><td valign=top>Sottocampi</td>
     <td>
-    \li a - Numero ISBN corretto (in alternativa con sottocampo 'z'). Non ripetibile.
-    \li z - Numero ISBN errato (in alternativa con sottocampo 'a'). Non ripetibile.
-    \li b - Qualificazione (Nota sul numero ISBN). Non ripetibile.
+    <ul>
+    <li> a - Numero ISBN corretto (in alternativa con sottocampo 'z'). Non ripetibile.</li>
+    <li> z - Numero ISBN errato (in alternativa con sottocampo 'a'). Non ripetibile.</li>
+    <li> b - Qualificazione (Nota sul numero ISBN). Non ripetibile.</li>
+    </ul>
     </td></tr>
  <tr><td valign=top>NOTE</td>
     <td>
@@ -925,9 +878,10 @@ DataField * Marc4cppDocumento::creaTag010_Isbn(char tipoNumeroStd) {
 
 
 
-/**
+/*!
 \brief <b>Tag 011 - Codice ISSN </b>
 
+[ authority documento ]
 <table>
 <tr>
 <th valign=top>Definizione</th><th>Descrizione</th></tr>
@@ -937,18 +891,17 @@ DataField * Marc4cppDocumento::creaTag010_Isbn(char tipoNumeroStd) {
     <td>ISSN (International Standard Serial Number)</td></tr>
 <tr><td valign=top>Obbligatorieta'</td>
     <td>Facoltativo</td></tr>
-<tr><td valign=top>Ripetibilita'</td>
-    <td>Ripetibile</td></tr>
-<tr><td valign=top>Indicatore 1</td>
-    <td>Non definito</td></tr>
-<tr><td valign=top>Indicatore 2</td>
-    <td>Non definito</td></tr>
+<tr><td valign=top>Ripetibilita'</td><td>Ripetibile</td></tr>
+<tr><td valign=top>Indicatore 1</td><td>Blank</td></tr>
+<tr><td valign=top>Indicatore 2</td><td>Blank</td></tr>
  <tr><td valign=top>Sottocampi</td>
     <td>
-    \li a - Numero ISSN corretto (in alternativa con sottocampo 'z'). Non ripetibile.
-    \li z - Numero ISSN errato (in alternativa con sottocampo 'a'). Non ripetibile.
-    \li b - Qualificazione (Nota sul numero ISBN). Non ripetibile.
-
+    <ul>
+<!--    <li> a - Numero ISSN corretto (in alternativa con sottocampo 'z'). Non ripetibile.</li> -->
+    <li> b - Qualificazione (Nota sul numero ISBN). Non ripetibile.</li>
+    <li> f - Numero ISSN corretto (in alternativa con sottocampo 'z'). Non ripetibile.</li>
+    <li> z - Numero ISSN errato (in alternativa con sottocampo 'a'). Non ripetibile.</li>
+	</ul>
     </td></tr>
  <tr><td valign=top>NOTE</td>
     <td>
@@ -1005,10 +958,10 @@ DataField * Marc4cppDocumento::creaTag011_Issn() {
 
 
 
-/**
-
+/*!
 \brief <b>Tag 012 - Impronta (Libro antico)</b>
 
+[ authority documento ]
 <table>
 <tr>
 <th valign=top>Definizione</th><th>Descrizione</th></tr>
@@ -1020,17 +973,18 @@ DataField * Marc4cppDocumento::creaTag011_Issn() {
     <td>Facoltativo (raccomandato)</td></tr>
 <tr><td valign=top>Ripetibilita'</td>
     <td>Ripetibile</td></tr>
-<tr><td valign=top>Indicatore 1</td>
-    <td>Non definito</td></tr>
-<tr><td valign=top>Indicatore 2</td>
-    <td>Non definito</td></tr>
+<tr><td valign=top>Indicatore 1</td><td>Blank</td></tr>
+<tr><td valign=top>Indicatore 2</td><td>Blank</td></tr>
  <tr><td valign=top>Sottocampi</td>
     <td>
-    \li a - Impronta completa. Non ripetibile.
-    \li 2 - Codifica forzata a 'fei'. Non ripetibile.
-    \li 9 - Nota. Non ripetibile.
+    <ul>
+    <li> a - Impronta completa. Non ripetibile.</li>
+    <li> 2 - Codifica forzata a 'fei'. Non ripetibile.</li>
+    <li> 9 - Nota. Non ripetibile.</li>
+    </ul>
     </td></tr>
  <tr><td valign=top>NOTE</td><td>Il tag 012 viene generato anche per record con tipo materiale 'U' (musica)</td></tr>
+ </table>
 
  */
 void Marc4cppDocumento::creaTag012_Impronta() {
@@ -1062,9 +1016,10 @@ void Marc4cppDocumento::creaTag012_Impronta() {
 }// End creaTag012
 
 
-/**
+/*!
 \brief <b>Tag 013 - Codice ISMN </b>
 
+[ authority documento ]
 <table>
 <tr>
 <th valign=top>Definizione</th><th>Descrizione</th></tr>
@@ -1076,15 +1031,15 @@ void Marc4cppDocumento::creaTag012_Impronta() {
     <td>Facoltativo</td></tr>
 <tr><td valign=top>Ripetibilita'</td>
     <td>Ripetibile</td></tr>
-<tr><td valign=top>Indicatore 1</td>
-    <td>Non definito</td></tr>
-<tr><td valign=top>Indicatore 2</td>
-    <td>Non definito</td></tr>
+<tr><td valign=top>Indicatore 1</td><td>Blank</td></tr>
+<tr><td valign=top>Indicatore 2</td><td>Blank</td></tr>
  <tr><td valign=top>Sottocampi</td>
     <td>
-    \li a - Numero ISMN corretto (in alternativa con sottocampo 'z'). Non ripetibile.
-    \li z - Numero ISMN errato (in alternativa con sottocampo 'a'). Non ripetibile.
-    \li b - Qualificazione (Nota sul numero ISMN). Non ripetibile.
+    <ul>
+    <li> a - Numero ISMN corretto (in alternativa con sottocampo 'z'). Non ripetibile.</li>
+    <li> b - Qualificazione (Nota sul numero ISMN). Non ripetibile.</li>
+    <li> z - Numero ISMN errato (in alternativa con sottocampo 'a'). Non ripetibile.</li>
+    </ul>
     </td></tr>
  <tr><td valign=top>NOTE</td>
     <td>
@@ -1136,9 +1091,10 @@ DataField * Marc4cppDocumento::creaTag013_Ismn() {
 	return df;
 }// End creaTag013Ismn
 
-/**
+/*/*!
 \brief <b>Tag 015 - Codice ISRN </b>
 
+[ authority documento ]
 <table>
 <tr>
 <th valign=top>Definizione</th><th>Descrizione</th></tr>
@@ -1146,20 +1102,18 @@ DataField * Marc4cppDocumento::creaTag013_Ismn() {
     <td>015</td></tr>
 <tr><td valign=top>Descrizione</td>
     <td> ISRN (International Standard Technical Report Number)</td></tr>
-<tr><td valign=top>Obbligatorieta'</td>
-    <td>Optional.</td></tr>
-<tr><td valign=top>Ripetibilita'</td>
-    <td>Repeatable.</td></tr>
-<tr><td valign=top>Indicatore 1</td>
-    <td>Non definito</td></tr>
-<tr><td valign=top>Indicatore 2</td>
-    <td>Non definito</td></tr>
+<tr><td valign=top>Obbligatorieta'</td><td>Optional.</td></tr>
+<tr><td valign=top>Ripetibilita'</td><td>Repeatable.</td></tr>
+<tr><td valign=top>Indicatore 1</td><td>Blank</td></tr>
+<tr><td valign=top>Indicatore 2</td><td>Blank</td></tr>
  <tr><td valign=top>Sottocampi</td>
     <td>
-    \li a - Numero (ISRN)
-    \li b - Qualificazione
-    \li d - Disponibilita' e/o prezzo
-    \li z - Cancellato/Invalido/Errato ISRN
+    <ul>
+    <li> a - Numero (ISRN)</li>
+    <li> b - Qualificazione</li>
+    <li> d - Disponibilita' e/o prezzo</li>
+    <li> z - Cancellato/Invalido/Errato ISRN</li>
+    </ul>
     </td></tr>
  <tr><td valign=top>NOTE</td>
     <td>CASSATO</td></tr>
@@ -1174,9 +1128,10 @@ DataField * Marc4cppDocumento::creaTag015_Isrn() {
 }// End creaTag015_ISRN
 
 
-/**
+/*!
 \brief <b>Tag 017 - Other standard identifier</b>
 
+[ authority documento ]
 <table>
 <tr>
 <th valign=top>Definizione</th><th>Descrizione</th></tr>
@@ -1190,19 +1145,25 @@ DataField * Marc4cppDocumento::creaTag015_Isrn() {
     <td>Ripetibile </td></tr>
 <tr><td valign=top>Indicatore 1</td>
     <td>Tipo numero standard
-				\li 7 Fonte specificata in sottocampo $2
-				\li 8 Non specificato</td></tr>
+    <ul>
+	<li> 7 Fonte specificata in sottocampo $2 (21/09/2010 Roveri)</li>
+<!--	<li> 8 Non specificato</td></tr></li> -->
+    </ul>
 <tr><td valign=top>Indicatore 2</td>
     <td>Indicatore di differenza.
-				\li 0 Non specificato
-				\li 1 Nessuna differenza
-				\li 2 Differenza</td></tr>
+    <ul>
+	<li> 0 Non specificato</li>
+	<li> 1 Nessuna differenza</li>
+	<li> 2 Differenza</td></tr></li>
+    </ul>
  <tr><td valign=top>Sottocampi</td>
     <td>
-    \li a - Numero standard (in alternativa al $z). Non Ripetibile.
-    \li z - Numero standard errato (in alternativa al $a). Non Ripetibile.
-    \li b - Qualificazione. Non Ripetibile.
-    \li 2 - Tipo numero standard. Non Ripetibile.
+    <ul>
+    <li> a - Numero standard (in alternativa al $z). Non Ripetibile.</li>
+    <li> b - Qualificazione. Non Ripetibile.</li>
+<!--    <li> z - Numero standard errato (in alternativa al $a). Non Ripetibile.</li> -->
+    <li> 2 - Tipo numero standard. Non Ripetibile.</li>
+    </ul>
     </td></tr>
  <tr><td valign=top>NOTE</td>
     <td>
@@ -1225,7 +1186,6 @@ DataField * Marc4cppDocumento::creaTag017_OtherStandardIdentifier() {
 	df->addSubfield(sf);
 	if (!nota.IsEmpty()) {
 		sf = new Subfield('b', &nota);
-		//sf->setData();
 		df->addSubfield(sf);
 	}
 	sf = new Subfield('2', tbNumeroStandard->getFieldString(tbNumeroStandard->tp_numero_std));
@@ -1236,9 +1196,10 @@ DataField * Marc4cppDocumento::creaTag017_OtherStandardIdentifier() {
 
 
 
-/**
+/*!
 \brief <b>Tag 020 - Numero di Bibliografia Nazionale (BNI) </b>
 
+[ authority documento ]
 <table>
 <tr>
 <th valign=top>Definizione</th><th>Descrizione</th></tr>
@@ -1248,24 +1209,20 @@ DataField * Marc4cppDocumento::creaTag017_OtherStandardIdentifier() {
     <td>Numero di Bibliografia Nazionale Italiana del titolo.</td></tr>
 <tr><td valign=top>Obbligatorieta'</td>
     <td>Facoltativo</td></tr>
-<tr><td valign=top>Ripetibilita'</td>
-    <td>Ripetibile</td></tr>
-<tr><td valign=top>Indicatore 1</td>
-    <td>Non definito</td></tr>
-<tr><td valign=top>Indicatore 2</td>
-    <td>Non definito</td></tr>
+<tr><td valign=top>Ripetibilita'</td> <td>Ripetibile</td></tr>
+<tr><td valign=top>Indicatore 1</td><td>Blank</td></tr>
+<tr><td valign=top>Indicatore 2</td><td>Blank</td></tr>
  <tr><td valign=top>Sottocampi</td>
     <td>
-    \li a - Codice paese. Non ripetibile
-    \li b - Numero di bibliografia nazionale italiana. Non ripetibile
+    <li> a - Codice paese. Non ripetibile</li>
+    <li> b - Numero di bibliografia nazionale italiana. Non ripetibile</li>
     </td></tr>
  <tr><td valign=top>NOTE</td>
-    <td>
-    </td></tr>
+    <td></td></tr>
 </table>
 
  */
-//\li z - Numero di bibliografia nazionale italiana errato. Il sottocampo viene creato se i primi 10 caratteri della nota sono diversi da spazio, utilizzando tali 10 caratteri.
+//<li> z - Numero di bibliografia nazionale italiana errato. Il sottocampo viene creato se i primi 10 caratteri della nota sono diversi da spazio, utilizzando tali 10 caratteri.</li>
 
 DataField * Marc4cppDocumento::creaTag020_NumeroDiBibliografiaNazionale() {
 	DataField *df;
@@ -1294,9 +1251,10 @@ DataField * Marc4cppDocumento::creaTag020_NumeroDiBibliografiaNazionale() {
 }// End creaTag020
 
 
-/**
+/*!
 \brief <b>Tag 022 - Numero di pubblicazione governativa </b>
 
+[ authority documento ]
 <table>
 <tr>
 <th valign=top>Definizione</th><th>Descrizione</th></tr>
@@ -1306,17 +1264,16 @@ DataField * Marc4cppDocumento::creaTag020_NumeroDiBibliografiaNazionale() {
     <td>Numero di pubblicazione governativa</td></tr>
 <tr><td valign=top>Obbligatorieta'</td>
     <td>Facoltativo</td></tr>
-<tr><td valign=top>Ripetibilita'</td>
-    <td>Ripetibile</td></tr>
-<tr><td valign=top>Indicatore 1</td>
-    <td>Non definito</td></tr>
-<tr><td valign=top>Indicatore 2</td>
-    <td>Non definito</td></tr>
+<tr><td valign=top>Ripetibilita'</td><td>Ripetibile</td></tr>
+<tr><td valign=top>Indicatore 1</td><td>Blank</td></tr>
+<tr><td valign=top>Indicatore 2</td><td>Blank</td></tr>
  <tr><td valign=top>Sottocampi</td>
     <td>
-    \li a - Codice paese. Non ripetibile.
-    \li b - Numero. Non ripetibile
-    \li z - Numero errato. Non ripetibile.
+    <ul>
+    <li> a - Codice paese. Non ripetibile.</li>
+    <li> b - Numero. Non ripetibile</li>
+    <li> z - Numero errato. Non ripetibile.</li>
+    </ul>
     </td></tr>
  <tr><td valign=top>NOTE</td>
     <td>
@@ -1352,9 +1309,10 @@ DataField * Marc4cppDocumento::creaTag022_NumeroDiPubblicazioneGovernativa() {
 
 
 
-/**
+/*!
 \brief <b>Tag 071 - Numero di lastra (Musica) </b>
 
+[ authority documento ]
 <table>
 <tr>
 <th valign=top>Definizione</th><th>Descrizione</th></tr>
@@ -1368,30 +1326,34 @@ DataField * Marc4cppDocumento::creaTag022_NumeroDiPubblicazioneGovernativa() {
     <td>Ripetibile</td></tr>
 <tr><td valign=top>Indicatore 1</td>
     <td>Tipo di numero dell'editore.<BR>
-	\li 0 Registrazione sonora: Numero di emissione.
-	\li 1 Registrazione sonora: numero di matrice
-	\li 2 Musica a stampa: numero di lastra
-	\li 3 Musica a stampa: altro numero di pubblicazione
-	\li 4 Numero di registrazione video
-	\li 5 Altro tipo di numero dell-editore
-	\li 6 Numero di risorsa elettronica (e.g. CD-ROM)
+    <ul>
+		<li> 0 Registrazione sonora: Numero di emissione.</li>
+		<li> 1 Registrazione sonora: numero di matrice</li>
+		<li> 2 Musica a stampa: numero di lastra</li>
+		<li> 3 Musica a stampa: altro numero di pubblicazione</li>
+		<li> 4 Numero di registrazione video</li>
+		<li> 5 Altro tipo di numero dell-editore</li>
+		<li> 6 Numero di risorsa elettronica (e.g. CD-ROM)</li>
+    </ul>
 <tr><td valign=top>Indicatore 2</td>
     <td>Indicatore della nota.<BR>
-	 \li 0 non stampare la nota
-	 \li 1 stampare la nota
+    <ul>
+	 <li> 0 non stampare la nota</li>
+	 <li> 1 stampare la nota</li>
+     </ul>
  <tr><td valign=top>Sottocampi</td>
     <td>
-    \li a - Numero standard. Non ripetibile.
-    \li c - Qualificazione. Non ripetibile.
+     <ul>
+    <li> a - Numero standard. Non ripetibile.</li>
+    <li> c - Qualificazione. Non ripetibile.</li>
+    <li> z - Numero standard errato (in alternativa al $a). Non Ripetibile.</li>
+    </ul>
     </td></tr>
  <tr><td valign=top>NOTE</td>
     <td>
     </td></tr>
 </table>
  */
-//\li b - Source
-//\li d - Terms of availability and/or price
-//\li z - Erroneous publisher's number
 
 
 DataField * Marc4cppDocumento::creaTag071_NumeroEditoreNonStandard(char tipoNumeroStd) {
@@ -1451,9 +1413,10 @@ DataField * Marc4cppDocumento::creaTag071_NumeroEditoreNonStandard(char tipoNume
 }// End creaTag071
 
 
-/**
+/*!
 \brief <b>Tag 090 - Numero di Bibliografia Cubi </b>
 
+[ authority documento ]
 <table>
 <tr>
 <th valign=top>Definizione</th><th>Descrizione</th></tr>
@@ -1463,15 +1426,12 @@ DataField * Marc4cppDocumento::creaTag071_NumeroEditoreNonStandard(char tipoNume
     <td>Numero di Bibliografia Cubi</td></tr>
 <tr><td valign=top>Obbligatorieta'</td>
     <td>Facoltativo</td></tr>
-<tr><td valign=top>Ripetibilita'</td>
-    <td>Ripetibile</td></tr>
-<tr><td valign=top>Indicatore 1</td>
-    <td>Non definito</td></tr>
-<tr><td valign=top>Indicatore 2</td>
-    <td>Non definito</td></tr>
+<tr><td valign=top>Ripetibilita'</td><td>Ripetibile</td></tr>
+<tr><td valign=top>Indicatore 1</td><td>Blank</td></tr>
+<tr><td valign=top>Indicatore 2</td><td>Blank</td></tr>
  <tr><td valign=top>Sottocampi</td>
     <td>
-    \li a - Numero standard. Non ripetibile.
+    <li> a - Numero standard. Non ripetibile.</li>
     </td></tr>
  <tr><td valign=top>NOTE</td>
     <td>
@@ -1490,130 +1450,126 @@ DataField * Marc4cppDocumento::creaTag090_NumeroDiBibliografiaCubi() {
 
 
 
-/**
-\brief <b>Tag 100 - Carta da'Identita'</b>
+/*!
+\brief <b>Tag 100 - Carta di identita'</b>
 
+[ authority documento ]
 <table>
 <tr>
 <th valign=top>Definizione</th><th>Descrizione</th></tr>
 <tr><td valign=top>Tag</td>
     <td>100</td></tr>
-<tr><td valign=top>Descrizione</td>
-    <td>Dati generali di elaborazione.</td></tr>
-<tr><td valign=top>Obbligatorieta'</td>
-    <td>Obbligatorio</td></tr>
-<tr><td valign=top>Ripetibilita'</td>
-    <td>Non Ripetibile</td></tr>
-<tr><td valign=top>Indicatore 1</td>
-    <td>Non definito</td></tr>
-<tr><td valign=top>Indicatore 2</td>
-    <td>Non definito</td></tr>
+<tr><td valign=top>Descrizione</td><td>Dati generali di elaborazione.</td></tr>
+<tr><td valign=top>Obbligatorieta'</td><td>Obbligatorio</td></tr>
+<tr><td valign=top>Ripetibilita'</td><td>Non Ripetibile</td></tr>
+<tr><td valign=top>Indicatore 1</td><td>Blank</td></tr>
+<tr><td valign=top>Indicatore 2</td><td>Blank</td></tr>
  <tr><td valign=top>Sottocampi</td>
     <td>
 <UL>
 	<li> a - Dati per l'elaborazione
 		<ul>
-		<li> 0-7 data di registrazione
-		<li>  8 tipo di data di pubblicazione
+		<li> 0-7 data di registrazione</li>
+		<li>  8 tipo di data di pubblicazione</li>
 			<ul>
-			 <li> a -periodico pubblicato correntemente
-			 <li> b -periodico la cui pubblicazione a' cessata
-			 <li> c -periodico di cui non si conosce lo "stato" della pubbl.
-			 <li> d -monografia
-			 <li> e -riproduzione di un documento
-			 <li> f -monografia con data incerta
-			 <li> g -monografia la cui pubbl. continua per pia' di un anno
-			 <li> h -monografia con data attuale e di copyright
-			 <li> i -monografia con data di uscita e di produzione
-			 <li> j -documento con data di pubblicazione dettagliata
-			 <li> ' ' - spazio
+			 <li> a -periodico pubblicato correntemente</li>
+			 <li> b -periodico la cui pubblicazione a' cessata</li>
+			 <li> c -periodico di cui non si conosce lo "stato" della pubbl.</li>
+			 <li> d -monografia</li>
+			 <li> e -riproduzione di un documento</li>
+			 <li> f -monografia con data incerta</li>
+			 <li> g -monografia la cui pubbl. continua per pia' di un anno</li>
+			 <li> h -monografia con data attuale e di copyright</li>
+			 <li> i -monografia con data di uscita e di produzione</li>
+			 <li> j -documento con data di pubblicazione dettagliata</li>
+			 <li> ' ' - spazio</li>
 			</ul>
-	<li>	9-12	prima data di pubbl.<br>
-			 se tipo_data = spazio allora valore = spazio, altrimenti valore = anno dalla data1
-	<li>	13-16	seconda data di pubbl.<br>
+	<li>	9-12	prima data di pubbl.
+			 se tipo_data = spazio allora valore = spazio, altrimenti valore = anno dalla data1</li>
+	<li>	13-16	seconda data di pubbl.
 			 se anno_data2 > 0 allora valore = anno_data2
 			 altrimenti se tipo_data = 'a' o 'F' o 'G' allora valore = 9999
-			 altrimenti valore = spazi.
-	<li>	17-19 destinatario della pubblicazione (NON USATI, carattere di riempimento)
+			 altrimenti valore = spazi.</li>
+	<li>	17-19 destinatario della pubblicazione (NON USATI, carattere di riempimento)</li>
 			<ul>
-			 <li> a -giovani
-			 <li> b -in eta' pre-scolare, 0-5 anni
-			 <li> c -in eta' scolare, 5-10 anni
-			 <li> d -bambini dai 9 ai 14 anni
-			 <li> e -giovani, 14-20 anni
-			 <li> k -adulti, serio
-			 <li> m -adulti, generale
-			 <li> u -sconosciuto
+			 <li> a -giovani</li>
+			 <li> b -in eta' pre-scolare, 0-5 anni</li>
+			 <li> c -in eta' scolare, 5-10 anni</li>
+			 <li> d -bambini dai 9 ai 14 anni</li>
+			 <li> e -giovani, 14-20 anni</li>
+			 <li> k -adulti, serio</li>
+			 <li> m -adulti, generale</li>
+			 <li> u -sconosciuto</li>
 			</ul>
-	<li>	20 pubblicazione governativa (NON USATO, carattere di riempimento)
+	<li>	20 pubblicazione governativa (NON USATO, carattere di riempimento)</li>
 			<ul>
-			 <li> a -statale
-			 <li> b -enti locali
-			 <li> c -dipartimento
-			 <li> d -municipio ecc.
-			 <li> e -dipartimenti intergovernativi
-			 <li> f -intergovernativa
-			 <li> g -governi in esilio o clandestini
-			 <li> h -livello non determinato
-			 <li> u -sconosciuto
-			 <li> y -pubblicazione non governativa
-			 <li> z -altri livelli
+			 <li> a -statale</li>
+			 <li> b -enti locali</li>
+			 <li> c -dipartimento</li>
+			 <li> d -municipio ecc.</li>
+			 <li> e -dipartimenti intergovernativi</li>
+			 <li> f -intergovernativa</li>
+			 <li> g -governi in esilio o clandestini</li>
+			 <li> h -livello non determinato</li>
+			 <li> u -sconosciuto</li>
+			 <li> y -pubblicazione non governativa</li>
+			 <li> z -altri livelli</li>
 			</ul>
 	<li>	21 record modificato
 			<ul>
-			 <li> 0 -record non modificato
-			 <li> 1 -record modificato
+			 <li> 0 -record non modificato</li>
+			 <li> 1 -record modificato</li>
 			</ul>
-	<li>	22-24 lingua della catalogazione
-	<li>	25 codice di traslitterazione (carattere di riempimento)
+	<li>	22-24 lingua della catalogazione</li>
+	<li>	25 codice di traslitterazione (carattere di riempimento)</li>
 			<ul>
-			 <li> a -traslitterazione secondo le norme ISO
-			 <li> b -altro
-			 <li> c -traslitt. multipla; ISO o altri schemi
-			 <li> y -non traslitterazione
+			 <li> a -traslitterazione secondo le norme ISO</li>
+			 <li> b -altro</li>
+			 <li> c -traslitt. multipla; ISO o altri schemi</li>
+			 <li> y -non traslitterazione</li>
 			</ul>
-	<li>	26-29 serie di caratteri
+	<li>	26-29 serie di caratteri</li>
 			<ul>
-			 <li> 01 -ISO 646 (Versione IRV) (Basic Latin ISO 646)*
-			 <li> 02 -ISO Registrazione 37 (Cirillico di base)
-			 <li> 03 -ISO 5426 (Latino esteso)*
-			 <li> 04 -ISO DIS 5427 (Cirillico esteso)
-			 <li> 05 -ISO 5428 (Greco)
-			 <li> 06 -ISO 6438 (Caratteri africani)
+			 <li> 01 -ISO 646 (Versione IRV) (Basic Latin ISO 646)*</li>
+			 <li> 02 -ISO Registrazione 37 (Cirillico di base)</li>
+			 <li> 03 -ISO 5426 (Latino esteso)*</li>
+			 <li> 04 -ISO DIS 5427 (Cirillico esteso)</li>
+			 <li> 05 -ISO 5428 (Greco)</li>
+			 <li> 06 -ISO 6438 (Caratteri africani)</li>
 			</ul>
-	<li>	30-31 - primo set addizionale<br> se e' utilizzato il set ISO/DIS 6937 allora valore = '10' altrimenti valore = spazi.
-	<li>	32-33 - secondo set addizionale<br> se e' utilizzato Greek ISO 5428 allora valore = '05' altrimenti valore = spazi.
-	<li>	34-35 alfabeto del titolo
+	<li>	30-31 - primo set addizionale<br> se e' utilizzato il set ISO/DIS 6937 allora valore = '10' altrimenti valore = spazi.</li>
+	<li>	32-33 - secondo set addizionale<br> se e' utilizzato Greek ISO 5428 allora valore = '05' altrimenti valore = spazi.</li>
+	<li>	34-35 alfabeto del titolo</li>
 			<ul>
-			 <li> ba -Latino *
-			 <li> ca -Cirillico
-			 <li> da -Giapponese - alfabeto non specificato
-			 <li> db -Giapponese - kanji
-			 <li> dc -Giapponese - kana
-			 <li> ea -Cinese
-			 <li> fa a'Arabo
-			 <li> ga -Greco
-			 <li> ha -Ebraico
-			 <li> ia -Thai
-			 <li> ja -Devanagari
-			 <li> ka -Coreano
-			 <li> la -Tamil
-			 <li> zz -Altri
+			 <li> ba -Latino *</li>
+			 <li> ca -Cirillico</li>
+			 <li> da -Giapponese - alfabeto non specificato</li>
+			 <li> db -Giapponese - kanji</li>
+			 <li> dc -Giapponese - kana</li>
+			 <li> ea -Cinese</li>
+			 <li> fa a'Arabo</li>
+			 <li> ga -Greco</li>
+			 <li> ha -Ebraico</li>
+			 <li> ia -Thai</li>
+			 <li> ja -Devanagari</li>
+			 <li> ka -Coreano</li>
+			 <li> la -Tamil</li>
+			 <li> zz -Altri</li>
 			</ul>
 		</UL>
     </td></tr>
 
  <tr><td valign=top>Formato</td>
     <td>Se tp_aa_pubb == 'a' allora seconda data di pubbl diventa
-    \li Polo - '9999'
-    \li Indice - '&nbsp;&nbsp;&nbsp;&nbsp;'
+    <li> Polo - '9999'</li>
+    <li> Indice - '&nbsp;&nbsp;&nbsp;&nbsp;' (4 blank)</li>
     </td>
     </tr>
 
 
 
  <tr><td valign=top>NOTE</td>
-    <td>le posizioni 31-32 33-34 vengono impostate inizialmente a spazi e poi vengono corrette alla fine dell'elaborazione di ogni record unimarc, secondo il set di caratteri riscontrato nel record.</td>
+    <td></td>
     </tr>
 </table>
 
@@ -1670,9 +1626,10 @@ DataField * Marc4cppDocumento::creaTag100_CartaDIdentita() {
 }// End creaTag100
 
 
-/**
+/*!
 \brief <b>Tag 101 - Lingua della pubblicazione </b>
 
+[ authority documento ]
 <table>
 <tr>
 <th valign=top>Definizione</th><th>Descrizione</th></tr>
@@ -1680,33 +1637,40 @@ DataField * Marc4cppDocumento::creaTag100_CartaDIdentita() {
     <td>101</td></tr>
 <tr><td valign=top>Descrizione</td>
     <td>Lingua della pubblicazione</td></tr>
-<tr><td valign=top>Obbligatorieta'</td>
-    <td>Facoltativo</td></tr>
-<tr><td valign=top>Ripetibilita'</td>
-    <td>Non Ripetibile</td></tr>
+<tr><td valign=top>Obbligatorieta'</td><td>Facoltativo</td></tr>
+<tr><td valign=top>Ripetibilita'</td><td>Non Ripetibile</td></tr>
 <tr><td valign=top>Indicatore 1</td>
-    <td>\li 0 Lingua originale
-	 \li 1 Traduzione dalla'originale o in lavoro intermedio
-	 \li 2 Contiene traduzioni other than translated summaries</td></tr>
-<tr><td valign=top>Indicatore 2</td>
-    <td>Non definito</td></tr>
+    <td>
+    <ul>
+    <li> 0 Lingua originale</li>
+	<li> 1 Traduzione dalla'originale o in lavoro intermedio</li>
+	<li> 2 Contiene traduzioni other than translated summaries</li>
+    <li> Blank If it is not possible to allocate this indicator in records converted from a source format, the fill character should be used in place of the values outlined above.</li>
+	</ul>
+	</td></tr>
+<tr><td valign=top>Indicatore 2</td><td>Blank</td></tr>
  <tr><td valign=top>Sottocampi</td>
     <td>
-    \li a - Lingua del testo. Ripetibile.
-	\li b - Lingua del testo intermedio. Ripetibile.
-	\li c - Lingua del testo originale. Ripetibile.
+    <ul>
+    <li> a - Lingua del testo. Ripetibile.</li>
+<!--
+	<li> b - Lingua del testo intermedio. Ripetibile.</li>
+	<li> c - Lingua del testo originale. Ripetibile.</li>
+-->
+    </ul>
 		</td></tr>
  <tr><td valign=top>NOTE</td><td>Sottocampo 'b' e 'c' per l'export di Indice confluiscono nel sottocampo 'a'</td></tr>
 </table>
 
  */
-//\li d - Lingua del compendio
-//\li e - Lingua degli indici
-//\li f - Lingua del frontespizio
-//\li g - Lingua del titolo proprio
-//\li h - Lingua del libretto, ecc.
-//\li i - Lingua del materiale allegato
-//\li j - Lingua dei sottotitoli
+
+//<li> d - Lingua del compendio</li>
+//<li> e - Lingua degli indici</li>
+//<li> f - Lingua del frontespizio</li>
+//<li> g - Lingua del titolo proprio</li>
+//<li> h - Lingua del libretto, ecc.</li>
+//<li> i - Lingua del materiale allegato</li>
+//<li> j - Lingua dei sottotitoli</li>
 
 
 
@@ -1723,7 +1687,7 @@ DataField * Marc4cppDocumento::creaTag101_LinguaPubblicazione() {
 		return df;
 
 	Subfield *sf;
-	df = new DataField((char *)"101", INDICATOR_FILLER, INDICATOR_UNDEFINED);
+	df = new DataField((char *)"101", INDICATOR_UNDEFINED, INDICATOR_UNDEFINED);
 	sf = new Subfield('a', sPtr);
 	df->addSubfield(sf);
 
@@ -1756,9 +1720,10 @@ DataField * Marc4cppDocumento::creaTag101_LinguaPubblicazione() {
 }// End creaTag101
 
 
-/**
+/*!
 \brief <b>Tag 102 - Paese di pubblicazione </b>
 
+[ authority documento ]
 <table>
 <tr>
 <th valign=top>Definizione</th><th>Descrizione</th></tr>
@@ -1768,21 +1733,20 @@ DataField * Marc4cppDocumento::creaTag101_LinguaPubblicazione() {
     <td>Paese di pubblicazione</td></tr>
 <tr><td valign=top>Obbligatorieta'</td>
     <td>Facoltativo</td></tr>
-<tr><td valign=top>Ripetibilita'</td>
-    <td>Non Ripetibile</td></tr>
-<tr><td valign=top>Indicatore 1</td>
-    <td>Non definito</td></tr>
-<tr><td valign=top>Indicatore 2</td>
-    <td>Non definito</td></tr>
+<tr><td valign=top>Ripetibilita'</td><td>Non Ripetibile</td></tr>
+<tr><td valign=top>Indicatore 1</td> <td>Blank</td></tr>
+<tr><td valign=top>Indicatore 2</td><td>Blank</td></tr>
  <tr><td valign=top>Sottocampi</td>
     <td>
-    \li a - Paese di pubblicazione. Non ripetibille
+    <ul>
+    <li> a - Paese di pubblicazione (2 caratteri). Non ripetibille</li>
+    </ul>
     </td></tr>
  <tr><td valign=top>NOTE</td><td>Per l'export di Polo il sottocampo 'a' viene reso minuscolo</td></tr>
 </table>
 
  */
-//\li b - Localita' di pubblicazione (NON USATO)
+//<li> b - Localita' di pubblicazione (NON USATO)</li>
 
 DataField * Marc4cppDocumento::creaTag102_PaeseDiPubblicazione() {
 	DataField *df = 0;
@@ -1803,9 +1767,10 @@ DataField * Marc4cppDocumento::creaTag102_PaeseDiPubblicazione() {
 }// End creaTag102
 
 
-/**
-\brief <b>Tag  105 - Dati codificati: monografie</b>
+/*!
+\brief <b>Tag 105 - Dati codificati: monografie</b>
 
+[ authority documento ]
 <table>
 <tr>
 <th valign=top>Definizione</th><th>Descrizione</th></tr>
@@ -1813,102 +1778,95 @@ DataField * Marc4cppDocumento::creaTag102_PaeseDiPubblicazione() {
     <td>105</td></tr>
 <tr><td valign=top>Descrizione</td>
     <td>Dati codificati per contenuto: monografie</td></tr>
-<tr><td valign=top>Obbligatorieta'</td>
-    <td>Facoltativo</td></tr>
-<tr><td valign=top>Ripetibilita'</td>
-    <td>Non Ripetibile</td></tr>
-<tr><td valign=top>Indicatore 1</td>
-    <td>Non definito</td></tr>
-<tr><td valign=top>Indicatore 2</td>
-    <td>Non definito</td></tr>
+<tr><td valign=top>Obbligatorieta'</td><td>Facoltativo</td></tr>
+<tr><td valign=top>Ripetibilita'</td><td>Non Ripetibile</td></tr>
+<tr><td valign=top>Indicatore 1</td><td>Blank</td></tr>
+<tr><td valign=top>Indicatore 2</td><td>Blank</td></tr>
  <tr><td valign=top>Sottocampi</td>
     <td>
     <ul>
-	 <li> a - Dati codificati monografie (Non ripetibile). NON USATO PER ORA (spazi)
-	 <ul>
-	 <li> 0-3 codici illustrazioni
+	 <li> a - Dati codificati monografie (Non ripetibile). NON USATO PER ORA (spazi)</li>
+	 <li> 0-3 codici illustrazioni</li>
 	 	<ul>
-		 <li> a - illustrazioni
-		 <li> b - mappe
-		 <li> c - ritratti
-		 <li> d - carte
-		 <li> e - piante
-		 <li> f - incisioni
-		 <li> g - musica
-		 <li> h - facsimili
-		 <li> i - stemmi
-		 <li> j - tavole genealogiche
-		 <li> k - schede
-		 <li> l - campioni
-		 <li> m - registrazioni sonore
-		 <li> n - diapositive
-		 <li> o - miniature
-		 <li> y - nessuna illustrazione
-		 <li> # - valore non necessario
+		 <li> a - illustrazioni</li>
+		 <li> b - mappe</li>
+		 <li> c - ritratti</li>
+		 <li> d - carte</li>
+		 <li> e - piante</li>
+		 <li> f - incisioni</li>
+		 <li> g - musica</li>
+		 <li> h - facsimili</li>
+		 <li> i - stemmi</li>
+		 <li> j - tavole genealogiche</li>
+		 <li> k - schede</li>
+		 <li> l - campioni</li>
+		 <li> m - registrazioni sonore</li>
+		 <li> n - diapositive</li>
+		 <li> o - miniature</li>
+		 <li> y - nessuna illustrazione</li>
+		 <li> # - valore non necessario</li>
 		 </ul>
-	 <li> 4-7 forma del contenuto
+	 <li> 4-7 forma del contenuto</li>
 		<ul>
-		 <li> a - bibliografie
-		 <li> b - cataloghi
-		 <li> c - indici
-		 <li> d - abstract o sommari
-		 <li> e - dizionari
-		 <li> f - enciclopedie
-		 <li> g - liste
-		 <li> h - descrizioni di progetto
-		 <li> i - statistiche
-		 <li> j - manuali
-		 <li> k - brevetti
-		 <li> l - norme standardizzate
-		 <li> m - dissertazioni o tesi
-		 <li> n - leggi e legislazione
-		 <li> o - tabelle
-		 <li> p - rendiconti tecnici
-		 <li> q - questionari
-		 <li> r - recensioni
-		 <li> s - trattati
-		 <li> t - cartoni animati o vignette
-		 <li> z - altro
-		 <li> # - valore non necessario
+		 <li> a - bibliografie</li>
+		 <li> b - cataloghi</li>
+		 <li> c - indici</li>
+		 <li> d - abstract o sommari</li>
+		 <li> e - dizionari</li>
+		 <li> f - enciclopedie</li>
+		 <li> g - liste</li>
+		 <li> h - descrizioni di progetto</li>
+		 <li> i - statistiche</li>
+		 <li> j - manuali</li>
+		 <li> k - brevetti</li>
+		 <li> l - norme standardizzate</li>
+		 <li> m - dissertazioni o tesi</li>
+		 <li> n - leggi e legislazione</li>
+		 <li> o - tabelle</li>
+		 <li> p - rendiconti tecnici</li>
+		 <li> q - questionari</li>
+		 <li> r - recensioni</li>
+		 <li> s - trattati</li>
+		 <li> t - cartoni animati o vignette</li>
+		 <li> z - altro</li>
+		 <li> # - valore non necessario</li>
 		</ul>
-	 <li> 8 pubblicazione di congresso
+	 <li> 8 pubblicazione di congresso</li>
 		<ul>
-		 <li> 0 - pubblicazione non relativa a congresso
-		 <li> 1 - pubblicazione relativa a congresso
+		 <li> 0 - pubblicazione non relativa a congresso</li>
+		 <li> 1 - pubblicazione relativa a congresso</li>
 		</ul>
-	 <li> 9 Festschrift
+	 <li> 9 Festschrift</li>
 		<ul>
-		 <li> 0 - non festschrift
-		 <li> 1 - festschrift
+		 <li> 0 - non festschrift</li>
+		 <li> 1 - festschrift</li>
 		</ul>
-	 <li> 10 indice (codice di disponibilita')
+	 <li> 10 indice (codice di disponibilita')</li>
 		<ul>
-		 <li> 0 - nessun indice
-		 <li> 1 - indice
+		 <li> 0 - nessun indice</li>
+		 <li> 1 - indice</li>
 		</ul>
-	 <li> 11 tipo di testo letterario
+	 <li> 11 tipo di testo letterario</li>
 		<ul>
-		 <li> a - romanzo
-		 <li> b - testo teatrale
-		 <li> c - saggi
-		 <li> d - satira e umorismo
-		 <li> e - epistolari
-		 <li> f - racconti
-		 <li> g - poesia
-		 <li> h - orazioni, retorica
-
-		 <li> i - libretto
-
-		 <li> y - testo non letterario
-		 <li> z - miscellanea o altre forme letterarie
+		 <li> a - romanzo</li>
+		 <li> b - testo teatrale</li>
+		 <li> c - saggi</li>
+		 <li> d - satira e umorismo</li>
+		 <li> e - epistolari</li>
+		 <li> f - racconti</li>
+		 <li> g - poesia</li>
+		 <li> h - orazioni, retorica</li>
+		 <li> i - libretto</li>
+		 <li> y - testo non letterario</li>
+		 <li> z - miscellanea o altre forme letterarie</li>
 		</ul>
-	 <li> 12 tipo di biografia
+	 <li> 12 tipo di biografia</li>
 		<ul>
-		 <li> a - autobiografia
-		 <li> b - biografia individuale
-		 <li> c - biografia collettiva
-		 <li> d - contiene informazioni biografiche
-		 <li> y - materiale non biografico
+		 <li> a - autobiografia</li>
+		 <li> b - biografia individuale</li>
+		 <li> c - biografia collettiva</li>
+		 <li> d - contiene informazioni biografiche</li>
+		 <li> y - materiale non biografico</li>
 		</ul>
     </ul>
     </td></tr>
@@ -1942,20 +1900,12 @@ DataField * Marc4cppDocumento::creaTag105_DatiCodificati() { // bool recordInTbT
 
 //tbTitolo->dumpRecord();
 
-// 05/05/2015 Paolucci, dato non obbligatorio
-//	if (!genere[0]) // 06/10/2010  && !genere[1] && !genere[2] && !genere[3]
-//		return df;
-
-
-
 	// make lowercase
 	for (int i=0; i< 4; i++)
 	{
 		if (genere[i] >= 'A' && genere[i] <= 'Z' )
 			genere[i]+=0x20;
 
-//		if (!genere[i] || (genere[i] >= '0' && genere[i] <= '9') ||  genere[i]=='x' || genere[i]=='y' || genere[i]=='r') // 05/07/2011 Mail franco/Roveri
-//			genere[i] = ' ';
 
 		if (genere[i]=='z')
 			ch=genere[i];
@@ -2038,134 +1988,130 @@ DataField * Marc4cppDocumento::creaTag105_DatiCodificati() { // bool recordInTbT
 
 
 
-/**
+/*!
 \brief <b>Tag 110 - Dati codificati: Periodici</b>
 
+[ authority documento ]
 <table>
 <tr>
 <th valign=top>Definizione</th><th>Descrizione</th></tr>
-<tr><td valign=top>Tag</td>
-    <td>110</td></tr>
-<tr><td valign=top>Descrizione</td>
-    <td>Dati codificati per contenuto: periodici</td></tr>
-<tr><td valign=top>Obbligatorieta'</td>
-    <td>Facoltativo</td></tr>
-<tr><td valign=top>Ripetibilita'</td>
-    <td>Non Ripetibile</td></tr>
-<tr><td valign=top>Indicatore 1</td>
-    <td>Non definito</td></tr>
-<tr><td valign=top>Indicatore 2</td>
-    <td>Non definito</td></tr>
- <tr><td valign=top>Sottocampi</td>
+<tr><td valign=top>Tag</td><td>110</td></tr>
+<tr><td valign=top>Descrizione</td><td>Dati codificati per contenuto: periodici</td></tr>
+<tr><td valign=top>Obbligatorieta'</td> <td>Facoltativo</td></tr>
+<tr><td valign=top>Ripetibilita'</td><td>Non Ripetibile</td></tr>
+	<tr><td valign=top>Indicatore 1</td><td>Blank</td></tr>
+	<tr><td valign=top>Indicatore 2</td><td>Blank</td></tr>
+	<tr><td valign=top>Sottocampi</td>
     <td>
 <ul>
 </ul>
-	<li>a - dati codificati contenuto: periodici
+	<li>a - dati codificati contenuto: periodici</li>
 		<ul>
-		<li>0 tipo di periodico
+		<li>0 tipo di periodico</li>
 			<ul>
-			 <li>a - periodico
-			 <li>b - serie monografica (collana)
-			 <li>c - giornale
-			 <li>z - altro
+			 <li>a - periodico</li>
+			 <li>b - serie monografica (collana)</li>
+			 <li>c - giornale</li>
+			 <li>z - altro</li>
 			</ul>
 		<li>1 frequenza
 		<ul>
-			 <li>a - quotidiano
-			 <li>b - due volte la settimana
-			 <li>c - settimanale
-			 <li>d - ogni due settimane
-			 <li>e - bimensile
-			 <li>f - mensile
-			 <li>g - bimestrale
-			 <li>h - trimestrale
-			 <li>i - quadrimestrale
-			 <li>j - semestrale
-			 <li>k - annuale
-			 <li>l - biennale
-			 <li>m - triennale
-			 <li>n - 3 volte alla settimana
-			 <li>o - 3 volte al mese
-			 <li>u - non conosciuta
-			 <li>y - non regolare
-			 <li>z - altro
+			 <li>a - quotidiano</li>
+			 <li>b - due volte la settimana</li>
+			 <li>c - settimanale</li>
+			 <li>d - ogni due settimane</li>
+			 <li>e - bimensile</li>
+			 <li>f - mensile</li>
+			 <li>g - bimestrale</li>
+			 <li>h - trimestrale</li>
+			 <li>i - quadrimestrale</li>
+			 <li>j - semestrale</li>
+			 <li>k - annuale</li>
+			 <li>l - biennale</li>
+			 <li>m - triennale</li>
+			 <li>n - 3 volte alla settimana</li>
+			 <li>o - 3 volte al mese</li>
+			 <li>u - non conosciuta</li>
+			 <li>y - non regolare</li>
+			 <li>z - altro</li>
 		</ul>
-		<li>2 regolarita'
+		<li>2 regolarita'</li>
 		<ul>
-			 <li>a - regolare
-			 <li>b - irregolare normalizzato
-			 <li>u - non conosciuta
-			 <li>y - non regolare
+			 <li>a - regolare</li>
+			 <li>b - irregolare normalizzato</li>
+			 <li>u - non conosciuta</li>
+			 <li>y - non regolare</li>
 		</ul>
-		<li>3 tipo di materiale
+		<li>3 tipo di materiale</li>
 		<ul>
-		 <li>a - bibliografie
-		 <li>b - cataloghi
-		 <li>c - indici
-		 <li>d - abstract o sommari
-		 <li>e - dizionari
-		 <li>f - enciclopedie
-		 <li>g - liste
-		 <li>h - annuari
-		 <li>i - statistiche
-		 <li>j - testi programmati
-		 <li>k - recensioni
-		 <li>l - leggi e legislazione
-		 <li>m - rendiconti legali e digesti
-		 <li>n - articoli legali
-		 <li>o - processi e note ai processi
-		 <li>p a' biografie
-		 <li>r - recensioni
-		 <li>t - cartoni animati o vignette
-		 <li>z - altro
-		 <li># - valore non necessario
+		 <li>a - bibliografie</li>
+		 <li>b - cataloghi</li>
+		 <li>c - indici</li>
+		 <li>d - abstract o sommari</li>
+		 <li>e - dizionari</li>
+		 <li>f - enciclopedie</li>
+		 <li>g - liste</li>
+		 <li>h - annuari</li>
+		 <li>i - statistiche</li>
+		 <li>j - testi programmati</li>
+		 <li>k - recensioni</li>
+		 <li>l - leggi e legislazione</li>
+		 <li>m - rendiconti legali e digesti</li>
+		 <li>n - articoli legali</li>
+		 <li>o - processi e note ai processi</li>
+		 <li>p - biografie</li>
+		 <li>r - recensioni</li>
+		 <li>t - cartoni animati o vignette</li>
+		 <li>z - altro</li>
+		 <li># - valore non necessario</li>
 		</ul>
-		<li>4-6 natura del contenuto
-		<li>7 pubblicazione di congresso
+		<li>4-6 natura del contenuto</li>
+		<li>7 pubblicazione di congresso</li>
 		<ul>
-		 <li>0 - periodico non relativo a congresso
-		 <li>1 - periodico relativo a congresso
+		 <li>0 - periodico non relativo a congresso</li>
+		 <li>1 - periodico relativo a congresso</li>
 		</ul>
-		<li>8 disponibilita' del frontespizio
+		<li>8 disponibilita' del frontespizio</li>
 		<ul>
-		 <li>a - nell'ultimo fascicolo del volume - sciolto
-		 <li>b - nell'ultimo fascicolo del volume - unito
-		 <li>c - nel primo fascicolo del prossimo volume - sciolto
-		 <li>d - nel primo fascicolo del prossimo volume - unito
-		 <li>e - pubblicato separatamente - gratis- su richiesta
-		 <li>f - pubblicato separatamente - gratis- invio automatico
-		 <li>g - pubblicato separatamente - da acquistare - su richiesta
-		 <li>u - non conosciuta al momento della creazione del record
-		 <li>x - non applicabile
-		 <li>y - nessun frontespizio
-		 <li>z - altro
+		 <li>a - nell'ultimo fascicolo del volume - sciolto</li>
+		 <li>b - nell'ultimo fascicolo del volume - unito</li>
+		 <li>c - nel primo fascicolo del prossimo volume - sciolto</li>
+		 <li>d - nel primo fascicolo del prossimo volume - unito</li>
+		 <li>e - pubblicato separatamente - gratis- su richiesta</li>
+		 <li>f - pubblicato separatamente - gratis- invio automatico</li>
+		 <li>g - pubblicato separatamente - da acquistare - su richiesta</li>
+		 <li>u - non conosciuta al momento della creazione del record</li>
+		 <li>x - non applicabile</li>
+		 <li>y - nessun frontespizio</li>
+		 <li>z - altro</li>
 		</ul>
-		<li>9 disponibilita' dell'indice
+		<li>9 disponibilita' dell'indice</li>
 		<ul>
-		 <li>a - ogni fasc. contiene un indice dei contenuti - sciolto
-		 <li>b - nell'ultimo fascicolo del volume - sciolto - numerato separatamente
-		 <li>c - nell'ultimo fascicolo del volume - non numerato
-		 <li>d - nell'ultimo fascicolo del volume - unito
-		 <li>e - nel primo fascicolo del volume - sciolto - numerato separatamente
-		 <li>f - nel primo fascicolo del volume - sciolto - non numerato
-		 <li>g - nel primo fascicolo del volume - unito
-		 <li>h - pubblicato separatamente - gratis - invio automatico
-		 <li>i - pubblicato separatamente - gratis - invio su richiesta
-		 <li>j - pubbl. separatamente - rilegato dall'editore - gratis a' invio automatico
-		 <li>k - pubblicato separatamente - rilegato dall'editore - gratis - invio su richiesta
-		 <li>l - pubbl. separatamente - rilegato dall'editore - da acquistare
-		 <li>m - questo periodico a' un supplemento o una sottoserie indicizzato nel periodico parente
-		 <li>u - non conosciuta al momento della creazione del record
-		 <li>x - non applicabile
-		 <li>y - indice non disponibile
-		 <li>z - altro
+		 <li>a - ogni fasc. contiene un indice dei contenuti - sciolto</li>
+		 <li>b - nell'ultimo fascicolo del volume - sciolto - numerato separatamente</li>
+		 <li>c - nell'ultimo fascicolo del volume - non numerato</li>
+		 <li>d - nell'ultimo fascicolo del volume - unito</li>
+		 <li>e - nel primo fascicolo del volume - sciolto - numerato separatamente</li>
+		 <li>f - nel primo fascicolo del volume - sciolto - non numerato</li>
+		 <li>g - nel primo fascicolo del volume - unito</li>
+		 <li>h - pubblicato separatamente - gratis - invio automatico</li>
+		 <li>i - pubblicato separatamente - gratis - invio su richiesta</li>
+		 <li>j - pubbl. separatamente - rilegato dall'editore - gratis a' invio automatico</li>
+		 <li>k - pubblicato separatamente - rilegato dall'editore - gratis - invio su richiesta</li>
+		 <li>l - pubbl. separatamente - rilegato dall'editore - da acquistare</li>
+		 <li>m - questo periodico a' un supplemento o una sottoserie indicizzato nel periodico parente</li>
+		 <li>u - non conosciuta al momento della creazione del record</li>
+		 <li>x - non applicabile</li>
+		 <li>y - indice non disponibile</li>
+		 <li>z - altro</li>
 		</ul>
-		 <li>10 disponibilita' dell'indice cumulativo
+		 <li>10 disponibilita' dell'indice cumulativo</li>
 		<ul>
-		 <li>0 - indice cumulativo non disponibile
-		 <li>1 - indice cumulativo disponibile
+		 <li>0 - indice cumulativo non disponibile</li>
+		 <li>1 - indice cumulativo disponibile</li>
 		</ul>
 	</ul>
+
      </td></tr>
  <tr><td valign=top>NOTE</td><td></td></tr></table>
 
@@ -2230,160 +2176,156 @@ DataField * Marc4cppDocumento::creaTag110_Periodici(char natura) {
 
 
 
-/**
+/*!
 \brief <b>Tag 116 - Dati codificati: arte grafica</b>
 
+[ authority documento ]
 <table>
 <tr>
 <th valign=top>Definizione</th><th>Descrizione</th></tr>
 <tr><td valign=top>Tag</td>
     <td>116</td></tr>
-<tr><td valign=top>Descrizione</td>
-    <td>Dati codificati contenuto: arte grafica</td></tr>
-<tr><td valign=top>Obbligatorieta'</td>
-    <td>Facoltativo</td></tr>
-<tr><td valign=top>Ripetibilita'</td>
-    <td>Ripetibile</td></tr>
-<tr><td valign=top>Indicatore 1</td>
-    <td>Non definito</td></tr>
-<tr><td valign=top>Indicatore 2</td>
-    <td>Non definito</td></tr>
+<tr><td valign=top>Descrizione</td><td>Dati codificati contenuto: arte grafica</td></tr>
+<tr><td valign=top>Obbligatorieta'</td> <td>Facoltativo</td></tr>
+<tr><td valign=top>Ripetibilita'</td> <td>Ripetibile</td></tr>
+<tr><td valign=top>Indicatore 1</td><td>Blank</td></tr>
+<tr><td valign=top>Indicatore 2</td><td>Blank</td></tr>
  <tr><td valign=top>Sottocampi</td>
     <td>
     <ul>
-    <li>a - dati codificati per l'arte grafica (0-17)
+    <li>a - dati codificati per l'arte grafica (0-17)</li>
 		<ul>
-		 <li>0 materiale specifico
+		 <li>0 materiale specifico</li>
 			<ul>
-			 <li>a - collage
-			 <li>b - disegno
-			 <li>c - pittura
-			 <li>d - riproduzione fotomeccanica
-			 <li>e - fotonegativo
-			 <li>f - riproduzione fotografica
-			 <li>h - immagine
-			 <li>i - stampa
-			 <li>k - disegno tecnico
-			 <li>z - altro
+			 <li>a - collage</li>
+			 <li>b - disegno</li>
+			 <li>c - pittura</li>
+			 <li>d - riproduzione fotomeccanica</li>
+			 <li>e - fotonegativo</li>
+			 <li>f - riproduzione fotografica</li>
+			 <li>h - immagine</li>
+			 <li>i - stampa</li>
+			 <li>k - disegno tecnico</li>
+			 <li>z - altro</li>
 			</ul>
-		<li>1 materiale del supporto principale
+		<li>1 materiale del supporto principale</li>
 			<ul>
-			 <li>a - tela
-			 <li>b - cartoncino
-			 <li>c - cartone
-			 <li>d - vetro
-			 <li>e - sintetico
-			 <li>f - pellami
-			 <li>g - tessuti
-			 <li>h - metallo
-			 <li>i - carta
-			 <li>j - gesso
-			 <li>k - legno compresso
-			 <li>l - porcellana
-			 <li>m - pietra
-			 <li>n - legno
-			 <li>u - non conosciuto
-			 <li>v - collana mista
-			 <li>z - altro
+			 <li>a - tela</li>
+			 <li>b - cartoncino</li>
+			 <li>c - cartone</li>
+			 <li>d - vetro</li>
+			 <li>e - sintetico</li>
+			 <li>f - pellami</li>
+			 <li>g - tessuti</li>
+			 <li>h - metallo</li>
+			 <li>i - carta</li>
+			 <li>j - gesso</li>
+			 <li>k - legno compresso</li>
+			 <li>l - porcellana</li>
+			 <li>m - pietra</li>
+			 <li>n - legno</li>
+			 <li>u - non conosciuto</li>
+			 <li>v - collana mista</li>
+			 <li>z - altro</li>
 			</ul>
-		<li>2 materiale del supporto secondario
+		<li>2 materiale del supporto secondario</li>
 			<ul>
-			 <li>a - tela
-			 <li>b - cartoncino
-			 <li>c - cartone
-			 <li>d - vetro
-			 <li>e - sintetico
-			 <li>f - pellami
-			 <li>g - tessuti
-			 <li>h - metallo
-			 <li>i - carta
-			 <li>j - gesso
-			 <li>k - legno compresso
-			 <li>l - porcellana
-			 <li>m - pietra
-			 <li>n - legno
-			 <li>u - non conosciuto
-			 <li>v - collana mista
-			 <li>y - nessun supporto secondario
-			 <li>z - altro
+			 <li>a - tela</li>
+			 <li>b - cartoncino</li>
+			 <li>c - cartone</li>
+			 <li>d - vetro</li>
+			 <li>e - sintetico</li>
+			 <li>f - pellami</li>
+			 <li>g - tessuti</li>
+			 <li>h - metallo</li>
+			 <li>i - carta</li>
+			 <li>j - gesso</li>
+			 <li>k - legno compresso</li>
+			 <li>l - porcellana</li>
+			 <li>m - pietra</li>
+			 <li>n - legno</li>
+			 <li>u - non conosciuto</li>
+			 <li>v - collana mista</li>
+			 <li>y - nessun supporto secondario</li>
+			 <li>z - altro</li>
 			</ul>
-		<li>3 colore
+		<li>3 colore</li>
 			<ul>
-			 <li>a - un colore, monocromatico
-			 <li>b - bianco e nero
-			 <li>c - multicolore
-			 <li>d - colorato a mano
-			 <li>u - non conosciuto
-			 <li>v - misto
-			 <li>x - non applicabile
-			 <li>z - altro
+			 <li>a - un colore, monocromatico</li>
+			 <li>b - bianco e nero</li>
+			 <li>c - multicolore</li>
+			 <li>d - colorato a mano</li>
+			 <li>u - non conosciuto</li>
+			 <li>v - misto</li>
+			 <li>x - non applicabile</li>
+			 <li>z - altro</li>
 			</ul>
-		<li>4-9 tecniche (del disegno, pittoriche)
+		<li>4-9 tecniche (del disegno, pittoriche)</li>
 			<ul>
-			 <li>aa - matita
-			 <li>ab - grafite
-			 <li>ac - matita colorata
-			 <li>ad - inchiostro di china
-			 <li>ae - inchiostro di china lavierung
-			 <li>af - carboncino
-			 <li>ag - gessetto
-			 <li>ah - gessetto nero
-			 <li>ai - sanguigna
-			 <li>aj - acquarello
-			 <li>ak - tempera
-			 <li>al - guazzo
-			 <li>am - pastello
-			 <li>an - olio
-			 <li>ba - pennarello
-			 <li>bb - macchia
-			 <li>bc - crayon
-			 <li>bd - seppia
-			 <li>be - inchiostro
-			 <li>bf - caseina
-			 <li>bg - doratura
-			 <li>bh - encaustico
-			 <li>bi - acrilico
-			 <li>bj - collage
-			 <li>bk - punta d'argento
-			 <li>bl - pennello
-			 <li>uu - non conosciuto
-			 <li>vv - misto
-			 <li>xx - non applicabile
-			 <li>zz - altro
+			 <li>aa - matita</li>
+			 <li>ab - grafite</li>
+			 <li>ac - matita colorata</li>
+			 <li>ad - inchiostro di china</li>
+			 <li>ae - inchiostro di china lavierung</li>
+			 <li>af - carboncino</li>
+			 <li>ag - gessetto</li>
+			 <li>ah - gessetto nero</li>
+			 <li>ai - sanguigna</li>
+			 <li>aj - acquarello</li>
+			 <li>ak - tempera</li>
+			 <li>al - guazzo</li>
+			 <li>am - pastello</li>
+			 <li>an - olio</li>
+			 <li>ba - pennarello</li>
+			 <li>bb - macchia</li>
+			 <li>bc - crayon</li>
+			 <li>bd - seppia</li>
+			 <li>be - inchiostro</li>
+			 <li>bf - caseina</li>
+			 <li>bg - doratura</li>
+			 <li>bh - encaustico</li>
+			 <li>bi - acrilico</li>
+			 <li>bj - collage</li>
+			 <li>bk - punta d'argento</li>
+			 <li>bl - pennello</li>
+			 <li>uu - non conosciuto</li>
+			 <li>vv - misto</li>
+			 <li>xx - non applicabile</li>
+			 <li>zz - altro</li>
 			</ul>
-		<li>10-15 tecniche (stampe)
+		<li>10-15 tecniche (stampe)</li>
 			<ul>
-			 <li>ba - xilografia
-			 <li>bb - xilografia a chiaroscuro
-			 <li>bc - xilografia a linea bianca
-			 <li>bd - camaiu
-			 <li>be - eliotipia
-			 <li>bf - cromolithografia
-			 <li>bg - incisione su linoleum
-			 <li>bh - incisione all'acquaforte
-			 <li>bi - litografia
-			 <li>bj - fotolitografia
-			 <li>bk - zincografia
-			 <li>bl - algraphy
-			 <li>bm - acquatinta
-			 <li>bn - reservage
-			 <li>ca - vernis-mou
-			 <li>cb - incisione
-			 <li>cc - incisione a crayon
-			 <li>cd - incisione a bulino
-			 <li>ce - puntasecca
-			 <li>cf - mezzatinta
-			 <li>cg - monotipo
-			 <li>ch - silkscreen
-			 <li>ci - steel engraving
-			 <li>cj - grafica al computer
-			 <li>ck - potocopia
-			 <li>uu - non conosciuto
-			 <li>vv - misto
-			 <li>xx - non applicabile
-			 <li>zz - altro
+			 <li>ba - xilografia</li>
+			 <li>bb - xilografia a chiaroscuro</li>
+			 <li>bc - xilografia a linea bianca</li>
+			 <li>bd - camaiu</li>
+			 <li>be - eliotipia</li>
+			 <li>bf - cromolithografia</li>
+			 <li>bg - incisione su linoleum</li>
+			 <li>bh - incisione all'acquaforte</li>
+			 <li>bi - litografia</li>
+			 <li>bj - fotolitografia</li>
+			 <li>bk - zincografia</li>
+			 <li>bl - algraphy</li>
+			 <li>bm - acquatinta</li>
+			 <li>bn - reservage</li>
+			 <li>ca - vernis-mou</li>
+			 <li>cb - incisione</li>
+			 <li>cc - incisione a crayon</li>
+			 <li>cd - incisione a bulino</li>
+			 <li>ce - puntasecca</li>
+			 <li>cf - mezzatinta</li>
+			 <li>cg - monotipo</li>
+			 <li>ch - silkscreen</li>
+			 <li>ci - steel engraving</li>
+			 <li>cj - grafica al computer</li>
+			 <li>ck - potocopia</li>
+			 <li>uu - non conosciuto</li>
+			 <li>vv - misto</li>
+			 <li>xx - non applicabile</li>
+			 <li>zz - altro</li>
 			</ul>
-		<li> 16-17 designazione delle funzioni
+		<li> 16-17 designazione delle funzioni</li>
     </ul>
     </td></tr>
  <tr><td valign=top>NOTE</td>
@@ -2443,24 +2385,20 @@ DataField * Marc4cppDocumento::creaTag116_ArteGrafica() {
 }// End creaTag116
 
 
-/**
+/*!
 \brief <b>Tag 120 - Dati codificati: materiali cartografici </b>
 
+[ authority documento ]
 <table>
 <tr>
 <th valign=top>Definizione</th><th>Descrizione</th></tr>
 <tr><td valign=top>Tag</td>
     <td>120</td></tr>
-<tr><td valign=top>Descrizione</td>
-    <td>Dati codificati per contenuto: materiali cartografici</td></tr>
-<tr><td valign=top>Obbligatorieta'</td>
-    <td>Facoltativo</td></tr>
-<tr><td valign=top>Ripetibilita'</td>
-    <td> Non ripetibile</td></tr>
-<tr><td valign=top>Indicatore 1</td>
-    <td>Non definito</td></tr>
-<tr><td valign=top>Indicatore 2</td>
-    <td>Non definito</td></tr>
+<tr><td valign=top>Descrizione</td><td>Dati codificati per contenuto: materiali cartografici</td></tr>
+<tr><td valign=top>Obbligatorieta'</td> <td>Facoltativo</td></tr>
+<tr><td valign=top>Ripetibilita'</td><td> Non ripetibile</td></tr>
+<tr><td valign=top>Indicatore 1</td><td>Blank</td></tr>
+<tr><td valign=top>Indicatore 2</td> <td>Blank</td></tr>
  <tr><td valign=top>Sottocampi</td>
     <td>
 	<ul>
@@ -2522,24 +2460,20 @@ DataField * Marc4cppDocumento::creaTag120_MaterialiCartografici() {
 
 
 
-/**
+/*!
 \brief <b>Tag 121 - Dati codificati: materiale cartografico,  caratteristiche fisiche </b>
 
+[ authority documento ]
 <table>
 <tr>
 <th valign=top>Definizione</th><th>Descrizione</th></tr>
 <tr><td valign=top>Tag</td>
     <td>121</td></tr>
-<tr><td valign=top>Descrizione</td>
-    <td>Dati codificati contenuto: Materiale cartografico - Caratteristiche fisiche</td></tr>
-<tr><td valign=top>Obbligatorieta'</td>
-    <td>Facoltativo</td></tr>
-<tr><td valign=top>Ripetibilita'</td>
-    <td>Non ripetibile</td></tr>
-<tr><td valign=top>Indicatore 1</td>
-    <td>Non definito</td></tr>
-<tr><td valign=top>Indicatore 2</td>
-    <td>Non definito</td></tr>
+<tr><td valign=top>Descrizione</td><td>Dati codificati contenuto: Materiale cartografico - Caratteristiche fisiche</td></tr>
+<tr><td valign=top>Obbligatorieta'</td><td>Facoltativo</td></tr>
+<tr><td valign=top>Ripetibilita'</td><td>Non ripetibile</td></tr>
+<tr><td valign=top>Indicatore 1</td><td>Blank</td></tr>
+<tr><td valign=top>Indicatore 2</td><td>Blank</td></tr>
  <tr><td valign=top>Sottocampi</td>
     <td>
     </td></tr>
@@ -2614,9 +2548,10 @@ DataField * Marc4cppDocumento::creaTag121_MaterialeCartografico_CaratteristicheF
 
 
 
-/**
+/*!
 \brief <b>Tag 123 - Dati codificati: materiale cartografico, scala e coordinate </b>
 
+[ authority documento ]
 <table>
 <tr>
 <th valign=top>Definizione</th><th>Descrizione</th></tr>
@@ -2624,36 +2559,34 @@ DataField * Marc4cppDocumento::creaTag121_MaterialeCartografico_CaratteristicheF
     <td>123</td></tr>
 <tr><td valign=top>Descrizione</td>
     <td>Dati codificati contenuto: Materiale cartografico - scala e coordinate</td></tr>
-<tr><td valign=top>Obbligatorieta'</td>
-    <td>Obbligatorio per il materiale cartografico</td></tr>
-<tr><td valign=top>Ripetibilita'</td>
-    <td>Ripetibile</td></tr>
+<tr><td valign=top>Obbligatorieta'</td><td>Obbligatorio per il materiale cartografico</td></tr>
+<tr><td valign=top>Ripetibilita'</td><td>Ripetibile</td></tr>
 <tr><td valign=top>Indicatore 1</td>
     <td> Indicatore nella prima posizione: tipo di scala
     <ul>
-	 <li>0 scala indeterminata
-	 <li>1 scala singola
-	 <li>2 scala multipla
-	 <li>3 intervallo di scala
-	 <li>4 scala approssimata</td></tr>
+	 <li>0 scala indeterminata</li>
+	 <li>1 scala singola</li>
+	 <li>2 scala multipla</li>
+	 <li>3 intervallo di scala</li>
+	 <li>4 scala approssimata</li>
     </ul>
-<tr><td valign=top>Indicatore 2</td>
-    <td>Non definito</td></tr>
- <tr><td valign=top>Sottocampi</td>
+	</td></tr>
+<tr><td valign=top>Indicatore 2</td><td>Blank</td></tr>
+<tr><td valign=top>Sottocampi</td>
     <td>
     <ul>
-	 <li>a - Tipo di scala
-	 <li>b - Scala orizzontale - Costante lineare
-	 <li>c - Scala orizzontale - Costante verticale
-	 <li>d - Coordinate - Massima estensione ad Ovest, Longitudine
-	 <li>e - Coordinate - Massima estensione ad Est, Longitudine
-	 <li>f - Coordinate - Massima estensione a Nord, Latitudine
-	 <li>g - Coordinate - Massima estensione a Sud, Latitudine
+	 <li>a - Tipo di scala</li>
+	 <li>b - Scala orizzontale - Costante lineare</li>
+	 <li>c - Scala orizzontale - Costante verticale</li>
+	 <li>d - Coordinate - Massima estensione ad Ovest, Longitudine</li>
+	 <li>e - Coordinate - Massima estensione ad Est, Longitudine</li>
+	 <li>f - Coordinate - Massima estensione a Nord, Latitudine</li>
+	 <li>g - Coordinate - Massima estensione a Sud, Latitudine</li>
 <!--
-	 <li>h - Scala angolare
-	 <li>i,j - Declinazione
-	 <li>k,m - Ascensione
-	 <li>n - Equinozio
+	 <li>h - Scala angolare</li>
+	 <li>i,j - Declinazione</li>
+	 <li>k,m - Ascensione</li>
+	 <li>n - Equinozio</li>
 -->
     </ul>
     </td></tr>
@@ -2715,7 +2648,7 @@ DataField * Marc4cppDocumento::creaTag123_MaterialeCartografico_ScalaECoordinate
 		df->addSubfield(sf);
 	}
 
-  // Mantis 0004627. 16/09/2011 Dopo aver parlato con Roveri e Paolucci si eccezione per la 123 e si tira fuori un record anche senza sottocampi!!!
+  // Mantis 0004627. 16/09/2011 Dopo aver parlato con Roveri e Paolucci si fa eccezione per la 123 e si tira fuori un record anche senza sottocampi!!!
   if (TIPO_SCARICO != TIPO_SCARICO_OPAC)
 	  {
 	  if (!df->getSubfields()->Length())
@@ -2732,9 +2665,10 @@ DataField * Marc4cppDocumento::creaTag123_MaterialeCartografico_ScalaECoordinate
 
 
 
-/**
+/*!
 \brief <b>Tag 124 - Dati codificati: Materiale cartografico, Materiale specifico </b>
 
+[ authority documento ]
 <table>
 <tr>
 <th valign=top>Definizione</th><th>Descrizione</th></tr>
@@ -2742,25 +2676,21 @@ DataField * Marc4cppDocumento::creaTag123_MaterialeCartografico_ScalaECoordinate
     <td>124</td></tr>
 <tr><td valign=top>Descrizione</td>
     <td>Dati codificati contenuto: Materiale cartografico - Materiale specifico</td></tr>
-<tr><td valign=top>Obbligatorieta'</td>
-    <td>Facoltativo</td></tr>
-<tr><td valign=top>Ripetibilita'</td>
-    <td> Non ripetibile</td></tr>
-<tr><td valign=top>Indicatore 1</td>
-    <td>Non definito</td></tr>
-<tr><td valign=top>Indicatore 2</td>
-    <td>Non definito</td></tr>
+<tr><td valign=top>Obbligatorieta'</td><td>Facoltativo</td></tr>
+<tr><td valign=top>Ripetibilita'</td><td> Non ripetibile</td></tr>
+<tr><td valign=top>Indicatore 1</td><td>Blank</td></tr>
+<tr><td valign=top>Indicatore 2</td><td>Blank</td></tr>
  <tr><td valign=top>Sottocampi</td>
     <td>
     <ul>
-    <li> a - Carattere dell'immagine
-	<li> b - Forma dell'unita' cartografica
-	<li> c - Tecnica di presentazione...
-	<li> d - Posizione della piattaforma
-	<li> e - Categoria del satellite
+    <li> a - Carattere dell'immagine</li>
+	<li> b - Forma dell'unita' cartografica</li>
+<!--	<li> c - Tecnica di presentazione...</li> -->
+	<li> d - Posizione della piattaforma</li>
+	<li> e - Categoria del satellite</li>
 <!--
-	<li> f - Nome del satellite
-	<li> g - Tecnica di registrazione
+	<li> f - Nome del satellite</li>
+	<li> g - Tecnica di registrazione</li>
 -->
     </ul>
     </td></tr>
@@ -2813,24 +2743,20 @@ DataField * Marc4cppDocumento::creaTag124_MaterialeCartografico_MaterialeSpecifi
 
 
 
-/**
+/*!
 \brief <b>Tag 125 - Registrazioni sonore e musica a stampa </b>
 
+[ authority documento ]
 <table>
 <tr>
 <th valign=top>Definizione</th><th>Descrizione</th></tr>
 <tr><td valign=top>Tag</td>
     <td>125</td></tr>
-<tr><td valign=top>Descrizione</td>
-    <td>Dati codificati contenuto: Registrazioni sonore e musica a stampa</td></tr>
-<tr><td valign=top>Obbligatorieta'</td>
-    <td>Facoltativo</td></tr>
-<tr><td valign=top>Ripetibilita'</td>
-    <td>Non ripetibile</td></tr>
-<tr><td valign=top>Indicatore 1</td>
-    <td>Non definito</td></tr>
-<tr><td valign=top>Indicatore 2</td>
-    <td>Non definito</td></tr>
+<tr><td valign=top>Descrizione</td><td>Dati codificati contenuto: Registrazioni sonore e musica a stampa</td></tr>
+<tr><td valign=top>Obbligatorieta'</td><td>Facoltativo</td></tr>
+<tr><td valign=top>Ripetibilita'</td><td>Non ripetibile</td></tr>
+<tr><td valign=top>Indicatore 1</td><td>Blank</td></tr>
+<tr><td valign=top>Indicatore 2</td><td>Blank</td></tr>
  <tr><td valign=top>Sottocampi</td>
     <td>
     </td></tr>
@@ -2838,13 +2764,13 @@ DataField * Marc4cppDocumento::creaTag124_MaterialeCartografico_MaterialeSpecifi
     <td>
    <li>a - Formato della musica a stampa
    <ul>
-	 <li>0 codice di presentazione
+	 <li>0 codice di presentazione</li>
 <!--
-	 <li>1 indicatore delle parti
-	 <li>2 caratteri - non ripetibile
+	 <li>1 indicatore delle parti</li>
+	 <li>2 caratteri - non ripetibile</li>
 -->
    </ul>
-   <li>b - Indicatore del testo letterario, 2 caratteri
+   <li>b - Indicatore del testo letterario, 2 caratteri</li>
 
     </td></tr>
 </table>
@@ -2894,32 +2820,30 @@ DataField * Marc4cppDocumento::creaTag125_RegistrazioniSonoreMusicaAStampa(char 
 
 
 
-/**
+/*!
 \brief <b>Tag 128 - Esecuzioni musicali e partiture </b>
 
+[ authority documento ]
 <table>
 <tr>
 <th valign=top>Definizione</th><th>Descrizione</th></tr>
 <tr><td valign=top>Tag</td>
     <td>128</td></tr>
-<tr><td valign=top>Descrizione</td>
-    <td>Dati Codificati Contenuto: Esecuzioni musicali e partiture</td></tr>
-<tr><td valign=top>Obbligatorieta'</td>
-    <td>Facoltativo</td></tr>
-<tr><td valign=top>Ripetibilita'</td>
-    <td>Ripetibile</td></tr>
-<tr><td valign=top>Indicatore 1</td>
-    <td>Non definito</td></tr>
-<tr><td valign=top>Indicatore 2</td>
-    <td>Non definito</td></tr>
+<tr><td valign=top>Descrizione</td><td>Dati Codificati Contenuto: Esecuzioni musicali e partiture</td></tr>
+<tr><td valign=top>Obbligatorieta'</td><td>Facoltativo</td></tr>
+<tr><td valign=top>Ripetibilita'</td><td>Ripetibile</td></tr>
+<tr><td valign=top>Indicatore 1</td><td>Blank</td></tr>
+<tr><td valign=top>Indicatore 2</td><td>Blank</td></tr>
  <tr><td valign=top>Sottocampi</td>
     <td>
+    <ul>
 <!--
-	 <li>a - Forma della composizione,2 caratteri
+	 <li>a - Forma della composizione,2 caratteri</li>
 -->
-	 <li>b - Voci o strumenti per ensemble,2 caratteri (Organico sintetico)
-	 <li>c - Voci o strumenti solisti,2 caratteri (Organico analitico)
-	 <li>9 - Tipo elaborazione
+	 <li>b - Voci o strumenti per ensemble,2 caratteri (Organico sintetico)</li>
+	 <li>c - Voci o strumenti solisti,2 caratteri (Organico analitico)</li>
+	 <li>9 - Tipo elaborazione</li>
+    </ul>
      </td></tr>
  <tr><td valign=top>NOTE</td>
     <td>
@@ -2977,24 +2901,20 @@ DataField * Marc4cppDocumento::creaTag128_EsecuzioniMusicaliEPartiture(char *bid
 
 
 
-/**
+/*!
 \brief <b>Tag 140 - Codici per il libro antico</b>
 
+[ authority documento ]
 <table>
 <tr>
 <th valign=top>Definizione</th><th>Descrizione</th></tr>
 <tr><td valign=top>Tag</td>
     <td>140</td></tr>
-<tr><td valign=top>Descrizione</td>
-    <td>Codici per il libro antico</td></tr>
-<tr><td valign=top>Obbligatorieta'</td>
-    <td>Facoltativo</td></tr>
-<tr><td valign=top>Ripetibilita'</td>
-    <td>Non ripetibile</td></tr>
-<tr><td valign=top>Indicatore 1</td>
-    <td>Non definito</td></tr>
-<tr><td valign=top>Indicatore 2</td>
-    <td>Non definito</td></tr>
+<tr><td valign=top>Descrizione</td> <td>Codici per il libro antico</td></tr>
+<tr><td valign=top>Obbligatorieta'</td><td>Facoltativo</td></tr>
+<tr><td valign=top>Ripetibilita'</td> <td>Non ripetibile</td></tr>
+<tr><td valign=top>Indicatore 1</td><td>Blank</td></tr>
+<tr><td valign=top>Indicatore 2</td><td>Blank</td></tr>
  <tr><td valign=top>Sottocampi</td>
     <td>
     <UL>
@@ -3552,9 +3472,10 @@ df->insertSubfield(0,sf);
 
 
 
-/**
-\brief <b>Tag 017 - INTERNATIONAL STANDARD RECORDING CODE (ISRC)</b>
+/*!
+\brief <b>Tag 016 - INTERNATIONAL STANDARD RECORDING CODE (ISRC)</b>
 
+[ authority documento ]
 <table>
 <tr>
 <th valign=top>Definizione</th><th>Descrizione</th></tr>
@@ -3570,34 +3491,37 @@ coexists.</td></tr>
     <td>Opzionale</td></tr>
 <tr><td valign=top>Ripetibilita'</td>
     <td>Ripetibile </td></tr>
-<tr><td valign=top>Indicatore 1</td>
-    <td>blank (not defined)</td></tr>
-<tr><td valign=top>Indicatore 2</td>
-    <td>blank (not defined)</td></tr>
+<tr><td valign=top>Indicatore 1</td> <td>Blank</td></tr>
+<tr><td valign=top>Indicatore 2</td><td>
+    <ul>
+    <li> 1 - (15/01/2015 mail Roveri)</li>
+    </ul>
+	</td></tr>
  <tr><td valign=top>Sottocampi</td>
     <td>
-    \li a - Number (ISRC) A correctly applied ISRC including hyphens. The ISRCs are assigned by the designated
-agency in each country.Mandatory unless $z is present. Non Ripetibile.
+    <ul>
+    <li> a - Number (ISRC) A correctly applied ISRC including hyphens. The ISRCs are assigned by the designated
+agency in each country.Mandatory unless $z is present. Non Ripetibile.</li>
 
-    \li b - Qualificazione. Non Ripetibile.
-    \li d - Terms of Availability and/or Price [Obsolete]
+    <li> b - Qualificazione. Non Ripetibile.</li>
+<!--    <li> d - Terms of Availability and/or Price [Obsolete]</li>
 			The ISRC does not identify a manifestation. Ripetibile? (manuale non dice).
-    \li z - Numero standard errato (in alternativa al $a). Non Ripetibile.
+-->
+    <li> z - Numero standard errato (in alternativa al $a). Non Ripetibile.</li>
+    </ul>
     </td></tr>
  <tr><td valign=top>NOTE</td>
     <td>
+	The ISRC consists of 4 segments:
+	COUNTRY CODE: The two characters allocated to you by the US ISRC Agency.
+	REGISTRANT CODE: Portion allocated to the Registrant by a National Agency (3 alphanumeric characters).
+	YEAR OF REFERENCE: The 2-digit year in which the ISRC was assigned to the recording.
+	DESIGNATION CODE: The code assigned to the sound recording by the registrant. This code may not be repeated within the same calendar year (5 digits).
+
+	Example: ISRC US-S1Z-09-00001
     </td></tr>
 </table>
 
-
-The ISRC consists of 4 segments:
-
-COUNTRY CODE: The two characters allocated to you by the US ISRC Agency.
-REGISTRANT CODE: Portion allocated to the Registrant by a National Agency (3 alphanumeric characters).
-YEAR OF REFERENCE: The 2-digit year in which the ISRC was assigned to the recording.
-DESIGNATION CODE: The code assigned to the sound recording by the registrant. This code may not be repeated within the same calendar year (5 digits).
-
-Example: ISRC US-S1Z-09-00001
 
  */
 
@@ -3636,14 +3560,15 @@ DataField * Marc4cppDocumento::creaTag016_Isrc() {
 
 
 
-/**
+/*!
 \brief <b>Tag 072 - UNIVERSAL PRODUCT CODE (UPC)</b>
 
+[ authority documento ]
 <table>
 <tr>
 <th valign=top>Definizione</th><th>Descrizione</th></tr>
 <tr><td valign=top>Tag</td>
-    <td>016</td></tr>
+    <td>072</td></tr>
 <tr><td valign=top>Descrizione</td>
     <td>This field contains the Universal Product Code. The field corresponds to the ISBD Standard
 Number (or Alternative) and Tenns of Availability Area. The field may contain the terms of
@@ -3652,25 +3577,30 @@ availability and/or price, even ifit does not contain a number.</td></tr>
     <td>Opzionale</td></tr>
 <tr><td valign=top>Ripetibilita'</td>
     <td>Ripetibile </td></tr>
-<tr><td valign=top>Indicatore 1</td>
-    <td>blank (not defined)</td></tr>
+<tr><td valign=top>Indicatore 1</td><td>Blank (not defined)</td></tr>
 <tr><td valign=top>Indicatore 2</td>
-    <td>Difference indicator
+ <td>Difference indicator
     The second indicator position contains a value that indicates whether there is a
 	difference between a scanned number or code and the same number or code in eye
 	readable form.
-		0 No information provided
-		1 No difference
-		2 Difference
+    <ul>
+<!--		<li>0 No information provided</li> -->
+		<li>1 - No difference (15/01/2015 mail Roveri)</li>
+<!--	<li>2 - Difference</li> -->
+    </ul>
     </td></tr>
  <tr><td valign=top>Sottocampi</td>
     <td>
-    \li a - Standard Number. A correctly formatted standard number or code. Number or code is formatted according to type. Not repeatable.
-    \li b - Qualificazione. Non Ripetibile.
-    \li c - Additional codes following standard number or codes. Contains any coded suffix to the identifier. Not repeatable.
-    \li d - Terms of Availability and/or Price [Obsolete]
-			The ISRC does not identify a manifestation. Non ripetibile.
-    \li z - Numero standard errato (in alternativa al $a). Non Ripetibile.
+    <ul>
+    <li> a - Standard Number. A correctly formatted standard number or code. Number or code is formatted according to type. Not repeatable.</li>
+    <li> b - Qualificazione. Non Ripetibile.</li>
+<!--
+    <li> c - Additional codes following standard number or codes. Contains any coded suffix to the identifier. Not repeatable.</li>
+    <li> d - Terms of Availability and/or Price [Obsolete]
+			The ISRC does not identify a manifestation. Non ripetibile.</li>
+-->
+    <li> z - Numero standard errato (in alternativa al $a). Non Ripetibile.</li>
+    </ul>
     </td></tr>
  <tr><td valign=top>NOTE</td>
     <td>
@@ -3713,14 +3643,15 @@ DataField * Marc4cppDocumento::creaTag072_Upc() {
 
 
 
-/**
+/*!
 \brief <b>Tag 073 - INTERNATIONAL ARTICLE NUMBER (EAN)</b>
 
+[ authority documento ]
 <table>
 <tr>
 <th valign=top>Definizione</th><th>Descrizione</th></tr>
 <tr><td valign=top>Tag</td>
-    <td>016</td></tr>
+    <td>073</td></tr>
 <tr><td valign=top>Descrizione</td>
     <td>This field contains the International Article Number. The field corresponds to the ISBD
 Standard Number (or Alternative) and Terms of Availability Area. The field may contain the
@@ -3730,26 +3661,30 @@ terms of availability and/or price, even if it does not contain a number.</td></
 <tr><td valign=top>Ripetibilita'</td>
     <td>Ripetibile </td></tr>
 <tr><td valign=top>Indicatore 1</td>
-    <td>blank (not defined)</td></tr>
+    <td>Blank (not defined)</td></tr>
 <tr><td valign=top>Indicatore 2</td>
     <td>Difference indicator
     The second indicator position contains a value that indicates whether there is a
 	difference between a scanned number or code and the same number or code in eye
 	readable form.
-		0 No information provided
-		1 No difference
-		2 Difference
+	<ul>
+<!--    <li> 0 - No information provided</li> -->
+	<li> 1 - No difference (15/01/2015 mail Roveri)</li>
+<!--	<li> 2 - Difference</li> -->
+	</ul>
     </td></tr>
  <tr><td valign=top>Sottocampi</td>
     <td>
-    \li a - Standard NumberA correctly formatted standard number or code. Not repeatable.
-    \li b - Qualificazione. Non Ripetibile.
-    \li c - Additional codes following standard number or codes. Contains any coded suffix to the identifier. Not repeatable.
-    \li d - Terms of Availability and/or Price. The price of the item and any comment on its availability. Not repeatable.
-    \li z - Erroneous Number or Code
+    <ul>
+    <li> a - Standard NumberA correctly formatted standard number or code. Not repeatable.</li>
+    <li> b - Qualificazione. Non Ripetibile.</li>
+    <li> c - Additional codes following standard number or codes. Contains any coded suffix to the identifier. Not repeatable.</li>
+    <li> d - Terms of Availability and/or Price. The price of the item and any comment on its availability. Not repeatable.</li>
+    <li> z - Erroneous Number or Code</li>
 			A number or code that has been identified as being erroneously applied to an item or is
 			otherwise invalid. It may have been allocated to two different publications or products
 			and in this instance cancelled, or it may have been incorrectly printed. Repeatable.
+    </ul>
     </td></tr>
  <tr><td valign=top>NOTE</td>
     <td>
@@ -3877,7 +3812,6 @@ if (tbTitset1->loadRecord(tbTitolo->getField(tbTitolo->bid)))
 
 	else
 		// undefined!!!!
-//		SignalAnError(__FILE__,__LINE__,"isModerno105(). Impossibile stabilire se si tratta di antico o moderno: %s.", tbTitolo->getField(tbTitolo->bid));
 		logToStdout(__FILE__, __LINE__, LOG_WARNING, "isModerno105(). Impossibile stabilire se si tratta di antico o moderno: %s.", tbTitolo->getField(tbTitolo->bid));
 
 }
@@ -3979,13 +3913,34 @@ while (tbNota321->loadNextRecord(bid)) // 18/04/2016
 	}
 } // End elaboraNote321
 
-/*
- 035 Altri numeri standard
- Indicatori non definiti
- Sottocampi:
- $a Number
- */
+/*!
+\brief <b>Tag 035 - Altri numeri standard</b>
 
+ [ authority documento ]
+ <table>
+ <tr>
+ <th valign=top>Definizione</th><th>Descrizione</th></tr>
+ <tr><td valign=top>Tag</td><td>035</td></tr>
+ <tr><td valign=top>Descrizione</td><td>Altri numeri standard</td></tr>
+ <tr><td valign=top>Obbligatorieta'</td><td>Opzionale</td></tr>
+ <tr><td valign=top>Ripetibilita'</td><td>Ripetibile</td></tr>
+ <tr><td valign=top>Indicatore 1</td><td>Blank</td></tr>
+ <tr><td valign=top>Indicatore 2</td><td>Blank</td></tr>
+  <tr><td valign=top>Sottocampi</td>
+  <td>
+    <ul>
+     <li>a - Number</li>
+    </ul>
+  </td>
+  </tr>
+  <tr><td valign=top>Formato</td>
+     <td>
+     </td>
+     </tr>
+  <tr><td valign=top>NOTE</td>
+     <td>Solo per POLO</td></tr>
+ </table>
+ */
 DataField * Marc4cppDocumento::creaTag035() {
 	DataField *df;
 	Subfield *sf;

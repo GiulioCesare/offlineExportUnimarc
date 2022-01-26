@@ -400,9 +400,9 @@ void Marc4cppDocumento::creaTag200_AnticoNew(DataField *df, CString *areaTitolo)
 
 
 /*!
-
 \brief <b>Tag 200 - Titolo e indicazione di responsabilita' (area 1 dell'ISBD)</b>
 
+[ authority documento ]
  <table>
  <tr>
  <th valign=top>Definizione</th><th>Descrizione</th>
@@ -411,29 +411,31 @@ void Marc4cppDocumento::creaTag200_AnticoNew(DataField *df, CString *areaTitolo)
  <tr><td valign=top>Tag</td><td>200</td></tr>
  <tr><td valign=top>Descrizione</td>
 	 <td>Titolo e indicazione di responsabilita' (area 1 dell'ISBD)</td></tr>
- <tr><td valign=top>Obbligatorieta'</td>
-	 <td>Obbligatorio</td></tr>
- <tr><td valign=top>Ripetibilita'</td>
-	 <td>Non Ripetibile</td></tr>
+ <tr><td valign=top>Obbligatorieta'</td><td>Obbligatorio</td></tr>
+ <tr><td valign=top>Ripetibilita'</td><td>Non Ripetibile</td></tr>
  <tr><td valign=top>Indicatore 1</td>
-	 <td>\li 0 titolo non significativo
-		 \li 1 titolo significativo</td></tr>
- <tr><td valign=top>Indicatore 2</td>
-	 <td>Non definito</td></tr>
+	 <td><ul>
+	 	 <li> 0 titolo non significativo</li>
+		 <li> 1 titolo significativo</td></tr></li>
+		 </ul>
+ <tr><td valign=top>Indicatore 2</td><td>Blank</td></tr>
   <tr><td valign=top>Sottocampi</td>
 	 <td>
-		\li a - titolo proprio. Ripetibile.
-		\li b - designazione generale del materiale. Ripetibile.
-		\li c - titolo proprio di altro autore. Ripetibile.
-		\li d - titolo parllelo. Ripetibile.
-		\li e - complemento del titolo. Ripetibile.
-		\li f - prima indicazione di responsabilita'. Ripetibile.
-		\li g - seconda e successive indicazioni di responsabilita'. Ripetibile.
-		\li h - numero di una parte. Ripetibile.
-		\li i - nome di una parte. Ripetibile.
-		\li v - indicazione di volume. Non Ripetibile.
-		\li z - lingua del titolo parallelo. Ripetibile.
+	 <ul>
+		<li> a - titolo proprio. Ripetibile.</li>
+		<li> b - designazione generale del materiale. Ripetibile.</li>
+		<li> c - titolo proprio di altro autore. Ripetibile.</li>
+		<li> d - titolo parllelo. Ripetibile.</li>
+		<li> e - complemento del titolo. Ripetibile.</li>
+		<li> f - prima indicazione di responsabilita'. Ripetibile.</li>
+		<li> g - seconda e successive indicazioni di responsabilita'. Ripetibile.</li>
+		<li> h - numero di una parte. Ripetibile.</li>
+		<li> i - nome di una parte. Ripetibile.</li>
+		<li> v - indicazione di volume. Non Ripetibile.</li>
+		<li> z - lingua del titolo parallelo. Ripetibile.</li>
+	<ul>
 	 </td></tr>
+
   <tr><td valign=top>NOTE</td><td></td></tr>
 
  </table>
@@ -512,7 +514,7 @@ DataField * Marc4cppDocumento::creaTag200_AreaTitoloEResponsabilita(CString *are
 	}
 	else
 	{
-//		SignalAnError(__FILE__,__LINE__,"$a non ricostruita per BID=%s", tbTitolo->getField(tbTitolo->bid));
+//		logToStdout(__FILE__,__LINE__,"$a non ricostruita per BID=%s", tbTitolo->getField(tbTitolo->bid));
 	}
 
 
@@ -539,6 +541,8 @@ DataField * Marc4cppDocumento::creaTag200_AreaTitoloEResponsabilita(CString *are
 
 /*!
 \brief <b>Tag 205 - Area dell'edizione</b>
+
+[ authority documento ]
 <table>
 <tr>
 <th valign=top>Definizione</th><th>Descrizione</th></tr>
@@ -546,8 +550,8 @@ DataField * Marc4cppDocumento::creaTag200_AreaTitoloEResponsabilita(CString *are
 <tr><td valign=top>Descrizione</td><td>Area dell'edizione</td></tr>
 <tr><td valign=top>Obbligatorieta'</td><td>Facoltativo</td></tr>
 <tr><td valign=top>Ripetibilita'</td><td>Ripetibile</td></tr>
-<tr><td valign=top>Indicatore 1</td><td>Non definito</td></tr>
-<tr><td valign=top>Indicatore 2</td><td>Non definito</td></tr>
+<tr><td valign=top>Indicatore 1</td><td>Blank</td></tr>
+<tr><td valign=top>Indicatore 2</td><td>Blank</td></tr>
  <tr><td valign=top>Sottocampi</td>
     <td>
     <UL>
@@ -581,7 +585,6 @@ DataField * Marc4cppDocumento::creaTag205_AreaEdizione(char *areaStartPtr, char 
 	else
 	{
 		// undefined!!!!
-//		SignalAnError(__FILE__,__LINE__,"creaTag205_AreaEdizione. Impossibile stabilire trattasi di antico o moderno: %s", tbTitolo->getField(tbTitolo->bid));
 		logToStdout(__FILE__, __LINE__, LOG_ERROR, "creaTag205_AreaEdizione. Impossibile stabilire trattasi di antico o moderno: %s", tbTitolo->getField(tbTitolo->bid));
 	}
 
@@ -596,6 +599,8 @@ DataField * Marc4cppDocumento::creaTag205_AreaEdizione(char *areaStartPtr, char 
 
 /*!
 \brief <b>Tag 206 - Area materiale cartografico - Dati numerici</b>
+
+[ authority documento ]
 <table>
 <tr>
 <th valign=top>Definizione</th><th>Descrizione</th></tr>
@@ -603,8 +608,8 @@ DataField * Marc4cppDocumento::creaTag205_AreaEdizione(char *areaStartPtr, char 
 <tr><td valign=top>Descrizione</td><td>Area relativa al materiale specifico: Materiale cartografico - Dati numerici</td></tr>
 <tr><td valign=top>Obbligatorieta'</td><td>Obbligatorio per il materiale cartografico</td></tr>
 <tr><td valign=top>Ripetibilita'</td><td>Ripetibile</td></tr>
-<tr><td valign=top>Indicatore 1</td><td>Non definito</td></tr>
-<tr><td valign=top>Indicatore 2</td><td>Non definito</td></tr>
+<tr><td valign=top>Indicatore 1</td><td>Blank</td></tr>
+<tr><td valign=top>Indicatore 2</td><td>Blank</td></tr>
  <tr><td valign=top>Sottocampi</td>
     <td>
     <UL>
@@ -629,6 +634,8 @@ DataField * Marc4cppDocumento::creaTag206_AreaSpecificaDelMateriale(
 
 /*!
 \brief <b>Tag 207 - Area periodici - nomi e date</b>
+
+[ authority documento ]
 <table>
 <tr>
 <th valign=top>Definizione</th><th>Descrizione</th></tr>
@@ -636,10 +643,12 @@ DataField * Marc4cppDocumento::creaTag206_AreaSpecificaDelMateriale(
 <tr><td valign=top>Descrizione</td><td>Area relativa al materiale specifico: periodici - nomi e date</td></tr>
 <tr><td valign=top>Obbligatorieta'</td><td>Facoltativo</td></tr>
 <tr><td valign=top>Ripetibilita'</td><td>Non Ripetibile</td></tr>
-<tr><td valign=top>Indicatore 1</td><td>Non definito</td></tr>
+<tr><td valign=top>Indicatore 1</td><td>Blank</td></tr>
 <tr><td valign=top>Indicatore 2</td><td>Nomi e date formattate<BR>
- 0 formattato<BR>
- 1 non formattato
+ <ul>
+ <li>0 formattate</li>
+ <li>1 non formattate</li>
+ </ul>
 </td></tr>
  <tr><td valign=top>Sottocampi</td>
     <td>
@@ -834,6 +843,8 @@ void Marc4cppDocumento::elabora205(DataField *df, C205 *c205) {
 
 /*!
 \brief <b>Tag 208 - Area specifica della musica a stampa</b>
+
+[ authority documento ]
 <table>
 <tr>
 <th valign=top>Definizione</th><th>Descrizione</th></tr>
@@ -841,13 +852,13 @@ void Marc4cppDocumento::elabora205(DataField *df, C205 *c205) {
 <tr><td valign=top>Descrizione</td><td>Area relativa al materiale specifico: musica a stampa</td></tr>
 <tr><td valign=top>Obbligatorieta'</td><td>Facoltativo</td></tr>
 <tr><td valign=top>Ripetibilita'</td><td>Non ripetibile</td></tr>
-<tr><td valign=top>Indicatore 1</td><td>Non definito</td></tr>
-<tr><td valign=top>Indicatore 2</td><td>Non definito</td></tr>
+<tr><td valign=top>Indicatore 1</td><td>Blank</td></tr>
+<tr><td valign=top>Indicatore 2</td><td>Blank</td></tr>
  <tr><td valign=top>Sottocampi</td>
     <td>
     <UL>
-        <li> a - Specifica per musica a stampa. Non ripetibile
-        <li> d - Specifica parallela per musica a stampa. Ripetibile
+        <li>a - Specifica per musica a stampa. Non ripetibile</li>
+        <li>d - Specifica parallela per musica a stampa. Ripetibile</li>
     </UL>
     </td></tr>
  <tr><td valign=top>NOTE</td><td></td></tr>
@@ -906,22 +917,25 @@ DataField * Marc4cppDocumento::creaTag208_AreaSpecifica_MusicaAStampa(
 
 /*!
 \brief <b>Tag 215 - Descrizione fisica </b>
+
+[ authority documento ]
 <table>
 <tr>
-<th valign=top>Definizione</th><th>Descrizione</th></tr>
+<th valign=top>Definizione</th><th>Descrizione</th>
+</tr>
 <tr><td valign=top>Tag</td><td>215</td></tr>
 <tr><td valign=top>Descrizione</td><td>Descrizione fisica</td></tr>
 <tr><td valign=top>Obbligatorieta'</td><td>Facoltativo</td></tr>
 <tr><td valign=top>Ripetibilita'</td><td>Ripetibile</td></tr>
-<tr><td valign=top>Indicatore 1</td><td>Non definito</td></tr>
-<tr><td valign=top>Indicatore 2</td><td>Non definito</td></tr>
+<tr><td valign=top>Indicatore 1</td><td>Blank</td></tr>
+<tr><td valign=top>Indicatore 2</td><td>Blank</td></tr>
  <tr><td valign=top>Sottocampi</td>
     <td>
     <UL>
-        <li> a - Designazione specifica ed estensione del materiale. Ripetibile
-        <li> c - Altre descrizioni fisiche. Non ripetibile
-        <li> d - Dimensioni. Ripetibile
-        <li> e - Materiale allegato. Ripetibile
+        <li> a - Designazione specifica ed estensione del materiale. Ripetibile</li>
+        <li> c - Altre descrizioni fisiche. Non ripetibile</li>
+        <li> d - Dimensioni. Ripetibile</li>
+        <li> e - Materiale allegato. Ripetibile</li>
     </UL>
     </td></tr>
  <tr><td valign=top>NOTE</td><td>I delimitatori non vengono riportati nei sottocampi.</td></tr>
@@ -997,6 +1011,8 @@ DataField * Marc4cppDocumento::creaTag215_AreaDescrizioneFisica(char *areaStartP
 
 /*!
 \brief <b>Tag 230 - Area risorse elettroniche</b>
+
+[ authority documento ]
 <table>
 <tr>
 <th valign=top>Definizione</th><th>Descrizione</th></tr>
@@ -1004,12 +1020,12 @@ DataField * Marc4cppDocumento::creaTag215_AreaDescrizioneFisica(char *areaStartP
 <tr><td valign=top>Descrizione</td><td>Area risorse elettroniche</td></tr>
 <tr><td valign=top>Obbligatorieta'</td><td>Obbligatorio per i computer files</td></tr>
 <tr><td valign=top>Ripetibilita'</td><td>Ripetibile solo quando le caratteristiche del file di pia' di un file sono descritte in uno singolo record</td></tr>
-<tr><td valign=top>Indicatore 1</td><td>Non definito</td></tr>
-<tr><td valign=top>Indicatore 2</td><td>Non definito</td></tr>
+<tr><td valign=top>Indicatore 1</td><td>Blank</td></tr>
+<tr><td valign=top>Indicatore 2</td><td>Blank</td></tr>
  <tr><td valign=top>Sottocampi</td>
     <td>
     <UL>
-        <li>a - Tipo risorsa. Non ripetibile.
+        <li>a - Tipo risorsa. Non ripetibile.</li>
     </UL>
     </td></tr>
  <tr><td valign=top>NOTE</td><td></td></tr>
@@ -1034,6 +1050,8 @@ DataField * Marc4cppDocumento::creaTag230_AreaRisorseElettroniche(
 
 /*!
 \brief <b>Tag 300 - Note generali</b>
+
+[ authority documento ]
 <table>
 <tr>
 <th valign=top>Definizione</th><th>Descrizione</th></tr>
@@ -1041,12 +1059,12 @@ DataField * Marc4cppDocumento::creaTag230_AreaRisorseElettroniche(
 <tr><td valign=top>Descrizione</td><td>Note generali relative a qualsiasi aspetto dell'unita' bibliografica</td></tr>
 <tr><td valign=top>Obbligatorieta'</td><td>Facoltativo</td></tr>
 <tr><td valign=top>Ripetibilita'</td><td>Non ripetibile</td></tr>
-<tr><td valign=top>Indicatore 1</td><td>Non definito</td></tr>
-<tr><td valign=top>Indicatore 2</td><td>Non definito</td></tr>
+<tr><td valign=top>Indicatore 1</td><td>Blank</td></tr>
+<tr><td valign=top>Indicatore 2</td><td>Blank</td></tr>
  <tr><td valign=top>Sottocampi</td>
     <td>
     <UL>
-        <li>a - Testo della nota. Non ripetibile.
+        <li>a - Testo della nota. Non ripetibile.</li>
     </UL>
     </td></tr>
  <tr><td valign=top>NOTE</td><td></td></tr>
@@ -1130,6 +1148,8 @@ DataField * Marc4cppDocumento::creaTag300_NoteGenerali(char *areaStartPtr, char 
 
 /*!
 \brief <b>Tag 327 - Note di contenuto</b>
+
+[ authority documento ]
 <table>
 <tr>
 <th valign=top>Definizione</th><th>Descrizione</th></tr>
@@ -1137,12 +1157,12 @@ DataField * Marc4cppDocumento::creaTag300_NoteGenerali(char *areaStartPtr, char 
 <tr><td valign=top>Descrizione</td><td>Note di contenuto</td></tr>
 <tr><td valign=top>Obbligatorieta'</td><td>Facoltativo</td></tr>
 <tr><td valign=top>Ripetibilita'</td><td>Ripetibile</td></tr>
-<tr><td valign=top>Indicatore 1</td><td>Non definito</td></tr>
-<tr><td valign=top>Indicatore 2</td><td>Non definito</td></tr>
+<tr><td valign=top>Indicatore 1</td><td>Blank</td></tr>
+<tr><td valign=top>Indicatore 2</td><td>Blank</td></tr>
  <tr><td valign=top>Sottocampi</td>
     <td>
     <UL>
-        <li>a - Testo della nota. Non ripetibile.
+        <li>a - Testo della nota. Non ripetibile.</li>
     </UL>
     </td></tr>
  <tr><td valign=top>NOTE</td><td></td></tr>
@@ -1156,6 +1176,8 @@ void Marc4cppDocumento::creaTag327_NoteDiContenuto()
 
 /*!
 \brief <b>Tag 330 - Abstract</b>
+
+[ authority documento ]
 <table>
 <tr>
 <th valign=top>Definizione</th><th>Descrizione</th></tr>
@@ -1163,12 +1185,12 @@ void Marc4cppDocumento::creaTag327_NoteDiContenuto()
 <tr><td valign=top>Descrizione</td><td>Abstract</td></tr>
 <tr><td valign=top>Obbligatorieta'</td><td>Facoltativo</td></tr>
 <tr><td valign=top>Ripetibilita'</td><td>Ripetibile</td></tr>
-<tr><td valign=top>Indicatore 1</td><td>Non definito</td></tr>
-<tr><td valign=top>Indicatore 2</td><td>Non definito</td></tr>
+<tr><td valign=top>Indicatore 1</td><td>Blank</td></tr>
+<tr><td valign=top>Indicatore 2</td><td>Blank</td></tr>
  <tr><td valign=top>Sottocampi</td>
     <td>
     <UL>
-        <li>a - Testo dell'abstract. Non ripetibile.
+        <li>a - Testo dell'abstract. Non ripetibile.</li>
     </UL>
     </td></tr>
  <tr><td valign=top>NOTE</td><td></td></tr>
@@ -1181,6 +1203,8 @@ void Marc4cppDocumento::creaTag330_Abstract()
 
 /*!
 \brief <b>Tag 336 - Note sulla risorsa elettronica</b>
+
+[ authority documento ]
 <table>
 <tr>
 <th valign=top>Definizione</th><th>Descrizione</th></tr>
@@ -1188,12 +1212,12 @@ void Marc4cppDocumento::creaTag330_Abstract()
 <tr><td valign=top>Descrizione</td><td>Note sulla risorsa elettronica</td></tr>
 <tr><td valign=top>Obbligatorieta'</td><td>Facoltativo</td></tr>
 <tr><td valign=top>Ripetibilita'</td><td>Ripetibile</td></tr>
-<tr><td valign=top>Indicatore 1</td><td>Non definito</td></tr>
-<tr><td valign=top>Indicatore 2</td><td>Non definito</td></tr>
+<tr><td valign=top>Indicatore 1</td><td>Blank</td></tr>
+<tr><td valign=top>Indicatore 2</td><td>Blank</td></tr>
  <tr><td valign=top>Sottocampi</td>
     <td>
     <UL>
-        <li>a - Testo della nota. Non ripetibile.
+        <li>a - Testo della nota. Non ripetibile.</li>
     </UL>
     </td></tr>
  <tr><td valign=top>NOTE</td><td></td></tr>
@@ -1207,6 +1231,8 @@ void Marc4cppDocumento::creaTag336_NoteRisorsaElettronica()
 
 /*!
 \brief <b>Tag 337 - Note tecniche sulla risorsa elettronica</b>
+
+[ authority documento ]
 <table>
 <tr>
 <th valign=top>Definizione</th><th>Descrizione</th></tr>
@@ -1214,12 +1240,12 @@ void Marc4cppDocumento::creaTag336_NoteRisorsaElettronica()
 <tr><td valign=top>Descrizione</td><td>Note tecniche sulla risorsa elettronica</td></tr>
 <tr><td valign=top>Obbligatorieta'</td><td>Facoltativo</td></tr>
 <tr><td valign=top>Ripetibilita'</td><td>Ripetibile</td></tr>
-<tr><td valign=top>Indicatore 1</td><td>Non definito</td></tr>
-<tr><td valign=top>Indicatore 2</td><td>Non definito</td></tr>
+<tr><td valign=top>Indicatore 1</td><td>Blank</td></tr>
+<tr><td valign=top>Indicatore 2</td><td>Blank</td></tr>
  <tr><td valign=top>Sottocampi</td>
     <td>
     <UL>
-        <li>a - Testo della nota. Non ripetibile.
+        <li>a - Testo della nota. Non ripetibile.</li>
     </UL>
     </td></tr>
  <tr><td valign=top>NOTE</td><td></td></tr>
@@ -1232,6 +1258,8 @@ void Marc4cppDocumento::creaTag337_NoteTecnicheRisorsaElettronica()
 
 /*!
 \brief <b>Tag 323 - Note al cast</b>
+
+[ authority documento ]
 <table>
 <tr>
 <th valign=top>Definizione</th><th>Descrizione</th></tr>
@@ -1239,8 +1267,8 @@ void Marc4cppDocumento::creaTag337_NoteTecnicheRisorsaElettronica()
 <tr><td valign=top>Descrizione</td><td>Note al cast</td></tr>
 <tr><td valign=top>Obbligatorieta'</td><td>Facoltativo</td></tr>
 <tr><td valign=top>Ripetibilita'</td><td>Ripetibile</td></tr>
-<tr><td valign=top>Indicatore 1</td><td>Non definito</td></tr>
-<tr><td valign=top>Indicatore 2</td><td>Non definito</td></tr>
+<tr><td valign=top>Indicatore 1</td><td>Blank</td></tr>
+<tr><td valign=top>Indicatore 2</td><td>Blank</td></tr>
  <tr><td valign=top>Sottocampi</td>
     <td>
     <UL>
@@ -1271,6 +1299,8 @@ void Marc4cppDocumento::creaTag323_NoteAlCast()
 
 /*!
 \brief <b>Tag 326 - Note sulla periodicita'</b>
+
+[ authority documento ]
 <table>
 <tr>
 <th valign=top>Definizione</th><th>Descrizione</th></tr>
@@ -1278,12 +1308,12 @@ void Marc4cppDocumento::creaTag323_NoteAlCast()
 <tr><td valign=top>Descrizione</td><td>Note sulla periodicita'</td></tr>
 <tr><td valign=top>Obbligatorieta'</td><td>Facoltativo</td></tr>
 <tr><td valign=top>Ripetibilita'</td><td>Ripetibile</td></tr>
-<tr><td valign=top>Indicatore 1</td><td>Non definito</td></tr>
-<tr><td valign=top>Indicatore 2</td><td>Non definito</td></tr>
+<tr><td valign=top>Indicatore 1</td><td>Blank</td></tr>
+<tr><td valign=top>Indicatore 2</td><td>Blank</td></tr>
  <tr><td valign=top>Sottocampi</td>
     <td>
     <UL>
-        <li>a - Testo della nota. Non ripetibile.
+        <li>a - Testo della nota. Non ripetibile.<li>
     </UL>
     </td></tr>
  <tr><td valign=top>NOTE</td><td></td></tr>
@@ -1331,6 +1361,8 @@ DataField * Marc4cppDocumento::creaTag326_NotePeriodicita() {
 
 /*!
 \brief <b>Tag 801 - Fonte di provenienza del record</b>
+
+[ authority documento ]
 <table>
 <tr>
 <th valign=top>Definizione</th><th>Descrizione</th></tr>
@@ -1338,14 +1370,14 @@ DataField * Marc4cppDocumento::creaTag326_NotePeriodicita() {
 <tr><td valign=top>Descrizione</td><td>Fonte di provenienza del record</td></tr>
 <tr><td valign=top>Obbligatorieta'</td><td>Facoltativo</td></tr>
 <tr><td valign=top>Ripetibilita'</td><td>Non ripetibile</td></tr>
-<tr><td valign=top>Indicatore 1</td><td>Non definito</td></tr>
+<tr><td valign=top>Indicatore 1</td><td>Blank</td></tr>
 <tr><td valign=top>Indicatore 2</td><td>3 - L'agenzia emittente</td></tr>
  <tr><td valign=top>Sottocampi</td>
     <td>
     <UL>
-        <li>a - Nazione dell'agenzia
-        <li>b - Agenzia
-        <li>c - Data di inserimento notizia per POLO o data di creazione Unimatc per INDICE
+        <li>a - Nazione dell'agenzia</li>
+        <li>b - Agenzia</li>
+        <li>c - Data di inserimento notizia per POLO o data di creazione Unimatc per INDICE</li>
     </UL>
     </td></tr>
  <tr><td valign=top>NOTE</td><td></td></tr>
@@ -1415,6 +1447,8 @@ else
 
 /*!
 \brief <b>Tag 850 - Istituto detentore</b>
+
+[ authority documento ]
 <table>
 <tr>
 <th valign=top>Definizione</th><th>Descrizione</th></tr>
@@ -1422,12 +1456,12 @@ else
 <tr><td valign=top>Descrizione</td><td>Istituto detentore</td></tr>
 <tr><td valign=top>Obbligatorieta'</td><td>Facoltativo</td></tr>
 <tr><td valign=top>Ripetibilita'</td><td>Ripetibile</td></tr>
-<tr><td valign=top>Indicatore 1</td><td>Non definito</td></tr>
-<tr><td valign=top>Indicatore 2</td><td>Non definito</td></tr>
+<tr><td valign=top>Indicatore 1</td><td>Blank</td></tr>
+<tr><td valign=top>Indicatore 2</td><td>Blank</td></tr>
  <tr><td valign=top>Sottocampi</td>
     <td>
     <UL>
-        <li>a - Codice ISIL
+        <li>a - Codice ISIL</li>
     </UL>
     </td></tr>
  <tr><td valign=top>NOTE</td><td></td></tr>
@@ -1450,18 +1484,6 @@ DataField * Marc4cppDocumento::creaTag850_IstitutoDetentore() {
 		CString key, s;
 		while (trTitBib->loadNextRecord(bid)) {
 
-//			const char *cdBib =  trTitBib->getField(trTitBib->cd_biblioteca);
-//			TbfBibliotecaInPolo *tbfBibliotecaInPolo = (TbfBibliotecaInPolo *) tbfBibliotecaKV->GetValueFromKey(cdBib);
-//
-//			if (!tbfBibliotecaInPolo) {
-//				SignalAnError(__FILE__, __LINE__, "Biblioteca non trovata per '%s'",cdBib);
-//				return df;
-//			}
-//
-//			sf = new Subfield('a'); // Codice anagrafe biblioteche
-//			cd_ana_biblioteca = tbfBibliotecaInPolo->getField(tbfBibliotecaInPolo->cd_ana_biblioteca);
-//			sf->setData(cd_ana_biblioteca);
-//			df->addSubfield(sf);
 
 
 //		    key = getPolo(); // prendi il polo
@@ -1646,6 +1668,131 @@ DataField * Marc4cppDocumento::creaTag115_audiovisivo() {
 }// End creaTag115_audiovideo
 
 
+
+/*!
+\brief <b>Tag 126 - Disco sonoro</b>
+
+ [ authority documento ]
+ <table>
+ <tr>
+ <th valign=top>Definizione</th><th>Descrizione</th></tr>
+ <tr><td valign=top>Tag</td><td>126</td></tr>
+ <tr><td valign=top>Descrizione</td><td>OUND RECORDINGS - PHYSICAL ATTRIBUTES (</td></tr>
+ <tr><td valign=top>Obbligatorieta'</td><td>Facoltativo</td></tr>
+ <tr><td valign=top>Ripetibilita'</td><td>Not repeatable</td></tr>
+ <tr><td valign=top>Indicatore 1</td><td>Blank</td></tr>
+ <tr><td valign=top>Indicatore 2</td><td>Blank</td></tr>
+  <tr><td valign=top>Sottocampi</td>
+  <td>
+    <ul>
+     <li>a - Sound Recording Coded Data (General) (Not Repeatable)</li>
+     <ul>
+     	 <li>0 - Form of release </li>
+		 <ul>
+
+			 <li>a = disc</li>
+			 <li>b = tape (open reel)</li>
+			 <li>c = tape (cassette)</li>
+			 <li>d = tape (cartridge)  e = wire recording</li>
+			 <li>f = cylinder</li>
+			 <li>g = roll (player-piano or player organ)</li>
+			 <li>h = film (sound film)</li>
+			 <li>z = other</li>
+		 </ul>
+		 <li>1 - Speed </li>
+			 <ul>
+				<li>u = unknown</li>
+				<li>x = not applicable</li>
+				<li>z = other (e.g. non-standardized speed for microgrooves before 1906)</li>
+				<li>Discs:</li>
+			 	 <ul>
+				<li> a = 16 2/3 rpm</li>
+				<li> b = 33 1/3 rpm</li>
+				<li> c = 45 rpm</li>
+				<li> d = 78 rpm</li>
+				<li> e = 8 rpm</li>
+				<li> g = 1.4 m. per second (compact discs)</li>
+			 	 </ul>
+				<li>Cylinders</li>
+			 	 <ul>
+				<li> h = 1 in. per second (120 rpm)</li>
+				<li> i = 160 rpm</li>
+			 	 </ul>
+				<li>Tapes:</li>
+			 	 <ul>
+				<li> k = 1 7/8 in. per second</li>
+				<li> l = 15/16 in. per second</li>
+				<li> m = 3 3/4 in. per second</li>
+				<li> n = 7 1/2 in. per second</li>
+				<li> o = 15 in. per second</li>
+				<li> p = 30 in. per second</li>
+				<li> q = 8/10 in. per second</li>
+				<li> r = 4/10 in. per second</li>
+			 	 </ul>
+			 </ul>
+     	 <li>2 - Kind of sound</li>
+		 <ul>
+			<li>a = monoaural</li>
+			<li>b = stereophonic</li>
+			<li>c = quadraphonic</li>
+			<li>u = unknown</li>
+			<li>z = other</li>
+		 </ul>
+     	 <li>3 - Groove width</li>
+		 <ul>
+			<li>a = coarse/standard</li>
+			<li>b = microgroove/fine</li>
+			<li>u = unknown</li>
+			<li>x = not applicable</li>
+			<li>z = other</li>
+		 </ul>
+		<li>4 - Dimensions (sound recordings)</li>
+		<ul>
+			<li>a = 3 in.</li>
+			<li>b = 5 in.</li>
+			<li>c = 7 in.</li>
+			<li>d = 10 in.</li>
+			<li>e = 12 in.</li>
+			<li>f = 16 in.</li>
+			<li>g = 14 in.</li>
+			<li>h = 4¾ in. (compact disc)</li>
+			<li>j = 3 7/8 x 2½ in. cassette</li>
+			<li>o = 5¼ x 3 7/8 in. cartridge</li>
+			<li>s = 2¾ x 4 in. cylinder</li>
+			<li>u = unknown</li>
+			<li>x = not applicable</li>
+			<li>z = other</li>
+		</ul>
+
+
+     </ul>
+
+
+
+
+     <ul>
+     	 <li></li>
+     </ul>
+     <ul>
+     	 <li></li>
+     </ul>
+    </ul>
+
+	<ul>
+	 <li></li>
+	</ul>
+
+  </td>
+  </tr>
+  <tr><td valign=top>Formato</td>
+     <td>
+     </td>
+     </tr>
+  <tr><td valign=top>NOTE</td>
+     <td>...</td></tr>
+ </table>
+ */
+
 DataField * Marc4cppDocumento::creaTag126_DiscoSonoro() {
 	DataField *df = 0;
 
@@ -1760,8 +1907,7 @@ DataField * Marc4cppDocumento::creaTag126_DiscoSonoro() {
 
 // 28/01/2016
 /*!
-
-\brief <b>127   CODED DATA FIELD –– Duration of sound recordings and printed music</b>
+\brief <b>Tag 127 - Duration of sound recordings and printed music</b>
 
  <table>
  <tr>
@@ -1769,23 +1915,19 @@ DataField * Marc4cppDocumento::creaTag126_DiscoSonoro() {
  <th>Descrizione</th>
  </tr>
 
- <tr><td valign=top>Tag</td><td>181</td></tr>
+ <tr><td valign=top>Tag</td><td>127</td></tr>
  <tr><td valign=top>Descrizione</td>
 	 <td>The field contains one or more six - character numbers corresponding to the duration of a manifestation
 	 consisting in or containing sound recordings or a portion of a sound recording, or to the estimated duration
 	 of a composition as stated on the printed music score that is being described.</td></tr>
- <tr><td valign=top>Obbligatorieta'</td>
-	 <td>Optional.  </td></tr>
- <tr><td valign=top>Ripetibilita'</td>
-	 <td>NON Repeatable</td></tr>
- <tr><td valign=top>Indicatore 1</td>
-	 <td>\li blank (not defined)</td></tr>
- <tr><td valign=top>Indicatore 2</td>
-	 <td>\li blank (not defined)</td></tr>
+ <tr><td valign=top>Obbligatorieta'</td><td>Optional.</td></tr>
+ <tr><td valign=top>Ripetibilita'</td><td>NON Repeatable</td></tr>
+ <tr><td valign=top>Indicatore 1</td><td>Blank</td></tr>
+ <tr><td valign=top>Indicatore 2</td><td>Blank</td></tr>
   <tr><td valign=top>Sottocampi</td>
 	 <td>
 		<UL>
-		\li a - Duration
+		<li> a - Duration</li>
 		</UL>
 
 	 </td></tr>
@@ -1826,9 +1968,9 @@ DataField * Marc4cppDocumento::creaTag127_DiscoSonoroDurata() {
 
 
 /*!
+\brief <b>Tag 181 - Content Form (area zer0)</b>
 
-\brief <b>181   CODED DATA FIELD –– Content Form (area zer0)</b>
-
+[ authority documento ]
  <table>
  <tr>
  <th valign=top>Definizione</th>
@@ -1838,24 +1980,26 @@ DataField * Marc4cppDocumento::creaTag127_DiscoSonoroDurata() {
  <tr><td valign=top>Tag</td><td>181</td></tr>
  <tr><td valign=top>Descrizione</td>
 	 <td>This field contains fixed-length data specifying the content form and content qualification of the resource being described, corresponding to the first two elements of ISBD Area 0.</td></tr>
- <tr><td valign=top>Obbligatorieta'</td>
-	 <td>Optional.  </td></tr>
- <tr><td valign=top>Ripetibilita'</td>
-	 <td>Repeatable when more than one system code is used or when a resource consists of different content forms in different media types (e.g., a kit resource).</td></tr>
+ <tr><td valign=top>Obbligatorieta'</td><td>Optional</td></tr>
+ <tr><td valign=top>Ripetibilita'</td><td>Repeatable when more than one system code is used or when a resource consists of different content forms in different media types (e.g., a kit resource).</td></tr>
  <tr><td valign=top>Indicatore 1</td>
-	 <td>\li blank (not defined)</td></tr>
+	 <td>
+	 	 <ul>
+	 	 <li> blank</td></tr></li>
+	 	 </ul>
  <tr><td valign=top>Indicatore 2</td>
 	 <td>The second indicator specifies whether this field is used to generate the ISBD Area 0 for print or other displays of the record.
-	 	\li 0	Do not generate area 0
-		\li 1	Generate area 0
-		\li #	Information not provided (use when the field contains subfield $c).
-
+	 	<ul>
+	 	<li> 0	Do not generate area 0</li>
+		<li> 1	Generate area 0</li>
+		<li> #	Information not provided (use when the field contains subfield $c).</li>
+		</ul>
 	 </td></tr>
 
   <tr><td valign=top>Sottocampi</td>
 	 <td>
 		<UL>
-		\li a - ISBD Content form Code. Optional.  Repeatable for different Content Forms contained in one Media Type.
+		<li> a - ISBD Content form Code. Optional.  Repeatable for different Content Forms contained in one Media Type.</li>
 			<UL>
 			<li>pos 0 = ISBD Content Form Code:
 				<UL>
@@ -1880,8 +2024,8 @@ DataField * Marc4cppDocumento::creaTag127_DiscoSonoroDurata() {
 				<li>4 = full
 				<li># = position not used
 				</UL>
-		\li b - ISBD Content Qualification : Specification of Type
-			<UL>
+			<li> b - ISBD Content Qualification : Specification of Type</li>
+				<UL>
 			<li>pos 0 = Specificazione del tipo di contenuto
 				<UL>
 				<li>a  =  notato
@@ -1913,9 +2057,9 @@ DataField * Marc4cppDocumento::creaTag127_DiscoSonoroDurata() {
 				<li>#  =  position not used
 				</UL>
 			</UL>
-		\li c - Other Coding for Type of Expression
-		\li 2 - System code
-		\li 6 - Interfield Linking Data
+		<li> c - Other Coding for Type of Expression</li>
+		<li> 2 - System code</li>
+		<li> 6 - Interfield Linking Data</li>
 
 		</UL>
 
@@ -2082,9 +2226,9 @@ DataField * Marc4cppDocumento::creaTag181_Area0_DatiCodificati(char *bid) {
 
 
 /*!
+\brief <b>Tag 182 - Media Type  (area zer0)</b>
 
-\brief <b>182   CODED DATA FIELD –– Media Type  (area zer0)</b>
-
+[ authority documento ]
  <table>
  <tr>
  <th valign=top>Definizione</th>
@@ -2094,24 +2238,26 @@ DataField * Marc4cppDocumento::creaTag181_Area0_DatiCodificati(char *bid) {
  <tr><td valign=top>Tag</td><td>181</td></tr>
  <tr><td valign=top>Descrizione</td>
 	 <td>This field contains fixed-length data specifying the media type of the resource being described. </td></tr>
- <tr><td valign=top>Obbligatorieta'</td>
-	 <td>Optional.  </td></tr>
- <tr><td valign=top>Ripetibilita'</td>
-	 <td>Repeatable when more than one system code is used or when a resource consists of mixed media (e.g., a kit resource).</td></tr>
+ <tr><td valign=top>Obbligatorieta'</td><td>Optional</td></tr>
+ <tr><td valign=top>Ripetibilita'</td><td>Repeatable when more than one system code is used or when a resource consists of mixed media (e.g., a kit resource).</td></tr>
  <tr><td valign=top>Indicatore 1</td>
-	 <td>\li blank (not defined)</td></tr>
+	 <td>
+	 <ul>
+	 <li> blank</td></tr></li>
+	 </ul>
  <tr><td valign=top>Indicatore 2</td>
 	 <td>The second indicator specifies whether this field is used to generate the ISBD Area 0 for print or other displays of the record.
-	 	\li 0	Do not generate area 0
-		\li 1	Generate area 0
-		\li #	Information not provided (use when the field contains subfield $c).
-
+	 	<ul>
+	 	<li> 0	Do not generate area 0</li>
+		<li> 1	Generate area 0</li>
+		<li> #	Information not provided (use when the field contains subfield $c).</li>
+		</ul>
 	 </td></tr>
 
   <tr><td valign=top>Sottocampi</td>
 	 <td>
 		<UL>
-		\li a - ISBD Media Type Code (Tipo di mediazione).
+		<li> a - ISBD Media Type Code (Tipo di mediazione).</li>
 			<UL>
 			<li>pos 0 = ISBD Content Form Code:
 				<UL>
@@ -2126,12 +2272,12 @@ DataField * Marc4cppDocumento::creaTag181_Area0_DatiCodificati(char *bid) {
 				<li>n  =  unmediated
 				<li>z = altro (per ora non gestito);
 				</UL>
-		\li c - Other Coding for Media Type
+		<li> c - Other Coding for Media Type</li>
 			<UL>
 			<li>pos 0 =
 			</UL>
-		\li 2 - System code
-		\li 6 - Interfield Linking Data
+		<li> 2 - System code</li>
+		<li> 6 - Interfield Linking Data</li>
 
 		</UL>
 
@@ -2185,6 +2331,8 @@ DataField * Marc4cppDocumento::creaTag182_Area0_TipoMediazione(char *bid) {
 
 /*!
 \brief <b>Tag 210 - Area ISBD della pubblicazione, distribuzione</b>
+
+[ authority documento ]
 <table>
 <tr>
 <th valign=top>Definizione</th><th>Descrizione</th></tr>
@@ -2192,21 +2340,21 @@ DataField * Marc4cppDocumento::creaTag182_Area0_TipoMediazione(char *bid) {
 <tr><td valign=top>Descrizione</td><td>Area ISBD della pubblicazione</td></tr>
 <tr><td valign=top>Obbligatorieta'</td><td>Facoltativo</td></tr>
 <tr><td valign=top>Ripetibilita'</td><td>Non Ripetibile</td></tr>
-<tr><td valign=top>Indicatore 1</td><td>Non definito</td></tr>
-<tr><td valign=top>Indicatore 2</td><td>Non definito</td></tr>
+<tr><td valign=top>Indicatore 1</td><td>Blank</td></tr>
+<tr><td valign=top>Indicatore 2</td><td>Blank</td></tr>
  <tr><td valign=top>Sottocampi</td>
     <td>
     <UL>
-	    <li>a - Primo luogo di pubblicazione. Ripetibile
-	    <li>b - Indirizzo dell'editore. Ripetibile
-	    <li>c - Nome dell'editore. Ripetibile
+	    <li>a - Primo luogo di pubblicazione. Ripetibile</li>
+	    <li>b - Indirizzo dell'editore. Ripetibile</li>
+	    <li>c - Nome dell'editore. Ripetibile</li>
     </UL>
 	 Secondo e successivi luoghi di pubblicazione
     <UL>
-	    <li>d - Data di pubblicazione. Ripetibile
-	    <li>e - Luogo di stampa. Ripetibile
-	    <li>g - Nome del tipografo. Ripetibile
-	    <li>h - Data di stampa. Ripetibile
+	    <li>d - Data di pubblicazione. Ripetibile</li>
+	    <li>e - Luogo di stampa. Ripetibile</li>
+	    <li>g - Nome del tipografo. Ripetibile</li>
+	    <li>h - Data di stampa. Ripetibile</li>
     </UL>
     </td>
     </tr>
@@ -2514,8 +2662,9 @@ stringLuoghiVect.DeleteAndClear();
 
 
 /*!
+\brief <b>Tag 183 - Carrier Type  (area zer0)</b>
 
-\brief <b>183  CODED DATA FIELD –– Carrier Type  (area zer0)</b>
+[ authority documento ]
  <table>
  <tr>
  <th valign=top>Definizione</th><th>Descrizione</th>
@@ -2524,32 +2673,37 @@ stringLuoghiVect.DeleteAndClear();
  <tr><td valign=top>Tag</td><td>200</td></tr>
  <tr><td valign=top>Descrizione</td>
 	 <td>This field contains coded data specifying the carrier type of the resource being described.</td></tr>
- <tr><td valign=top>Obbligatorieta'</td>
-	 <td>Facoltativo</td></tr>
- <tr><td valign=top>Ripetibilita'</td>
-	 <td>Non Ripetibile</td></tr>
+ <tr><td valign=top>Obbligatorieta'</td> <td>Facoltativo</td></tr>
+ <tr><td valign=top>Ripetibilita'</td> <td>Non Ripetibile</td></tr>
  <tr><td valign=top>Indicatore 1</td>
-	 <td>\li blank (not defined)</td></tr>
+  	  <td>
+	 <ul>
+	 <li>Blank</td></tr></li>
+	 </ul>
  <tr><td valign=top>Indicatore 2</td>
 	 <td>Display Indicator
-		\li 0 - Not used to generate displays.
-		\li 1 - Used to generate displays.
-		\li # - Information not provided.
+		<ul>
+		<li> 0 - Not used to generate displays.</li>
+		<li> 1 - Used to generate displays.</li>
+		<li> # - Information not provided.</li>
+		</ul>
 	 </td></tr>
   <tr><td valign=top>Sottocampi</td>
 	 <td>
-		\li a - [Reserved for ISBD Carrier Type Code].
-		\li c - Carrier Type Code. Ripetibile.
+	 <ul>
+		<li> a - [Reserved for ISBD Carrier Type Code].</li>
+		<li> c - Carrier Type Code. Ripetibile.</li>
 				A coded value specifying the carrier type applying to the resource, according to the provisions of the
 				system specified in subfield $2. Mandatory if $a is not present. Repeatable when several carrier types,
 				associated with the same media type, are present in the resource.
-		\li 2 -  System code. Source of the code used in $c.
+		<li> 2 -  System code. Source of the code used in $c.</li>
 				Mandatory if $c is present. NON Ripetibile.
-		\li 6 - Interfield Linking Data.
+		<li> 6 - Interfield Linking Data.</li>
 				Data required to link the field with other fields in the record (for example with field 182 -
 				Coded data Field: Media Type). Repeatable.
-		\li 8 - Materials specified.
+		<li> 8 - Materials specified.</li>
 				Part of the described materials to which the field applies. Repeatable.
+	</ul>
 	 </td></tr>
   <tr><td valign=top>NOTE</td><td></td></tr>
 
@@ -2639,7 +2793,6 @@ DataField * Marc4cppDocumento::creaTag300_321_NoteGenerali_ConRiferimenti(char *
 	CString s;
 	if (!tbNota300->loadRecord(bid))
         {
-//		 SignalAnError(__FILE__,__LINE__,"Nota generale con riferimento mancante per bid %s", bid);
 		 logToStdout(__FILE__, __LINE__, LOG_ERROR, "Nota generale con riferimento mancante per bid %s", bid);
 		return df;
         }

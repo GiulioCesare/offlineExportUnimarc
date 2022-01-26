@@ -426,7 +426,7 @@ void Marc4cppLegami::creaLegamiTitoloSoggetto() {
 //				if (DATABASE_ID == DATABASE_SBNWEB && IS_TAG_TO_GENERATE(696))
 				if (IS_TAG_TO_GENERATE(696))
 				{
-					df = creaLegameDescrittoreDescrittore();
+					df = creaTag696_LegameDescrittoreDescrittore();
 					if (df)
 						marcRecord->addDataField(df);
 				}
@@ -2094,11 +2094,7 @@ void Marc4cppLegami::addAutoreFormaAccettata(DataField *df, char tipoLegame, cha
 
 
 
-//	if (!tbAutore->loadRecord(vid)) {
-//	SignalAnError(__FILE__, __LINE__, "Non posso caricare autore con vid base %s", vid);
-//	}
 	if (!tbAutore->loadRecord(vidPadre)) {
-//		SignalAnError(__FILE__, __LINE__, "Non posso caricare autore con vid base %s", vidPadre);
 		logToStdout(__FILE__, __LINE__, LOG_ERROR, "Non posso caricare autore con vid base %s", vidPadre);
 	}
 
@@ -3392,46 +3388,34 @@ if (checkQuadra)	// Gestione parentesi quadra [. Mail Bergamin 18/12/2011
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /*!
 \brief <b>Tag 225 - Area della collezione</b>
+
+[ authority documento ]
 <table>
-<tr><th valign=top>Definizione</th><th>Descrizione</th></tr>
+<tr>
+<th valign=top>Definizione</th><th>Descrizione</th>
+</tr>
 <tr><td valign=top>Tag</td><td>225</td></tr>
 <tr><td valign=top>Descrizione</td><td>Area della collezione</td></tr>
 <tr><td valign=top>Obbligatorieta'</td><td>Facoltativo</td></tr>
 <tr><td valign=top>Ripetibilita'</td><td>Ripetibile</td></tr>
 <tr><td valign=top>Indicatore 1</td><td>valore = 2 (indica che il campo e' identico al campo 410)</td></tr>
-<tr><td valign=top>Indicatore 2</td><td>spazio</td></tr>
- <tr><td valign=top>Sottocampi</td>
+<tr><td valign=top>Indicatore 2</td><td>Blank</td></tr>
+<tr><td valign=top>Sottocampi</td>
     <td>
     <UL>
-		<li>a - Titolo della collana. Se ci sono piu' collane e' il titolo della collana superiore. Non ripetibile.
-		<li>d - Titolo parallelo. Ripetibile.
-		<li>e - Complemento del titolo. Ripetibile.
-		<li>f - Prima indicazione di responsabilita'. Ripetibile.
+		<li>a - Titolo della collana. Se ci sono piu' collane e' il titolo della collana superiore. Non ripetibile.</li>
+		<li>d - Titolo parallelo. Ripetibile.</li>
+		<li>e - Complemento del titolo. Ripetibile.</li>
+		<li>f - Prima indicazione di responsabilita'. Ripetibile.</li>
 <!--
-		<li>g - Altra indicazione di responsabilit�.  Ripetibile.
-		<li>h - Numerazione della sottocollana nella collana superiore. Ripetibile.
-		<li>i - Name of a Part
-		<li>v - Volume Designation
-		<li>x - ISSN of Series
-		<li>z - Language of Parallel Title
+		<li>g - Altra indicazione di responsabilita'.  Ripetibile.</li>
+		<li>h - Numerazione della sottocollana nella collana superiore. Ripetibile.</li>
+		<li>i - Name of a Part</li>
+		<li>v - Volume Designation</li>
+		<li>x - ISSN of Series</li>
+		<li>z - Language of Parallel Title</li>
 -->
     </UL>
     </td></tr>
@@ -3650,6 +3634,8 @@ s.Clear(); // Mantis 4365
 
 /*!
 \brief <b>Tag 311 - Note legami tra titoli</b>
+
+[ authority documento ]
 <table>
 <tr>
 <th valign=top>Definizione</th><th>Descrizione</th></tr>
@@ -3657,13 +3643,13 @@ s.Clear(); // Mantis 4365
 <tr><td valign=top>Descrizione</td><td>Note riguardanti legami tra titoli</td></tr>
 <tr><td valign=top>Obbligatorieta'</td><td>Facoltativo</td></tr>
 <tr><td valign=top>Ripetibilita'</td><td>Ripetibile</td></tr>
-<tr><td valign=top>Indicatore 1</td><td>Non definito</td></tr>
-<tr><td valign=top>Indicatore 2</td><td>Non definito</td></tr>
+<tr><td valign=top>Indicatore 1</td><td>Blank</td></tr>
+<tr><td valign=top>Indicatore 2</td><td>Blank</td></tr>
  <tr><td valign=top>Sottocampi</td>
     <td>
     <UL>
-        <li>a - Testo della nota. Non ripetibile.
-        <li>9 - identificativo titolo di arrivo del legame. Non ripetibile.
+        <li>a - Testo della nota. Non ripetibile.</li>
+        <li>9 - identificativo titolo di arrivo del legame. Non ripetibile.</li>
     </UL>
     </td></tr>
  <tr><td valign=top>NOTE</td><td>
@@ -3747,6 +3733,8 @@ DataField * Marc4cppLegami::creaTag311_NotaLegame(char *bid, char *bidColl,
 
 /*!
 \brief <b>Tag 312 - Note legami con varianti del titolo</b>
+
+[ authority documento ]
 <table>
 <tr>
 <th valign=top>Definizione</th><th>Descrizione</th></tr>
@@ -3754,13 +3742,13 @@ DataField * Marc4cppLegami::creaTag311_NotaLegame(char *bid, char *bidColl,
 <tr><td valign=top>Descrizione</td><td>Note legami con varianti del titolo</td></tr>
 <tr><td valign=top>Obbligatorieta'</td><td>Facoltativo</td></tr>
 <tr><td valign=top>Ripetibilita'</td><td>Ripetibile</td></tr>
-<tr><td valign=top>Indicatore 1</td><td>Non definito</td></tr>
-<tr><td valign=top>Indicatore 2</td><td>Non definito</td></tr>
+<tr><td valign=top>Indicatore 1</td><td>Blank</td></tr>
+<tr><td valign=top>Indicatore 2</td><td>Blank</td></tr>
  <tr><td valign=top>Sottocampi</td>
     <td>
     <UL>
-        <li>a - Testo della nota. Non ripetibile.
-        <li>9 - identificativo titolo di arrivo del legame. Non ripetibile.
+        <li>a - Testo della nota. Non ripetibile.</li>
+        <li>9 - identificativo titolo di arrivo del legame. Non ripetibile.</li>
     </UL>
     </td></tr>
  <tr><td valign=top>NOTE</td><td>
@@ -3935,6 +3923,8 @@ DataField * Marc4cppLegami::creaLegameTitoloTesauro(char *entryReticoloPtr, int 
 
 /*!
 \brief <b>Tag 696 - Variante di soggetto (legame desrittore - descrittore)</b>
+
+[ authority documento ]
 <table>
 <tr>
 <th valign=top>Definizione</th><th>Descrizione</th></tr>
@@ -3942,13 +3932,13 @@ DataField * Marc4cppLegami::creaLegameTitoloTesauro(char *entryReticoloPtr, int 
 <tr><td valign=top>Descrizione</td><td>Variante di soggetto</td></tr>
 <tr><td valign=top>Obbligatorieta'</td><td>Facoltativo</td></tr>
 <tr><td valign=top>Ripetibilita'</td><td>Ripetibile</td></tr>
-<tr><td valign=top>Indicatore 1</td><td>Non definito</td></tr>
-<tr><td valign=top>Indicatore 2</td><td>Non definito</td></tr>
+<tr><td valign=top>Indicatore 1</td><td>Blank</td></tr>
+<tr><td valign=top>Indicatore 2</td><td>Blank</td></tr>
  <tr><td valign=top>Sottocampi</td>
     <td>
     <UL>
-        <li>a - Prima variante
-        <li>x - Varianti successive
+        <li>a - Prima variante</li>
+        <li>x - Varianti successive</li>
     </UL>
     </td></tr>
  <tr><td valign=top>NOTE</td><td></td></tr>
@@ -3957,7 +3947,7 @@ DataField * Marc4cppLegami::creaLegameTitoloTesauro(char *entryReticoloPtr, int 
 // 28/06/2016
 // Crea legame descrittore descrittore per i descrittori del soggetto in questione
 // NB: Record del soggetto gia' caricato
-DataField * Marc4cppLegami::creaLegameDescrittoreDescrittore() {
+DataField * Marc4cppLegami::creaTag696_LegameDescrittoreDescrittore() {
 	DataField *df = 0;
 	Subfield *sf;
 
@@ -3989,7 +3979,7 @@ DataField * Marc4cppLegami::creaLegameDescrittoreDescrittore() {
 //retb = tbDescrittore->loadRecord(didSource);
 //if (!retb)
 //{
-//	SignalAnError(__FILE__, __LINE__, "\nDescrittore base % s per descrittore coll %s", didSource, didColl);
+//	logTo(__FILE__, __LINE__, "\nDescrittore base % s per descrittore coll %s", didSource, didColl);
 //	return df;
 //}
 //printf ("\tDesc:'%s'", tbDescrittore->getField(tbDescrittore->ds_descrittore));
@@ -4013,7 +4003,6 @@ DataField * Marc4cppLegami::creaLegameDescrittoreDescrittore() {
 					retb = tbDescrittore->loadRecord(didColl);
 					if (!retb)
 					{
-//						SignalAnError(__FILE__, __LINE__, "\nDescrittore base % s per descrittore coll %s", didSource, didColl);
 						logToStdout(__FILE__, __LINE__, LOG_ERROR, "Descrittore base % s per descrittore coll %s", didSource, didColl);
 						continue;
 					}
@@ -4035,7 +4024,7 @@ DataField * Marc4cppLegami::creaLegameDescrittoreDescrittore() {
 //			retb = tbDescrittore->loadRecord(trSogDes->getField(trSogDes->did)); // Carica il record del descrittore
 //			if (!retb)
 //			{
-//				SignalAnError(__FILE__, __LINE__, "\nDescrittore % s per soggetto %s", trSogDes->getField(trSogDes->did), cid);
+//				logToStdout(__FILE__, __LINE__, "\nDescrittore % s per soggetto %s", trSogDes->getField(trSogDes->did), cid);
 //				continue;
 //			}
 //			creaTag931_LegameSoggettoDescrittore();
@@ -4118,6 +4107,8 @@ DataField * Marc4cppLegami::creaSoggettoVarianteSS(CString *key_des,  CKeyValueV
 
 /*!
 \brief <b>Tag 699 - Variante di soggetto (legame desrittore - descrittore) (da file fornito da CFI)</b>
+
+[ authority documento ]
 <table>
 <tr>
 <th valign=top>Definizione</th><th>Descrizione</th></tr>
@@ -4180,7 +4171,6 @@ void Marc4cppLegami::creaLegameSoggettoVariante() {
 			retb = tbDescrittore->loadRecord(didSource);
 			if (!retb)
 			{
-//				SignalAnError(__FILE__, __LINE__, "\nDescrittore base %s ", didSource);  // per descrittore coll %s , didColl
 				logToStdout(__FILE__, __LINE__, LOG_ERROR, "Descrittore base %s ", didSource);  // per descrittore coll %s , didColl
 				continue;
 			}

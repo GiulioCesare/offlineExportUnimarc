@@ -154,8 +154,6 @@ class Marc4cppDocumento {
     void creaTag200_AnticoNew(DataField *df, CString *areaTitolo);	// 22/12/2015
     void creaTag200_NonAnticoNew(DataField *df, CString *areaTitolo, char natura);
 
-
-
     void creaTag205Antico(C205 *c205, char *area205);
 
     void creaTag205NonAntico(C205 *c205, char *area205);
@@ -173,6 +171,7 @@ public:
 
     int	isAnticoModernoUndefined();	// 0=undefined 1=antico, 2=moderno
 	bool isModerno105();	// Da tb_tit_set1 in base a info in s105_tp_testo_letterario
+	DataField * creaTag200_AreaTitoloEResponsabilita(CString *areaTitolo); // char *areaStartPtr, char *areaEndPtr
 
 
 	bool isModernoE();	// Test carattere in 4ta posizione 19/05/2015
@@ -181,7 +180,6 @@ public:
 
 	bool isMusica();
 
-	DataField * creaTag200_AreaTitoloEResponsabilita(CString *areaTitolo); // char *areaStartPtr, char *areaEndPtr
 
 	Marc4cppDocumento(MarcRecord *marcRecord,
 			TbTitolo *tbTitolo, TbImpronta * tbImpronta, TbNumeroStd *tbNumeroStandard, TbGrafica *tbGrafica,

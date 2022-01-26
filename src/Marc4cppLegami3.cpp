@@ -48,6 +48,8 @@ extern void logToStdout(	const OrsChar *Module, OrsInt Line, int level, const Or
 
 /*!
 \brief <b>Tag 314 - Nota legame titolo/autore</b>
+
+[ authority documento ]
 <table>
 <tr>
 <th valign=top>Definizione</th><th>Descrizione</th></tr>
@@ -55,13 +57,13 @@ extern void logToStdout(	const OrsChar *Module, OrsInt Line, int level, const Or
 <tr><td valign=top>Descrizione</td><td>Nota legame titolo/autore</td></tr>
 <tr><td valign=top>Obbligatorieta'</td><td>Facoltativo</td></tr>
 <tr><td valign=top>Ripetibilita'</td><td>Ripetibile</td></tr>
-<tr><td valign=top>Indicatore 1</td><td>Non definito</td></tr>
-<tr><td valign=top>Indicatore 2</td><td>Non definito</td></tr>
+<tr><td valign=top>Indicatore 1</td><td>Blank</td></tr>
+<tr><td valign=top>Indicatore 2</td><td>Blank</td></tr>
  <tr><td valign=top>Sottocampi</td>
     <td>
     <UL>
-        <li>a - Testo della nota. Non ripetibile.
-        <li>9 - identificativo titolo di arrivo del legame. Non ripetibile.
+        <li>a - Testo della nota. Non ripetibile.</li>
+        <li>9 - identificativo titolo di arrivo del legame. Non ripetibile.</li>
     </UL>
     </td></tr>
  <tr><td valign=top>NOTE</td><td></td></tr>
@@ -148,6 +150,8 @@ DataField * Marc4cppLegami::creaTag314_NotaLegameTitoloAutore(char *bid, char *e
 
 /*!
 \brief <b>Tag 410 - Campi legame titolo collana</b>
+
+[ authority documento ]
 <table>
 <tr>
 <th valign=top>Definizione</th><th>Descrizione</th></tr>
@@ -155,11 +159,11 @@ DataField * Marc4cppLegami::creaTag314_NotaLegameTitoloAutore(char *bid, char *e
 <tr><td valign=top>Descrizione</td><td>Campi legame titolo collana</td></tr>
 <tr><td valign=top>Obbligatorieta'</td><td>Facoltativo</td></tr>
 <tr><td valign=top>Ripetibilita'</td><td>Ripetibile</td></tr>
-<tr><td valign=top>Indicatore 1</td><td>Non definito</td></tr>
+<tr><td valign=top>Indicatore 1</td><td>Blank</td></tr>
 <tr><td valign=top>Indicatore 2</td><td>
     <UL>
-        <li>0 non stampare la nota
-        <li>1 stampare la nota.
+        <li>0 non stampare la nota</li>
+        <li>1 stampare la nota.</li>
     </UL>
 
 
@@ -167,8 +171,8 @@ DataField * Marc4cppLegami::creaTag314_NotaLegameTitoloAutore(char *bid, char *e
  <tr><td valign=top>Sottocampi</td>
     <td>
     <UL>
-        <li>1 - Dati di legame
-        <li>v - Sequenza
+        <li>1 - Dati di legame</li>
+        <li>v - Sequenza</li>
     </UL>
     </td></tr>
  <tr><td valign=top>NOTE</td><td></td></tr>
@@ -245,6 +249,8 @@ void Marc4cppLegami::creaTag410_TitoliCollane(
 
 /*!
 \brief <b>Tag 422 - Unita' padre del supplemento</b>
+
+[ authority documento ]
 <table>
 <tr>
 <th valign=top>Definizione</th><th>Descrizione</th></tr>
@@ -252,18 +258,17 @@ void Marc4cppLegami::creaTag410_TitoliCollane(
 <tr><td valign=top>Descrizione</td><td>Unita' padre del supplemento</td></tr>
 <tr><td valign=top>Obbligatorieta'</td><td>Facoltativo</td></tr>
 <tr><td valign=top>Ripetibilita'</td><td>Ripetibile</td></tr>
-<tr><td valign=top>Indicatore 1</td><td>Non definito</td></tr>
+<tr><td valign=top>Indicatore 1</td><td>Blank</td></tr>
 <tr><td valign=top>Indicatore 2</td><td>
     <UL>
-        <li>0 - non stampare la nota
-        <li>1 - stampare la nota
+        <li>0 - non stampare la nota</li>
+        <li>1 - stampare la nota</li>
     </UL>
 </td></tr>
  <tr><td valign=top>Sottocampi</td>
     <td>
     <UL>
-        <li> 1 - Tag 200 embedded
-
+        <li> 1 - Tag 200 embedded</li>
     </UL>
     </td></tr>
  <tr><td valign=top>NOTE</td><td></td></tr>
@@ -286,6 +291,8 @@ DataField * Marc4cppLegami::creaTag422_PadreSupplemento() {
 
 /*!
 \brief <b>Tag 423 - Pubblicato con (Allegato a)</b>
+
+[ authority documento ]
 <table>
 <tr>
 <th valign=top>Definizione</th><th>Descrizione</th></tr>
@@ -293,17 +300,17 @@ DataField * Marc4cppLegami::creaTag422_PadreSupplemento() {
 <tr><td valign=top>Descrizione</td><td>Pubblicato con (Allegato a)</td></tr>
 <tr><td valign=top>Obbligatorieta'</td><td>Facoltativo</td></tr>
 <tr><td valign=top>Ripetibilita'</td><td>Ripetibile</td></tr>
-<tr><td valign=top>Indicatore 1</td><td>Non definito</td></tr>
+<tr><td valign=top>Indicatore 1</td><td>Blank</td></tr>
  <tr><td valign=top>Indicatore 2</td><td>
     <UL>
-        <li>0 - non stampare la nota
-        <li>1 - stampare la nota
+        <li>0 - non stampare la nota</li>
+        <li>1 - stampare la nota</li>
     </UL>
 </td></tr>
 <tr><td valign=top>Sottocampi</td>
     <td>
     <UL>
-        <li>1 - Tag 200 embedded . Tag 7xx embedded (dati legame titolo autore)
+        <li>1 - Tag 200 embedded . Tag 7xx embedded (dati legame titolo autore)</li>
     </UL>
     </td></tr>
  <tr><td valign=top>NOTE</td><td></td></tr>
@@ -373,6 +380,8 @@ DataField * Marc4cppLegami::creaTag423_PubblicatoCon(tree<std::string>::sibling_
 
 /*!
 \brief <b>Tag 430 - Continuazione di</b>
+
+[ authority documento ]
 <table>
 <tr>
 <th valign=top>Definizione</th><th>Descrizione</th></tr>
@@ -380,17 +389,17 @@ DataField * Marc4cppLegami::creaTag423_PubblicatoCon(tree<std::string>::sibling_
 <tr><td valign=top>Descrizione</td><td>Continuazione di</td></tr>
 <tr><td valign=top>Obbligatorieta'</td><td>Facoltativo</td></tr>
 <tr><td valign=top>Ripetibilita'</td><td>Ripetibile</td></tr>
-<tr><td valign=top>Indicatore 1</td><td>Non definito</td></tr>
+<tr><td valign=top>Indicatore 1</td><td>Blank</td></tr>
  <tr><td valign=top>Indicatore 2</td><td>
     <UL>
-        <li>0 - non stampare la nota
-        <li>1 - stampare la nota
+        <li>0 - non stampare la nota</li>
+        <li>1 - stampare la nota</li>
     </UL>
 </td></tr>
 <tr><td valign=top>Sottocampi</td>
     <td>
     <UL>
-        <li>1 - Tag 200 embedded . Tag 7xx embedded (dati legame titolo autore)
+        <li>1 - Tag 200 embedded . Tag 7xx embedded (dati legame titolo autore)</li>
     </UL>
     </td></tr>
  <tr><td valign=top>NOTE</td><td></td></tr>
@@ -412,6 +421,8 @@ DataField * Marc4cppLegami::creaTag430_ContinuazioneDi() {
 
 /*!
 \brief <b>Tag 431 - Continuazione in</b>
+
+[ authority documento ]
 <table>
 <tr>
 <th valign=top>Definizione</th><th>Descrizione</th></tr>
@@ -419,17 +430,17 @@ DataField * Marc4cppLegami::creaTag430_ContinuazioneDi() {
 <tr><td valign=top>Descrizione</td><td>Continuazione in</td></tr>
 <tr><td valign=top>Obbligatorieta'</td><td>Facoltativo</td></tr>
 <tr><td valign=top>Ripetibilita'</td><td>Ripetibile</td></tr>
-<tr><td valign=top>Indicatore 1</td><td>Non definito</td></tr>
- <tr><td valign=top>Indicatore 2</td><td>
+<tr><td valign=top>Indicatore 1</td><td>Blank</td></tr>
+<tr><td valign=top>Indicatore 2</td><td>
     <UL>
-        <li>0 - non stampare la nota
-        <li>1 - stampare la nota
+        <li>0 - non stampare la nota</li>
+        <li>1 - stampare la nota</li>
     </UL>
 </td></tr>
 <tr><td valign=top>Sottocampi</td>
     <td>
     <UL>
-        <li>1 - Tag 200 embedded.
+        <li>1 - Tag 200 embedded.</li>
     </UL>
     </td></tr>
  <tr><td valign=top>NOTE</td><td></td></tr>
@@ -457,6 +468,8 @@ DataField * Marc4cppLegami::creaTag431_ContinuaInParteIn() {
 
 /*!
 \brief <b>Tag 434 - Ha assorbito</b>
+
+[ authority documento ]
 <table>
 <tr>
 <th valign=top>Definizione</th><th>Descrizione</th></tr>
@@ -464,17 +477,17 @@ DataField * Marc4cppLegami::creaTag431_ContinuaInParteIn() {
 <tr><td valign=top>Descrizione</td><td>Ha assorbito</td></tr>
 <tr><td valign=top>Obbligatorieta'</td><td>Facoltativo</td></tr>
 <tr><td valign=top>Ripetibilita'</td><td>Ripetibile</td></tr>
-<tr><td valign=top>Indicatore 1</td><td>Non definito</td></tr>
+<tr><td valign=top>Indicatore 1</td><td>Blank</td></tr>
  <tr><td valign=top>Indicatore 2</td><td>
     <UL>
-        <li>0 - non stampare la nota
-        <li>1 - stampare la nota
+        <li>0 - non stampare la nota</li>
+        <li>1 - stampare la nota</li>
     </UL>
 </td></tr>
 <tr><td valign=top>Sottocampi</td>
     <td>
     <UL>
-        <li>1 - Tag 200 embedded.
+        <li>1 - Tag 200 embedded.</li>
     </UL>
     </td></tr>
  <tr><td valign=top>NOTE</td><td></td></tr>
@@ -499,6 +512,8 @@ DataField * Marc4cppLegami::creaTag434_AssorbitoDa() {
 
 /*!
 \brief <b>Tag 447 - Si fonde con per formare</b>
+
+[ authority documento ]
 <table>
 <tr>
 <th valign=top>Definizione</th><th>Descrizione</th></tr>
@@ -506,7 +521,7 @@ DataField * Marc4cppLegami::creaTag434_AssorbitoDa() {
 <tr><td valign=top>Descrizione</td><td>Si fonde con per formare</td></tr>
 <tr><td valign=top>Obbligatorieta'</td><td>Facoltativo</td></tr>
 <tr><td valign=top>Ripetibilita'</td><td>Ripetibile</td></tr>
-<tr><td valign=top>Indicatore 1</td><td>Non definito</td></tr>
+<tr><td valign=top>Indicatore 1</td><td>Blank</td></tr>
  <tr><td valign=top>Indicatore 2</td><td>
     <UL>
         <li>0 - non stampare la nota
@@ -537,6 +552,8 @@ DataField * Marc4cppLegami::creaTag447_SiFondeConPerFormare() {
 
 /*!
 \brief <b>Tag 451 - Altra edizione su stesso supporto</b>
+
+[ authority documento ]
 <table>
 <tr>
 <th valign=top>Definizione</th><th>Descrizione</th></tr>
@@ -544,7 +561,7 @@ DataField * Marc4cppLegami::creaTag447_SiFondeConPerFormare() {
 <tr><td valign=top>Descrizione</td><td>Altra edizione su stesso supporto</td></tr>
 <tr><td valign=top>Obbligatorieta'</td><td>Facoltativo</td></tr>
 <tr><td valign=top>Ripetibilita'</td><td>Ripetibile</td></tr>
-<tr><td valign=top>Indicatore 1</td><td>Non definito</td></tr>
+<tr><td valign=top>Indicatore 1</td><td>Blank</td></tr>
  <tr><td valign=top>Indicatore 2</td><td>
     <UL>
         <li>0 - non stampare la nota
@@ -575,6 +592,8 @@ DataField * Marc4cppLegami::creaTag451_AltraEdizioneStessoSupporto() {
 
 /*!
 \brief <b>Tag 454 - Titolo originale</b>
+
+[ authority documento ]
 <table>
 <tr>
 <th valign=top>Definizione</th><th>Descrizione</th></tr>
@@ -582,7 +601,7 @@ DataField * Marc4cppLegami::creaTag451_AltraEdizioneStessoSupporto() {
 <tr><td valign=top>Descrizione</td><td>Titolo originale</td></tr>
 <tr><td valign=top>Obbligatorieta'</td><td>Facoltativo</td></tr>
 <tr><td valign=top>Ripetibilita'</td><td>Ripetibile</td></tr>
-<tr><td valign=top>Indicatore 1</td><td>Non definito</td></tr>
+<tr><td valign=top>Indicatore 1</td><td>Blank</td></tr>
  <tr><td valign=top>Indicatore 2</td><td>
     <UL>
         <li>0 - non stampare la nota
@@ -676,6 +695,8 @@ DataField * Marc4cppLegami::creaTag454_TraduzioneDi(const tree<std::string>& tr)
 
 /*!
 \brief <b>Tag 488 - Continuazione di</b>
+
+[ authority documento ]
 <table>
 <tr>
 <th valign=top>Definizione</th><th>Descrizione</th></tr>
@@ -683,7 +704,7 @@ DataField * Marc4cppLegami::creaTag454_TraduzioneDi(const tree<std::string>& tr)
 <tr><td valign=top>Descrizione</td><td>Legame continuazione di</td></tr>
 <tr><td valign=top>Obbligatorieta'</td><td>Facoltativo</td></tr>
 <tr><td valign=top>Ripetibilita'</td><td>Ripetibile</td></tr>
-<tr><td valign=top>Indicatore 1</td><td>Non definito</td></tr>
+<tr><td valign=top>Indicatore 1</td><td>Blank</td></tr>
  <tr><td valign=top>Indicatore 2</td><td>
     <UL>
         <li>0 - non stampare la nota
@@ -725,7 +746,8 @@ DataField * Marc4cppLegami::creaTag488_ContinuazioneDi(char *bid, char *bidColl,
 
 /*!
 \brief <b>Tag 500 - Legame a Titolo uniforme</b>
-\brief <b>Tag 506 - Legame a Titolo dell'opera (02/02/2017, sostituisce la 500)</b>
+
+[ authority documento ]
 <table>
 <tr>
 <th valign=top>Definizione</th><th>Descrizione</th></tr>
@@ -741,18 +763,18 @@ DataField * Marc4cppLegami::creaTag488_ContinuazioneDi(char *bid, char *bidColl,
 </td></tr>
 <tr><td valign=top>Indicatore 2</td><td>
     <UL>
-        <li>0 titolo non usato come intestazione
-        <li>1 titolo usato come intestazione.<BR>
-        Se il titolo di natura A non ha autori collegati e il titolo di natura M non ha autori collegati di tipo 1 o 2, il 2ndo indicatore deve essere 1. Vedi anche es. UBO3006166.<BR>
-        Se il titolo di natura A non ha autori collegati ma il titolo di natura M ha un autore collegato di tipo 1 o 2, il 2ndo indicatore deve essere 0.
+        <li>0 titolo non usato come intestazione</li>
+        <li>1 titolo usato come intestazione.
+        Se il titolo di natura A non ha autori collegati e il titolo di natura M non ha autori collegati di tipo 1 o 2, il 2ndo indicatore deve essere 1. Vedi anche es. UBO3006166.
+        Se il titolo di natura A non ha autori collegati ma il titolo di natura M ha un autore collegato di tipo 1 o 2, il 2ndo indicatore deve essere 0.</li>
     </UL>
 </td></tr>
  <tr><td valign=top>Sottocampi</td>
     <td>
     <UL>
-        <li>1 - Tag 200 area 1 embedded
-        <li>3 - Bid
-        <li>9 - Legame all'autore
+        <li>1 - Tag 200 area 1 embedded</li>
+        <li>3 - Bid</li>
+        <li>9 - Legame all'autore</li>
     </UL>
     </td></tr>
  <tr><td valign=top>NOTE</td><td></td></tr>
@@ -916,7 +938,6 @@ DataField * Marc4cppLegami::creaTag500_TitoloUniforme(
 			bool retb = tbAutore->loadRecord(idBuffer);
 			if (!retb)
 			{
-//				SignalAnError(__FILE__, __LINE__,"Non trovo autore con vid %s", idBuffer);
 				logToStdout(__FILE__, __LINE__, LOG_ERROR, "Non trovo autore con vid %s", idBuffer);
 			}
 			else
@@ -961,6 +982,8 @@ DataField * Marc4cppLegami::creaTag500_TitoloUniforme(
 
 /*!
 \brief <b>Tag 510 - Titolo parallelo</b>
+
+[ authority documento ]
 <table>
 <tr>
 <th valign=top>Definizione</th><th>Descrizione</th></tr>
@@ -970,16 +993,16 @@ DataField * Marc4cppLegami::creaTag500_TitoloUniforme(
 <tr><td valign=top>Ripetibilita'</td><td>Ripetibile</td></tr>
 <tr><td valign=top>Indicatore 1</td><td>
     <UL>
-        <li>0 titolo non significativo
-        <li>1 titolo significativo
+        <li>0 titolo non significativo</li>
+        <li>1 titolo significativo</li>
     </UL>
 </td></tr>
 <tr><td valign=top>Indicatore 2</td><td>Non definito</td></tr>
  <tr><td valign=top>Sottocampi</td>
     <td>
     <UL>
-        <li>1 - Tag 200 area 1 embedded
-        <li>9 - Legame al titolo
+        <li>1 - Tag 200 area 1 embedded</li>
+        <li>9 - Legame al titolo</li>
     </UL>
     </td></tr>
  <tr><td valign=top>NOTE</td><td></td></tr>
@@ -1022,26 +1045,28 @@ DataField * Marc4cppLegami::creaTag510_TitoloParallelo() {
 
 /*!
 \brief <b>Tag 517 - Altre varianti del titolo</b>
+
+[ authority documento ]
 <table>
 <tr>
 <th valign=top>Definizione</th><th>Descrizione</th></tr>
 <tr><td valign=top>Tag</td><td>517</td></tr>
-<tr><td valign=top>Descrizione</td><td>Titolo parallelo</td></tr>
+<tr><td valign=top>Descrizione</td><td>Altre varianti del titolo</td></tr>
 <tr><td valign=top>Obbligatorieta'</td><td>Facoltativo</td></tr>
 <tr><td valign=top>Ripetibilita'</td><td>Ripetibile</td></tr>
 <tr><td valign=top>Indicatore 1</td><td>
     <UL>
-        <li>0 titolo non significativo
-        <li>1 titolo significativo
+        <li>0 titolo non significativo</li>
+        <li>1 titolo significativo</li>
     </UL>
 </td></tr>
 <tr><td valign=top>Indicatore 2</td><td>Non definito</td></tr>
  <tr><td valign=top>Sottocampi</td>
     <td>
     <UL>
-        <li>1 - Tag 200 area 1 embedded
-        <li>3 - Legame a musica (anche noto come sottotipo legame)
-        <li>9 - Legame al titolo
+        <li>1 - Tag 200 area 1 embedded</li>
+        <li>3 - Legame a musica (anche noto come sottotipo legame)</li>
+        <li>9 - Legame al titolo</li>
     </UL>
     </td></tr>
  <tr><td valign=top>NOTE</td><td></td></tr>
@@ -1091,6 +1116,8 @@ DataField * Marc4cppLegami::creaTag517_AltreVariantiTitolo(CString* tp_legame_mu
 
 /*!
 \brief <b>Tag 520 - Continuazione di (periodici)</b>
+
+[ authority documento ]
 <table>
 <tr>
 <th valign=top>Definizione</th><th>Descrizione</th></tr>
@@ -1100,16 +1127,16 @@ DataField * Marc4cppLegami::creaTag517_AltreVariantiTitolo(CString* tp_legame_mu
 <tr><td valign=top>Ripetibilita'</td><td>Ripetibile</td></tr>
 <tr><td valign=top>Indicatore 1</td><td>
     <UL>
-        <li>0 titolo non significativo
-        <li>1 titolo significativo
+        <li>0 titolo non significativo</li>
+        <li>1 titolo significativo</li>
     </UL>
 </td></tr>
 <tr><td valign=top>Indicatore 2</td><td>Non definito</td></tr>
  <tr><td valign=top>Sottocampi</td>
     <td>
     <UL>
-        <li>1 - Tag 200 area 1 embedded
-        <li>9 - Legame al titolo
+        <li>1 - Tag 200 area 1 embedded</li>
+        <li>9 - Legame al titolo</li>
     </UL>
     </td></tr>
  <tr><td valign=top>NOTE</td><td></td></tr>
@@ -1155,6 +1182,8 @@ DataField * Marc4cppLegami::creaTag520_ContinuazioneDiPeriodici(char *bid,
 
 /*!
 \brief <b>Tag 530 - Titolo chiave (periodici)</b>
+
+[ authority documento ]
 <table>
 <tr>
 <th valign=top>Definizione</th><th>Descrizione</th></tr>
@@ -1164,16 +1193,16 @@ DataField * Marc4cppLegami::creaTag520_ContinuazioneDiPeriodici(char *bid,
 <tr><td valign=top>Ripetibilita'</td><td>Ripetibile</td></tr>
 <tr><td valign=top>Indicatore 1</td><td>
     <UL>
-        <li>0 titolo non significativo
-        <li>1 titolo significativo
+        <li>0 titolo non significativo</li>
+        <li>1 titolo significativo</li>
     </UL>
 </td></tr>
 <tr><td valign=top>Indicatore 2</td><td>se il titolo ha autore principale vale '1' altrimenti vale '0'.</td></tr>
  <tr><td valign=top>Sottocampi</td>
     <td>
     <UL>
-        <li>1 - Tag 200 area 1 embedded
-        <li>9 - Legame al titolo
+        <li>1 - Tag 200 area 1 embedded</li>
+        <li>9 - Legame al titolo</li>
     </UL>
     </td></tr>
  <tr><td valign=top>NOTE</td><td></td></tr>
@@ -1218,6 +1247,8 @@ DataField * Marc4cppLegami::creaTag530_TitoloChiavePeriodici(const tree<
 
 /*!
 \brief <b>Tag 532 - Titolo estrapolato</b>
+
+[ authority documento ]
 <table>
 <tr>
 <th valign=top>Definizione</th><th>Descrizione</th></tr>
@@ -1227,16 +1258,16 @@ DataField * Marc4cppLegami::creaTag530_TitoloChiavePeriodici(const tree<
 <tr><td valign=top>Ripetibilita'</td><td>Ripetibile</td></tr>
 <tr><td valign=top>Indicatore 1</td><td>
     <UL>
-        <li>0 titolo non significativo
-        <li>1 titolo significativo
+        <li>0 titolo non significativo</li>
+        <li>1 titolo significativo</li>
     </UL>
 </td></tr>
 <tr><td valign=top>Indicatore 2</td><td>Non definito.</td></tr>
  <tr><td valign=top>Sottocampi</td>
     <td>
     <UL>
-        <li>1 - Tag 200 area 1 embedded
-        <li>9 - Legame al titolo
+        <li>1 - Tag 200 area 1 embedded</li>
+        <li>9 - Legame al titolo</li>
     </UL>
     </td></tr>
  <tr><td valign=top>NOTE</td><td></td></tr>
@@ -1279,6 +1310,8 @@ DataField * Marc4cppLegami::creaTag532_TitoloEstrapolato(char *bid,
 
 /*!
 \brief <b>Tag 606 - Soggetti ordinari</b>
+
+[ authority documento ]
 <table>
 <tr>
 <th valign=top>Definizione</th><th>Descrizione</th></tr>
@@ -1288,23 +1321,23 @@ DataField * Marc4cppLegami::creaTag532_TitoloEstrapolato(char *bid,
 <tr><td valign=top>Ripetibilita'</td><td>Ripetibile</td></tr>
 <tr><td valign=top>Indicatore 1</td><td>
     <UL>
-        <li>0 Nessun livello specificato
-        <li>1 Termine principale
-        <li>2 Termine secondario
-        <li>' ' Informazione non disponibile
+        <li>0 Nessun livello specificato</li>
+        <li>1 Termine principale</li>
+        <li>2 Termine secondario</li>
+        <li>' ' Informazione non disponibile</li>
     </UL>
 </td></tr>
 <tr><td valign=top>Indicatore 2</td><td>Non definito</td></tr>
  <tr><td valign=top>Sottocampi</td>
     <td>
     <UL>
-        <li>a - Elemento principale
-        <li>x - Suddivisione generale
+        <li>a - Elemento principale</li>
+        <li>x - Suddivisione generale</li>
         <li>2 - Codice di sistema di soggettazione (Soggettario)
  Il $2 delle etichette 6xx dovrebbe contenere, per il nuovo
  soggettario (codice NFI di SBN) la codifica "nsogi" come dichiarato
- nell'Appendice G del Manuale UNIMARC, 3. ed. Il codice FIR rimane uguale.
-        <li>3 - Numero record nell'Authority File (CID)
+ nell'Appendice G del Manuale UNIMARC, 3. ed. Il codice FIR rimane uguale.</li>
+        <li>3 - Numero record nell'Authority File (CID)</li>
 
     </UL>
     </td></tr>
@@ -1386,14 +1419,16 @@ if (DATABASE_ID != DATABASE_INDICE) // 01/10/2013 (solo per il POLO)
 
 /*!
 \brief <b>Tag 700 - Autori personali, responsabilita' principale</b>
+
+[ authority documento ]
 <table>
 <tr>
 <th valign=top>Definizione</th><th>Descrizione</th></tr>
 <tr><td valign=top>Tag</td><td>700</td></tr>
 <tr><td valign=top>Descrizione</td><td>Autori personali, responsabilita' principale</td></tr>
 <tr><td valign=top>Obbligatorieta'</td><td>Facoltativo</td></tr>
-<tr><td valign=top>Ripetibilita'</td><td>Non ripetibile</td></tr>
-<tr><td valign=top>Indicatore 1</td><td>Non definito</td></tr>
+<tr><td valign=top>Ripetibilita'</td><td>Blank</td></tr>
+<tr><td valign=top>Indicatore 1</td><td>Blank</td></tr>
 <tr><td valign=top>Indicatore 2</td><td>
     <UL>
         <li>0 - Nome in forma diretta
@@ -1403,15 +1438,14 @@ if (DATABASE_ID != DATABASE_INDICE) // 01/10/2013 (solo per il POLO)
  <tr><td valign=top>Sottocampi</td>
     <td>
     <UL>
-        <li>a - Elemento principale. Parte principale del nome dell'autore. (Non ripetibile)
-        <li>b - Secondo elemento del nome. Il resto del nome dell'autore. (Ripetibile)
-        <li>c - Qualificazione (Ripetibile)
-        <li>d - Numerali romani
-        <li>f - Date
-        <li>g - Iniziali del nome per esteso
-        <li>3 - Numero di record nell'Authority File
-        <li>4 - Codice del relatore
-        <li>
+        <li>a - Elemento principale. Parte principale del nome dell'autore. (Non ripetibile)</li>
+        <li>b - Secondo elemento del nome. Il resto del nome dell'autore. (Ripetibile)</li>
+        <li>c - Qualificazione (Ripetibile)</li>
+        <li>d - Numerali romani</li>
+        <li>f - Date</li>
+        <li>g - Iniziali del nome per esteso</li>
+        <li>3 - Numero di record nell'Authority File</li>
+        <li>4 - Codice del relatore</li>
     </UL>
     </td></tr>
  <tr><td valign=top>NOTE</td><td></td></tr>
@@ -1448,6 +1482,8 @@ DataField * Marc4cppLegami::creaTag700_NomiPersonaliResponsabilitaPrincipale(CSt
 
 /*!
 \brief <b>Tag 701 - Autori personali, responsabilita' alternativa</b>
+
+[ authority documento ]
 <table>
 <tr>
 <th valign=top>Definizione</th><th>Descrizione</th></tr>
@@ -1455,25 +1491,24 @@ DataField * Marc4cppLegami::creaTag700_NomiPersonaliResponsabilitaPrincipale(CSt
 <tr><td valign=top>Descrizione</td><td>Autori personali, responsabilita' alternativa</td></tr>
 <tr><td valign=top>Obbligatorieta'</td><td>Facoltativo</td></tr>
 <tr><td valign=top>Ripetibilita'</td><td>Ripetibile</td></tr>
-<tr><td valign=top>Indicatore 1</td><td>Non definito</td></tr>
+<tr><td valign=top>Indicatore 1</td><td>Blank</td></tr>
 <tr><td valign=top>Indicatore 2</td><td>
     <UL>
-        <li>0 - Nome in forma diretta
-        <li>1 - Cognome
+        <li>0 - Nome in forma diretta</li>
+        <li>1 - Cognome</li>
     </UL>
 </td></tr>
  <tr><td valign=top>Sottocampi</td>
     <td>
     <UL>
-        <li>a - Elemento principale. Parte principale del nome dell'autore. (Non ripetibile)
-        <li>b - Secondo elemento del nome. Il resto del nome dell'autore. (Ripetibile)
-        <li>c - Qualificazione (Ripetibile)
-        <li>d - Numerali romani
-        <li>f - Date
-        <li>g - Iniziali del nome per esteso
-        <li>3 - Numero di record nell'Authority File
-        <li>4 - Codice del relatore
-        <li>
+        <li>a - Elemento principale. Parte principale del nome dell'autore. (Non ripetibile)</li>
+        <li>b - Secondo elemento del nome. Il resto del nome dell'autore. (Ripetibile)</li>
+        <li>c - Qualificazione (Ripetibile)</li>
+        <li>d - Numerali romani</li>
+        <li>f - Date</li>
+        <li>g - Iniziali del nome per esteso</li>
+        <li>3 - Numero di record nell'Authority File</li>
+        <li>4 - Codice del relatore</li>
     </UL>
     </td></tr>
  <tr><td valign=top>NOTE</td><td>Come la 700</td></tr>
@@ -1509,6 +1544,8 @@ DataField * Marc4cppLegami::creaTag701_NomiPersonaliResponsabilitaAlternativa(CS
 
 /*!
 \brief <b>Tag 702 - Autori personali, responsabilita' secondaria</b>
+
+[ authority documento ]
 <table>
 <tr>
 <th valign=top>Definizione</th><th>Descrizione</th></tr>
@@ -1516,25 +1553,24 @@ DataField * Marc4cppLegami::creaTag701_NomiPersonaliResponsabilitaAlternativa(CS
 <tr><td valign=top>Descrizione</td><td>Autori personali, responsabilita' secondaria</td></tr>
 <tr><td valign=top>Obbligatorieta'</td><td>Facoltativo</td></tr>
 <tr><td valign=top>Ripetibilita'</td><td>Ripetibile</td></tr>
-<tr><td valign=top>Indicatore 1</td><td>Non definito</td></tr>
+<tr><td valign=top>Indicatore 1</td><td>Blank</td></tr>
 <tr><td valign=top>Indicatore 2</td><td>
     <UL>
-        <li>0 - Nome in forma diretta
-        <li>1 - Cognome
+        <li>0 - Nome in forma diretta</li>
+        <li>1 - Cognome</li>
     </UL>
 </td></tr>
  <tr><td valign=top>Sottocampi</td>
     <td>
     <UL>
-        <li>a - Elemento principale. Parte principale del nome dell'autore. (Non ripetibile)
-        <li>b - Secondo elemento del nome. Il resto del nome dell'autore. (Ripetibile)
-        <li>c - Qualificazione (Ripetibile)
-        <li>d - Numerali romani
-        <li>f - Date
-        <li>g - Iniziali del nome per esteso
-        <li>3 - Numero di record nell'Authority File
-        <li>4 - Codice del relatore
-        <li>
+        <li>a - Elemento principale. Parte principale del nome dell'autore. (Non ripetibile)</li>
+        <li>b - Secondo elemento del nome. Il resto del nome dell'autore. (Ripetibile)</li>
+        <li>c - Qualificazione (Ripetibile)</li>
+        <li>d - Numerali romani</li>
+        <li>f - Date</li>
+        <li>g - Iniziali del nome per esteso</li>
+        <li>3 - Numero di record nell'Authority File</li>
+        <li>4 - Codice del relatore</li>
     </UL>
     </td></tr>
  <tr><td valign=top>NOTE</td><td>Come la 700</td></tr>
@@ -1605,6 +1641,8 @@ DataField * Marc4cppLegami::creaTag702_NomiPersonaliResponsabilitaSecondaria(CSt
 
 /*!
 \brief <b>Tag 710 - Autori collettivi, responsabilita' principale</b>
+
+[ authority documento ]
 <table>
 <tr>
 <th valign=top>Definizione</th><th>Descrizione</th></tr>
@@ -1614,29 +1652,29 @@ DataField * Marc4cppLegami::creaTag702_NomiPersonaliResponsabilitaSecondaria(CSt
 <tr><td valign=top>Ripetibilita'</td><td>Non ripetibile</td></tr>
 <tr><td valign=top>Indicatore 1</td><td>
     <UL>
-        <li>0 - Autore collettivo
-        <li>1 - Congresso
+        <li>0 - Autore collettivo</li>
+        <li>1 - Congresso</li>
     </UL>
 </td></tr>
 <tr><td valign=top>Indicatore 2</td><td>
     <UL>
-        <li>0 - Nome in forma inversa.  Viene usato quando la prima parola del nome collettivo o congresso inizia con un'iniziale o nome di persona
-        <li>1 - Nome di localita' o di autorita'.  Viene usato per gli autori collettivi quando sono relativi ad agenzie di autorita' o governative
-        <li>2 - Nome in forma diretta. Viene usato per tutti gli altri casi
+        <li>0 - Nome in forma inversa.  Viene usato quando la prima parola del nome collettivo o congresso inizia con un'iniziale o nome di persona</li>
+        <li>1 - Nome di localita' o di autorita'.  Viene usato per gli autori collettivi quando sono relativi ad agenzie di autorita' o governative</li>
+        <li>2 - Nome in forma diretta. Viene usato per tutti gli altri casi</li>
     </UL>
 </td></tr>
  <tr><td valign=top>Sottocampi</td>
     <td>
     <UL>
-        <li>a - Elemento principale. (Non ripetibile)
-        <li>b - Suddivisione. (Ripetibile)
-        <li>c - Qualificazione. (Ripetibile)
-        <li>d - Numero del congresso. (Ripetibile)
-        <li>e - Luogo del congresso. (Non ripetibile)
-        <li>f - Data del congresso. (Non ripetibile)
-        <li>g - Elemento permutato. (Non ripetibile)
-        <li>3 - Numero di record nell'Authority File. (Non ripetibile)
-        <li>4 - Codice del relatore. (Non ripetibile)
+        <li>a - Elemento principale. (Non ripetibile)</li>
+        <li>b - Suddivisione. (Ripetibile)</li>
+        <li>c - Qualificazione. (Ripetibile)</li>
+        <li>d - Numero del congresso. (Ripetibile)</li>
+        <li>e - Luogo del congresso. (Non ripetibile)</li>
+        <li>f - Data del congresso. (Non ripetibile)</li>
+        <li>g - Elemento permutato. (Non ripetibile)</li>
+        <li>3 - Numero di record nell'Authority File. (Non ripetibile)</li>
+        <li>4 - Codice del relatore. (Non ripetibile)</li>
     </UL>
     </td></tr>
  <tr><td valign=top>NOTE</td><td></td></tr>
@@ -1659,6 +1697,8 @@ DataField * Marc4cppLegami::creaTag710_NomeDiEnte_ResponsabilitaPrincipale(CStri
 
 /*!
 \brief <b>Tag 711 - Autori collettivi, responsabilita' alternativa</b>
+
+[ authority documento ]
 <table>
 <tr>
 <th valign=top>Definizione</th><th>Descrizione</th></tr>
@@ -1666,30 +1706,30 @@ DataField * Marc4cppLegami::creaTag710_NomeDiEnte_ResponsabilitaPrincipale(CStri
 <tr><td valign=top>Descrizione</td><td>Autori collettivi, responsabilita' alternativa</td></tr>
 <tr><td valign=top>Obbligatorieta'</td><td>Facoltativo</td></tr>
 <tr><td valign=top>Ripetibilita'</td><td>Ripetibile</td></tr>
-<tr><td valign=top>Indicatore 1</td><td>Non definito</td></tr>
+<tr><td valign=top>Indicatore 1</td><td>
     <UL>
-        <li>0 - Autore collettivo
-        <li>1 - Congresso
+        <li>0 - Autore collettivo</li>
+        <li>1 - Congresso</li>
     </UL>
 <tr><td valign=top>Indicatore 2</td><td>
     <UL>
-        <li>0 - Nome in forma inversa.  Viene usato quando la prima parola del nome collettivo o congresso inizia con un'iniziale o nome di persona
-        <li>1 - Nome di localita' o di autorita'.  Viene usato per gli autori collettivi quando sono relativi ad agenzie di autorita' o governative
-        <li>2 - Nome in forma diretta. Viene usato per tutti gli altri casi
+        <li>0 - Nome in forma inversa.  Viene usato quando la prima parola del nome collettivo o congresso inizia con un'iniziale o nome di persona</li>
+        <li>1 - Nome di localita' o di autorita'.  Viene usato per gli autori collettivi quando sono relativi ad agenzie di autorita' o governative</li>
+        <li>2 - Nome in forma diretta. Viene usato per tutti gli altri casi</li>
     </UL>
 </td></tr>
  <tr><td valign=top>Sottocampi</td>
     <td>
     <UL>
-        <li>a - Elemento principale. (Non ripetibile)
-        <li>b - Suddivisione. (Ripetibile)
-        <li>c - Qualificazione. (Ripetibile)
-        <li>d - Numero del congresso. (Ripetibile)
-        <li>e - Luogo del congresso. (Non ripetibile)
-        <li>f - Data del congresso. (Non ripetibile)
-        <li>g - Elemento permutato. (Non ripetibile)
-        <li>3 - Numero di record nell'Authority File. (Non ripetibile)
-        <li>4 - Codice del relatore. (Non ripetibile)
+        <li>a - Elemento principale. (Non ripetibile)</li>
+        <li>b - Suddivisione. (Ripetibile)</li>
+        <li>c - Qualificazione. (Ripetibile)</li>
+        <li>d - Numero del congresso. (Ripetibile)</li>
+        <li>e - Luogo del congresso. (Non ripetibile)</li>
+        <li>f - Data del congresso. (Non ripetibile)</li>
+        <li>g - Elemento permutato. (Non ripetibile)</li>
+        <li>3 - Numero di record nell'Authority File. (Non ripetibile)</li>
+        <li>4 - Codice del relatore. (Non ripetibile)</li>
     </UL>
     </td></tr>
  <tr><td valign=top>NOTE</td><td></td></tr>
@@ -1708,6 +1748,8 @@ DataField * Marc4cppLegami::creaTag711_NomeDiEnte_ResponsabilitaAlternativa(CStr
 
 /*!
 \brief <b>Tag 712 - Autori collettivi, responsabilita' secondaria</b>
+
+[ authority documento ]
 <table>
 <tr>
 <th valign=top>Definizione</th><th>Descrizione</th></tr>
@@ -1717,30 +1759,30 @@ DataField * Marc4cppLegami::creaTag711_NomeDiEnte_ResponsabilitaAlternativa(CStr
 <tr><td valign=top>Ripetibilita'</td><td>Ripetibile</td></tr>
 <tr><td valign=top>Indicatore 1</td><td>
     <UL>
-        <li>0 - Autore collettivo
-        <li>1 - Congresso
+        <li>0 - Autore collettivo</li>
+        <li>1 - Congresso</li>
     </UL>
 </td></tr>
 <tr><td valign=top>Indicatore 2</td><td>
     <UL>
-        <li>0 - Nome in forma inversa.  Viene usato quando la prima parola del nome collettivo o congresso inizia con un'iniziale o nome di persona
-        <li>1 - Nome di localita' o di autorita'.  Viene usato per gli autori collettivi quando sono relativi ad agenzie di autorita' o governative
-        <li>2 - Nome in forma diretta. Viene usato per tutti gli altri casi
+        <li>0 - Nome in forma inversa.  Viene usato quando la prima parola del nome collettivo o congresso inizia con un'iniziale o nome di persona</li>
+        <li>1 - Nome di localita' o di autorita'.  Viene usato per gli autori collettivi quando sono relativi ad agenzie di autorita' o governative</li>
+        <li>2 - Nome in forma diretta. Viene usato per tutti gli altri casi</li>
     </UL>
 </td></tr>
  <tr><td valign=top>Sottocampi</td>
     <td>
     <UL>
-        <li>a - Elemento principale. (Non ripetibile)
-        <li>b - Suddivisione. (Ripetibile)
-        <li>c - Qualificazione. (Ripetibile)
-        <li>d - Numero del congresso. (Ripetibile)
-        <li>e - Luogo del congresso. (Non ripetibile)
-        <li>f - Data del congresso. (Non ripetibile)
-        <li>g - Elemento permutato. (Non ripetibile)
-        <li>3 - Numero di record nell'Authority File. (Non ripetibile)
-        <li>4 - Codice del relatore. (Non ripetibile)
-        <li>5 - codice ISIL (solo per POLI)
+        <li>a - Elemento principale. (Non ripetibile)</li>
+        <li>b - Suddivisione. (Ripetibile)</li>
+        <li>c - Qualificazione. (Ripetibile)</li>
+        <li>d - Numero del congresso. (Ripetibile)</li>
+        <li>e - Luogo del congresso. (Non ripetibile)</li>
+        <li>f - Data del congresso. (Non ripetibile)</li>
+        <li>g - Elemento permutato. (Non ripetibile)</li>
+        <li>3 - Numero di record nell'Authority File. (Non ripetibile)</li>
+        <li>4 - Codice del relatore. (Non ripetibile)</li>
+        <li>5 - codice ISIL (solo per POLI)</li>
     </UL>
     </td></tr>
  <tr><td valign=top>NOTE</td><td></td></tr>
@@ -1772,6 +1814,8 @@ DataField * Marc4cppLegami::creaTag712_NomeDiEnte_ResponsabilitaSecondaria(CStri
 
 /*!
 \brief <b>Tag 790 - Rinvii autori personali</b>
+
+[ authority documento ]
 <table>
 <tr>
 <th valign=top>Definizione</th><th>Descrizione</th></tr>
@@ -1781,24 +1825,24 @@ DataField * Marc4cppLegami::creaTag712_NomeDiEnte_ResponsabilitaSecondaria(CStri
 <tr><td valign=top>Ripetibilita'</td><td>Ripetibile</td></tr>
 <tr><td valign=top>Indicatore 1</td><td>
     <UL>
-        <li>0 - Nome in forma diretta
-        <li>1 - Cognome
+        <li>0 - Nome in forma diretta</li>
+        <li>1 - Cognome</li>
     </UL>
 </td></tr>
 <tr><td valign=top>Indicatore 2</td><td>Non definito</td></tr>
  <tr><td valign=top>Sottocampi</td>
     <td>
     <UL>
-        <li>a - Elemento principale. Parte principale del nome dell'autore. (Non ripetibile)
-        <li>b - Secondo elemento del nome. Il resto del nome dell'autore. (Ripetibile)
-        <li>c - Qualificazione (Ripetibile)
-        <li>d - Numerali romani
-        <li>f - Date
-        <li>g - Iniziali del nome per esteso
-        <li>3 - Numero di record nell'Authority File
-        <li>4 - Codice del relatore
-        <li>z - Autore in forma accettata, per tipo legame 4xx (Non ripetibile)
-        <li>y - Autore in forma accettata, per tipo legame 5xx (Non ripetibile)
+        <li>a - Elemento principale. Parte principale del nome dell'autore. (Non ripetibile)</li>
+        <li>b - Secondo elemento del nome. Il resto del nome dell'autore. (Ripetibile)</li>
+        <li>c - Qualificazione (Ripetibile)</li>
+        <li>d - Numerali romani</li>
+        <li>f - Date</li>
+        <li>g - Iniziali del nome per esteso</li>
+        <li>3 - Numero di record nell'Authority File</li>
+        <li>4 - Codice del relatore</li>
+        <li>z - Autore in forma accettata, per tipo legame 4xx (Non ripetibile)</li>
+        <li>y - Autore in forma accettata, per tipo legame 5xx (Non ripetibile)</li>
     </UL>
     </td></tr>
  <tr><td valign=top>NOTE</td><td></td></tr>
@@ -1828,6 +1872,8 @@ DataField * Marc4cppLegami::creaTag790_RinvioAutorePersonale(char tipoLegame, ch
 
 /*!
 \brief <b>Tag 791 - Rinvio autore collettivo</b>
+
+[ authority documento ]
 <table>
 <tr>
 <th valign=top>Definizione</th><th>Descrizione</th></tr>
@@ -1837,31 +1883,31 @@ DataField * Marc4cppLegami::creaTag790_RinvioAutorePersonale(char tipoLegame, ch
 <tr><td valign=top>Ripetibilita'</td><td>Non ripetibile</td></tr>
 <tr><td valign=top>Indicatore 1</td><td>
     <UL>
-        <li>0 - Autore collettivo
-        <li>1 - Congresso
+        <li>0 - Autore collettivo</li>
+        <li>1 - Congresso</li>
     </UL>
 </td></tr>
 <tr><td valign=top>Indicatore 2</td><td>
     <UL>
-        <li>0 - Nome in forma inversa.  Viene usato quando la prima parola del nome collettivo o congresso inizia con un'iniziale o nome di persona
-        <li>1 - Nome di localita' o di autorita'.  Viene usato per gli autori collettivi quando sono relativi ad agenzie di autorita' o governative
-        <li>2 - Nome in forma diretta. Viene usato per tutti gli altri casi
+        <li>0 - Nome in forma inversa.  Viene usato quando la prima parola del nome collettivo o congresso inizia con un'iniziale o nome di persona</li>
+        <li>1 - Nome di localita' o di autorita'.  Viene usato per gli autori collettivi quando sono relativi ad agenzie di autorita' o governative</li>
+        <li>2 - Nome in forma diretta. Viene usato per tutti gli altri casi</li>
     </UL>
 </td></tr>
  <tr><td valign=top>Sottocampi</td>
     <td>
     <UL>
-        <li>a - Elemento principale. (Non ripetibile)
-        <li>b - Suddivisione. (Ripetibile)
-        <li>c - Qualificazione. (Ripetibile)
-        <li>d - Numero del congresso. (Ripetibile)
-        <li>e - Luogo del congresso. (Non ripetibile)
-        <li>f - Data del congresso. (Non ripetibile)
-        <li>g - Elemento permutato. (Non ripetibile)
-        <li>3 - Numero di record nell'Authority File. (Non ripetibile)
-        <li>4 - Codice del relatore. (Non ripetibile)
-        <li>z - Autore in forma accettata, per tipo legame 4xx (Non ripetibile)
-        <li>y - Autore in forma accettata, per tipo legame 5xx (Non ripetibile)
+        <li>a - Elemento principale. (Non ripetibile)</li>
+        <li>b - Suddivisione. (Ripetibile)</li>
+        <li>c - Qualificazione. (Ripetibile)</li>
+        <li>d - Numero del congresso. (Ripetibile)</li>
+        <li>e - Luogo del congresso. (Non ripetibile)</li>
+        <li>f - Data del congresso. (Non ripetibile)</li>
+        <li>g - Elemento permutato. (Non ripetibile)</li>
+        <li>3 - Numero di record nell'Authority File. (Non ripetibile)</li>
+        <li>4 - Codice del relatore. (Non ripetibile)</li>
+        <li>z - Autore in forma accettata, per tipo legame 4xx (Non ripetibile)</li>
+        <li>y - Autore in forma accettata, per tipo legame 5xx (Non ripetibile)</li>
     </UL>
     </td></tr>
  <tr><td valign=top>NOTE</td><td></td></tr>
@@ -1883,6 +1929,8 @@ DataField * Marc4cppLegami::creaTag791_RinvioAutoreCollettivo(char tipoLegame, c
 
 /*!
 \brief <b>Tag 921 - Marca editoriale</b>
+
+[ authority documento ]
 <table>
 <tr>
 <th valign=top>Definizione</th><th>Descrizione</th></tr>
@@ -1890,17 +1938,17 @@ DataField * Marc4cppLegami::creaTag791_RinvioAutoreCollettivo(char tipoLegame, c
 <tr><td valign=top>Descrizione</td><td>Marca editoriale</td></tr>
 <tr><td valign=top>Obbligatorieta'</td><td>Facoltativo</td></tr>
 <tr><td valign=top>Ripetibilita'</td><td>Ripetibile</td></tr>
-<tr><td valign=top>Indicatore 1</td><td>Non definito</td></tr>
-<tr><td valign=top>Indicatore 2</td><td>Non definito</td></tr>
+<tr><td valign=top>Indicatore 1</td><td>Blank</td></tr>
+<tr><td valign=top>Indicatore 2</td><td>Blank</td></tr>
  <tr><td valign=top>Sottocampi</td>
     <td>
     <UL>
-        <li> a - Numero MID. Non ripetibile
-        <li> b - Descrizione della marca editoriale. Non ripetibile
-        <li> c - Citazione della marca editoriale. Ripetibile
-        <li> d - Nota della marca editoriale. Non ripetibile
-        <li> e - Motto. Non ripetibile
-        <li> f - Parola chiave. Ripetibile
+        <li> a - Numero MID. Non ripetibile</li>
+        <li> b - Descrizione della marca editoriale. Non ripetibile</li>
+        <li> c - Citazione della marca editoriale. Ripetibile</li>
+        <li> d - Nota della marca editoriale. Non ripetibile</li>
+        <li> e - Motto. Non ripetibile</li>
+        <li> f - Parola chiave. Ripetibile</li>
     </UL>
     </td></tr>
  <tr><td valign=top>NOTE</td><td></td></tr>
@@ -1998,59 +2046,62 @@ DataField * Marc4cppLegami::creaTag921_Marca() {
 
 
 
-/*
-21/07/2014
-
-Scaricare per i record facenti parte di una raccolta fattizia anche l’etichetta 560.
 
 
-Definizione del campo
-
-L’etichetta viene generata in presenza di una relazione a “raccolta fattizia”
-(natura SBN = ‘R’; relazione 01R fa parte della raccolta).
-
-Occorrenza
-
-Opzionale. Ripetibile.
-
-Indicatori
-
-Indicatore 1: 1
-
-Indicatore 2: spazio (non definito)
-
-Sottocampi
-
-$a Titolo della raccolta. Non ripetibile.
-
-  Il testo viene recuperato dal titolo proprio della raccolta (area 1 fino a fine area ‘. –’ )
-
-$e Al informazioni descrittive. Ripetibile
-
-   Viene generato
+/*!
+\brief <b>Tag 560 - Raccolta fattizia</b>
+<!-- 21/07/2014 -->
+ [ authority documento ]
+ <table>
+ <tr>
+ <th valign=top>Definizione</th><th>Descrizione</th></tr>
+ <tr><td valign=top>Tag</td><td>560</td></tr>
+ <tr><td valign=top>Descrizione</td><td>L’etichetta viene generata in presenza di una relazione a “raccolta fattizia”
+(natura SBN = ‘R’; relazione 01R fa parte della raccolta).</td></tr>
+ <tr><td valign=top>Obbligatorieta'</td><td>Opzionale</td></tr>
+ <tr><td valign=top>Ripetibilita'</td><td>Ripetibile</td></tr>
+<tr><td valign=top>Indicatore 1</td><td>
+    <UL>
+        <li>0 titolo non significativo</li>
+        <li>1 titolo significativo</li>
+    </UL>
+</td></tr>
+ <tr><td valign=top>Indicatore 2</td><td>Blank</td></tr>
+  <tr><td valign=top>Sottocampi</td>
+  <td>
+    <ul>
+     <li>a - Titolo della raccolta. Non ripetibile. (Il testo viene recuperato dal titolo proprio della raccolta (area 1 fino a fine area ‘. –’ ))</li>
+     <li>e - Altre informazioni descrittive. Ripetibile (Viene generato
    	   - un sottocampo per l’area della descrizione fisica a cui si antepone la label ‘Descr. Fisica: ’
-   	   - e uno per l’area note a cui si antepone la label ‘Note: ’.
-
-$5 Codice ISIL (IT- + codice anagrafico della biblioteca) della biblioteca che ha creato la raccolta seguito
-   dalla eventuale collocazione della copia del documento cui si riferisce la 200. Non ripetibile.
-
-   Il contenuto del sottocampo risulta quindi dall’accodamento, eseguito previa eliminazione degli spazi in
+   	   - e uno per l’area note a cui si antepone la label ‘Note: ’.)</li>
+     <li>5 - Codice ISIL (IT- + codice anagrafico della biblioteca) della biblioteca che ha creato la raccolta seguito
+   dalla eventuale collocazione della copia del documento cui si riferisce la 200. Non ripetibile. (   Il contenuto del sottocampo risulta quindi dall’accodamento, eseguito previa eliminazione degli spazi in
    testa e coda dei seguenti campi:
    	   - codice ISIL della biblioteca che possiede il documento seguito da un carattere a spazio o,
    	   	   in alternativa,
    	   	   "cd_polo_sezione"+"cd_biblioteca_sezione",  "cd_sez", "cd_loc", "spec_loc"
    	   	   (da recuperare da tbc_collocazione imponendo la condizione tbc_collocazione.key_loc= tbc_inventario.key_loc)
    	   	   e "seq_coll" (da recuperare da tbc_inventario), solo se in seq_coll è presente almeno un carattere diverso
-   	   	   da spazio dopo "spec_loc" inserire il carattere “/”.
+   	   	   da spazio dopo "spec_loc" inserire il carattere “/”.)</li>
+     <li>9 - codice identificativo della raccolta (BID del titolo di natura R: anche se non previsto da UNIMARC
+   lo si introduce per consentire una più semplice navigazione in OPAC dalla raccolta ai documenti contenuti).</li>
+    </ul>
+  </td>
+  </tr>
+  <tr><td valign=top>Formato</td>
+     <td>
+     </td>
+     </tr>
+  <tr><td valign=top>NOTE</td>
+     <td>
 
-$9 codice identificativo della raccolta (BID del titolo di natura R: anche se non previsto da UNIMARC
-   lo si introduce per consentire una più semplice navigazione in OPAC dalla raccolta ai documenti contenuti).
+     	 <p>Se l’estrazione interessa un sottoinsieme delle biblioteche del polo per la produzione delle etichette 560 debbono essere prese in considerazione solo le relazioni titolo-titolo(R) relative a raccolte inserite da una delle biblioteche del sottoinsieme (primi 6 chr del campo tb_titolo.ute_ins = ‘codice polo + codice biblioteca’).</p>
+     </td></tr>
+ </table>
+ */
 
-NOTA
 
-Se l’estrazione interessa un sottoinsieme delle biblioteche del polo per la produzione delle etichette 560 debbono essere prese in considerazione solo le relazioni titolo-titolo(R) relative a raccolte inserite da una delle biblioteche del sottoinsieme (primi 6 chr del campo tb_titolo.ute_ins = ‘codice polo + codice biblioteca’).
 
-*/
 DataField * Marc4cppLegami::creaTag560_RaccoltaFattizia(char *bid_base) {
 	DataField *df;
 	Subfield *sf;
@@ -2341,6 +2392,42 @@ DataField * Marc4cppLegami::creaTag_TitoloDellOpera(const tree<std::string>& tr,
 }
 
 
+/*!
+\brief <b>Tag 506 - Legame a Titolo dell'opera (02/02/2017, sostituisce la 500)</b>
+
+[ authority documento ]
+<table>
+<tr>
+<th valign=top>Definizione</th><th>Descrizione</th></tr>
+<tr><td valign=top>Tag</td><td>506</td></tr>
+<tr><td valign=top>Descrizione</td><td>Legame a Titolo uniforme (dicasi Titolo di raggruppamento nel verdone)</td></tr>
+<tr><td valign=top>Obbligatorieta'</td><td>Facoltativo</td></tr>
+<tr><td valign=top>Ripetibilita'</td><td>Ripetibile</td></tr>
+<tr><td valign=top>Indicatore 1</td><td>
+    <UL>
+        <li>0 titolo non significativo</li>
+        <li>1 titolo significativo</li>
+    </UL>
+</td></tr>
+<tr><td valign=top>Indicatore 2</td><td>
+    <UL>
+        <li>0 titolo non usato come intestazione</li>
+        <li>1 titolo usato come intestazione.
+        Se il titolo di natura A non ha autori collegati e il titolo di natura M non ha autori collegati di tipo 1 o 2, il 2ndo indicatore deve essere 1. Vedi anche es. UBO3006166.
+        Se il titolo di natura A non ha autori collegati ma il titolo di natura M ha un autore collegato di tipo 1 o 2, il 2ndo indicatore deve essere 0.</li>
+    </UL>
+</td></tr>
+ <tr><td valign=top>Sottocampi</td>
+    <td>
+    <UL>
+        <li>1 - Tag 200 area 1 embedded</li>
+        <li>3 - Bid</li>
+        <li>9 - Legame all'autore</li>
+    </UL>
+    </td></tr>
+ <tr><td valign=top>NOTE</td><td></td></tr>
+</table>
+*/
 DataField * Marc4cppLegami::creaTag506_TitoloDellOpera() { // const tree<std::string>& tr, bool responsabilitaM1o2
 	DataField *df;
 	Subfield * sf;
@@ -2417,7 +2504,48 @@ DataField * Marc4cppLegami::creaTag506_TitoloDellOpera() { // const tree<std::st
 
 
  */
+/*!
+\brief <b>Tag 576 - Nome dell’autore per opera con autore all’interno della manifestazione</b>
 
+ [ authority documento ]
+ <table>
+ <tr>
+ <th valign=top>Definizione</th><th>Descrizione</th></tr>
+ <tr><td valign=top>Tag</td><td>576</td></tr>
+ <tr><td valign=top>Descrizione</td><td>Nome dell’autore per opera con autore all’interno della manifestazione</td></tr>
+ <tr><td valign=top>Obbligatorieta'</td><td>Facoltativo</td></tr>
+ <tr><td valign=top>Ripetibilita'</td><td>Ripetibile</td></tr>
+ <tr><td valign=top>Indicatore 1</td><td>
+ 	 <ul>
+ 	 	 <li>0 - Title is not primary entry (nel catalogo non è usato il concetto di accesso principale)</li>
+ 	 	 <li>1 - Title is primary entry</li>
+ 	 </ul>
+ 	 </td></tr>
+ <tr><td valign=top>Indicatore 2</td><td>
+ 	 <ul>
+ 	 	 <li>Blank - non applicabile</li>
+ 	 	 <li>0 - Unstructured title  (Standard subfields technique)</li>
+ 	 	 <li>1 - Structured title  (Standard subfields technique)</li>
+ 	 </ul>
+
+ </td></tr>
+  <tr><td valign=top>Sottocampi</td>
+  <td>
+    <ul>
+     <li>1 - 001 BID dell’opera</li>
+     <li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;7xx  con relativi sottocampi</li>
+     <li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;506 con relativi sottocampi</li>
+    </ul>
+  </td>
+  </tr>
+  <tr><td valign=top>Formato</td>
+     <td>
+     </td>
+     </tr>
+  <tr><td valign=top>NOTE</td>
+     <td>...</td></tr>
+ </table>
+ */
 DataField * Marc4cppLegami::creaTag576_TitoloDellOpera(CString *bidCollSPtr) // , const tree<std::string>& tr, bool responsabilitaM1o2
 {
 	DataField *df = 0;

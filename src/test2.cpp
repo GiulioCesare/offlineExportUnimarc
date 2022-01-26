@@ -780,7 +780,6 @@ for (int i=0; i < tbFields; i++)
 sPtr = new CString();
 if (!sPtr)
 {
-// SignalAnError(__FILE_, _LINE__, "failed to instantiate string for entry: %d", i);
 break;
 }
 fieldsVector->Add(sPtr);
@@ -1808,32 +1807,21 @@ void printTagsGestiti()
 	printf ("\n\nAuthority DOCUMENTO");
 	printf ("\n-------------------");
 	printf ("\n0-- Blocco di identificazione");
-//			printf ("\n	001,005,010,011,012,013,015,016,017,020,022,071,072,073"); // 02/09/2014 + 016,072,073
-//	printf ("\n	001,003,005,010,011,012,013,015,016,017,020,022,071,072,073"); // 21/01/2016 + 003
 	printf ("\n	001,003,005,010,011,012,013,015,016,017,020,022,035,071,072,073"); // 17/10/2016 + 035 (solo per POLI)
 
 	printf ("\n1-- Blocco delle informazioni codificate");
-//			printf ("\n	100,101,102,105,110,115,116,120,121,123,124,125,126,128,140"); // 20/02/2015 115+126
-//			printf ("\n	100,101,102,105,110,115,116,120,121,123,124,125,126,128,140,181,182"); // 00/03/2015 181,182
-//			printf ("\n	100,101,102,105,110,115,116,120,121,123,124,125,126,128,140,181,182,183"); // 20/11/2015 183
 	printf ("\n	100,101,102,105,110,115,116,120,121,123,124,125,126,127,128,140,181,182,183"); // 28/01/2016 127
 	printf ("\n2-- Blocco delle informazioni descrittive");
 	printf ("\n	200,205,206,207,208,210,215,225,230");
 	printf ("\n3-- Blocco delle note");
-//			printf ("\n	300,311,312,314,316,317,323,326,327,330,336,337");
 	printf ("\n	300,311,312,314,316,317,321,323,326,327,330,336,337"); // 321 per indice 26/11/2015 (link a siti web)
 
 	printf ("\n4-- Blocco dei titoli in relazione");
-	// 27/10/2017 creaTag441_HaPerContinuazioneParziale()
 	printf ("\n	410,421,422,423,430,431,434,440,441,447,451,452,454,461,462,463,464,488");
-	printf ("\n5-- Blocco dei titoli di relazione");
-//	printf ("\n	500,510,520,517,530,532");
+	printf ("\n5-- Blocco delle varie forme del titolo ");
 	printf ("\n	500,506,510,520,517,530,532,576"); // 506 per titoli di acesso dell'opera, 576 per legami Titolo/Opera con autore
 
 	printf ("\n6-- Blocco dell'analisi semantica");
-//			printf ("\n	606,620,676,686");
-//			printf ("\n	606,620,676,686, 696"); // 696 (tesauro) solo per Polo 11/12/2015
-//	printf ("\n	606,620,676,686, 689"); // 696 diventa 689 (tesauro) solo per Polo 14/01/2016
 	printf ("\n	606,620,676,686,689,696,699"); // 699 per le varianti storiche 16/01/2018
 	printf ("\n7-- Blocco dei legami alle intestazioni");
 	printf ("\n	700,701,702,710,711,712,790,791");
@@ -1874,25 +1862,25 @@ void printTagsGestiti()
 
 	printf ("\n\nAuthority TITOLO_UNIFORME");
 	printf ("\n----------------");
-	printf ("\n001,005");
+	printf ("\n001,003, 005");
 	printf ("\n100,101,102,152");
 	printf ("\n230,231,240,241");
 	printf ("\n300");
 	printf ("\n431,441");
-//	printf ("\n500,501,510,511");	// 19/05/2016
 	printf ("\n500,501,510,511,530,531,541");	// 02/03/2017
 	printf ("\n801,810,815,830");
 
 
 	printf ("\n\nAuthority LUOGHI");   // 04/11/2020
 	printf ("\n----------------");
-	printf ("\n0001,003,005,035");
-	printf ("\n100,102,152");
+	printf ("\n001,005,035"); // ,003
+	printf ("\n100,102");
 	printf ("\n260");
 	printf ("\n300");
 	printf ("\n460");
 	printf ("\n801,810,815,830");
 
+	printf ("\n\n");
 }
 
 
@@ -3013,25 +3001,12 @@ void printHeader()
 //					printf ("\n\nVersione 12.11.02 10/11/2021"); // Fixed bug in OrsBool CString::Replace(const char *fromString, const char *toString, int occurance ) // 0 = all
 //					printf ("\n\nVersione 12.11.03 10/11/2021"); // Fix Marc4cppLegamiAuthority::Marc4cppLegamiAuthority(Marc4cppDocumentoAuthority *marc4cppDocumentoAuthority, char* offsetBufferTrAutAutRelPtr, // 10/11/2020
 //					printf ("\n\nVersione 12.11.04 17/11/2021"); // Fix if (poloBibCnc.GetLastChar() == '\n') // 17/11/2021, if (poloBibCnm.GetLastChar() == '\n') // 17/11/2021 e // 18/11/2021
-					printf ("\n\nVersione 12.11.05 25/11/2021"); // Fix 511 per authority titoli uniformi
+//					printf ("\n\nVersione 12.11.05 25/11/2021"); // Fix 511 per authority titoli uniformi
+//					printf ("\n\nVersione 12.11.06 30/11/2021"); // Fix 200 per authority autori (tolti *)
 
-
-
-
-
-
-					//	mail Patrizia. Per quando aggiorniamo esercizio
-//					DB
-//					tb_cartografia
-//					inserito campo TP_PROIEZIONE
-//					--alter table tb_cartoggrafia per aggiungere tp_proiezione
-//					ALTER TABLE MULTIMATERIALE.TB_CARTOGRAFIA ADD TP_PROIEZIONE  varchar2(2);
-
-
-
-//			printf ("\n%s", switchOverrides);
-//			printf ("\n\nExport per viaf = %s", EXPORT_VIAF ? "true" : "false");
-
+					printf ("\n\nVersione 13.01. 26/01/2022");	// Creata procedura esterna per documentare l'estrazione delle etichette
+																// a partire dalla documentazione presente nel codice.
+																// La procedura si trova in ../extract_doc_from_source
 
 			printf ("\n");
 } // End printHeader();
@@ -3056,34 +3031,7 @@ int main(int argc, const char* argv[]) {
 	deleteVectors();
 	if (incrementale_dal)
 		delete incrementale_dal;
-
-//#ifdef DEBUG_ARGE
-//	printf ("\nLog statistiche delle eccezioni per tag 210");
-//	printf ("\n-------------------------------------------");
-//	printf ("\n210 Tonda aperta ma non chiusa = %d", eccSoloTondaApertaCtr);
-//	printf ("\n210 Tonda chiusa ma non aperta = %d", eccSoloTondaChiusaCtr);
-//
-//	printf ("\n210 Date non precedute da virgola spazio = %d", eccDataNonPrecedutaDaVirgolaCtr);
-//	printf ("\n210 Testo e non data dopo la virgola spazio=%d", eccTestoDopoVirgolaSpazioCtr);
-//	printf ("\n210 Parentesi tonde NON sottoarea ..(..).. = %d", eccParentesiTondeNonSottoarea);
-//#endif
-
-}
-
-// ======================================================
-// Configurazioni degli arguments per eclipse debug/run
-
-//
-//	/home/argentino/export/exportUnimarc/dp/offlineExportUnimarc.linux.local.cfg -t /home/argentino/export/exportUnimarc/dp/tagsToExport.txt
-
-
-
-
-//	AUTHORITY Titoli uniformi indice locale
-//	/media/argentino/473056186B71DFD3/export/indice/dp/offlineExportUnimarcAuthority.titoli_uniformi.media.cfg
-
-// DOCUMENT
-//	/media/argentino/473056186B71DFD3/export/indice/dp/offlineExportUnimarc64.linux.media.cfg -t /media/argentino/473056186B71DFD3/export/indice/dp/tagsToExport.txt
+} // End Main
 
 
 
