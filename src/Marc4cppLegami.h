@@ -237,8 +237,19 @@ class Marc4cppLegami {
     void elabora46x(char *bid, bool bidHaPadre); // , char *sequenza
     void elabora46y(char *bid, TbReticoloTit *tbReticoloTit);
     void elaboraOrdini();
-    DataField * creaLegameAutoreAltriDB(char *entryReticoloPtr, int pos);//19/01/2021
+
+    void get_legami_cnc_cnm(CString *sPtr,
+    						ATTValVector <CString *> *cncIdsPtr,
+    						ATTValVector <CString *> *cnmIdsPtr,
+    						CString *poloBibCncPtr,
+    						CString *poloBibCnmPtr
+							);
+    void creaLegameTitoloAltriDB(const char *bid, DataField *df);
+
+
+    void creaLegameAutoreAltriDB(char *entryReticoloPtr, int pos);//19/01/2021
     void creaLegamiAutoreAltriDB();//20/01/2021
+
     void getEntityId(char *entryReticolo, char *bid);
     void init();
     void initLicr();

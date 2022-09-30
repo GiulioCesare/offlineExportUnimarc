@@ -307,9 +307,59 @@ void Marc4cppLegami::elaboraOrdini() {
 } // end elaboraOrdini
 
 
+// 04/08/2022
+void Marc4cppLegami::get_legami_cnc_cnm(CString *sPtr ,
+						ATTValVector <CString *> *cncIdsPtr,
+						ATTValVector <CString *> *cnmIdsPtr,
+						CString *poloBibCncPtr,
+						CString *poloBibCnmPtr
+						)
+{
+	ATTValVector <CString *> stringVect;
+
+	CTokenizer *Tokenizer = new CTokenizer("|");
+	char* tokenPtr;
+	CString token;
+
+	Tokenizer->Assign(sPtr->data());
+	tokenPtr = Tokenizer->GetToken(); // Remove root
+	while(*(tokenPtr = Tokenizer->GetToken()))
+	{
+		token.assign(tokenPtr);
+		stringVect.Clear();
+		token.Split(stringVect, ',');
+		if (stringVect[1]->StartsWith("CNC"))
+			{
+			if(poloBibCncPtr->IsEmpty())
+			{
+				poloBibCncPtr->assign(stringVect[1]);
+				if (poloBibCncPtr->GetLastChar() == '\n') // 17/11/2021
+					poloBibCncPtr->ExtractLastChar();
+			}
+			cncIdsPtr->Add(stringVect[0]);
+			}
+		else
+		{
+			if(poloBibCnmPtr->IsEmpty())
+			{
+				poloBibCnmPtr->assign(stringVect[1]);
+				if (poloBibCnmPtr->GetLastChar() == '\n') // 17/11/2021
+					poloBibCnmPtr->ExtractLastChar();
+
+			}
+			cnmIdsPtr->Add(stringVect[0]);
+		}
+		delete stringVect[1]; // eliminiamo il DB che non ci serve +
+
+	}//End while
+
+	delete Tokenizer;
+} // End get_legami_cnc_cnm
 
 
-DataField  *Marc4cppLegami::creaLegameAutoreAltriDB(char *entryReticoloPtr, int pos) {
+
+
+void Marc4cppLegami::creaLegameAutoreAltriDB(char *entryReticoloPtr, int pos) {
 	bool retb;
 		long position;
 		long offset;
@@ -323,7 +373,6 @@ DataField  *Marc4cppLegami::creaLegameAutoreAltriDB(char *entryReticoloPtr, int 
 
 		ATTValVector <CString *> cncIds;
 		ATTValVector <CString *> cnmIds;
-		ATTValVector <CString *> stringVect;
 		//tbAutore->dumpRecord();
 		//vid = tbAutore->getField(tbAutore->vid);
 
@@ -335,7 +384,7 @@ DataField  *Marc4cppLegami::creaLegameAutoreAltriDB(char *entryReticoloPtr, int 
 		//+++ test hassan
 		if (! trIdsbnIdaltriAu->loadRecord(vid))
 		{
-			return df;
+			return; //  df
 		}
 		//trIdsbnIdaltriAu->dumpRecord();
 	//	CString cdPoloBib=trIdsbnIdaltriAu->getField(trIdsbnIdaltriAu->cd_polo);
@@ -367,9 +416,7 @@ DataField  *Marc4cppLegami::creaLegameAutoreAltriDB(char *entryReticoloPtr, int 
 		{
 			CString *sPtr=new CString();
 			CString *sPtr2;
-			CTokenizer *Tokenizer = new CTokenizer("|");
-			char* tokenPtr;
-			CString token;
+			CString poloBibCnc,poloBibCnm;
 
 			// Questo bid ha legami ad altri titoli
 			// Dalla posizione prendiamo l'offset
@@ -386,46 +433,14 @@ DataField  *Marc4cppLegami::creaLegameAutoreAltriDB(char *entryReticoloPtr, int 
 			if (!sPtr->ReadLineWithPrefixedMaxSize(trIdsbnIdaltriAuRelIn))
 			{
 				logToStdout(__FILE__, __LINE__, LOG_ERROR, "trIdsbnIdaltriAuRelIn read failed");
-				return 0;
+				return; // 0
 			}
 			//printf("\nlegami: '%s'",sPtr->Data());
 
 			// Splittiamo la riga negli n elementi che la compongono
-//if (sPtr->GetLastChar() == '\n')
-//	sPtr->ExtractLastChar();
 
-			Tokenizer->Assign(sPtr->data());
-			tokenPtr = Tokenizer->GetToken(); // Remove root
-			CString poloBibCnc,poloBibCnm;
-			while(*(tokenPtr = Tokenizer->GetToken()))
-			{
-				token.assign(tokenPtr);
-				stringVect.Clear();
-				token.Split(stringVect, ',');
-				if (stringVect[1]->StartsWith("CNC"))
-					{
-					if(poloBibCnc.IsEmpty())
-					{
-						poloBibCnc=stringVect[1]->data();
-						if (poloBibCnc.GetLastChar() == '\n') // 17/11/2021
-							poloBibCnc.ExtractLastChar();
-					}
-					cncIds.Add(stringVect[0]);
-					}
-				else
-				{
-					if(poloBibCnm.IsEmpty())
-					{
-						poloBibCnm=stringVect[1]->data();
-						if (poloBibCnm.GetLastChar() == '\n') // 17/11/2021
-							poloBibCnm.ExtractLastChar();
+			get_legami_cnc_cnm(sPtr,  &cncIds, &cnmIds, &poloBibCnc, &poloBibCnm);
 
-					}
-					cnmIds.Add(stringVect[0]);
-				}
-				delete stringVect[1]; // eliminiamo il DB che non ci serve +
-
-			}//End while
 
 			if (cncIds.length())
 			{
@@ -491,11 +506,9 @@ DataField  *Marc4cppLegami::creaLegameAutoreAltriDB(char *entryReticoloPtr, int 
 			cncIds.DeleteAndClear();
 			cnmIds.DeleteAndClear();
 
-
 			int i=0;
 			delete sPtr;
-			delete Tokenizer;
-			return df;
+//			return df;
 		}// End if(retb)
 
 
@@ -2512,6 +2525,7 @@ DataField * Marc4cppLegami::creaTag899_Localizzazione(bool has430, bool has440) 
 	CString *sPtr, *cdAnaBib;
 
 //trTitBib->dumpRecord();
+//return df; // 04/08/2022 To find memory leak
 
 	CString *cdPolo = trTitBib->getFieldString(trTitBib->cd_polo);
 	CString kPoloBiblioteca(cdPolo->data(), cdPolo->Length()); // = (char *)trTitBib->getField(trTitBib->cd_polo); // 24/02/2010
@@ -2577,6 +2591,7 @@ DataField * Marc4cppLegami::creaTag899_Localizzazione(bool has430, bool has440) 
 		return df;
     }
 
+
     // 14/07/2020 Crea 899 solo se biblioteca trovata (bug con PBE)
 	df = new DataField((char *)"899", 3);
 	//df->setTag();
@@ -2622,6 +2637,7 @@ DataField * Marc4cppLegami::creaTag899_Localizzazione(bool has430, bool has440) 
 			df->addSubfield(sf);
 		}
 	}
+
 
 		char flPossesso = *trTitBib->getField(trTitBib->fl_possesso);
 		char flGestione = *trTitBib->getField(trTitBib->fl_gestione);
@@ -2670,7 +2686,6 @@ DataField * Marc4cppLegami::creaTag899_Localizzazione(bool has430, bool has440) 
 				df->addSubfield(sf);
 		}
 	}
-
 
 
 
@@ -2813,8 +2828,11 @@ DataField * Marc4cppLegami::creaTag899_Localizzazione(bool has430, bool has440) 
 
 	}
 
-
-
+	// 04/08/2022 Crea legami altri db
+	//	solo se biblioteca CNC o CNM andiamo a vedere se ci sono legami
+	const char *bid = trTitBib->getField(trTitBib->bid);
+	if ((cdPolo->isEqual("CNC") || cdPolo->isEqual("CNM")) && trIdsbnIdaltriAu->loadRecord(bid))
+		creaLegameTitoloAltriDB(bid, df);
 	return df;
 
 } // creaTag899_Localizzazione
@@ -3992,7 +4010,6 @@ void Marc4cppLegami::creaLegamiTitoloBiblioteca() {
 
 	if (IS_TAG_TO_GENERATE(899))
 	{
-//printf ("\nGenerate 899");
 		retb = trTitBib->existsRecord(bid);
 		if (retb)
 		{
@@ -4003,9 +4020,6 @@ void Marc4cppLegami::creaLegamiTitoloBiblioteca() {
 			// Abbiamo un 440 ("continua con")?
 			df = marcRecord->getDataField((char *)"440");
 			bool has440 = df ? true : false;
-
-
-//printf ("\nexists record");
 			while (trTitBib->loadNextRecord(bid)) {
 				// Crea la 899
 				if (df = creaTag899_Localizzazione(has430, has440))
@@ -4783,4 +4797,101 @@ bool Marc4cppLegami::isRiferimentoLegame01MW_2(char *bid, char *bid_base) {
 } // End isRiferimentoLegame01MW_2
 
 
+// 05/08/2022
+void Marc4cppLegami::creaLegameTitoloAltriDB(const char *bid, DataField *df) {
+	bool retb;
+		long position;
+		long offset;
+		char *entryPtr;
+		CString entryFile;
+		Subfield *sf;
+
+		ATTValVector <CString *> cncIds;
+		ATTValVector <CString *> cnmIds;
+
+		if (! trIdsbnIdaltriAu->loadRecord(bid))
+		{
+			return;
+		}
+//		CString cdAnaBib;
+
+		// Troviamo le relazioni totolo/titolo di altri db
+		// -----------------------------------
+		if (offsetBuffertrIdsbnIdaltriAuRelPtr)
+			retb = BinarySearch::search(offsetBuffertrIdsbnIdaltriAuRelPtr, elementstrIdsbnIdaltriAuRel, keyPlusOffsetPlusLfLength, bid, BID_KEY_LENGTH, position, &entryPtr);
+		else
+		{
+			retb = BinarySearch::search(trIdsbnIdaltriAuRelOffsetIn, elementstrIdsbnIdaltriAuRel, keyPlusOffsetPlusLfLength, bid, BID_KEY_LENGTH, position, &entryFile);
+			entryPtr = entryFile.data();
+		}
+
+
+		if (retb)
+		{
+			CString *sPtr=new CString();
+			CString *sPtr2;
+			CString poloBibCnc,poloBibCnm;
+
+			// Questo bid ha legami ad altri titoli
+			// Dalla posizione prendiamo l'offset
+			//		offset = atol (entryPtr+BID_KEY_LENGTH); // offsetBufferTrAutAutPtr+position
+			if (OFFSET_TYPE == OFFSET_TYPE_BINARY) // 09/02/2015
+				//memcpy (&offset, entryPtr+ BID_KEY_LENGTH, 4);	// OFFSET BINARI
+				offset =  *((int*)(entryPtr+BID_KEY_LENGTH)); // 24/03/2015
+
+			else
+				offset = atoi (entryPtr+BID_KEY_LENGTH); // OFFSET in ASCII
+
+			// Dall'offset del file delle relazioni andiamo a prendere la relazione titolo/titolo
+			trIdsbnIdaltriAuRelIn->SeekTo(offset);
+			if (!sPtr->ReadLineWithPrefixedMaxSize(trIdsbnIdaltriAuRelIn))
+			{
+				logToStdout(__FILE__, __LINE__, LOG_ERROR, "trIdsbnIdaltriAuRelIn read failed");
+			}
+			//printf("\nlegami: '%s'",sPtr->Data());
+
+			// Splittiamo la riga negli n elementi che la compongono
+
+			get_legami_cnc_cnm(sPtr,  &cncIds, &cnmIds, &poloBibCnc, &poloBibCnm);
+
+
+			if (cncIds.length())
+			{
+			//	CString cdPoloBib=trIdsbnIdaltriAu->getField(trIdsbnIdaltriAu->cd_polo);
+			//	cdPoloBib.AppendString(trIdsbnIdaltriAu->getField(trIdsbnIdaltriAu->cd_biblioteca));
+			//	printf("\ncdPoloBib '%s'",cdPoloBib.Data());
+				if (! tbfBiblioteca->loadRecord(poloBibCnc.Data()))
+				{
+					logToStdout(__FILE__, __LINE__, LOG_ERROR, "Codice polo biblioteca sconosciuto %c", poloBibCnc.Data());
+				}else{
+				for(int i=0;i<cncIds.length();i++)
+					{
+					sPtr2 = cncIds.Entry(i);
+					sf = new Subfield('9',sPtr2);
+					df->addSubfield(sf);
+					}
+				}
+			}
+
+			if (cnmIds.length())
+			{
+				if (! tbfBiblioteca->loadRecord(poloBibCnm.Data()))
+				{
+					logToStdout(__FILE__, __LINE__, LOG_ERROR, "Codice polo biblioteca sconosciuto %c", poloBibCnm.Data());
+				}else{
+//tbfBiblioteca->dumpRecord();
+				for(int i=0;i<cnmIds.length();i++)
+				{
+					sPtr2 = cnmIds.Entry(i);
+					sf = new Subfield('9',sPtr2);
+					df->addSubfield(sf);
+				}
+			}
+			}
+			cncIds.DeleteAndClear();
+			cnmIds.DeleteAndClear();
+			int i=0;
+			delete sPtr;
+		}// End if(retb)
+} // end creaLegameTitoloAltriDB
 

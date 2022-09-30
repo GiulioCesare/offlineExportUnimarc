@@ -837,28 +837,38 @@ void testOffsetFile()
 	char *entryPtr;
 
 	// Apri il file
-	CFile *tbClasseOffsetIn = new CFile("e:/SbnWeb/migrazione/bve/input/tb_classe.out.off.srt1");
+//	CFile *tbClasseOffsetIn = new CFile("e:/SbnWeb/migrazione/bve/input/tb_classe.out.off.srt1");
 
+	CFile *tbClasseOffsetIn = new CFile("/home/argentino/export/lo1/tb_classe.out.off.srt");
+
+#define CLASSE_KEY_LENGTH	36 // 02/02/2015
+#define KEYLOC_KEY_LENGTH	9
+#define TR_KEY_LENGTH	20
+#define BIBLIOTECA_KEY_LENGTH 6
+#define OFFSET_LENGTH 11
+#define INVENTARIO_KEY_LENGTH	16
+#define TBC_SEZIONE_COLLOCAZIONE_KEY_LENGTH 16
+#define LF_LENGTH 1
 
 	// Carica il file in memoria
 	tbClasseOffsetIn->SeekToEnd();
 	long fileSize = tbClasseOffsetIn->CurOffset();
 	long elements = fileSize/(34+11+1);
-	char *offsetBufferTbClassePtr = (char *)malloc(elements*(34+11+1)); // n righe di classe+Offset
+	char *offsetBufferTbClassePtr = (char *)malloc(elements*(CLASSE_KEY_LENGTH+OFFSET_LENGTH+LF_LENGTH)); // n righe di classe+Offset
 	printf ("\n\nLeggendo offsets per %s", tbClasseOffsetIn->GetName());
 	printf ("\nLeggendo %ld righe", elements);
 	loadOffsetFiles2(tbClasseOffsetIn, offsetBufferTbClassePtr);
 
 	// Esegui una ricerca
-	char const *key = "D18937.                           ";
+	char const *key = "R    IT/V42.5/PSI                   ";
 	long position;
 	long offset;
 
 
-	if (BinarySearch::search(offsetBufferTbClassePtr, elements, (34+11+1), key,  34, position, &entryPtr))
+	if (BinarySearch::search(offsetBufferTbClassePtr, elements, (CLASSE_KEY_LENGTH+OFFSET_LENGTH+LF_LENGTH), key,  CLASSE_KEY_LENGTH, position, &entryPtr))
 	{
 		// Dalla posizione prendiamo l'offset
-		offset = atol (entryPtr+34); // offsetBufferTrTitTitPtr+position
+		offset = atol (entryPtr+CLASSE_KEY_LENGTH); // offsetBufferTrTitTitPtr+position
 		printf("\nFOUND %s at position %ld, offset %ld", key, position, offset);
 	}
 	else
@@ -957,6 +967,7 @@ void addBibliotecheDaNonMostrareIn950(char *csvBibliotecheFilename)
 
 void addBibliotecheDaMostrareIn899(char *csvBibliotecheFilename)
 {
+
 	// Prendiamo il nome del file e controllimao se esiste
 	if (!CFile::Exists(csvBibliotecheFilename))
 		return;
@@ -1817,7 +1828,7 @@ void printTagsGestiti()
 	printf ("\n	300,311,312,314,316,317,321,323,326,327,330,336,337"); // 321 per indice 26/11/2015 (link a siti web)
 
 	printf ("\n4-- Blocco dei titoli in relazione");
-	printf ("\n	410,421,422,423,430,431,434,440,441,447,451,452,454,461,462,463,464,488");
+	printf ("\n	410,421,422,423,430,431,434,440,441,447,451,454,461,462,463,464,488"); // ,452
 	printf ("\n5-- Blocco delle varie forme del titolo ");
 	printf ("\n	500,506,510,520,517,530,532,576"); // 506 per titoli di acesso dell'opera, 576 per legami Titolo/Opera con autore
 
@@ -1949,7 +1960,7 @@ void testCFile()
 
 void printHeader()
 {
-	printf ("\nOffline Export UNIMARC - (c)Copyright Iccu 2009-2021 (autore Argentino Trombin) - Open source");
+	printf ("\nOffline Export UNIMARC - (c)Copyright Iccu 2009-2022 (autore Argentino Trombin) - Open source");
 //	printf ("\nVersione 1.0.0 del 17/11/2009");
 //	printf ("\nVersione 1.0.1 del 19/11/2009"); 	// Rifatta la 200
 //	printf ("\nVersione 1.0.2 del 23/11/2009"); 	// Rifatta la 960 in base a doc. di Rossana con aggiunta della $m
@@ -2994,7 +3005,7 @@ void printHeader()
 
 //					printf ("\n\nVersione 12.09.04 21/09/2021"); // Fix $9 in 4xx e 5xx, mail Mataloni del 21/09/21
 //					printf ("\n\nVersione 12.09.05 22/09/2021"); // Fix $9 = "nota al legame" in 4xx mail Mataloni del 22/09/21
-//					printf ("\n\nVersione 12.09.06 27/09/2021"); // Fix test per 010 con 10 per autori (non veniva esportata etichetta 010)
+//					printf ("\n\nVersione 12.09.06 27/09/2021"); // -Fix test per 010 con 10 per autori (non veniva esportata etichetta 010)
 //					printf ("\n\nVersione 12.11.01 10/11/2021"); // Implementata la logToStdout e sostituito la SignalError, SignalFaralError, SignalWarninf
 
 
@@ -3004,11 +3015,13 @@ void printHeader()
 //					printf ("\n\nVersione 12.11.05 25/11/2021"); // Fix 511 per authority titoli uniformi
 //					printf ("\n\nVersione 12.11.06 30/11/2021"); // Fix 200 per authority autori (tolti *)
 
-					printf ("\n\nVersione 13.01. 26/01/2022");	// Creata procedura esterna per documentare l'estrazione delle etichette
+//					printf ("\n\nVersione 13.01.01 26/01/2022");	// Creata procedura esterna per documentare l'estrazione delle etichette
 																// a partire dalla documentazione presente nel codice.
 																// La procedura si trova in ../extract_doc_from_source
 
-			printf ("\n");
+					printf ("\n\nVersione 13.08.01 05/08/2022");	// Aggiunto $9 alla 899. Fix bug con ripetizione della prima 999
+
+					printf ("\n");
 } // End printHeader();
 
 
@@ -3020,7 +3033,9 @@ int main(int argc, const char* argv[]) {
 	//testTokenizer();
 	//testCFile();
 	//testMarcRead();
-	//testSplitAssign ();
+	//testSplitAssign();
+//	testOffsetFile();
+
 	entitaVector = new ATTValVector<CString *>();
 	relazioniVector = new ATTValVector<CString *>();
 	offsetVector = new ATTValVector<CString *>();

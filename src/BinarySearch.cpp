@@ -52,6 +52,7 @@ binarySearchMemoryCtr++; // 04/02/2015
 		midpointPtr = offsetMapPtr + (midpoint * rowLength);
 
 //		printf ("\nhigh=%d, midpoint=%d, low=%d, key=%s, midpointPtr=%s", high, midpoint, low, keyToSearch, midpointPtr);
+//		printf ("\nkey=%s - midpointPtr=%s", keyToSearch, midpointPtr);
 
 		ret = strncmp (keyToSearch, midpointPtr, keyLength);
 		if (!ret)

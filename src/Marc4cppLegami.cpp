@@ -1262,11 +1262,16 @@ void Marc4cppLegami::creaLegamiAutoreAltriDB() {
 			//if (str.find("AUT:", pos + 1) != string::npos) {
 				//				std::cout << str << std::endl;
 				//entryReticoloPtr = (char *)str.data();
-				if(df= creaLegameAutoreAltriDB((char *) str.data(), pos + 4))
 
-					{
-						//marcRecord->addDataField(df);
-					}
+//				if(df= creaLegameAutoreAltriDB((char *) str.data(), pos + 4))
+//
+//					{
+//						marcRecord->addDataField(df);
+//					}
+				// 05/08/2022 made void function
+				creaLegameAutoreAltriDB((char *) str.data(), pos + 4);
+
+
 			}
 	//	}
 		++ch;
