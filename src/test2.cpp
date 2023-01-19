@@ -3019,7 +3019,8 @@ void printHeader()
 																// a partire dalla documentazione presente nel codice.
 																// La procedura si trova in ../extract_doc_from_source
 
-					printf ("\n\nVersione 13.08.01 05/08/2022");	// Aggiunto $9 alla 899. Fix bug con ripetizione della prima 999
+//					printf ("\n\nVersione 13.08.01 05/08/2022");	// Aggiunto $9 alla 899. Fix bug con ripetizione della prima 999
+					printf ("\n\nVersione 14.01.01 19/01/2022");	// fix problema trattini in 010
 
 					printf ("\n");
 } // End printHeader();

@@ -1,9 +1,9 @@
-../src/Leader.cpp
+../src/Marc4cppDocumento.cpp
+../src/Marc4cppCollocazione.cpp
+../src/Marc4cppLegami2.cpp
+../src/Marc4cppLegami.cpp
+../src/Marc4cppDocumentoAuthority.cpp
+../src/Marc4CppDocumento2.cpp
 ../src/Marc4cppLegami3.cpp
 ../src/Marc4cppLegamiAuthority.cpp
-../src/Marc4cppDocumentoAuthority.cpp
-../src/Marc4cppLegami.cpp
-../src/Marc4cppLegami2.cpp
-../src/Marc4cppCollocazione.cpp
-../src/Marc4CppDocumento2.cpp
-../src/Marc4cppDocumento.cpp
+../src/Leader.cpp

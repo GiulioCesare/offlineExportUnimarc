@@ -837,8 +837,8 @@ DataField * Marc4cppDocumento::creaTag010_Isbn(char tipoNumeroStd) {
 //#endif
 	numeroStandard.AppendString(tbNumeroStandard->getFieldString(tbNumeroStandard->numero_std)); // 14/01/15 Rimesso. Era stato tolto per sbaglio
 
-	if (ISBN_CON_TRATTINI) // Mantis 4361 12/04/2011
-		CMisc::gestisciTrattiniNumStandardIsbn(&numeroStandard, &numeroStandard);
+//	if (ISBN_CON_TRATTINI) // Mantis 4361 12/04/2011
+//		CMisc::gestisciTrattiniNumStandardIsbn(&numeroStandard, &numeroStandard);
 
 	// Se non esistono dati non creare l'etichetta
 	if (notaPtr->IsEmpty() && numeroStandard.IsEmpty())
@@ -852,7 +852,12 @@ DataField * Marc4cppDocumento::creaTag010_Isbn(char tipoNumeroStd) {
 	if (notaPtr->IndexSubStringCaseInsensitive("err") != -1) // 18/10/2010
 		sf = new Subfield('z');
 	else
+	{
+		if (ISBN_CON_TRATTINI) // 19/01/2023
+			CMisc::gestisciTrattiniNumStandardIsbn(&numeroStandard, &numeroStandard);
 		sf = new Subfield('a');
+	}
+
 
 	numeroStandard.Strip(numeroStandard.trailing, ' ');
 	sf->setData(&numeroStandard);

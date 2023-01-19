@@ -434,7 +434,7 @@ DataField * Marc4cppDocumentoAuthority::creaTag015_Isadn()
 /*!
 \brief <b>Tag 010 - ISNI</b>
 
-[ authority autore ]
+[ authority documento, autore ]
  <table>
  <tr>
  <th valign=top>Definizione</th><th>Descrizione</th></tr>
