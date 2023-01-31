@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<collection xmlns="http://www.bncf.firenze.sbn.it/unimarc/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.bncf.firenze.sbn.it/unimarc/slim ./unimarcslim.xsd">
+<rec>
+	<lab>00001nam2 22000013i 450 </lab>
+	<cf t="001">IT\ICCU\ABR\0000164</cf>
+	<cf t="003">http://id.sbn.it/bid/ABR0000164</cf>
+	<cf t="005">20211104153355.4</cf>
+	<df t="100" i1=" " i2=" ">
+		<sf c="a">20190802d1951    ||||0itac50      ba</sf>
+	</df>
+	<df t="101" i1=" " i2=" ">
+		<sf c="a">eng</sf>
+	</df>
+	<df t="102" i1=" " i2=" ">
+		<sf c="a">CH</sf>
+	</df>
+	<df t="181" i1=" " i2="1">
+		<sf c="6">z01</sf>
+		<sf c="a">i </sf>
+		<sf c="b">xxxe  </sf>
+	</df>
+	<df t="182" i1=" " i2="1">
+		<sf c="6">z01</sf>
+		<sf c="a">n</sf>
+	</df>
+	<df t="183" i1=" " i2="1">
+		<sf c="6">z01</sf>
+		<sf c="a">nc</sf>
+		<sf c="2">RDAcarrier</sf>
+	</df>
+	<df t="200" i1="1" i2=" ">
+		<sf c="a">The nineteenth century</sf>
+		<sf c="e">new sources of emotion from Goya to Gauguin</sf>
+		<sf c="f">text by Maurice Raynal</sf>
+		<sf c="g">translated by James Emmons</sf>
+	</df>
+	<df t="210" i1=" " i2=" ">
+		<sf c="a">Geneva [etc.]</sf>
+		<sf c="c"> Skira</sf>
+		<sf c="d">stampa 1951</sf>
+	</df>
+	<df t="215" i1=" " i2=" ">
+		<sf c="a">147 p.</sf>
+		<sf c="c">ill.</sf>
+		<sf c="d">29x25 cm</sf>
+	</df>
+	<df t="410" i1=" " i2="0">
+		<sf c="1">001IT\ICCU\PUV\0797974</sf>
+		<sf c="1">2001 </sf>
+		<sf c="a">The great centuries of painting</sf>
+	</df>
+	<df t="461" i1=" " i2="1">
+		<s1>
+			<cf t="001">001IT\ICCU\UBO\0306771</cf>
+		</s1>
+		<s1>
+			<df t="200" i1="1" i2=" ">
+				<sf c="a">The great centuries of painting</sf>
+				<sf c="f">collection planned and directed by Albert Skira</sf>
+			</df>
+		</s1>
+	</df>
+	<df t="606" i1=" " i2=" ">
+		<sf c="a">Pittura</sf>
+		<sf c="x">Sec. 19.</sf>
+		<sf c="2">FE </sf>
+		<sf c="3">IT\ICCU\CFIC\084530</sf>
+	</df>
+	<df t="700" i1=" " i2="1">
+		<sf c="a">Raynal</sf>
+		<sf c="b">, Maurice</sf>
+		<sf c="3">IT\ICCU\RAVV\033477</sf>
+		<sf c="4">070</sf>
+	</df>
+	<df t="702" i1=" " i2="1">
+		<sf c="a">Emmons</sf>
+		<sf c="b">, James</sf>
+		<sf c="3">IT\ICCU\PALV\003335</sf>
+		<sf c="4">070</sf>
+	</df>
+	<df t="801" i1=" " i2="3">
+		<sf c="a">IT</sf>
+		<sf c="b">ICCU</sf>
+		<sf c="c">20230130</sf>
+	</df>
+	<df t="899" i1=" " i2=" ">
+		<sf c="1">TE0045</sf>
+		<sf c="2">ABR R3</sf>
+		<sf c="f">P/G</sf>
+	</df>
+	<df t="899" i1=" " i2=" ">
+		<sf c="1">VE0265</sf>
+		<sf c="2">VEA BA</sf>
+		<sf c="f">P/G</sf>
+	</df>
+	<df t="999" i1=" " i2=" ">
+		<sf c="1">cnm 00</sf>
+		<sf c="2">CNM 00</sf>
+		<sf c="3">RAVV033477</sf>
+		<sf c="9">CNMN\0000313552</sf>
+	</df>
+</rec>
+<rec>
+	<lab>00001naa2 22000013i 450 </lab>
+	<cf t="001">IT\ICCU\ABR\0000196</cf>
+	<cf t="003">http://id.sbn.it/bid/ABR0000196</cf>
+	<cf t="005">20200107124103.8</cf>
+	<df t="100" i1=" " i2=" ">
+		<sf c="a">20190807d2019    ||||0itac50      ba</sf>
+	</df>
+	<df t="101" i1=" " i2=" ">
+		<sf c="a">ita</sf>
+	</df>
+	<df t="181" i1=" " i2="1">
+		<sf c="6">z01</sf>
+		<sf c="a">i </sf>
+		<sf c="b">xxxe  </sf>
+	</df>
+	<df t="182" i1=" " i2="1">
+		<sf c="6">z01</sf>
+		<sf c="a">n</sf>
+	</df>
+	<df t="200" i1="1" i2=" ">
+		<sf c="a">Due presunte opere abruzzesi conservate a Pisa</sf>
+		<sf c="f">Gianfranco Natale</sf>
+	</df>
+	<df t="300" i1=" " i2=" ">
+		<sf c="a">A. 72 (2019), 2, pp. 122-125</sf>
+	</df>
+	<df t="461" i1=" " i2="1">
+		<s1>
+			<cf t="001">001IT\ICCU\TO0\0193885</cf>
+		</s1>
+		<s1>
+			<df t="200" i1="1" i2=" ">
+				<sf c="a">Rivista abruzzese</sf>
+				<sf c="e">rassegna trimestrale di cultura</sf>
+			</df>
+		</s1>
+	</df>
+	<df t="801" i1=" " i2="3">
+		<sf c="a">IT</sf>
+		<sf c="b">ICCU</sf>
+		<sf c="c">20230130</sf>
+	</df>
+	<df t="899" i1=" " i2=" ">
+		<sf c="1">AQ0050</sf>
+		<sf c="2">ABR DS</sf>
+		<sf c="f">P/G</sf>
+	</df>
+</rec>
+</collection>

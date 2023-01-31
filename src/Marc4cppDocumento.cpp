@@ -3359,11 +3359,12 @@ bool Marc4cppDocumento::elaboraDatiDocumento() {
 
 		else if ((areeVect.Entry(i)->StartsWith("206-"))) // Area 3 - Area specifica del materiale
 		{
-			if (IS_TAG_TO_GENERATE(206))
-			{
+// 26/01/2023 Campo obbligatorio
+//			if (IS_TAG_TO_GENERATE(206))
+//			{
 			if (df = creaTag206_AreaSpecificaDelMateriale(areaStartPtr,		areaEndPtr))
 				marcRecord->addDataField(df);
-			}
+//			}
 		}
 		else if ((areeVect.Entry(i)->StartsWith("207-"))) // Area ? - Area relativa al materiale specifico: periodici - nomi e date
 		{
@@ -3407,7 +3408,7 @@ df->insertSubfield(0,sf);
 		}
 		else if ((areeVect.Entry(i)->StartsWith("230-"))) // Area ? - Area relativa al materiale specifico: Risorse elettroniche
 		{
-			if (IS_TAG_TO_GENERATE(230))
+//	26/01/2023 obbligatorio		if (IS_TAG_TO_GENERATE(230))
 				if (df = creaTag230_AreaRisorseElettroniche(areaStartPtr, areaEndPtr))
 					marcRecord->addDataField(df);
 		}
